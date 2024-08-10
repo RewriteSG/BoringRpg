@@ -9,7 +9,6 @@ GameManager* GameManager::GM_Instance = nullptr;
 GameManager::GameManager()
 {
 	GM_Instance = this;
-	isPlayerTurn = true;
 	//Weapon = nullptr;
 	GameEnded = false;
 	GameWon = true;
@@ -75,7 +74,6 @@ void GameManager::Exit()
 
 void GameManager::PromptInput()
 {
-	isPlayerTurn = true;
 	Scene::GotoXY(0, 12);
 	cout << "Input:                                                        ";
 	Scene::GotoXY(7, 12);
