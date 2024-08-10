@@ -15,7 +15,6 @@ public:
 	const Vector2 GetPrevPosition() const;
 	void UpdatePosition();
 	virtual void Start();
-	//virtual void Start();
 	virtual void Update();
 	virtual void Collided(GameObject* collision);
 	virtual void OnDestroyed();
