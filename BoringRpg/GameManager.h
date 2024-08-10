@@ -11,13 +11,7 @@ using namespace std;
 class GameManager
 {
 	static GameManager* GM_Instance;
-	//Entity* Player;
-	//Item** HealthGlobes;
-	//Goblin** Goblins;
-	//Item** Weapon;
-	int goblinCount;
 	bool isPlayerTurn;
-	int turns;
 	bool GameEnded, GameWon;
 public:
 	static GameManager* getGM();

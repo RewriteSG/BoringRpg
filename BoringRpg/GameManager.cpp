@@ -11,7 +11,6 @@ GameManager::GameManager()
 	GM_Instance = this;
 	isPlayerTurn = true;
 	//Weapon = nullptr;
-	turns = 0; goblinCount = 0;
 	GameEnded = false;
 	GameWon = true;
 }
@@ -21,31 +20,8 @@ void GameManager::Start()
 
 	GM_Instance = this;
 	//Weapon = nullptr;
-	turns = 0; goblinCount = 0;
 	GameEnded = false;
 	GameWon = true;
-
-	string clearInput = "";
-	for (int i = 0; i < 999; i++)
-	{
-		clearInput += " ";
-	}
-	system("cls");
-	int input = 0;
-	Scene::GotoXY(0, 1);
-	cout << "Pick a Character! \n 1 - Archer\n 2 - Barbarian \n Input: ";
-	while (!(cin >> input) && (input != 1 && input != 2)) 
-	{
-		cin.clear();
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		Scene::GotoXY(0, 1);
-		cout << "Pick a Character! \n 1 - Archer\n 2 - Barbarian \n Input: ";
-		cout << clearInput;
-		Scene::GotoXY(8, 4);
-
-	}
-
-	turns = 0;
 
 	Scene::GotoXY(0, 0);
 	cout << "-----Boring RPG-----";
@@ -113,6 +89,6 @@ void GameManager::PromptInput()
 {
 	isPlayerTurn = true;
 	Scene::GotoXY(0, 12);
-	cout << "Player Option Move (W)(A)(S)(D) Attack(I)(J)(K)(L) \n Input:                                                        ";
-	Scene::GotoXY(7, 13);
+	cout << "Input:                                                        ";
+	Scene::GotoXY(7, 12);
 }
