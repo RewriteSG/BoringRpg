@@ -15,6 +15,8 @@ void Application::Start()
 	scene = Scene();
 	srand((unsigned int)time(0));
 	scene.Start();
+	Update();
+	Exit();
 	//_CrtDumpMemoryLeaks();
 }
 
