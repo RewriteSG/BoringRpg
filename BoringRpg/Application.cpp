@@ -5,7 +5,11 @@
 #include <iostream>
 
 int main() {
-	return 0; 
+	Application app;
+	app.Start();
+	app.Update();
+	app.Exit();
+	return 0;
 }
 Application::Application()
 {
@@ -15,7 +19,6 @@ void Application::Start()
 	scene = Scene();
 	srand((unsigned int)time(0));
 	scene.Start();
-	Update();
 	Exit();
 	//_CrtDumpMemoryLeaks();
 }

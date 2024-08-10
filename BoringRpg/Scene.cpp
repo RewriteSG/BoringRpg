@@ -51,23 +51,7 @@ void Scene::Exit()
 		delete Objects[i];
 	}
 	delete[] Objects;
-	system("cls");
-	string EndText = "";
-	if (gm.GetGameWon())
-	{
-		EndText = "You Won! Restart Game? Input Yes if you want to Restart";
-	}
-	else
-		EndText = "You Lost! Restart Game? Input Yes if you want to Restart";
 
-	GotoXY(10, 10);
-	cout << EndText;
-	GotoXY(10, 11);
-	cout << "Input : ";
-	string input;
-	cin >> input;
-	LowerString(input);
-	ContinuePgrm = (input == "yes");
 }
 
 void Scene::GotoXY(int x, int y, Vector2 WorldTopLeft)
