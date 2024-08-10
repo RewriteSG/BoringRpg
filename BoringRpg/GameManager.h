@@ -11,11 +11,12 @@ using namespace std;
 class GameManager
 {
 	static GameManager* GM_Instance;
-	bool isPlayerTurn;
 	bool GameEnded, GameWon;
+
 public:
 	static GameManager* getGM();
 	GameManager();
+
 	void Start();
 	void Update();
 	void Exit();

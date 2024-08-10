@@ -22,10 +22,8 @@ void GameManager::Start()
 	//Weapon = nullptr;
 	GameEnded = false;
 	GameWon = true;
-	new GameObject(Vector2(4, 4));
-	new GameObject(Vector2(4, 5));
-	new GameObject(Vector2(4, 6));
 	
+	//new Entity(Vector2(4, 4));
 }
 
 //
@@ -40,8 +38,9 @@ void GameManager::Start()
 //cout << "Player Health (" << GetHealth() << ") Attack (" << GetAttackDamage() << ")";
 void GameManager::Update()
 {
-	GameEnded = false;PromptInput();
+	GameEnded = false;
 
+	PromptInput();
 
 	string input;
 	cin >> input;

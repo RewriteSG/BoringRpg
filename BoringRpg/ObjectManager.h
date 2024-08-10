@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 /// <summary>
-/// Handles
+/// Handles All Objects in the background
 /// </summary>
 class ObjectManager
 {
@@ -10,8 +10,6 @@ class ObjectManager
 	GameObject** gameObjectsToAdd;
 	GameObject** gameObjectsToRemove;
 	static ObjectManager* objectManagerInstance;
-
-
 
 	int gameObjectsCount, gameObjectsToAddCount, gameObjectsToRemoveCount;
 	GameObject** AddGameObject(GameObject** Array, GameObject* toAdd, int& count);
@@ -25,11 +23,16 @@ class ObjectManager
 public:
 	ObjectManager();
 	void Start();
+
 	GameObject** GetObjects();
 	int GetObjectsCount() const;
+
+
 	GameObject* GetObjectAtPosition(const Vector2& atPos) const;
 	void InstantiateObject(GameObject* obj);
 	void DestroyObject(GameObject* obj);
+
+
 	void UpdateObjects();
 	void UpdateObjectsPosition();
 	static ObjectManager* getObjectManager();
