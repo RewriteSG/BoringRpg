@@ -48,20 +48,6 @@ void GameObject::Start()
 	IsActive = true;
 }
 
-
-void GameObject::Update()
-{
-
-}
-
-void GameObject::Collided(GameObject* collision)
-{
-}
-
-void GameObject::OnDestroyed()
-{
-}
-
 bool GameObject::GetActive() const
 {
 	return IsActive;

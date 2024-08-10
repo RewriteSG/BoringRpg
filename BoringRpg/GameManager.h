@@ -4,7 +4,6 @@
 #include "Items.h"
 #include "ObjectManager.h"
 #include <iostream>
-#include "Goblin.h"
 using namespace std;
 /// <summary>
 /// A GameManager class where it handles the Game win and lose condition as well as Handling player's input. 
@@ -12,9 +11,9 @@ using namespace std;
 class GameManager
 {
 	static GameManager* GM_Instance;
-	Entity* Player;
-	Item** HealthGlobes;
-	Goblin** Goblins;
+	//Entity* Player;
+	//Item** HealthGlobes;
+	//Goblin** Goblins;
 	//Item** Weapon;
 	int goblinCount;
 	bool isPlayerTurn;
@@ -26,14 +25,10 @@ public:
 	void Start();
 	void Update();
 	void Exit();
+
 	void PromptInput();
 	void HandleInput(char input);
-	bool GetPlayerTurn() const;
-	void RemoveGoblin(Goblin* gob);
-	bool isAllGoblinsDead() const;
-	Entity* GetPlayer() const;
 
-	void SetPlayer(Entity* toEntity);
 	bool GetGameEnded() const;
 	bool GetGameWon() const;
 };
