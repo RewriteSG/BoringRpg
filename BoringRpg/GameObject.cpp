@@ -11,9 +11,11 @@ GameObject::GameObject()
 
 GameObject::GameObject(Vector2 toPos)
 {
-	symbol = ' ';
+	symbol = '*';
+	ObjectManager::getObjectManager()->InstantiateObject(this);
 	position = toPos;
 	IsActive = true;
+	Start();
 }
 
 Vector2* GameObject::GetPosition()
@@ -46,6 +48,18 @@ void GameObject::UpdatePosition()
 void GameObject::Start()
 {
 	IsActive = true;
+}
+
+void GameObject::Update()
+{
+}
+
+void GameObject::Collided(GameObject* collision)
+{
+}
+
+void GameObject::OnDestroyed()
+{
 }
 
 bool GameObject::GetActive() const

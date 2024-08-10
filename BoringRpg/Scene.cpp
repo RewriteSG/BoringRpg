@@ -17,6 +17,8 @@ void Scene::Start()
 	world.Start();
 	objectManager.Start();
 	gm.Start();
+
+	//world.Update(objectManager.GetObjects(), objectManager.GetObjectsCount()); // Always call this method before render
 	world.Render();
 
 }

@@ -22,21 +22,10 @@ void GameManager::Start()
 	//Weapon = nullptr;
 	GameEnded = false;
 	GameWon = true;
-
-	Scene::GotoXY(0, 0);
-	cout << "-----Boring RPG-----";
-	for (int i = 0; i < 20; i++)
-	{
-
-		Scene::GotoXY(i, 1);
-		cout << "                                            ";
-	}
-	for (int i = 2; i < 12; i++)
-	{
-
-		Scene::GotoXY(0, i);
-		cout << "+";
-	}
+	new GameObject(Vector2(4, 4));
+	new GameObject(Vector2(4, 5));
+	new GameObject(Vector2(4, 6));
+	
 }
 
 //

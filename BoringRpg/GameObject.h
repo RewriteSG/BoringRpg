@@ -16,9 +16,9 @@ public:
 	void UpdatePosition();
 	virtual void Start();
 	//virtual void Start();
-	virtual void Update() = 0;
-	virtual void Collided(GameObject* collision) = 0;
-	virtual void OnDestroyed() = 0;
+	virtual void Update();
+	virtual void Collided(GameObject* collision);
+	virtual void OnDestroyed();
 	bool GetActive() const;
 	void SetActive(bool);
 };
