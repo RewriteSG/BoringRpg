@@ -6,29 +6,12 @@
 
 int main() {
 	Application app;
-	app.Start();
-	app.Update();
-	app.Exit();
+	app.sceneMgr.Start();
+	app.sceneMgr.Update();
+	app.sceneMgr.Exit();
 	return 0;
 }
 Application::Application()
 {
-}
-void Application::Start()
-{
-	scene = Scene();
-	srand((unsigned int)time(0));
-	scene.Start();
-	Exit();
-	//_CrtDumpMemoryLeaks();
-}
-
-void Application::Update()
-{
-	scene.Update();
-}
-
-void Application::Exit()
-{
-	scene.Exit();
+	sceneMgr;
 }

@@ -62,7 +62,6 @@ void ObjectManager::UpdateObjects()
 	AddGameObjects();
 	RemoveGameObjects();
 	
-	
 	UpdateObjectsPosition();
 
 	for (int i = 0; i < gameObjectsCount; i++)

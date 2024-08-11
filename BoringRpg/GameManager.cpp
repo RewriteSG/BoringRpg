@@ -74,7 +74,7 @@ void GameManager::Exit()
 
 void GameManager::PromptInput()
 {
-	Scene::GotoXY(0, 12);
+	Scene::GotoXY(110, 12);
 	cout << "Input:                                                        ";
-	Scene::GotoXY(7, 12);
+	Scene::GotoXY(110, 12);
 }

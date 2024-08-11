@@ -16,27 +16,28 @@ void Scene::Start()
 {
 	world.Start();
 	objectManager.Start();
-	gm.Start();
+	//gm.Start();
 
-	//world.Update(objectManager.GetObjects(), objectManager.GetObjectsCount()); // Always call this method before render
+	// Instantiate Objects here
+	// For Example 
+	//new Entity(Vector2(4, 4));
+
+
+
 	world.Render();
-
 }
 
 void Scene::Update()
 {
-
-
 	objectManager.UpdateObjects();  // update objects at the start of the frame
-
-
-	world.Update(objectManager.GetObjects(), objectManager.GetObjectsCount()); // Always call this method before render
-	world.Render(objectManager.GetObjects(), objectManager.GetObjectsCount());
-
 	objectManager.UpdateObjectsPosition(); // Update Object positions
 
 	gm.Update();
 
+}
+
+void Scene::Render()
+{
 	world.Update(objectManager.GetObjects(), objectManager.GetObjectsCount()); // Always call this method before render  
 	world.Render(objectManager.GetObjects(), objectManager.GetObjectsCount());
 
@@ -45,7 +46,6 @@ void Scene::Update()
 
 void Scene::Exit()
 {
-	gm.Exit();
 	int objectsCount = objectManager.GetObjectsCount();
 	GameObject** Objects = objectManager.GetObjects();
 	for (int i = 0; i < objectsCount; i++)
@@ -54,6 +54,7 @@ void Scene::Exit()
 	}
 	delete[] Objects;
 
+	gm.Exit();
 }
 
 void Scene::GotoXY(int x, int y, Vector2 WorldTopLeft)

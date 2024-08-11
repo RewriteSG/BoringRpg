@@ -9,12 +9,14 @@ class World
 	static World* worldInstance;
 	Vector2 topLeftPos;
 	Vector2 botRightPos;
-	char charMap[10][10];
-
+	char** charMap;
+	int width, height;
 
 public:
 	static World* GetWorldInstance();
+	World();
 	World(Vector2 topLeft);
+	World(Vector2 topLeft, int toWidth, int toHeight);
 	void Start();
 	//const char GetCharFromXandY(int x, int y)const;
 	void SetCharFromXandY(const int& x, const int& y, const char& toChar);

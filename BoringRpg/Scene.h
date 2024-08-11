@@ -9,11 +9,13 @@ class Scene
 public:
 	World world;
 	ObjectManager objectManager;
-	GameManager gm;
+	GameManager gm; 
 	bool ContinuePgrm;
 	Scene();
 	void Start();
 	void Update();
+
+	void Render();
 	void Exit();
 	bool GetContinuePgrm() const;
 	static void GotoXY(int x, int y, Vector2 WorldTopLeft);

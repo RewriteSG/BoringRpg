@@ -12,6 +12,7 @@ class ObjectManager
 	static ObjectManager* objectManagerInstance;
 
 	int gameObjectsCount, gameObjectsToAddCount, gameObjectsToRemoveCount;
+
 	GameObject** AddGameObject(GameObject** Array, GameObject* toAdd, int& count);
 	GameObject** RemoveGameObject(GameObject** Array, GameObject* toRemove, int& count);
 	GameObject** RemoveGameObject(GameObject** Array, GameObject* toRemove, int& count, bool DeleteObj);

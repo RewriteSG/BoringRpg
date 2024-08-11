@@ -9,12 +9,52 @@ World* World::GetWorldInstance()
 {
 	return worldInstance;
 }
-World::World(Vector2 topLeft) : topLeftPos(topLeft), botRightPos(topLeft + Vector2(10,10))
+World::World() : topLeftPos(), botRightPos(Vector2(10, 10)), width(10), height(10)
 {
 	worldInstance = this;
-	for (int y = 0; y < 10; y++)
+	charMap = new char* [height];
+	for (int i = 0; i < height; i++)
 	{
-		for (int x = 0; x < 10; x++)
+		charMap[i] = new char[width];
+	}
+
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			charMap[y][x] = '.';
+		}
+	}
+}
+World::World(Vector2 topLeft) : topLeftPos(topLeft), botRightPos(topLeft + Vector2(10,10)), width(10) , height(10)
+{
+	worldInstance = this;
+	charMap = new char* [height];
+	for (int i = 0; i < height; i++)
+	{
+		charMap[i] = new char[width];
+	}
+
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			charMap[y][x] = '.';
+		}
+	}
+}
+World::World(Vector2 topLeft, int toWidth, int toHeight) : topLeftPos(topLeft), botRightPos(topLeft + Vector2(10, 10)), width(toWidth), height(toHeight)
+{
+	worldInstance = this;
+	charMap = new char* [height];
+	for (int i = 0; i < height; i++)
+	{
+		charMap[i] = new char[width];
+	}
+
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
 		{
 			charMap[y][x] = '.';
 		}
@@ -22,9 +62,9 @@ World::World(Vector2 topLeft) : topLeftPos(topLeft), botRightPos(topLeft + Vecto
 }
 void World::Start()
 {
-	for (int y = 0; y < 10; y++)
+	for (int y = 0; y < height; y++)
 	{
-		for (int x = 0; x < 10; x++)
+		for (int x = 0; x < width; x++)
 		{
 			charMap[y][x] = '.';
 		}
@@ -58,7 +98,7 @@ void World::Update(GameObject** objects, int objectsCount)
 	Vector2* pos;
 	for (int i = 0; i < objectsCount; i++)
 	{
-		Vector2::Clamp(*objects[i]->GetPosition(), Vector2(9, 9), Vector2(0, 0));
+		Vector2::Clamp(*objects[i]->GetPosition(), Vector2(width, height), Vector2(0, 0));
 		if (!objects[i]->GetActive())
 		{
 			continue;
@@ -98,15 +138,15 @@ void World::Render(GameObject** objects, int objectsCount)
 		if (*pos != objects[i]->GetPrevPosition())
 		{
 
-			Scene::GotoXY(objects[i]->GetPrevPosition().GetX() + (1* objects[i]->GetPrevPosition().GetX()), objects[i]->GetPrevPosition().GetY(), topLeftPos);
+			Scene::GotoXY(objects[i]->GetPrevPosition().GetX() + (8 * (objects[i]->GetPrevPosition().GetX())), objects[i]->GetPrevPosition().GetY() + (4 * objects[i]->GetPrevPosition().GetY()), topLeftPos);
 			cout << charMap[objects[i]->GetPrevPosition().GetY()][objects[i]->GetPrevPosition().GetX()] << " ";
 
-			Scene::GotoXY(pos->GetX()+ (1* pos->GetX()), pos->GetY(), topLeftPos);
+			Scene::GotoXY(pos->GetX()+ (8 * (pos->GetX())), pos->GetY() + (4 * pos->GetY()), topLeftPos);
 			cout << charMap[pos->GetY()][pos->GetX()] << " ";
 		}
 		else 
 		{
-			Scene::GotoXY(pos->GetX() + (1 * pos->GetX()), pos->GetY(), topLeftPos);
+			Scene::GotoXY(pos->GetX() + (8 * (pos->GetX())), pos->GetY() + (4 * pos->GetY()), topLeftPos);
 			cout << charMap[pos->GetY()][pos->GetX()] << " ";
 		}
 
@@ -115,12 +155,12 @@ void World::Render(GameObject** objects, int objectsCount)
 
 void World::Render()
 {
-	for (int y = 0; y < 10; y++)
+	for (int y = 0; y < height; y++)
 	{
-		for (int x = 0; x < 10; x++)
+		for (int x = 0; x < width; x++)
 		{
-			Scene::GotoXY(x + (1*x), y, topLeftPos);
-			cout << charMap[y][x] << " ";
+			Scene::GotoXY(x + (8 * (x)), y + (4 * y), topLeftPos);
+			cout << charMap[y][x];
 		}
 	}
 }

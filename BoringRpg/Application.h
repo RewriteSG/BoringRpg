@@ -1,14 +1,11 @@
 #pragma once
 using namespace std;
-#include "Scene.h"
+#include "SceneManager.h"
 
 class Application
 {
 public:
-	Scene scene;
+	SceneManager sceneMgr;
 	Application();
-	void Start();
-	void Update();
-	void Exit();
 };
 
