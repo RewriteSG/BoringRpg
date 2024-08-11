@@ -3,13 +3,13 @@ using namespace std;
 #include "Scene.h"
 class SceneManager
 {
-	Scene* nextScene;
+	static Scene* nextScene;
 public:
-	Scene* CurrentScene;
+	static Scene* CurrentScene;
 	SceneManager();
-	void Start();
-	void Update();
-	void LoadScene(Scene* toScene);
-	void Exit();
+	static void Start();
+	static void Update();
+	static void LoadScene(Scene* toScene);
+	static void Exit();
 };
 

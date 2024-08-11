@@ -2,6 +2,7 @@
 #include <iostream>
 #include "ObjectManager.h"
 #include "Application.h"
+#include "GameManager.h"
 Player::Player()
 {
 }
@@ -10,7 +11,6 @@ void Player::Start()
 }
 void Player::Update()
 {
-
 }
 void Player::Collided(GameObject* collision)
 {

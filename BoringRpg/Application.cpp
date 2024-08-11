@@ -7,6 +7,7 @@
 int main() {
 	Application app;
 	app.sceneMgr.Start();
+	while(true)
 	app.sceneMgr.Update();
 	app.sceneMgr.Exit();
 	return 0;

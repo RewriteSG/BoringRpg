@@ -1,8 +1,11 @@
 #include "SceneManager.h"
+#include "ExampleScene.h"
+Scene* SceneManager::CurrentScene = nullptr;
+Scene* SceneManager::nextScene = nullptr;
 
 SceneManager::SceneManager()
 {
-	CurrentScene = new Scene(); 
+	CurrentScene = new ExampleScene(); 
 	nextScene = nullptr;
 }
 
@@ -10,15 +13,13 @@ void SceneManager::Start()
 {
 	srand((unsigned int)time(0));
 	CurrentScene->Start();
-	Exit();
 }
 
 void SceneManager::Update()
 {
-	CurrentScene->Render();
 	CurrentScene->Update();
 	CurrentScene->Render();
-
+	CurrentScene->gm.Update();
 	if (nextScene) 
 	{
 		if (CurrentScene)
@@ -29,6 +30,8 @@ void SceneManager::Update()
 		CurrentScene = nullptr;
 		CurrentScene = nextScene;
 		nextScene = nullptr;
+		system("cls");
+		CurrentScene->Start();
 	}
 }
 

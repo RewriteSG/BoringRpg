@@ -76,5 +76,5 @@ void GameManager::PromptInput()
 {
 	Scene::GotoXY(110, 12);
 	cout << "Input:                                                        ";
-	Scene::GotoXY(110, 12);
+	Scene::GotoXY(117, 12);
 }

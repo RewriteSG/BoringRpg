@@ -12,8 +12,8 @@ public:
 	GameManager gm; 
 	bool ContinuePgrm;
 	Scene();
-	void Start();
-	void Update();
+	virtual void Start();
+	virtual void Update();
 
 	void Render();
 	void Exit();
