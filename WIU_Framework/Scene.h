@@ -20,6 +20,7 @@ public:
 	bool GetContinuePgrm() const;
 	static void GotoXY(int x, int y, Vector2 WorldTopLeft);
 	static void GotoXY(int x, int y);
+
 	static void LowerString(string& _string);
 };
 

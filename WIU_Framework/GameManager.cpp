@@ -1,6 +1,8 @@
 #include "GameManager.h"
 #include "Scene.h"
 #include "MyFunctions.cpp"
+#include "Application.h"
+#include "Windows.h"
 
 using namespace myFunctions;
 
@@ -14,59 +16,26 @@ GameManager::GameManager()
 	GameWon = true;
 }
 
-void GameManager::Start()
-{
-
-	GM_Instance = this;
-	//Weapon = nullptr;
-	GameEnded = false;
-	GameWon = true;
-	
-	//new Entity(Vector2(4, 4));
-}
-
-//
-//Application::GotoXY(14 + (10), 2);
-//if (weaponHeld)
-//{
-//	cout << "Player Health (" << GetHealth() << ") Attack ("
-//		<< GetAttackDamage() - weaponHeld->GetDamageIncrease() << "+" << weaponHeld->GetDamageIncrease() << ")";
-//
-//}
-//else
-//cout << "Player Health (" << GetHealth() << ") Attack (" << GetAttackDamage() << ")";
-void GameManager::Update()
-{
-	GameEnded = false;
-
-	PromptInput();
-
-	string input;
-	cin >> input;
-	Scene::LowerString(input);
-
-	HandleInput(input[0]);
-	
-}
-
-void GameManager::HandleInput(char input)
-{
-
-}
-bool GameManager::GetGameEnded() const
-{
-	return GameEnded;
-}
-bool GameManager::GetGameWon() const
-{
-	return GameWon;
-}
-
 GameManager* GameManager::getGM()
 {
 	return GM_Instance;
 }
 
+void GameManager::Start()
+{
+
+	GM_Instance = this;
+	GameEnded = false;
+	GameWon = true;
+}
+void GameManager::Update()
+{
+	GameEnded = false;
+
+	PromptInput();
+	HandleInput();
+	
+}
 void GameManager::Exit()
 {
 
@@ -78,3 +47,50 @@ void GameManager::PromptInput()
 	cout << "Input:                                                        ";
 	Scene::GotoXY(117, 12);
 }
+void GameManager::HandleInput(void)
+{
+	char input = _getch();
+
+	switch (input)
+	{
+	case 'w':
+		//Move up
+		break;
+	case 's':
+		//Move down
+		break;
+	case 'd':
+		//Move right
+		break;
+	case 'a':
+		//Move left
+		break;
+	}
+}
+
+bool GameManager::GetGameEnded() const
+{
+	return GameEnded;
+}
+bool GameManager::GetGameWon() const
+{
+	return GameWon;
+}
+
+char GameManager::_getch(void)
+{
+	char ch = 0;
+	DWORD mode, count;
+	HANDLE h = GetStdHandle(STD_INPUT_HANDLE);
+
+	GetConsoleMode(h, &mode);
+	SetConsoleMode(h, mode & ~(ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT));
+
+	ReadConsoleA(h, &ch, 1, &count, NULL);
+
+	SetConsoleMode(h, mode);
+	return tolower(ch);
+}
+
+
+

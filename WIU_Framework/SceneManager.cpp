@@ -2,52 +2,40 @@
 #include "ExampleScene.h"
 #include "Windows.h"
 #include <cwchar>
-Scene* SceneManager::CurrentScene = nullptr;
+Scene* SceneManager::currentScene = nullptr;
 Scene* SceneManager::nextScene = nullptr;
 
-SceneManager::SceneManager()
-{
-	CurrentScene = new ExampleScene(); 
-	nextScene = nullptr;
-}
-
-void SceneManager::Start()
+void SceneManager::Start(void)
 {
 	srand((unsigned int)time(0));
-	CurrentScene->Start();
+
+	currentScene = new ExampleScene();
+	currentScene->Start();
 }
 
-void SceneManager::Update()
+void SceneManager::Update(void)
 {
-
-
-	CurrentScene->Update();
-	CurrentScene->Render();
-	CurrentScene->gm.Update();
+	currentScene->Update();
+	currentScene->Render();
+	currentScene->gm.Update();
 
 	if (nextScene) 
 	{
-		if (CurrentScene)
+		if (currentScene)
 		{
-			CurrentScene->Exit();
-			delete CurrentScene;
+			currentScene->Exit();
+			delete currentScene;
 		}
-		CurrentScene = nullptr;
-		CurrentScene = nextScene;
+		currentScene = nullptr;
+		currentScene = nextScene;
 		nextScene = nullptr;
 		system("cls");
-		CurrentScene->Start();
+		currentScene->Start();
 	}
 }
 
-void SceneManager::LoadScene(Scene* toScene)
-{
-	nextScene = toScene;
-	
-}
+void SceneManager::Exit() { currentScene->Exit(); }
 
+void SceneManager::LoadScene(Scene* toScene) { nextScene = toScene; }
 
-void SceneManager::Exit()
-{
-	CurrentScene->Exit();
-}
+Scene* SceneManager::GetNextScene(void) {return nextScene;}

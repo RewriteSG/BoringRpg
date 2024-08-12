@@ -5,43 +5,49 @@
 #include <iostream>
 #include "Windows.h"
 
-int main() {
-	Application app;
-	app.sceneMgr.Start();
-	while(true)
-	app.sceneMgr.Update();
-	app.sceneMgr.Exit();
-	return 0;
-}
-Application::Application()
+void Application::FontSize(const Vector2 size)
 {
-
-	std::cout << "Test: ";
+	CONSOLE_FONT_INFOEX fontex{sizeof(CONSOLE_FONT_INFOEX) };
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetCurrentConsoleFontEx(hOut, false, &fontex);
+	fontex.dwFontSize.X = size.GetX(); // Width of each character in pixels
+	fontex.dwFontSize.Y = size.GetY(); // Height of each character in pixels
+	SetCurrentConsoleFontEx(hOut, false, &fontex);
+}
+void Application::ScreenSMaximised(void) 
+{
 	// Get the console window handle
 	HWND consoleWindow = GetConsoleWindow();
-
-
 	// Maximize the console window
 	ShowWindow(consoleWindow, SW_MAXIMIZE);
-
-	CONSOLE_FONT_INFOEX fontex{ sizeof(CONSOLE_FONT_INFOEX) };
-	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	if (hOut == INVALID_HANDLE_VALUE) {
-		std::cerr << "Error: Unable to get console handle." << std::endl;
-	}
-
-	if (GetCurrentConsoleFontEx(hOut, false, &fontex)) {
-
-		fontex.dwFontSize.X = 9; // Width of each character in pixels
-		fontex.dwFontSize.Y = 14; // Height of each character in pixels
-
-		
-		if (SetCurrentConsoleFontEx(hOut, false, &fontex)) {
-			std::cout << "Working";
-		
-		}
-
-	}
-	sceneMgr;
 }
+void Application::HideCursor(void)
+{
+	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cursorInfo;
+
+	GetConsoleCursorInfo(consoleHandle, &cursorInfo);
+	cursorInfo.bVisible = FALSE; // Set the cursor visibility to false
+	SetConsoleCursorInfo(consoleHandle, &cursorInfo);
+}
+
+Application::Application(void) { sceneMgr = new SceneManager(); }
+
+void Application::Init(void)
+{
+	FontSize(Vector2(9, 16));
+	ScreenSMaximised();
+	//HideCursor();
+
+	sceneMgr->Start();
+}
+
+void Application::Update(void)
+{
+	do
+	{
+		sceneMgr->Update();
+	} while (SceneManager::GetNextScene() != nullptr);
+}
+
+void Application::Exit(void) { delete sceneMgr; }

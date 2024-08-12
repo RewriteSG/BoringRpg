@@ -10,6 +10,7 @@ using namespace std;
 /// </summary>
 class GameManager
 {
+private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
 
@@ -22,9 +23,11 @@ public:
 	void Exit();
 
 	void PromptInput();
-	void HandleInput(char input);
+	void HandleInput(void);
 
 	bool GetGameEnded() const;
 	bool GetGameWon() const;
+
+	static char _getch(void);
 };
 
