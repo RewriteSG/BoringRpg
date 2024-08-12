@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "Scene.h"
 #include "MyFunctions.cpp"
+#include "Application.h"
 
 using namespace myFunctions;
 

@@ -138,15 +138,15 @@ void World::Render(GameObject** objects, int objectsCount)
 		if (*pos != objects[i]->GetPrevPosition())
 		{
 
-			Scene::GotoXY(objects[i]->GetPrevPosition().GetX() + (8 * (objects[i]->GetPrevPosition().GetX())), objects[i]->GetPrevPosition().GetY() + (4 * objects[i]->GetPrevPosition().GetY()), topLeftPos);
+			Scene::GotoXY(objects[i]->GetPrevPosition().GetX() + (9 * (objects[i]->GetPrevPosition().GetX())), objects[i]->GetPrevPosition().GetY() + (4 * objects[i]->GetPrevPosition().GetY()), topLeftPos);
 			cout << charMap[objects[i]->GetPrevPosition().GetY()][objects[i]->GetPrevPosition().GetX()] << " ";
 
-			Scene::GotoXY(pos->GetX()+ (8 * (pos->GetX())), pos->GetY() + (4 * pos->GetY()), topLeftPos);
+			Scene::GotoXY(pos->GetX()+ (9 * (pos->GetX())), pos->GetY() + (4 * pos->GetY()), topLeftPos);
 			cout << charMap[pos->GetY()][pos->GetX()] << " ";
 		}
 		else 
 		{
-			Scene::GotoXY(pos->GetX() + (8 * (pos->GetX())), pos->GetY() + (4 * pos->GetY()), topLeftPos);
+			Scene::GotoXY(pos->GetX() + (9 * (pos->GetX())), pos->GetY() + (4 * pos->GetY()), topLeftPos);
 			cout << charMap[pos->GetY()][pos->GetX()] << " ";
 		}
 
@@ -159,7 +159,7 @@ void World::Render()
 	{
 		for (int x = 0; x < width; x++)
 		{
-			Scene::GotoXY(x + (8 * (x)), y + (4 * y), topLeftPos);
+			Scene::GotoXY(x + (9 * (x)), y + (4 * y), topLeftPos);
 			cout << charMap[y][x];
 		}
 	}

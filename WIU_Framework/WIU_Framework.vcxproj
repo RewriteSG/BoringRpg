@@ -133,6 +133,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Items.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="MyFunctions.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Player.cpp" />

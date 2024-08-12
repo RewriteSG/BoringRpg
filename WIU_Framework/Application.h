@@ -4,8 +4,20 @@ using namespace std;
 
 class Application
 {
+private:
+	SceneManager* sceneMgr;
+
+private:
+	void ScreenSMaximised(void);
+	void HideCursor(void);
+	void FontSize(const Vector2 size);
+	
 public:
-	SceneManager sceneMgr;
-	Application();
+	Application(void);
+
+	void Init(void);
+	void Update(void);
+	void Exit(void);
+	
 };
 
