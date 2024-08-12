@@ -1,12 +1,13 @@
 #include "ExampleScene.h"
 #include "SceneManager.h"
+#include "Player.h"
 void ExampleScene::Start()
 {
 	Scene::Start();
 	// Instantiate Objects Here!
 
 	// For Example 
-	new Entity(Vector2(4, 4));
+	new Player();
 
 }
 

@@ -3,11 +3,14 @@
 #include "ObjectManager.h"
 #include "Application.h"
 #include "GameManager.h"
+#include "PlayerSprite.h"
 Player::Player()
 {
+	Start();
 }
 void Player::Start()
 {
+	SetSprite(new PlayerSprite());
 }
 void Player::Update()
 {

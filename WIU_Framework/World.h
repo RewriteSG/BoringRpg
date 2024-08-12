@@ -2,8 +2,8 @@
 #include "Vector2.h"
 #include "GameObject.h"
 
-#define CellX 8
-#define CellY 4
+#define CellX 7
+#define CellY 3
 /// <summary>
 /// A World Class that handles the render and the keeping the objects bound in the world, also handling the collisions
 /// </summary>

@@ -6,7 +6,7 @@ class Player :
 
 public:
     Player();
-    void Start()override;
+    void Start() override;
     void Update()override;
     void Collided(GameObject* collision) override;
     void OnDestroyed() override;

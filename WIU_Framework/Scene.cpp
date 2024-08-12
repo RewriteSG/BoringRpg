@@ -72,6 +72,43 @@ void Scene::GotoXY(int x, int y)
 	SetConsoleCursorPosition(hConsoleOutput, scrn);
 }
 
+void Scene::ChangeColor(TypeColor color)
+{
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	// you can loop k higher to see more color choices
+	//for (int k = 1; k < 255; k++)
+	//{
+	//	// pick the colorattribute k you want
+	//	SetConsoleTextAttribute(hConsole, k);
+	//	cout << k << " I want to be nice today!" << endl;
+	//}
+
+	switch (color)
+	{
+	case Scene::Red:
+		SetConsoleTextAttribute(hConsole, 12);
+		break;
+	case Scene::Green:
+		SetConsoleTextAttribute(hConsole, 10);
+		break;
+	case Scene::Blue:
+		SetConsoleTextAttribute(hConsole, 9);
+		break;
+	case Scene::Purple:
+		SetConsoleTextAttribute(hConsole, 5);
+		break;
+	case Scene::Black:
+		SetConsoleTextAttribute(hConsole, 0);
+		break;
+	case Scene::White:
+		SetConsoleTextAttribute(hConsole, 15);
+		break;
+	default:
+		SetConsoleTextAttribute(hConsole, 7);
+		break;
+	}
+}
+
 void Scene::LowerString(string& _string)
 {
 	string result;

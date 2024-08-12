@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "World.h"
 #include <iostream>
+#include "Windows.h"
 using namespace std;
 Sprite::Sprite()
 {

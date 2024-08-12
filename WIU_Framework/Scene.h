@@ -14,13 +14,23 @@ public:
 	Scene();
 	virtual void Start();
 	virtual void Update();
-
+	
 	void Render();
 	void Exit();
 	bool GetContinuePgrm() const;
 	static void GotoXY(int x, int y, Vector2 WorldTopLeft);
 	static void GotoXY(int x, int y);
-
+	static enum TypeColor
+	{
+		Red,
+		Green, 
+		Blue,
+		Purple,
+		Black,
+		White,
+		Default
+	};
+	static void ChangeColor(TypeColor color);
 	static void LowerString(string& _string);
 };
 
