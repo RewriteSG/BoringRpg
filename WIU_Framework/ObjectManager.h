@@ -16,17 +16,18 @@ class ObjectManager
 	GameObject** AddGameObject(GameObject** Array, GameObject* toAdd, int& count);
 	GameObject** RemoveGameObject(GameObject** Array, GameObject* toRemove, int& count);
 	GameObject** RemoveGameObject(GameObject** Array, GameObject* toRemove, int& count, bool DeleteObj);
+
 	int GameObjectIndex(GameObject** Array, GameObject* indexOf, const int& count)const;
 	bool GameObjectsArrayContains(GameObject** Array, GameObject* obj, const int& count)const;
-	void AddGameObjects();
-	void RemoveGameObjects();
+	void AddGameObjects(void);
+	void RemoveGameObjects(void);
 
 public:
-	ObjectManager();
-	void Start();
+	ObjectManager(void);
+	void Start(void);
 
-	GameObject** GetObjects();
-	int GetObjectsCount() const;
+	GameObject** GetObjects(void);
+	int GetObjectsCount(void) const;
 
 
 	GameObject* GetObjectAtPosition(const Vector2& atPos) const;
@@ -34,8 +35,7 @@ public:
 	void DestroyObject(GameObject* obj);
 
 
-	void UpdateObjects();
-	void UpdateObjectsPosition();
+	void UpdateObjects(void);
 	static ObjectManager* getObjectManager();
 };
 

@@ -3,7 +3,7 @@
 #include "Windows.h"
 ObjectManager* ObjectManager::objectManagerInstance = nullptr;
 
-ObjectManager::ObjectManager()
+ObjectManager::ObjectManager(void)
 {
 	objectManagerInstance = this;
 	gameObjects = nullptr;
@@ -14,7 +14,7 @@ ObjectManager::ObjectManager()
 	gameObjectsToRemoveCount = 0;
 }
 
-void ObjectManager::Start()
+void ObjectManager::Start(void)
 {
 	objectManagerInstance = this;
 	gameObjects = nullptr;
@@ -61,25 +61,15 @@ void ObjectManager::UpdateObjects()
 {
 	AddGameObjects();
 	RemoveGameObjects();
-	
-	UpdateObjectsPosition();
 
 	for (int i = 0; i < gameObjectsCount; i++)
 	{
+		gameObjects[i]->UpdatePosition();
 		gameObjects[i]->Update();
 	}
 
 	AddGameObjects();
 	RemoveGameObjects();
-}
-
-void ObjectManager::UpdateObjectsPosition()
-{
-
-	for (int i = 0; i < gameObjectsCount; i++)
-	{
-		gameObjects[i]->UpdatePosition();
-	}
 }
 
 GameObject** ObjectManager::AddGameObject(GameObject** Array, GameObject* toAdd, int& ArraySize)

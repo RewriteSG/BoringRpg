@@ -30,7 +30,6 @@ void Scene::Start()
 void Scene::Update()
 {
 	objectManager.UpdateObjects();  // update objects at the start of the frame
-	objectManager.UpdateObjectsPosition(); // Update Object positions
 }
 
 void Scene::Render()
