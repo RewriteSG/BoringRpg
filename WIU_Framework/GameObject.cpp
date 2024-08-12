@@ -6,6 +6,7 @@ GameObject::GameObject()
 	symbol = '*';
 	ObjectManager::getObjectManager()->InstantiateObject(this);
 	IsActive = true;
+	sprite = new Sprite();
 	Start();
 }
 
@@ -15,6 +16,7 @@ GameObject::GameObject(Vector2 toPos)
 	ObjectManager::getObjectManager()->InstantiateObject(this);
 	position = toPos;
 	IsActive = true;
+	sprite = new Sprite();
 	Start();
 }
 
@@ -60,6 +62,20 @@ void GameObject::Collided(GameObject* collision)
 
 void GameObject::OnDestroyed()
 {
+}
+
+void GameObject::SetSprite(Sprite* _sprite)
+{
+	if (!_sprite)
+		return;
+	delete sprite;
+	sprite = _sprite;
+
+}
+
+Sprite* GameObject::GetSprite()
+{
+	return sprite;
 }
 
 bool GameObject::GetActive() const

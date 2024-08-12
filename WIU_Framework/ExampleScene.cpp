@@ -15,5 +15,5 @@ void ExampleScene::Update()
 	Scene::Update();
 
 	// Update Game Here!
-	SceneManager::LoadScene(new Scene());
+	//SceneManager::LoadScene(new Scene());
 }

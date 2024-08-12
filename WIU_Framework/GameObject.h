@@ -1,10 +1,12 @@
 #pragma once
 #include "Vector2.h"
+#include "Sprite.h"
 class GameObject
 {
 	char symbol;
 	Vector2 position;
 	Vector2 prevPosition;
+	Sprite* sprite;
 	bool IsActive;
 public:
 	GameObject();
@@ -18,6 +20,9 @@ public:
 	virtual void Update();
 	virtual void Collided(GameObject* collision);
 	virtual void OnDestroyed();
+	void SetSprite(Sprite* sprite);
+	Sprite* GetSprite();
+
 	bool GetActive() const;
 	void SetActive(bool);
 };
