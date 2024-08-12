@@ -1,5 +1,7 @@
 #include "SceneManager.h"
 #include "ExampleScene.h"
+#include "Windows.h"
+#include <cwchar>
 Scene* SceneManager::CurrentScene = nullptr;
 Scene* SceneManager::nextScene = nullptr;
 
@@ -17,9 +19,12 @@ void SceneManager::Start()
 
 void SceneManager::Update()
 {
+
+
 	CurrentScene->Update();
 	CurrentScene->Render();
 	CurrentScene->gm.Update();
+
 	if (nextScene) 
 	{
 		if (CurrentScene)
