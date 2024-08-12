@@ -31,10 +31,7 @@ void Application::HideCursor(void)
 	SetConsoleCursorInfo(consoleHandle, &cursorInfo);
 }
 
-Application::Application(void)
-{
-	sceneMgr = new SceneManager();
-}
+Application::Application(void) { sceneMgr = new SceneManager(); }
 
 void Application::Init(void)
 {
@@ -50,10 +47,7 @@ void Application::Update(void)
 	do
 	{
 		sceneMgr->Update();
-	} while (sceneMgr->GetNextScene() != nullptr);
+	} while (SceneManager::GetNextScene() != nullptr);
 }
 
-void Application::Exit(void)
-{
-	delete sceneMgr;
-}
+void Application::Exit(void) { delete sceneMgr; }

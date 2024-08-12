@@ -38,4 +38,4 @@ void SceneManager::Exit() { currentScene->Exit(); }
 
 void SceneManager::LoadScene(Scene* toScene) { nextScene = toScene; }
 
-Scene* SceneManager::GetNextScene(void) const {return nextScene;}
+Scene* SceneManager::GetNextScene(void) {return nextScene;}

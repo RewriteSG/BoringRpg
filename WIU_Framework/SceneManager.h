@@ -14,6 +14,6 @@ public:
 	static void Exit(void);
 
 	static void LoadScene(Scene* toScene);
-	Scene* GetNextScene(void) const;
+	static Scene* GetNextScene(void);
 };
 
