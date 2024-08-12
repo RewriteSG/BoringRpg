@@ -18,18 +18,22 @@ public:
 	void Render();
 	void Exit();
 	bool GetContinuePgrm() const;
+
 	static void GotoXY(int x, int y, Vector2 WorldTopLeft);
 	static void GotoXY(int x, int y);
-	static enum TypeColor
+
+	enum TypeColor
 	{
 		Red,
 		Green, 
 		Blue,
 		Purple,
+		Yellow,
 		Black,
 		White,
 		Default
 	};
+
 	static void ChangeColor(TypeColor color);
 	static void LowerString(string& _string);
 };
