@@ -2,7 +2,6 @@
 #include "World.h"
 #include "Scene.h"
 #include <iostream>
-
 void PlayerSprite::Render(int x, int y, Vector2 topLeft)
 {
 	/*for (int i = 0; i <= CellY; i++)

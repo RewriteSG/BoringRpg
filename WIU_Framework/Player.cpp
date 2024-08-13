@@ -10,6 +10,7 @@ Player::Player()
 }
 void Player::Start()
 {
+	GetPosition()->SetXandY(2, 2);
 	SetSprite(new PlayerSprite());
 }
 void Player::Update()

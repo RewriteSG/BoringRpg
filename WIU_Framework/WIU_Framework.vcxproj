@@ -134,6 +134,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Items.cpp" />
+    <ClCompile Include="LivingRoomScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyFunctions.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
@@ -143,6 +144,8 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="WallSprite.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +156,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Items.h" />
+    <ClInclude Include="LivingRoomScene.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSprite.h" />
@@ -160,6 +164,8 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Wall.h" />
+    <ClInclude Include="WallSprite.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
