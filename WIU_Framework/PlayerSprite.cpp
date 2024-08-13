@@ -37,3 +37,7 @@ void PlayerSprite::Render(int x, int y, Vector2 topLeft)
 	std::cout << "G";
 	Scene::ChangeColor(Scene::Default);
 }
+
+
+//if TimeLoop++ (include bool GameRestart) {
+//playerPosition reset Vector2 topLeft

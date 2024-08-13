@@ -1,6 +1,8 @@
 #include "ExampleScene.h"
 #include "SceneManager.h"
 #include "Player.h"
+#include "Robber.h"
+
 void ExampleScene::Start()
 {
 	Scene::Start();
@@ -8,6 +10,8 @@ void ExampleScene::Start()
 
 	// For Example 
 	new Player();
+	new Robber(Vector2(2,2));
+
 
 }
 

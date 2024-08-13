@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Items.h"
 #include "ObjectManager.h"
+#include "TimeSystem.h"
 #include <iostream>
 using namespace std;
 /// <summary>
@@ -13,9 +14,10 @@ class GameManager
 private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
-
 public:
+	TimeSystem timesys; 
 	static GameManager* getGM();
+
 	GameManager();
 
 	void Start();
