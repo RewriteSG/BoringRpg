@@ -86,22 +86,24 @@ void Scene::ChangeColor(TypeColor color)
 	switch (color)
 	{
 	case Scene::Red:
-		SetConsoleTextAttribute(hConsole, 12);
+		SetConsoleTextAttribute(hConsole, 460);
 		break;
 	case Scene::Green:
-		SetConsoleTextAttribute(hConsole, 10);
+		SetConsoleTextAttribute(hConsole, 426);
 		break;
 	case Scene::Blue:
-		SetConsoleTextAttribute(hConsole, 9);
+		SetConsoleTextAttribute(hConsole, 409);
 		break;
 	case Scene::Purple:
-		SetConsoleTextAttribute(hConsole, 5);
+		SetConsoleTextAttribute(hConsole, 477);
 		break;
+	case Scene::Yellow:
+		SetConsoleTextAttribute(hConsole, 102);
 	case Scene::Black:
 		SetConsoleTextAttribute(hConsole, 0);
 		break;
 	case Scene::White:
-		SetConsoleTextAttribute(hConsole, 15);
+		SetConsoleTextAttribute(hConsole, 119);
 		break;
 	default:
 		SetConsoleTextAttribute(hConsole, 7);

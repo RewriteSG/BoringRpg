@@ -1,7 +1,7 @@
 #include "GameObject.h"
 #include "ObjectManager.h"
 #include "World.h"
-GameObject::GameObject()
+GameObject::GameObject(void)
 {
 	symbol = '*';
 	ObjectManager::getObjectManager()->InstantiateObject(this);
@@ -20,12 +20,12 @@ GameObject::GameObject(Vector2 toPos)
 	Start();
 }
 
-Vector2* GameObject::GetPosition()
+Vector2* GameObject::GetPosition(void)
 {
 	return &position;
 }
 
-char GameObject::GetObjectChar() const
+char GameObject::GetObjectChar(void) const
 {
 	return symbol;
 }
@@ -35,7 +35,7 @@ void GameObject::SetObjectChar(char toChar)
 	symbol = toChar;
 }
 
-const Vector2 GameObject::GetPrevPosition() const
+const Vector2 GameObject::GetPrevPosition(void) const
 {
 	return prevPosition;
 }
@@ -47,22 +47,14 @@ void GameObject::UpdatePosition()
 }
 
 
-void GameObject::Start()
+void GameObject::Start(void)
 {
 	IsActive = true;
 }
 
-void GameObject::Update()
-{
-}
-
-void GameObject::Collided(GameObject* collision)
-{
-}
-
-void GameObject::OnDestroyed()
-{
-}
+void GameObject::Update(void) {}
+void GameObject::Collided(GameObject* collision) {}
+void GameObject::OnDestroyed(void) {}
 
 void GameObject::SetSprite(Sprite* _sprite)
 {
@@ -73,12 +65,12 @@ void GameObject::SetSprite(Sprite* _sprite)
 
 }
 
-Sprite* GameObject::GetSprite()
+Sprite* GameObject::GetSprite(void)
 {
 	return sprite;
 }
 
-bool GameObject::GetActive() const
+bool GameObject::GetActive(void) const
 {
 	return IsActive;
 }
