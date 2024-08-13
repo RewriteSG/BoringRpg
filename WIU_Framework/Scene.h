@@ -15,9 +15,9 @@ public:
 	virtual void Start();
 	virtual void Update();
 	
-	void Render();
-	void Exit();
-	bool GetContinuePgrm() const;
+	virtual void Render();
+	virtual void Exit();
+	virtual bool GetContinuePgrm() const;
 
 	static void GotoXY(int x, int y, Vector2 WorldTopLeft);
 	static void GotoXY(int x, int y);
@@ -31,10 +31,11 @@ public:
 		Yellow,
 		Black,
 		White,
-		Default
+		BG_COLOR
 	};
 
-	static void ChangeColor(TypeColor color);
+	static void ChangeColor(const TypeColor color);
+	static void ChangeColor(const int color);
 	static void LowerString(string& _string);
 };
 

@@ -129,7 +129,7 @@ void World::Update(GameObject** objects, int objectsCount)
 
 }
 
-void World::Render(GameObject** objects, int objectsCount)
+void World::Render(GameObject** objects, int objectsCount) const
 {
 	Vector2* pos;
 
@@ -157,6 +157,15 @@ void World::Render(GameObject** objects, int objectsCount)
 
 void World::Render()
 {
+	Scene::ChangeColor(0);
+	for (int i = 0; i < height + (CellY * (height-1)); i++)
+	{
+		Scene::GotoXY(topLeftPos.GetX(), topLeftPos.GetY() + i);
+		for (int x = 0; x < width + (CellX * (width - 1)); x++)
+			cout << " ";
+	}
+
+	Scene::ChangeColor(1);
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
@@ -165,4 +174,5 @@ void World::Render()
 			cout << charMap[y][x];
 		}
 	}
+	Scene::ChangeColor(Scene::BG_COLOR);
 }

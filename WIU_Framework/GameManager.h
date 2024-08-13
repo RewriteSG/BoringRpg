@@ -5,6 +5,7 @@
 #include "ObjectManager.h"
 #include <iostream>
 using namespace std;
+
 /// <summary>
 /// A GameManager class where it handles the Game win and lose condition as well as Handling player's input. 
 /// </summary>

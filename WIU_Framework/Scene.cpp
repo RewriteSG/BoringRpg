@@ -7,7 +7,7 @@ bool Scene::GetContinuePgrm() const
 	return ContinuePgrm;
 }
 
-Scene::Scene() : world(Vector2(1, 2)), objectManager(), gm()
+Scene::Scene() : world(Vector2(6, 2), 16, 10), objectManager(), gm()
 {
 	ContinuePgrm = true;
 }
@@ -36,8 +36,6 @@ void Scene::Render()
 {
 	world.Update(objectManager.GetObjects(), objectManager.GetObjectsCount()); // Always call this method before render  
 	world.Render(objectManager.GetObjects(), objectManager.GetObjectsCount());
-
-
 }
 
 void Scene::Exit()
@@ -106,9 +104,14 @@ void Scene::ChangeColor(TypeColor color)
 		SetConsoleTextAttribute(hConsole, 119);
 		break;
 	default:
-		SetConsoleTextAttribute(hConsole, 7);
+		SetConsoleTextAttribute(hConsole, 136);
 		break;
 	}
+}
+void Scene::ChangeColor(const int color)
+{
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, color);
 }
 
 void Scene::LowerString(string& _string)

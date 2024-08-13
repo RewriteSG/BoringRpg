@@ -26,7 +26,7 @@ public:
 	void PrintCharFromXandY(const int& x,const int& y)const;
 	const Vector2 GetTopLeft() const;
 	void Update(GameObject** objects, int objectsCount);
-	void Render(GameObject** objects, int objectsCount);
+	void Render(GameObject** objects, int objectsCount) const;
 	void Render();
 };
 

@@ -35,9 +35,19 @@ Application::Application(void) { sceneMgr = new SceneManager(); }
 
 void Application::Init(void)
 {
-	FontSize(Vector2(9, 16));
+	FontSize(Vector2(9, 18));
 	ScreenSMaximised();
 	//HideCursor();
+
+	for (int i = 0; i < 43; ++i)
+	{
+		for (int j = 0; j < 172; ++j)
+		{
+			Scene::ChangeColor(Scene::BG_COLOR);
+			std::cout << " ";
+		}
+		std::cout << std::endl;
+	}
 
 	sceneMgr->Start();
 }

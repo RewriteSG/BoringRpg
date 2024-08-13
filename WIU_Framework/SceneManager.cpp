@@ -1,5 +1,5 @@
 #include "SceneManager.h"
-#include "ExampleScene.h"
+#include "MainMenu.h"
 #include "Windows.h"
 #include <cwchar>
 Scene* SceneManager::currentScene = nullptr;
@@ -9,7 +9,7 @@ void SceneManager::Start(void)
 {
 	srand((unsigned int)time(0));
 
-	currentScene = new ExampleScene();
+	currentScene = new MainMenu();
 	currentScene->Start();
 }
 

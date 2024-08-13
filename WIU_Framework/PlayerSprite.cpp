@@ -35,5 +35,5 @@ void PlayerSprite::Render(int x, int y, Vector2 topLeft)
 	std::cout << "G";
 	Scene::GotoXY(5 + x + (CellX * x), 3 + y + (y * CellY), topLeft);
 	std::cout << "G";
-	Scene::ChangeColor(Scene::Default);
+	Scene::ChangeColor(Scene::BG_COLOR);
 }

@@ -3,7 +3,8 @@
 #include "MyFunctions.cpp"
 #include "Application.h"
 #include "Windows.h"
-
+#include "SceneManager.h"
+#include "MainMenu.h"
 using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
@@ -31,7 +32,9 @@ void GameManager::Start()
 void GameManager::Update()
 {
 	GameEnded = false;
-
+	MainMenu* menu = dynamic_cast<MainMenu*>(SceneManager::currentScene);
+	if (menu)
+		return;
 	PromptInput();
 	HandleInput();
 	
