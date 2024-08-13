@@ -128,7 +128,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Door.cpp" />
+    <ClCompile Include="BedroomCabinetSprite.cpp" />
+    <ClCompile Include="BedroomScene.cpp" />
+    <ClCompile Include="BedroomTableSprite.cpp" />
+    <ClCompile Include="BedSprite.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExampleScene.cpp" />
     <ClCompile Include="Furniture.cpp" />
@@ -152,7 +155,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Door.h" />
+    <ClInclude Include="BedroomCabinetSprite.h" />
+    <ClInclude Include="BedroomScene.h" />
+    <ClInclude Include="BedroomTableSprite.h" />
+    <ClInclude Include="BedSprite.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExampleScene.h" />
     <ClInclude Include="Furniture.h" />

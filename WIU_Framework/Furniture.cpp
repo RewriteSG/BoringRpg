@@ -1,10 +1,53 @@
 #include "Furniture.h"
 #include "GameManager.h"
+#include "BedSprite.h"
+#include "BedroomCabinetSprite.h"
 #include "Player.h"
+#include "BedroomTableSprite.h"
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 {
 	furniture = type;
 	*GetPosition() = toPos;
+	switch (furniture)
+	{
+	case Furniture::SofaKey:
+		break;
+	case Furniture::EmptySofa:
+		break;
+	case Furniture::BedroomCabinet:
+		SetSprite(new BedroomCabinetSprite());
+		break;
+	case Furniture::LivingRoomCabinet:
+		break;
+	case Furniture::Television:
+		break;
+	case Furniture::KitchenCabinet:
+		break;
+	case Furniture::Sink:
+		break;
+	case Furniture::Planks:
+		break;
+	case Furniture::CardBoardBox:
+		break;
+	case Furniture::Table:
+		break;
+	case Furniture::Bedroomtable:
+		SetSprite(new BedroomTableSprite());
+		break;
+	case Furniture::Phone:
+		break;
+	case Furniture::ToolBox:
+		break;
+	case Furniture::Stove:
+		break;
+	case Furniture::Bed:
+		SetSprite(new BedSprite());
+		break;
+	case Furniture::TrashCan:
+		break;
+	default:
+		break;
+	}
 }
 
 void Furniture::Start()
@@ -30,7 +73,7 @@ void Furniture::Collided(GameObject* obj)
 	case Furniture::LivingRoomCabinet:
 		GameManager::getGM()->InteractionsMgr.LivingRoomCabinetInteracted(this, obj);
 		break;
-	case Furniture::TelevisionCabinet:
+	case Furniture::Television:
 		GameManager::getGM()->InteractionsMgr.TelevisionInteracted(this, obj);
 		break;
 	case Furniture::KitchenCabinet:

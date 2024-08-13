@@ -35,6 +35,7 @@ public:
 	};
 
 	static void ChangeColor(TypeColor color);
+	static void ChangeColor(TypeColor color, bool toCharColors);
 	static void LowerString(string& _string);
 };
 
