@@ -57,7 +57,7 @@ void Application::Update(void)
 	do
 	{
 		sceneMgr->Update();
-	} while (SceneManager::GetNextScene() != nullptr);
+	} while (SceneManager::currentScene);
 }
 
 void Application::Exit(void) { delete sceneMgr; }

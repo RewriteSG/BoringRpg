@@ -2,6 +2,7 @@
 #include "MainMenu.h"
 #include "Windows.h"
 #include <cwchar>
+#include "ExampleScene.h"
 Scene* SceneManager::currentScene = nullptr;
 Scene* SceneManager::nextScene = nullptr;
 
@@ -9,7 +10,7 @@ void SceneManager::Start(void)
 {
 	srand((unsigned int)time(0));
 
-	currentScene = new MainMenu();
+	currentScene = new ExampleScene();
 	currentScene->Start();
 }
 

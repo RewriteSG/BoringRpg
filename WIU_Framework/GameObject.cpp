@@ -3,6 +3,7 @@
 #include "World.h"
 GameObject::GameObject(void)
 {
+	name = "";
 	symbol = '*';
 	ObjectManager::getObjectManager()->InstantiateObject(this);
 	IsActive = true;
@@ -12,6 +13,7 @@ GameObject::GameObject(void)
 
 GameObject::GameObject(Vector2 toPos)
 {
+	name = "";
 	symbol = '*';
 	ObjectManager::getObjectManager()->InstantiateObject(this);
 	position = toPos;
@@ -86,4 +88,9 @@ void GameObject::SetActive(bool setActive)
 		World::GetWorldInstance()->SetCharFromXandY(prevPos.GetX(), prevPos.GetY(), '.');
 
 	}
+}
+
+std::string GameObject::GetName(void) const
+{
+	return name;
 }
