@@ -50,7 +50,10 @@ void LivingRoomScene::Start()
 	new Wall(Vector2(13, 0));
 	new Wall(Vector2(14, 0));
 	new Furniture(Furniture::LivingRoomCabinet, Vector2(1, 1));
-	
+	new Furniture(Furniture::Television, Vector2(3, 1));
+	new Furniture(Furniture::LivingroomTable, Vector2(2, 4));
+	new Furniture(Furniture::EmptySofa, Vector2(1, 4));
+
 }
 
 void LivingRoomScene::Update()

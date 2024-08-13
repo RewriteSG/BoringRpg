@@ -7,6 +7,7 @@ public:
 	enum TypeOfFurniture
 	{
 		SofaKey,
+		Clock,
 		EmptySofa,
 		BedroomCabinet1,
 		BedroomCabinet2,
@@ -16,7 +17,7 @@ public:
 		Sink,
 		Planks,
 		CardBoardBox,
-		Table,
+		LivingroomTable,
 		Bedroomtable,
 		Phone,
 		ToolBox,

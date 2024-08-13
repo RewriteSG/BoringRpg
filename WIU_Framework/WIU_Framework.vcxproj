@@ -133,6 +133,7 @@
     <ClCompile Include="BedroomScene.cpp" />
     <ClCompile Include="BedroomTableSprite.cpp" />
     <ClCompile Include="BedSprite.cpp" />
+    <ClCompile Include="EmptySofaSprite.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExampleScene.cpp" />
     <ClCompile Include="Furniture.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="LivingRoomCabinetSprite.cpp" />
     <ClCompile Include="LivingRoomScene.cpp" />
+    <ClCompile Include="LivingroomTableSprite.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyFunctions.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
@@ -150,6 +152,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="TelevisionSprite.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WallSprite.cpp" />
@@ -162,6 +165,7 @@
     <ClInclude Include="BedroomScene.h" />
     <ClInclude Include="BedroomTableSprite.h" />
     <ClInclude Include="BedSprite.h" />
+    <ClInclude Include="EmptySofaSprite.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExampleScene.h" />
     <ClInclude Include="Furniture.h" />
@@ -171,6 +175,7 @@
     <ClInclude Include="Items.h" />
     <ClInclude Include="LivingRoomCabinetSprite.h" />
     <ClInclude Include="LivingRoomScene.h" />
+    <ClInclude Include="LivingroomTableSprite.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSprite.h" />
@@ -178,6 +183,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="TelevisionSprite.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="WallSprite.h" />
