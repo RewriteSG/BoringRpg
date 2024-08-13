@@ -9,21 +9,26 @@ class GameObject
 	Sprite* sprite;
 	bool IsActive;
 public:
-	GameObject();
+	GameObject(void);
 	GameObject(Vector2 toPos);
-	Vector2* GetPosition();
-	char GetObjectChar() const;
-	void SetObjectChar(char toChar);
-	const Vector2 GetPrevPosition() const;
-	void UpdatePosition();
-	virtual void Start();
-	virtual void Update();
-	virtual void Collided(GameObject* collision);
-	virtual void OnDestroyed();
-	void SetSprite(Sprite* sprite);
-	Sprite* GetSprite();
 
-	bool GetActive() const;
-	void SetActive(bool);
+	Vector2* GetPosition(void);
+	const Vector2 GetPrevPosition(void) const;
+
+	void SetObjectChar(char toChar);
+	char GetObjectChar(void) const;
+
+	void UpdatePosition(void);
+
+	virtual void Start(void);
+	virtual void Update(void);
+	virtual void Collided(GameObject* collision);
+	virtual void OnDestroyed(void);
+
+	void SetSprite(Sprite* sprite);
+	Sprite* GetSprite(void);
+
+	bool GetActive(void) const;
+	void SetActive(bool setActive);
 };
 
