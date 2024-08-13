@@ -4,6 +4,7 @@
 #include "Items.h"
 #include "ObjectManager.h"
 #include <iostream>
+#include "InteractionsManager.h"
 using namespace std;
 /// <summary>
 /// A GameManager class where it handles the Game win and lose condition as well as Handling player's input. 
@@ -15,7 +16,9 @@ private:
 	bool GameEnded, GameWon;
 
 public:
+
 	static GameManager* getGM();
+	InteractionsManager InteractionsMgr;
 	GameManager();
 
 	void Start();
