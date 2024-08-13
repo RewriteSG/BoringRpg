@@ -8,7 +8,8 @@ public:
 	{
 		SofaKey,
 		EmptySofa,
-		BedroomCabinet,
+		BedroomCabinet1,
+		BedroomCabinet2,
 		LivingRoomCabinet,
 		Television,
 		KitchenCabinet,

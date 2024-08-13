@@ -4,6 +4,7 @@
 #include "BedroomCabinetSprite.h"
 #include "Player.h"
 #include "BedroomTableSprite.h"
+#include "BedroomCabinet2Sprite.h"
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 {
 	furniture = type;
@@ -14,8 +15,11 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		break;
 	case Furniture::EmptySofa:
 		break;
-	case Furniture::BedroomCabinet:
+	case Furniture::BedroomCabinet1:
 		SetSprite(new BedroomCabinetSprite());
+		break;
+	case Furniture::BedroomCabinet2:
+		SetSprite(new BedroomCabinet2Sprite());
 		break;
 	case Furniture::LivingRoomCabinet:
 		break;
@@ -67,7 +71,10 @@ void Furniture::Collided(GameObject* obj)
 	case Furniture::EmptySofa:
 		GameManager::getGM()->InteractionsMgr.SofaInteracted(this, obj, true);
 		break;
-	case Furniture::BedroomCabinet:
+	case Furniture::BedroomCabinet1:
+		GameManager::getGM()->InteractionsMgr.BedRoomCabinetInteracted(this, obj);
+		break;
+	case Furniture::BedroomCabinet2:
 		GameManager::getGM()->InteractionsMgr.BedRoomCabinetInteracted(this, obj);
 		break;
 	case Furniture::LivingRoomCabinet:

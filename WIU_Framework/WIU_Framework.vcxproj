@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="BedroomCabinet2Sprite.cpp" />
     <ClCompile Include="BedroomCabinetSprite.cpp" />
     <ClCompile Include="BedroomScene.cpp" />
     <ClCompile Include="BedroomTableSprite.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BedroomCabinet2Sprite.h" />
     <ClInclude Include="BedroomCabinetSprite.h" />
     <ClInclude Include="BedroomScene.h" />
     <ClInclude Include="BedroomTableSprite.h" />
@@ -170,6 +172,7 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSprite.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprite.h" />
@@ -177,6 +180,9 @@
     <ClInclude Include="Wall.h" />
     <ClInclude Include="WallSprite.h" />
     <ClInclude Include="World.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WIU_Framework.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
