@@ -140,6 +140,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InteractionsManager.cpp" />
     <ClCompile Include="Items.cpp" />
+    <ClCompile Include="LivingRoomCabinetSprite.cpp" />
     <ClCompile Include="LivingRoomScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyFunctions.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InteractionsManager.h" />
     <ClInclude Include="Items.h" />
+    <ClInclude Include="LivingRoomCabinetSprite.h" />
     <ClInclude Include="LivingRoomScene.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Player.h" />

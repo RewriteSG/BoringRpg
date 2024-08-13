@@ -4,6 +4,7 @@
 #include "BedroomCabinetSprite.h"
 #include "Player.h"
 #include "BedroomTableSprite.h"
+#include "LivingRoomCabinetSprite.h"
 #include "BedroomCabinet2Sprite.h"
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 {
@@ -22,6 +23,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		SetSprite(new BedroomCabinet2Sprite());
 		break;
 	case Furniture::LivingRoomCabinet:
+		SetSprite(new LivingRoomCabinetSprite());
 		break;
 	case Furniture::Television:
 		break;

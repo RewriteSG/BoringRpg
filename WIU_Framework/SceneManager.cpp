@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "ExampleScene.h"
 #include "BedroomScene.h"
+#include "LivingRoomScene.h"
 #include "Windows.h"
 #include <cwchar>
 Scene* SceneManager::currentScene = nullptr;
@@ -10,7 +11,7 @@ void SceneManager::Start(void)
 {
 	srand((unsigned int)time(0));
 
-	currentScene = new BedroomScene();
+	currentScene = new LivingRoomScene();
 	currentScene->Start();
 }
 
