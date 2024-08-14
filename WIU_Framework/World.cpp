@@ -136,6 +136,8 @@ void World::Render(GameObject** objects, int objectsCount) const
 	for (int i = 0; i < objectsCount; i++)
 	{
 		pos = objects[i]->GetPosition();
+		if (!objects[i]->IsRenderingSprite())
+			continue;
 		if (*pos != objects[i]->GetPrevPosition())
 		{
 
@@ -159,7 +161,7 @@ void World::Render(GameObject** objects, int objectsCount) const
 void World::Render()
 {
 	Scene::ChangeColor(0);
-	for (int i = 0; i < height + (CellY * (height-1)); i++)
+	for (int i = 0; i < height + (CellY * (height)); i++)
 	{
 		Scene::GotoXY(topLeftPos.GetX(), topLeftPos.GetY() + i);
 		for (int x = 0; x < width + (CellX * (width - 1)); x++)

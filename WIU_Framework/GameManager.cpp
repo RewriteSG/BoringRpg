@@ -5,6 +5,7 @@
 #include "Windows.h"
 #include "SceneManager.h"
 #include "MainMenu.h"
+#include "BedroomScene.h"
 using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
@@ -56,7 +57,8 @@ void GameManager::PromptInput()
 void GameManager::HandleInput(void)
 {
 	char input = _getch();
-
+	if (!player)
+		return;
 	switch (input)
 	{
 	case 'w':
@@ -76,7 +78,11 @@ void GameManager::HandleInput(void)
 		//Move left
 		break;
 	}
-
+	if (*player->GetPosition() == Vector2(8, 0))
+	{
+		SceneManager::LoadScene(new BedroomScene());
+		player = nullptr;
+	}
 }
 
 bool GameManager::GetGameEnded() const
