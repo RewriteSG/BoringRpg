@@ -4,12 +4,18 @@
 #include "Application.h"
 #include "GameManager.h"
 #include "PlayerSprite.h"
+
+Player* Player::playerInstance = nullptr;
+
 Player::Player()
 {
 	Start();
+	name = "Hazwan";
+	playerInstance = this;
 }
 void Player::Start()
 {
+	GetPosition()->SetXandY(2, 2);
 	SetSprite(new PlayerSprite());
 }
 void Player::Update()

@@ -1,6 +1,9 @@
 #include "SceneManager.h"
 #include "ExampleScene.h"
+#include "BedroomScene.h"
+#include "LivingRoomScene.h"
 #include "Windows.h"
+#include "MainMenu.h"
 #include <cwchar>
 Scene* SceneManager::currentScene = nullptr;
 Scene* SceneManager::nextScene = nullptr;
@@ -9,7 +12,7 @@ void SceneManager::Start(void)
 {
 	srand((unsigned int)time(0));
 
-	currentScene = new ExampleScene();
+	currentScene = new MainMenu();
 	currentScene->Start();
 }
 
@@ -18,6 +21,7 @@ void SceneManager::Update(void)
 	currentScene->Update();
 	currentScene->Render();
 	currentScene->gm.Update();
+	currentScene->Render(); 
 
 	if (nextScene) 
 	{

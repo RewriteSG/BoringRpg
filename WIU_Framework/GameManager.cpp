@@ -3,7 +3,8 @@
 #include "MyFunctions.cpp"
 #include "Application.h"
 #include "Windows.h"
-
+#include "SceneManager.h"
+#include "MainMenu.h"
 using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
@@ -14,6 +15,7 @@ GameManager::GameManager()
 	//Weapon = nullptr;
 	GameEnded = false;
 	GameWon = true;
+	player = nullptr;
 }
 
 GameManager* GameManager::getGM()
@@ -31,7 +33,9 @@ void GameManager::Start()
 void GameManager::Update()
 {
 	GameEnded = false;
-
+	MainMenu* menu = dynamic_cast<MainMenu*>(SceneManager::currentScene);
+	if (menu)
+		return;
 	PromptInput();
 	HandleInput();
 	
@@ -43,9 +47,9 @@ void GameManager::Exit()
 
 void GameManager::PromptInput()
 {
-	Scene::GotoXY(110, 12);
-	cout << "Input:                                                        ";
-	Scene::GotoXY(117, 12);
+	Scene::GotoXY(110, 36);
+	cout << "Input:";
+	Scene::GotoXY(117, 36);
 }
 void GameManager::HandleInput(void)
 {
@@ -55,17 +59,22 @@ void GameManager::HandleInput(void)
 	{
 	case 'w':
 		//Move up
+		*player->GetPosition() += Vector2(0, -1);
 		break;
 	case 's':
+		*player->GetPosition() += Vector2(0, 1);
 		//Move down
 		break;
 	case 'd':
+		*player->GetPosition() += Vector2(1, 0);
 		//Move right
 		break;
 	case 'a':
+		*player->GetPosition() += Vector2(-1, 0);
 		//Move left
 		break;
 	}
+
 }
 
 bool GameManager::GetGameEnded() const
@@ -75,6 +84,14 @@ bool GameManager::GetGameEnded() const
 bool GameManager::GetGameWon() const
 {
 	return GameWon;
+}
+
+void GameManager::CreatePlayer(Vector2 toPos)
+{
+	if (player)
+		delete player;
+	player = new Player();
+	*player->GetPosition() = toPos;
 }
 
 char GameManager::_getch(void)

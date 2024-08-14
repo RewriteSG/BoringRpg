@@ -4,10 +4,10 @@ using namespace std;
 class SceneManager
 {
 private:
-	static Scene* nextScene;
-	static Scene* currentScene;
 
 public:
+	static Scene* nextScene;
+	static Scene* currentScene;
 	SceneManager(void) = default;
 	static void Start(void);
 	static void Update(void);

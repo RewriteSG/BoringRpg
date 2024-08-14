@@ -1,13 +1,17 @@
 #pragma once
 #include "Vector2.h"
 #include "Sprite.h"
+#include <iostream>
 class GameObject
 {
+protected:
+	std::string name;
 	char symbol;
 	Vector2 position;
 	Vector2 prevPosition;
 	Sprite* sprite;
 	bool IsActive;
+
 public:
 	GameObject(void);
 	GameObject(Vector2 toPos);
@@ -30,5 +34,7 @@ public:
 
 	bool GetActive(void) const;
 	void SetActive(bool setActive);
+
+	std::string GetName(void) const;
 };
 

@@ -206,6 +206,7 @@ void ObjectManager::AddGameObjects()
 		for (int i = 0; i < toAdd; i++)
 		{
 			pos = gameObjectsToAdd[i]->GetPosition();
+			Vector2::Clamp(pos, Vector2(World::GetWorldInstance()->width-1, World::GetWorldInstance()->height-1), Vector2(0, 0));
 			//gameObjectsToAdd[i]->Start();
 			World::GetWorldInstance()->SetCharFromXandY(pos->GetX(), pos->GetY(), gameObjectsToAdd[i]->GetObjectChar());
 
