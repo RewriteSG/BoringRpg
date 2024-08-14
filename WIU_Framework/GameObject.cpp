@@ -27,6 +27,11 @@ Vector2* GameObject::GetPosition(void)
 	return &position;
 }
 
+Vector2 GameObject::GetPosition(bool) const
+{
+	return position;
+}
+
 char GameObject::GetObjectChar(void) const
 {
 	return symbol;

@@ -5,6 +5,7 @@
 #include "ObjectManager.h"
 #include <iostream>
 #include "InteractionsManager.h"
+#include "TimeSystem.h"
 #include "Player.h"
 using namespace std;
 /// <summary>
@@ -20,6 +21,7 @@ public:
 	Player* player;
 	static GameManager* getGM();
 	InteractionsManager InteractionsMgr;
+	TimeSystem TimeSys;
 	GameManager();
 
 	void Start();

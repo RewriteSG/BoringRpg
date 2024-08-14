@@ -1,5 +1,8 @@
 #pragma once
 #include "Entity.h"
+#include "Player.h"
+#include "TimeSystem.h"
+
 class Robber :
     public Entity
 {
@@ -15,6 +18,13 @@ public:
     void Update()override;
     void Collided(GameObject* collision) override;
     void OnDestroyed() override;
+
+    //positioning
+   
+
+    void MoveTowardsPlayer( Player& player) ;
+
+
 
 };
 

@@ -1,6 +1,7 @@
 #include "ExampleScene.h"
 #include "SceneManager.h"
 #include "Player.h"
+#include "Robber.h"
 #include "UI.h"
 void ExampleScene::Start()
 {
@@ -9,6 +10,7 @@ void ExampleScene::Start()
 
 	// For Example 
 	new Player();
+	//new Robber();
 
 }
 
