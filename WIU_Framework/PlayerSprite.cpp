@@ -12,6 +12,7 @@ void PlayerSprite::Render(int x, int y, Vector2 topLeft)
 			std::cout << "*";
 		}
 	}*/
+	Scene::ChangeColor(Scene::Black);
 
 	Scene::GotoXY(x + (CellX * x), 0 + y + (y * CellY), topLeft);
 	std::cout << " ";

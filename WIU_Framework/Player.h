@@ -3,8 +3,10 @@
 class Player :
     public Entity
 {
-
+   
 public:
+    static Player* playerInstance;
+
     Player();
     void Start() override;
     void Update()override;
