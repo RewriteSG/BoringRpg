@@ -10,6 +10,10 @@ public:
 	bool hasNails;
 	bool hasPlanks;
 	bool hasShampoo;
+	bool hasKnife;
+	bool hasDuctTape;
+	bool hasKnife;
+	bool hasMetalPan;
 
 
 	InteractionsManager();
