@@ -1,68 +1,127 @@
 #include "UI.h"
 #include "Scene.h"
+#include "conio.h"
+#include "Windows.h"
 
-UI::UI(const Vector2 _position) : dialogueUI(nullptr), optionUI(nullptr), position(_position)
+UI::UI(const Vector2 _position, const int _color) : optionUI(nullptr), position(_position), color(_color)
 {
+	Scene::ChangeColor(_color);
 }
 
 UI::~UI(void)
 {
 	if (optionUI != nullptr)
-	{
-		optionUI->Clear();
 		delete optionUI;
-	}
 }
 
-void UI::CreateOptionUI(const std::string label, const int color, const int width, const int height)
+void UI::CreateBorder(const Vector2 position,  int width, const int height) const
 {
-	optionUI = new OptionUI(position + Vector2(0, 1), color);
+	Scene::ChangeColor(color);
 	for (int i = 0; i < height; ++i)
 	{
-		Scene::GotoXY(position.GetX(), position.GetY() + i);
-		Scene::ChangeColor(color - 2);
-		if (i == 0)
-			std::cout << label;
-
+		Scene::GotoXY(position.GetX(), position.GetY() + i, this->position);
 		for (int j = 0; j < width; ++j)
 		{
-			Scene::ChangeColor(color);
 			std::cout << " ";
 		}
-		std::cout << std::endl;
 	}
 }
 
-void UI::CreateDialogueUI(const std::string label, const int color, const int width, const int height)
+void UI::CreateBox(const Vector2 position, const std::string text, const int width, const int height) const
 {
-	dialogueUI = new DialogueUI(position + Vector2(0, 1), color);
-	for (int i = 0; i < height; ++i)
+	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
+	CreateBorder(position, width, height);
+	CreateText(text, position);
+}
+void UI::CreateText(const std::string text, const Vector2 position) const
+{
+	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
+	Scene::ChangeColor(color + 7);
+	std::cout << text << std::endl;
+}
+
+void UI::CreateOptionUI(const Vector2 optionPosition, const bool isCenter)
+{
+	optionUI = new OptionUI(position + optionPosition, color, isCenter);
+}
+
+OptionUI* UI::GetOptionUI(void) const { return optionUI; }
+
+void UI::PrintDialogue(const Vector2 position, const std::string text) const
+{
+	Scene::ChangeColor(color + 7);
+	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
+	std::string textToPrint = text;
+
+	char input{};
+	for (char& ch : textToPrint)
 	{
-		Scene::GotoXY(position.GetX(), position.GetY() + i);
-		Scene::ChangeColor(color - 2);
-		if (i == 0)
-			std::cout << label;
-
-		for (int j = 0; j < width; ++j)
+		if (_kbhit())
 		{
-			Scene::ChangeColor(color);
-			std::cout << " ";
+			input = GameManager::_getch();
+
+			if (input == '\r')
+			{
+				Scene::GotoXY(position.GetX(), position.GetY(), this->position);
+				std::cout << textToPrint;
+				break;
+			}
 		}
-		std::cout << std::endl;
+
+		std::cout << ch;
+		Sleep(70);
 	}
+
+	while (true)
+	{
+		input = GameManager::_getch();
+		if (input == '\r')
+			break;
+	}
+
+	Scene::ChangeColor(color);
+	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
+	for (char& ch : textToPrint)
+		std::cout << ' ';
 }
 
-DialogueUI* UI::GetDialogueUI(void) const
+int UI::PickDialogue(const Vector2 position, const std::string text) const
 {
-	if (dialogueUI == nullptr)
-		throw std::invalid_argument("PLEASE CREATE YOUR DIALOGUE UI :(");
+	int choosenOption = 0;
 
-	return dialogueUI;
-}
+	Scene::ChangeColor(color);
+	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
+	std::string textToPrint = text;
 
-OptionUI* UI::GetOptionUI(void) const { 
+	char input{};
+	for (char& ch : textToPrint)
+	{
+		if (_kbhit())
+		{
+			input = GameManager::_getch();
+
+			if (input == '\r')
+			{
+				Scene::GotoXY(position.GetX(), position.GetY(), this->position);
+				std::cout << textToPrint;
+				break;
+			}
+		}
+
+		std::cout << ch;
+		Sleep(70);
+	}
+
 	if (optionUI == nullptr)
-		throw std::invalid_argument("PLEASE CREATE YOUR OPTION UI :(");
+		throw std::invalid_argument("No option UI instance object");
 
-	return optionUI;
+	choosenOption =  optionUI->PickOption(Vector2(0, 2));
+
+	Scene::ChangeColor(color);
+	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
+	for (char& ch : textToPrint)
+		std::cout << ' ';
+
+	delete optionUI;
+	return choosenOption;
 }

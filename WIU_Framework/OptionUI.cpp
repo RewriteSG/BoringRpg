@@ -1,7 +1,7 @@
 #include "OptionUI.h"
 #include "Scene.h"
 
-OptionUI::OptionUI(Vector2 _position, const int& color) : position(_position), optionsSize(0), optionsCapacity(0)
+OptionUI::OptionUI(Vector2 _position, const int& color, const bool _isCenter) : position(_position), optionsSize(0), optionsCapacity(0), isCenter(_isCenter)
 {
 	textColor = color;
 	reallocOption(2);
@@ -9,6 +9,7 @@ OptionUI::OptionUI(Vector2 _position, const int& color) : position(_position), o
 
 OptionUI::~OptionUI(void)
 {
+	if(optionsSize > 0)
 	delete[] options;
 }
 
@@ -39,7 +40,7 @@ void OptionUI::AddOption(std::string* text)
 		reallocOption(optionsCapacity + optionsCapacity / 2);
 
 	options[optionsSize++] = text;
-}\
+}
 
 int OptionUI::PeekIndex(const std::string item) const
 {
@@ -61,44 +62,16 @@ int OptionUI::PeekIndex(const std::string item) const
 	return indexToRemove;
 }
 
-void OptionUI::RemoveOption(std::string* text)
+void OptionUI::Clear(const Vector2 position) const
 {
-	bool isItemFound = false;
-	int indexToRemove = 0;
 	for (int i = 0; i < optionsSize; ++i)
 	{
-		if (options[i] == text)
+		Scene::GotoXY(position.GetX(), position.GetY() + i, this->position);
+		for (char& ch : *options[i])
 		{
-			isItemFound = true;
-			indexToRemove = i;
-			break;
+			std::cout << " ";
 		}
 	}
-
-	if (!isItemFound)
-		throw std::out_of_range("Item is not found");
-
-	delete options[indexToRemove];
-	for (int i = indexToRemove; i < optionsSize - 1; ++i)
-		options[i] = options[i + 1];
-	--optionsSize;
-}
-
-void OptionUI::RemoveOption(const int itemIndex)
-{
-	if (itemIndex >= optionsSize)
-		throw std::out_of_range("Item is not found");
-
-	delete options[itemIndex];
-	for (int i = itemIndex; i < optionsSize - 1; ++i)
-		options[i] = options[i + 1];
-	--optionsSize;
-}
-
-void OptionUI::Clear(void) const
-{
-	for (int i = 0; i < optionsSize; ++i)
-		delete options[i];
 }
 
 int OptionUI::PickOption(const Vector2 position) const
@@ -120,7 +93,7 @@ int OptionUI::PickOption(const Vector2 position) const
 
 		for (int i = 0; i < optionsSize; ++i)
 		{
-			Scene::GotoXY(position.GetX() - (int)options[i]->length() / 2, position.GetY() + i, this->position);
+			Scene::GotoXY(position.GetX() - ((isCenter) ? (int)options[i]->length() / 2 : 0), position.GetY() + i, this->position);
 			PrintOption(*options[i], colors[i]);
 		}
 
@@ -146,5 +119,6 @@ int OptionUI::PickOption(const Vector2 position) const
 	}
 
 	delete[] colors;
-	return choosenOption;
+	Clear(position);
+	return choosenOption - 1;
 }
