@@ -3,10 +3,9 @@
 #include "Entity.h"
 #include "Items.h"
 #include "ObjectManager.h"
-#include "TimeSystem.h"
 #include <iostream>
+#include "InteractionsManager.h"
 using namespace std;
-
 /// <summary>
 /// A GameManager class where it handles the Game win and lose condition as well as Handling player's input. 
 /// </summary>
@@ -15,10 +14,11 @@ class GameManager
 private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
-public:
-	TimeSystem timesys; 
-	static GameManager* getGM();
 
+public:
+
+	static GameManager* getGM();
+	InteractionsManager InteractionsMgr;
 	GameManager();
 
 	void Start();

@@ -13,9 +13,9 @@ class World
 	Vector2 topLeftPos;
 	Vector2 botRightPos;
 	char** charMap;
-	int width, height;
 
 public:
+	int width, height;
 	static World* GetWorldInstance();
 	World();
 	World(Vector2 topLeft);

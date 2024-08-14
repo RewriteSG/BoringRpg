@@ -7,7 +7,7 @@ bool Scene::GetContinuePgrm() const
 	return ContinuePgrm;
 }
 
-Scene::Scene() : world(Vector2(6, 2), 16, 10), objectManager(), gm()
+Scene::Scene() : world(Vector2(1, 2), 16, 10), objectManager(), gm()
 {
 	ContinuePgrm = true;
 }
@@ -36,6 +36,8 @@ void Scene::Render()
 {
 	world.Update(objectManager.GetObjects(), objectManager.GetObjectsCount()); // Always call this method before render  
 	world.Render(objectManager.GetObjects(), objectManager.GetObjectsCount());
+
+
 }
 
 void Scene::Exit()
@@ -104,14 +106,48 @@ void Scene::ChangeColor(TypeColor color)
 		SetConsoleTextAttribute(hConsole, 119);
 		break;
 	default:
-		SetConsoleTextAttribute(hConsole, 136);
+		SetConsoleTextAttribute(hConsole, 7);
 		break;
 	}
 }
-void Scene::ChangeColor(const int color)
+
+void Scene::ChangeColor(TypeColor color, bool tochar)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hConsole, color);
+	// you can loop k higher to see more color choices
+	//for (int k = 1; k < 255; k++)
+	//{
+	//	// pick the colorattribute k you want
+	//	SetConsoleTextAttribute(hConsole, k);
+	//	cout << k << " I want to be nice today!" << endl;
+	//}
+
+	switch (color)
+	{
+	case Scene::Red:
+		SetConsoleTextAttribute(hConsole, 12); 
+		break;
+	case Scene::Green:
+		SetConsoleTextAttribute(hConsole, 10);
+		break;
+	case Scene::Blue:
+		SetConsoleTextAttribute(hConsole, 7);
+		break;
+	case Scene::Purple:
+		SetConsoleTextAttribute(hConsole, 5);
+		break;
+	case Scene::Yellow:
+		SetConsoleTextAttribute(hConsole, 14);
+	case Scene::Black:
+		SetConsoleTextAttribute(hConsole, 0);
+		break;
+	case Scene::White:
+		SetConsoleTextAttribute(hConsole, 15);
+		break;
+	default:
+		SetConsoleTextAttribute(hConsole, 7);
+		break;
+	}
 }
 
 void Scene::LowerString(string& _string)

@@ -26,6 +26,7 @@ void Vector2::SetXandY(int _x, int _y)
     y = _y;
 }
 
+
 Vector2& Vector2::operator-=(const Vector2& scalar)
 {
     x -= scalar.x;
@@ -95,6 +96,16 @@ void Vector2::Clamp(Vector2& value, const Vector2& max,const Vector2& min)
     Clamp(value.y, max.y, min.y);
 }
 
+void Vector2::Clamp(int* value, const int& max, const int& min)
+{
+
+}
+
+void Vector2::Clamp(Vector2* value, const Vector2& max, const Vector2& min)
+{
+    Clamp(value->x, max.x, min.x);
+    Clamp(value->y, max.y, min.y);
+}
 
 bool Vector2::operator==(const Vector2& scalar)
 {

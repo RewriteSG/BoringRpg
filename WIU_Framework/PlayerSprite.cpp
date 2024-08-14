@@ -2,7 +2,6 @@
 #include "World.h"
 #include "Scene.h"
 #include <iostream>
-
 void PlayerSprite::Render(int x, int y, Vector2 topLeft)
 {
 	/*for (int i = 0; i <= CellY; i++)
@@ -35,9 +34,5 @@ void PlayerSprite::Render(int x, int y, Vector2 topLeft)
 	std::cout << "G";
 	Scene::GotoXY(5 + x + (CellX * x), 3 + y + (y * CellY), topLeft);
 	std::cout << "G";
-	Scene::ChangeColor(Scene::BG_COLOR);
+	Scene::ChangeColor(Scene::Default);
 }
-
-
-//if TimeLoop++ (include bool GameRestart) {
-//playerPosition reset Vector2 topLeft

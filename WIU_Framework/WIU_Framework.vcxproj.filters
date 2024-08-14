@@ -66,13 +66,16 @@
     <ClCompile Include="PlayerSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TimeSystem.cpp">
+    <ClCompile Include="WallSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Robber.cpp">
+    <ClCompile Include="Wall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RobberSprite.cpp">
+    <ClCompile Include="LivingRoomScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BedSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -122,13 +125,16 @@
     <ClInclude Include="PlayerSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TimeSystem.h">
+    <ClInclude Include="WallSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Robber.h">
+    <ClInclude Include="Wall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RobberSprite.h">
+    <ClInclude Include="LivingRoomScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BedSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
