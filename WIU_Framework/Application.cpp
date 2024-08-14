@@ -41,7 +41,7 @@ void Application::Init(void)
 
 	for (int i = 0; i < 43; ++i)
 	{
-		for (int j = 0; j < 172; ++j)
+		for (int j = 0; j < 316; ++j)
 		{
 			Scene::ChangeColor(Scene::BG_COLOR);
 			std::cout << " ";
