@@ -159,6 +159,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TelevisionSprite.cpp" />
     <ClCompile Include="TimeSystem.cpp" />
+    <ClCompile Include="ToiletScene.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TelevisionSprite.h" />
     <ClInclude Include="TimeSystem.h" />
+    <ClInclude Include="ToiletScene.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Wall.h" />

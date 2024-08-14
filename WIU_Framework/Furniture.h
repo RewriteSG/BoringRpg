@@ -18,6 +18,7 @@ public:
 		Planks,
 		CardBoardBox,
 		LivingroomTable,
+		ToiletCabinet,
 		Bedroomtable,
 		Phone,
 		ToolBox,
