@@ -6,7 +6,6 @@ OptionUI::OptionUI(Vector2 _position, const int& color, const bool _isCenter) : 
 	textColor = color;
 	reallocOption(2);
 }
-
 OptionUI::~OptionUI(void)
 {
 	if(optionsSize > 0)
