@@ -7,6 +7,7 @@
 void LivingRoomScene::Start()
 {
 	Scene::Start();
+	gm.CreatePlayer(Vector2(5, 5));
 	new Wall(Vector2(0, 0));
 	new Wall(Vector2(0, 1));
 	new Wall(Vector2(0, 2));

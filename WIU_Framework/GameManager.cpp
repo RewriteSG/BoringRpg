@@ -14,6 +14,7 @@ GameManager::GameManager()
 	//Weapon = nullptr;
 	GameEnded = false;
 	GameWon = true;
+	player = nullptr;
 }
 
 GameManager* GameManager::getGM()
@@ -55,14 +56,18 @@ void GameManager::HandleInput(void)
 	{
 	case 'w':
 		//Move up
+		*player->GetPosition() += Vector2(0, -1);
 		break;
 	case 's':
+		*player->GetPosition() += Vector2(0, 1);
 		//Move down
 		break;
 	case 'd':
+		*player->GetPosition() += Vector2(1, 0);
 		//Move right
 		break;
 	case 'a':
+		*player->GetPosition() += Vector2(-1, 0);
 		//Move left
 		break;
 	}
@@ -75,6 +80,14 @@ bool GameManager::GetGameEnded() const
 bool GameManager::GetGameWon() const
 {
 	return GameWon;
+}
+
+void GameManager::CreatePlayer(Vector2 toPos)
+{
+	if (player)
+		delete player;
+	player = new Player();
+	*player->GetPosition() = toPos;
 }
 
 char GameManager::_getch(void)
