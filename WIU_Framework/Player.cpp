@@ -38,3 +38,14 @@ void Player::OnDestroyed()
 {
 
 }
+
+Vector2 Player::GetPosition() const
+{
+	return position;
+	//return Vector2();
+}
+
+void Player::SetPosition(Vector2 newPos)
+{
+	position = newPos;
+}

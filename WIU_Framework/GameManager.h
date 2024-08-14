@@ -5,6 +5,7 @@
 #include "ObjectManager.h"
 #include <iostream>
 #include "InteractionsManager.h"
+#include "TimeSystem.h"
 using namespace std;
 /// <summary>
 /// A GameManager class where it handles the Game win and lose condition as well as Handling player's input. 
@@ -18,6 +19,8 @@ private:
 public:
 
 	static GameManager* getGM();
+	TimeSystem TimeSys;
+
 	InteractionsManager InteractionsMgr;
 	GameManager();
 

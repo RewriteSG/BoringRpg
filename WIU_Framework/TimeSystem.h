@@ -3,12 +3,13 @@
 class TimeSystem
 {
 public:
-	int TimeTaken, TimeLimitForRobber, TimeLimitForCops;
+	int TimeTaken, RobberTime, TimeLimitForCops;
 	int TimeLoop;
 	TimeSystem();
 	void CountLoop(int);
-	void increaseTimeTaken(int);
-	void decreaseTimeTaken(int);
+	virtual void increaseTimeTaken(int time);
+	virtual void decreaseTimeTaken(int time);
+	virtual void increaseRobberTime(int time);
 
 	std::string GetTimeinString( int second);
 };
