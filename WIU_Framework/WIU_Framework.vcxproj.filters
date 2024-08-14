@@ -126,6 +126,9 @@
     <ClCompile Include="OptionUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PickupableItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -209,9 +212,6 @@
     <ClInclude Include="LivingroomTableSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TelevisionSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -234,6 +234,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OptionUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupableItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

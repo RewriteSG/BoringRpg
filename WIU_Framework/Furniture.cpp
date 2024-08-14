@@ -62,6 +62,12 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	}
 }
 
+Furniture::Furniture(TypeOfFurniture type, Vector2 toPos, bool isInvisible)
+{
+	furniture = type;
+	*GetPosition() = toPos;
+}
+
 void Furniture::Start()
 {
 }

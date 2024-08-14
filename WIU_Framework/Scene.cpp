@@ -1,13 +1,13 @@
 #include "Scene.h"
 #include "Windows.h"
 
-
+GameManager Scene::gm = GameManager();
 bool Scene::GetContinuePgrm() const
 {
 	return ContinuePgrm;
 }
 
-Scene::Scene() : world(Vector2(1, 2), 16, 10), objectManager(), gm()
+Scene::Scene() : world(Vector2(1, 2), 16, 10), objectManager()
 {
 	ContinuePgrm = true;
 }
@@ -22,9 +22,8 @@ void Scene::Start()
 	// For Example 
 	//new Entity(Vector2(4, 4));
 
-
-
 	world.Render();
+
 }
 
 void Scene::Update()

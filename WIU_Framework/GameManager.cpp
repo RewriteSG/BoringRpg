@@ -54,7 +54,8 @@ void GameManager::PromptInput()
 void GameManager::HandleInput(void)
 {
 	char input = _getch();
-
+	if (!player)
+		return;
 	switch (input)
 	{
 	case 'w':

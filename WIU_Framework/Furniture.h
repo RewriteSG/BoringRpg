@@ -25,8 +25,6 @@ public:
 		Bed,
 		TrashCan
 	};
-	/// <summary>
-	/// 
 
 	///// Furnitures
 	//void SofaInteracted(GameObject* sofa, GameObject* player);
@@ -43,16 +41,14 @@ public:
 	//void BedRoomCabinetInteracted(GameObject* bedRoomCabinet, GameObject* player);
 	//void BedInteracted(GameObject* bed, GameObject* player);
 	//void TelevisionInteracted(GameObject* bed, GameObject* player);
-
-	///// Doors
 	//void MainDoorInteracted(GameObject* MainDoor, GameObject* player);
 	//void BedroomDoorInteracted(GameObject* BedroomDoor, GameObject* player);
 	//void ClosetDoorInteracted(GameObject* closetDoor, GameObject* player);
 	//void KitchenDoorInteracted(GameObject* KitchenDoor, GameObject* player);
 	//void BathroomDoorInteracted(GameObject* BathroomDoor, GameObject* player);
-	/// </summary>
 	TypeOfFurniture furniture;
 	Furniture(TypeOfFurniture type, Vector2 toPos);
+	Furniture(TypeOfFurniture type, Vector2 toPos, bool isInvisible);
 	void Start();
 	void Collided(GameObject* obj) override;
 

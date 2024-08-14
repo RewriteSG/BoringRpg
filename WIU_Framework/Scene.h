@@ -6,10 +6,10 @@
 #include <iostream>
 class Scene
 {
-public:
 	World world;
 	ObjectManager objectManager;
-	GameManager gm; 
+public:
+	static GameManager gm; 
 	bool ContinuePgrm;
 	Scene();
 	virtual void Start();
