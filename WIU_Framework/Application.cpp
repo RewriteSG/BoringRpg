@@ -37,7 +37,7 @@ void Application::Init(void)
 {
 	FontSize(Vector2(9, 18));
 	ScreenSMaximised();
-	//HideCursor();
+	HideCursor();
 
 	for (int i = 0; i < 43; ++i)
 	{

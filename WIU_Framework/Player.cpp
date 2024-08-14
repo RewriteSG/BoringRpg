@@ -15,6 +15,7 @@ Player::Player()
 }
 void Player::Start()
 {
+	GetPosition()->SetXandY(2, 2);
 	SetSprite(new PlayerSprite());
 }
 void Player::Update()
@@ -43,3 +44,15 @@ void Player::OnDestroyed()
 {
 
 }
+//Vector2 Player::GetPosition() const
+//{
+//	return Vector2();
+//}
+
+
+
+//Player::Player(Vector2 toPos)
+//{
+//
+//}
+

@@ -4,6 +4,9 @@
 #include "Items.h"
 #include "ObjectManager.h"
 #include <iostream>
+#include "InteractionsManager.h"
+#include "TimeSystem.h"
+#include "Player.h"
 #include "UI.h"
 using namespace std;
 
@@ -18,7 +21,10 @@ private:
 	UI* gameUI;
 
 public:
+	Player* player;
 	static GameManager* getGM();
+	InteractionsManager InteractionsMgr;
+	TimeSystem TimeSys;
 	GameManager();
 
 	void Start();
@@ -31,6 +37,7 @@ public:
 	bool GetGameEnded() const;
 	bool GetGameWon() const;
 
+	void CreatePlayer(Vector2 toPos);
 	static char _getch(void);
 };
 

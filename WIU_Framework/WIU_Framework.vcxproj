@@ -128,12 +128,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="BedroomCabinet.cpp" />
+    <ClCompile Include="BedroomCabinet2Sprite.cpp" />
+    <ClCompile Include="BedroomCabinetSprite.cpp" />
+    <ClCompile Include="BedroomScene.cpp" />
+    <ClCompile Include="BedroomTableSprite.cpp" />
+    <ClCompile Include="BedSprite.cpp" />
+    <ClCompile Include="EmptySofaSprite.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExampleScene.cpp" />
+    <ClCompile Include="Furniture.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="InteractionsManager.cpp" />
     <ClCompile Include="Items.cpp" />
+    <ClCompile Include="LivingRoomCabinetSprite.cpp" />
+    <ClCompile Include="LivingRoomScene.cpp" />
+    <ClCompile Include="LivingroomTableSprite.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MyFunctions.cpp" />
@@ -141,32 +151,59 @@
     <ClCompile Include="OptionUI.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerSprite.cpp" />
+    <ClCompile Include="Robber.cpp" />
+    <ClCompile Include="RobberSprite.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="TelevisionSprite.cpp" />
+    <ClCompile Include="TimeSystem.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="WallSprite.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="BedroomCabinet.h" />
+    <ClInclude Include="BedroomCabinet2Sprite.h" />
+    <ClInclude Include="BedroomCabinetSprite.h" />
+    <ClInclude Include="BedroomScene.h" />
+    <ClInclude Include="BedroomTableSprite.h" />
+    <ClInclude Include="BedSprite.h" />
+    <ClInclude Include="DialogueUI.h" />
+    <ClInclude Include="EmptySofaSprite.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExampleScene.h" />
+    <ClInclude Include="Furniture.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="InteractionsManager.h" />
     <ClInclude Include="Items.h" />
+    <ClInclude Include="LivingRoomCabinetSprite.h" />
+    <ClInclude Include="LivingRoomScene.h" />
+    <ClInclude Include="LivingroomTableSprite.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="OptionUI.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSprite.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Robber.h" />
+    <ClInclude Include="RobberSprite.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="TelevisionSprite.h" />
+    <ClInclude Include="TimeSystem.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Wall.h" />
+    <ClInclude Include="WallSprite.h" />
     <ClInclude Include="World.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WIU_Framework.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

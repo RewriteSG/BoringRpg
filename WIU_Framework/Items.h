@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "TimeSystem.h"
 class Item :
     public GameObject
 {

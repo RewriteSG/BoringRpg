@@ -1,7 +1,7 @@
 #include "MainMenu.h"
 #include "SceneManager.h"
 #include "ExampleScene.h"
-
+#include "LivingRoomScene.h"
 void MainMenu::DrawClock(const int size) const
 {
 	const int width = size * 2;
@@ -78,12 +78,12 @@ void MainMenu::Update(void)
 	systemUI.GetOptionUI()->AddOption(new std::string("Endings"));
 	systemUI.GetOptionUI()->AddOption(new std::string("Quit"));
 
-	int choice = systemUI.GetOptionUI()->PickOption(Vector2(0, 2));
+	int choice = systemUI.GetOptionUI()->PickOption(Vector2(0, 5));
 
 	switch (choice)
 	{
 	case 0:
-		SceneManager::LoadScene(new ExampleScene());
+		SceneManager::LoadScene(new LivingRoomScene());
 		break;
 	case 2:
 		exit(0);

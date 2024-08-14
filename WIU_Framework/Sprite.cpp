@@ -26,15 +26,15 @@ void Sprite::RenderVoid(int x, int y, Vector2 topLeft)
 {
 
 	//Scene::GotoXY(x, y, topLeft);
-	for (int i = 0; i < CellY; i++)
+	for (int i = 0; i <= CellY; i++)
 	{
-		Scene::GotoXY(x, i+y + CellY, topLeft);
+		Scene::GotoXY(x + (CellX * x), i + y + (y * CellY), topLeft); 
 
-		std::cout << ".";
+		std::cout << " ";
 		for (int x = 0; x < CellX; x++)
 		{
 			if (i == 0)
-				std::cout << ".";
+				std::cout << " ";
 			else
 
 				std::cout << " ";

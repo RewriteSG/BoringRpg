@@ -99,7 +99,7 @@ void World::Update(GameObject** objects, int objectsCount)
 	Vector2* pos;
 	for (int i = 0; i < objectsCount; i++)
 	{
-		Vector2::Clamp(*objects[i]->GetPosition(), Vector2(width, height), Vector2(0, 0));
+		Vector2::Clamp(objects[i]->GetPosition(), Vector2(width-1, height-1), Vector2(0, 0));
 		if (!objects[i]->GetActive())
 		{
 			continue;
@@ -171,7 +171,7 @@ void World::Render()
 		for (int x = 0; x < width; x++)
 		{
 			Scene::GotoXY(x + (CellX * (x)), y + (CellY * y), topLeftPos);
-			cout << charMap[y][x];
+			cout << " ";
 		}
 	}
 	Scene::ChangeColor(Scene::BG_COLOR);
