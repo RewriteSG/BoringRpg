@@ -171,7 +171,7 @@ void World::Render()
 		for (int x = 0; x < width; x++)
 		{
 			Scene::GotoXY(x + (CellX * (x)), y + (CellY * y), topLeftPos);
-			cout << charMap[y][x];
+			cout << " ";
 		}
 	}
 	Scene::ChangeColor(Scene::BG_COLOR);
