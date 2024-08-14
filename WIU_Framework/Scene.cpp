@@ -16,13 +16,7 @@ void Scene::Start()
 {
 	world.Start();
 	objectManager.Start();
-	//gm.Start();
-
-	// Instantiate Objects here
-	// For Example 
-	//new Entity(Vector2(4, 4));
-
-
+	gm.Start();
 
 	world.Render();
 }

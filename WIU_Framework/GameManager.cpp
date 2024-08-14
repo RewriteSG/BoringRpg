@@ -5,11 +5,13 @@
 #include "Windows.h"
 #include "SceneManager.h"
 #include "MainMenu.h"
+#include "Player.h"
+#include "conio.h"
 using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
 
-GameManager::GameManager()
+GameManager::GameManager() : gameUI(nullptr)
 {
 	GM_Instance = this;
 	//Weapon = nullptr;
@@ -28,17 +30,19 @@ void GameManager::Start()
 	GM_Instance = this;
 	GameEnded = false;
 	GameWon = true;
+
+	gameUI = new UI(Vector2(130, 12), 7);
+	gameUI->CreateOptionUI(Vector2(1, 19), false);
+	gameUI->GetOptionUI()->AddOption(new std::string(Player::playerInstance->GetName()));
+	gameUI->GetOptionUI()->AddOption(new std::string("Pan"));
+	gameUI->GetOptionUI()->AddOption(new std::string("Blank"));
 }
 void GameManager::Update()
 {
-	GameEnded = false;
-	MainMenu* menu = dynamic_cast<MainMenu*>(SceneManager::currentScene);
-	if (menu)
-		return;
-	PromptInput();
+	gameUI->PickDialogue(Vector2(1, 19), "Pick one please");
 	HandleInput();
-	
 }
+
 void GameManager::Exit()
 {
 

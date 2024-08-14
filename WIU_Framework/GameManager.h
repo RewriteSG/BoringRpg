@@ -4,6 +4,7 @@
 #include "Items.h"
 #include "ObjectManager.h"
 #include <iostream>
+#include "UI.h"
 using namespace std;
 
 /// <summary>
@@ -14,6 +15,7 @@ class GameManager
 private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
+	UI* gameUI;
 
 public:
 	static GameManager* getGM();

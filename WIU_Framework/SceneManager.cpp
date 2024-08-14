@@ -10,7 +10,7 @@ void SceneManager::Start(void)
 {
 	srand((unsigned int)time(0));
 
-	currentScene = new ExampleScene();
+	currentScene = new MainMenu();
 	currentScene->Start();
 }
 
@@ -18,6 +18,9 @@ void SceneManager::Update(void)
 {
 	currentScene->Update();
 	currentScene->Render();
+
+	MainMenu* menu = dynamic_cast<MainMenu*>(currentScene);
+	if(!menu)
 	currentScene->gm.Update();
 
 	if (nextScene) 

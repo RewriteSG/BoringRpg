@@ -2,23 +2,23 @@
 #include "SceneManager.h"
 #include "Player.h"
 #include "UI.h"
+#include "conio.h"
 void ExampleScene::Start()
 {
-	Scene::Start();
-	// Instantiate Objects Here!
+	UI gameUI(Vector2(130, 12));
+	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15);
+	gameUI.CreateBox(Vector2(0, 17), "Dialogue:", 40, 10);
 
-	// For Example 
 	new Player();
+
+	Scene::Start();
+
 
 }
 
 void ExampleScene::Update()
 {
 	Scene::Update();
-
-	UI ui(Vector2(130, 10));
-	ui.CreateDialogueUI("Dialogue: ", 112, 40, 10);
-	ui.GetDialogueUI()->PrintDialogue(Vector2(), Player::playerInstance, "is a person");
 
 	// Update Game Here!
 	//SceneManager::LoadScene(new Scene());
