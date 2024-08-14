@@ -9,15 +9,15 @@ class InventoryManager
 	int inventoryMaxCapacity;
 	int inventoryCurrentCapacity;
 	PickupableItem::TypeOfPickup** Items;
-	PickupableItem::TypeOfPickup* getItemInInventory(string item);
+	PickupableItem::TypeOfPickup* getItemInInventory(PickupableItem::TypeOfPickup item);
 public:
 	InventoryManager();
 	bool PickupItem(PickupableItem::TypeOfPickup typeofPickup);
-	string** GetItems();
-	bool InventoryHasItems(string item1);
-	bool InventoryHasItems(string item1, string item2);
-	bool InventoryHasItems(string item1, string item2, string item3);
-	void DropItem(string dropItem);
-	void UseItem(string useItem);
+	PickupableItem::TypeOfPickup** GetItems();
+	bool InventoryHasItems(PickupableItem::TypeOfPickup item1);
+	bool InventoryHasItems(PickupableItem::TypeOfPickup item1, PickupableItem::TypeOfPickup item2);
+	bool InventoryHasItems(PickupableItem::TypeOfPickup item1, PickupableItem::TypeOfPickup item2, PickupableItem::TypeOfPickup item3);
+	void DropItem(PickupableItem::TypeOfPickup dropItem);
+	void UseItem(PickupableItem::TypeOfPickup useItem);
 };
 
