@@ -5,11 +5,12 @@ class InteractionsManager
 public:
 	bool hasSofaKeyCollected;
 	bool hasClosetDoorOpened;
-	bool hasCallingTheCops;
+	bool hasCalledTheCops;
 	bool hasHammer;
 	bool hasNails;
-	bool hasSoap;
 	bool hasPlanks;
+	bool hasShampoo;
+
 
 	InteractionsManager();
 
