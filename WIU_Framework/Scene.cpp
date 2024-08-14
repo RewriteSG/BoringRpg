@@ -105,6 +105,9 @@ void Scene::ChangeColor(TypeColor color)
 	case Scene::White:
 		SetConsoleTextAttribute(hConsole, 119);
 		break;
+	case Scene::BG_COLOR:
+		SetConsoleTextAttribute(hConsole, 136);
+		break;
 	default:
 		SetConsoleTextAttribute(hConsole, 7);
 		break;
@@ -148,6 +151,11 @@ void Scene::ChangeColor(TypeColor color, bool tochar)
 		SetConsoleTextAttribute(hConsole, 7);
 		break;
 	}
+}
+void Scene::ChangeColor(const int color)
+{
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, color);
 }
 
 void Scene::LowerString(string& _string)
