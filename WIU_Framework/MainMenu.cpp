@@ -72,7 +72,7 @@ void MainMenu::Start(void)
 void MainMenu::Update(void)
 {
 	UI systemUI(Vector2(172 / 2, 43 / 2));
-	systemUI.CreateOptionUI(112);
+	systemUI.CreateOptionUI(" ", 112, 10, 10);
 
 	systemUI.GetOptionUI()->AddOption(new std::string("Play"));
 	systemUI.GetOptionUI()->AddOption(new std::string("Endings"));
