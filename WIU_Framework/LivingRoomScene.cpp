@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "Wall.h"
 #include "Furniture.h"
-
+#include "Robber.h"
 void LivingRoomScene::Start()
 {
 	Scene::Start();
@@ -54,6 +54,7 @@ void LivingRoomScene::Start()
 	new Furniture(Furniture::LivingroomTable, Vector2(2, 4));
 	new Furniture(Furniture::EmptySofa, Vector2(1, 4));
 
+	new Robber();
 	gm.CreatePlayer(Vector2(11, 6));
 }
 

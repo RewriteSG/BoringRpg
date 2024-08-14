@@ -9,7 +9,6 @@ void ExampleScene::Start()
 
 	// For Example 
 	new Player();
-
 }
 
 void ExampleScene::Update()
