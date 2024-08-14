@@ -72,6 +72,15 @@ void ObjectManager::UpdateObjects()
 	RemoveGameObjects();
 }
 
+void ObjectManager::UpdatePositions()
+{
+	for (int i = 0; i < gameObjectsCount; i++)
+	{
+		gameObjects[i]->UpdatePosition();
+		//gameObjects[i]->Update();
+	}
+}
+
 GameObject** ObjectManager::AddGameObject(GameObject** Array, GameObject* toAdd, int& ArraySize)
 {
 

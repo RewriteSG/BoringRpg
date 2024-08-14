@@ -20,6 +20,7 @@ void SceneManager::Update(void)
 {
 	currentScene->Update();
 	currentScene->Render();
+	currentScene->UpdateGameObjectsPos();
 	currentScene->gm.Update();
 	currentScene->Render(); 
 

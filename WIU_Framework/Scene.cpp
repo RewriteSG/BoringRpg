@@ -32,6 +32,11 @@ void Scene::Update()
 	objectManager.UpdateObjects();  // update objects at the start of the frame
 }
 
+void Scene::UpdateGameObjectsPos()
+{
+	objectManager.UpdatePositions(); 
+}
+
 void Scene::Render()
 {
 	world.Update(objectManager.GetObjects(), objectManager.GetObjectsCount()); // Always call this method before render  

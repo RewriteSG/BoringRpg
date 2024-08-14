@@ -14,7 +14,7 @@ public:
 	Scene();
 	virtual void Start();
 	virtual void Update();
-	
+	void UpdateGameObjectsPos();
 	virtual void Render();
 	virtual void Exit();
 	bool GetContinuePgrm() const;
