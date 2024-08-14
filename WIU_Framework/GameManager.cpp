@@ -47,9 +47,9 @@ void GameManager::Exit()
 
 void GameManager::PromptInput()
 {
-	Scene::GotoXY(110, 48);
+	Scene::GotoXY(110, 36);
 	cout << "Input:";
-	Scene::GotoXY(117, 48);
+	Scene::GotoXY(117, 36);
 }
 void GameManager::HandleInput(void)
 {
@@ -74,6 +74,7 @@ void GameManager::HandleInput(void)
 		//Move left
 		break;
 	}
+
 }
 
 bool GameManager::GetGameEnded() const
