@@ -7,13 +7,12 @@ public:
 	int TimeLoop;
 	TimeSystem();
 	void CountLoop(int);
-	virtual void increaseTimeTaken(int time);
-	virtual void decreaseTimeTaken(int time);
-	virtual void increaseRobberTime(int time);
+	void increaseTimeTaken(int time);
+	void decreaseTimeTaken(int time);
+	void increaseRobberTime(int time);
 
 	std::string GetTimeinString( int second);
 
-	void increaseRobberTime(int);
 
 
 };

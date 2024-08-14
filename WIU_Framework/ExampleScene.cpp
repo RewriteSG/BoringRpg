@@ -9,6 +9,10 @@ void ExampleScene::Start()
 
 	// For Example 
 	new Player();
+
+	//robber
+	new Robber();
+
 }
 
 void ExampleScene::Update()

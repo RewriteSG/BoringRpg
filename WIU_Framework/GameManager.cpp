@@ -16,6 +16,7 @@ GameManager::GameManager()
 	GameEnded = false;
 	GameWon = true;
 	player = nullptr;
+	robber = nullptr;
 }
 
 GameManager* GameManager::getGM()
@@ -32,12 +33,13 @@ void GameManager::Start()
 }
 void GameManager::Update()
 {
+
 	GameEnded = false;
 	MainMenu* menu = dynamic_cast<MainMenu*>(SceneManager::currentScene);
 	if (menu)
 		return;
 	PromptInput();
-	HandleInput();
+	HandleInput(); 
 	
 }
 void GameManager::Exit()
@@ -93,6 +95,15 @@ void GameManager::CreatePlayer(Vector2 toPos)
 	player = new Player();
 	*player->GetPosition() = toPos;
 }
+
+void GameManager::CreateRobber(Vector2 toPos)
+{
+	if (robber)
+		delete robber;
+	robber = new Robber();
+	*robber->GetPosition() = toPos;
+}
+
 
 char GameManager::_getch(void)
 {

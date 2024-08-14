@@ -12,6 +12,7 @@ class Robber :
 public:
     Robber();
     Robber(Vector2 toPos);
+   // static Robber* robberInstance;
 
 
     void Start() override;
@@ -22,7 +23,7 @@ public:
     //positioning
    
 
-    void MoveTowardsPlayer( Player& player) ;
+    void MoveTowardsPlayer( Player& player);
 
 
 
