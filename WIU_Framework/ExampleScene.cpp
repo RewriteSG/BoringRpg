@@ -17,8 +17,8 @@ void ExampleScene::Update()
 	Scene::Update();
 
 	UI ui(Vector2(130, 10));
-	ui.CreateDialogueUI(112);
-	ui.GetDialogueUI()->PrintDialogue(Vector2(), Player::playerInstance, "is a  gayest person");
+	ui.CreateDialogueUI("Dialogue: ", 112, 40, 10);
+	ui.GetDialogueUI()->PrintDialogue(Vector2(), Player::playerInstance, "is a person");
 
 	// Update Game Here!
 	//SceneManager::LoadScene(new Scene());

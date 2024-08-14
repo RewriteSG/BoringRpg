@@ -3,7 +3,6 @@
 
 UI::UI(const Vector2 _position) : dialogueUI(nullptr), optionUI(nullptr), position(_position)
 {
-	Scene::GotoXY(position.GetX(), position.GetY());
 }
 
 UI::~UI(void)
@@ -15,14 +14,42 @@ UI::~UI(void)
 	}
 }
 
-void UI::CreateOptionUI(const int color)
+void UI::CreateOptionUI(const std::string label, const int color, const int width, const int height)
 {
-	optionUI = new OptionUI(position, color);
+	optionUI = new OptionUI(position + Vector2(0, 1), color);
+	for (int i = 0; i < height; ++i)
+	{
+		Scene::GotoXY(position.GetX(), position.GetY() + i);
+		Scene::ChangeColor(color - 2);
+		if (i == 0)
+			std::cout << label;
+
+		for (int j = 0; j < width; ++j)
+		{
+			Scene::ChangeColor(color);
+			std::cout << " ";
+		}
+		std::cout << std::endl;
+	}
 }
 
-void UI::CreateDialogueUI(const int color)
+void UI::CreateDialogueUI(const std::string label, const int color, const int width, const int height)
 {
-	dialogueUI = new DialogueUI(position, color);
+	dialogueUI = new DialogueUI(position + Vector2(0, 1), color);
+	for (int i = 0; i < height; ++i)
+	{
+		Scene::GotoXY(position.GetX(), position.GetY() + i);
+		Scene::ChangeColor(color - 2);
+		if (i == 0)
+			std::cout << label;
+
+		for (int j = 0; j < width; ++j)
+		{
+			Scene::ChangeColor(color);
+			std::cout << " ";
+		}
+		std::cout << std::endl;
+	}
 }
 
 DialogueUI* UI::GetDialogueUI(void) const
