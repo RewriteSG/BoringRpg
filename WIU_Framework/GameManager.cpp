@@ -34,12 +34,14 @@ void GameManager::Start()
 
 	gameUI = new UI(Vector2(130, 12), 7);
 	gameUI->CreateOptionUI(Vector2(1, 19), false);
-	gameUI->GetOptionUI()->AddOption(new std::string(Player::playerInstance->GetName()));
-	gameUI->GetOptionUI()->AddOption(new std::string("Pan"));
-	gameUI->GetOptionUI()->AddOption(new std::string("Blank"));
+
 }
 void GameManager::Update()
 {
+	/*for (int i = 0; i < inventory.count; i++)
+	{
+		gameUI->CreateOptionUI()
+	}*/
 	gameUI->PickDialogue(Vector2(1, 19), "Pick one please");
 	HandleInput();
 }

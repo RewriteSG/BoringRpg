@@ -133,7 +133,6 @@
     <ClCompile Include="BedroomScene.cpp" />
     <ClCompile Include="BedroomTableSprite.cpp" />
     <ClCompile Include="BedSprite.cpp" />
-    <ClCompile Include="DialogueUI.cpp" />
     <ClCompile Include="EmptySofaSprite.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExampleScene.cpp" />
