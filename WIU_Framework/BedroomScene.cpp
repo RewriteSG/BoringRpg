@@ -59,9 +59,12 @@ void BedroomScene::Start()
 	new Wall(Vector2(13, 0));
 	new Wall(Vector2(14, 0));
 	new Furniture(Furniture::Bed, Vector2(1, 1));
+	new Furniture(Furniture::Bed, Vector2(1, 1),true);
 	new Furniture(Furniture::BedroomCabinet1, Vector2(3, 1));
 	new Furniture(Furniture::Bedroomtable, Vector2(5, 1));
 	new Furniture(Furniture::BedroomCabinet2, Vector2(13, 1));
+
+	gm.CreatePlayer(Vector2(5, 8));
 }
 
 void BedroomScene::Update()
