@@ -17,6 +17,7 @@ public:
 	GameObject(Vector2 toPos);
 
 	Vector2* GetPosition(void);
+	Vector2 GetPosition(bool)const;
 	const Vector2 GetPrevPosition(void) const;
 
 	void SetObjectChar(char toChar);

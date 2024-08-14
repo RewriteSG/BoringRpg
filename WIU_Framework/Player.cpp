@@ -44,3 +44,15 @@ void Player::OnDestroyed()
 {
 
 }
+//Vector2 Player::GetPosition() const
+//{
+//	return Vector2();
+//}
+
+
+
+//Player::Player(Vector2 toPos)
+//{
+//
+//}
+

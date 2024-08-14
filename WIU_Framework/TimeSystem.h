@@ -12,5 +12,9 @@ public:
 	virtual void increaseRobberTime(int time);
 
 	std::string GetTimeinString( int second);
+
+	void increaseRobberTime(int);
+
+
 };
 

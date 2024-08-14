@@ -2,16 +2,14 @@
 #include "Entity.h"
 #include "Player.h"
 #include "TimeSystem.h"
+
 class Robber :
     public Entity
 {
     int steps;
-    Vector2 position;
+
 
 public:
-
-    TimeSystem TimerForRobberSteps;
-
     Robber();
     Robber(Vector2 toPos);
 
@@ -22,10 +20,11 @@ public:
     void OnDestroyed() override;
 
     //positioning
+   
 
-   // Robber(Vector2 startPos) : position(startPos) {}
-   /* Vector2 GetPosition() const;
-    void MoveTowardsPlayer(const Player& player);*/
+    void MoveTowardsPlayer( Player& player) ;
+
+
 
 };
 

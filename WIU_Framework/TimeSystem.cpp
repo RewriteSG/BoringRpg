@@ -21,11 +21,10 @@ void TimeSystem::decreaseTimeTaken(int time)
 {
 	TimeTaken -= time;
 }
-void TimeSystem::increaseRobberTime(int time)
-{
+void TimeSystem::increaseRobberTime(int time) {
 	RobberTime += time;
-
 }
+
 std::string TimeSystem::GetTimeinString(int time)
 {
 	//display time in min & sec
