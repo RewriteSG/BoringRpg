@@ -12,7 +12,6 @@ public:
 	bool hasShampoo;
 	bool hasKnife;
 	bool hasDuctTape;
-	bool hasKnife;
 	bool hasMetalPan;
 
 
