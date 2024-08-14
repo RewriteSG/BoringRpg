@@ -161,12 +161,16 @@
     <ClCompile Include="StoreRoomDoorSprite.cpp" />
     <ClCompile Include="TelevisionSprite.cpp" />
     <ClCompile Include="TimeSystem.cpp" />
+    <ClCompile Include="ToiletCabinetSprite.cpp" />
     <ClCompile Include="ToiletDoorSprite.cpp" />
+    <ClCompile Include="ToiletScene.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WallSprite.cpp" />
     <ClCompile Include="World.cpp" />
+    <ClCompile Include="淋浴Sprite.cpp" />
+    <ClCompile Include="马桶Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -202,12 +206,16 @@
     <ClInclude Include="StoreRoomDoorSprite.h" />
     <ClInclude Include="TelevisionSprite.h" />
     <ClInclude Include="TimeSystem.h" />
+    <ClInclude Include="ToiletCabinetSprite.h" />
     <ClInclude Include="ToiletDoorSprite.h" />
+    <ClInclude Include="ToiletScene.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="WallSprite.h" />
     <ClInclude Include="World.h" />
+    <ClInclude Include="淋浴Sprite.h" />
+    <ClInclude Include="马桶Sprite.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WIU_Framework.rc" />

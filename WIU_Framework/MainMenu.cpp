@@ -3,6 +3,7 @@
 #include "ExampleScene.h"
 #include "BedroomScene.h"
 #include "LivingRoomScene.h"
+#include "ToiletScene.h"
 void MainMenu::DrawClock(const int size) const
 {
 	const int width = size * 2;
@@ -84,7 +85,7 @@ void MainMenu::Update(void)
 	switch (choice)
 	{
 	case 1:
-		SceneManager::LoadScene(new BedroomScene());
+		SceneManager::LoadScene(new ToiletScene());
 		break;
 	case 3:
 		exit(0);

@@ -12,6 +12,9 @@
 #include "DoorSprites.h"
 #include "StoreRoomDoorSprite.h"
 #include "ToiletDoorSprite.h"
+#include "ÂíÍ°Sprite.h"
+#include "ÁÜÔ¡Sprite.h"
+#include "ToiletCabinetSprite.h"
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 {
 	furniture = type;
@@ -19,6 +22,15 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	switch (furniture)
 	{
 	case Furniture::SofaKey:
+		break;
+	case Furniture::ToiletCabinet:
+		SetSprite(new ToiletCabinetSprite());
+		break;
+	case Furniture::ÂíÍ°:
+		SetSprite(new ÂíÍ°Sprite());
+		break;
+	case Furniture::ÁÜÔ¡:
+		SetSprite(new ÁÜÔ¡Sprite());
 		break;
 	case Furniture::StoreRoomDoor:
 		SetSprite(new StoreRoomDoorSprite());
