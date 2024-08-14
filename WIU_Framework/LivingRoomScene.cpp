@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "Wall.h"
 #include "Furniture.h"
-
+#include "PickupableItem.h"
 void LivingRoomScene::Start()
 {
 	Scene::Start();
@@ -49,6 +49,7 @@ void LivingRoomScene::Start()
 	new Wall(Vector2(12, 0));
 	new Wall(Vector2(13, 0));
 	new Wall(Vector2(14, 0));
+	new PickupableItem(PickupableItem::Knife, Vector2(7, 4)); 
 	new Furniture(Furniture::LivingRoomCabinet, Vector2(1, 1));
 	new Furniture(Furniture::Television, Vector2(3, 1));
 	new Furniture(Furniture::Television, Vector2(4, 1),true);
@@ -57,7 +58,6 @@ void LivingRoomScene::Start()
 	new Furniture(Furniture::LivingroomTable, Vector2(4, 4), true);
 	new Furniture(Furniture::LivingroomTable, Vector2(5, 4), true);
 	new Furniture(Furniture::LivingroomTable, Vector2(6, 4), true);
-	new Furniture(Furniture::LivingroomTable, Vector2(7, 4), true);
 	new Furniture(Furniture::LivingroomTable, Vector2(7, 5), true);
 	new Furniture(Furniture::EmptySofa, Vector2(1, 4));
 

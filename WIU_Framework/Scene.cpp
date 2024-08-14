@@ -98,6 +98,7 @@ void Scene::ChangeColor(TypeColor color)
 		break;
 	case Scene::Yellow:
 		SetConsoleTextAttribute(hConsole, 102);
+		break;
 	case Scene::Black:
 		SetConsoleTextAttribute(hConsole, 0);
 		break;

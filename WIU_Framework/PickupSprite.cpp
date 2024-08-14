@@ -10,8 +10,8 @@ void PickupSprite::Render(int x, int y, Vector2 topLeft)
 	//std::cout << " ";
 
 
-	Scene::GotoXY(3 + x + (CellX * x), 0 + y + (y * CellY), topLeft);
 	Scene::ChangeColor(Scene::Yellow);
+	Scene::GotoXY(1 + x + (CellX * x), 5 + y + (y * CellY), topLeft);
 	std::cout << "K";
 	Scene::ChangeColor(Scene::Default);
 }
