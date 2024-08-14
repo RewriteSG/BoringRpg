@@ -85,7 +85,7 @@ void MainMenu::Update(void)
 	{
 	case 1:
 		//system("cls");
-		SceneManager::LoadScene(new BedroomScene());
+		SceneManager::LoadScene(new LivingRoomScene());
 		break;
 	case 3:
 		exit(0);

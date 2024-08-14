@@ -51,7 +51,14 @@ void LivingRoomScene::Start()
 	new Wall(Vector2(14, 0));
 	new Furniture(Furniture::LivingRoomCabinet, Vector2(1, 1));
 	new Furniture(Furniture::Television, Vector2(3, 1));
+	new Furniture(Furniture::Television, Vector2(4, 1),true);
 	new Furniture(Furniture::LivingroomTable, Vector2(2, 4));
+	new Furniture(Furniture::LivingroomTable, Vector2(3, 4), true);
+	new Furniture(Furniture::LivingroomTable, Vector2(4, 4), true);
+	new Furniture(Furniture::LivingroomTable, Vector2(5, 4), true);
+	new Furniture(Furniture::LivingroomTable, Vector2(6, 4), true);
+	new Furniture(Furniture::LivingroomTable, Vector2(7, 4), true);
+	new Furniture(Furniture::LivingroomTable, Vector2(7, 5), true);
 	new Furniture(Furniture::EmptySofa, Vector2(1, 4));
 
 	gm.CreatePlayer(Vector2(11, 6));

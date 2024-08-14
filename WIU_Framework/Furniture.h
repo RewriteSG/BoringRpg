@@ -23,7 +23,8 @@ public:
 		ToolBox,
 		Stove,
 		Bed,
-		TrashCan
+		TrashCan,
+
 	};
 
 	///// Furnitures

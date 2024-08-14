@@ -13,6 +13,7 @@ PickupableItem::TypeOfPickup* InventoryManager::getItemInInventory(PickupableIte
 
 InventoryManager::InventoryManager()
 {
+	Items = nullptr;
 	inventoryCurrentCapacity = 3;
 	inventoryMaxCapacity = 0;
 }
@@ -28,7 +29,7 @@ bool InventoryManager::PickupItem(PickupableItem::TypeOfPickup typeofPickup)
 
 PickupableItem::TypeOfPickup** InventoryManager::GetItems()
 {
-	return nullptr;
+	return Items;
 }
 
 bool InventoryManager::InventoryHasItems(PickupableItem::TypeOfPickup item1)
