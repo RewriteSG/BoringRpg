@@ -1,6 +1,7 @@
 #include "InteractionsManager.h"
-
-
+#include "GameManager.h"
+#include "ObjectManager.h"
+#include "Furniture.h"
 
 InteractionsManager::InteractionsManager()
 {
@@ -9,8 +10,30 @@ InteractionsManager::InteractionsManager()
 
 void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
-	
+	Start();
+	ui->CreateOptionUI(Vector2(-2, 14), false);
+	if (hasSofaKeyCollected) 
+	{
+		ui->PrintDialogue(Vector2(-2, 14), "You: I don't think there is anything else I can do here.");
+	}
+	else 
+	{
+		ui->PrintDialogue(Vector2(-2, 14), "You: I hid my CABINET KEY under the sofa so no one can find it.");
+		ui->GetOptionUI()->AddOption(new std::string("Yes"));
+		ui->GetOptionUI()->AddOption(new std::string("No"));
+		int choosenItem = ui->PickDialogue(Vector2(-2, 14), "Pick up the key?");
+		switch (choosenItem)
+		{
+		case 0:
+			timer.increaseTimeTaken(5);
+			hasSofaKeyCollected = true;
+			GameManager::getGM()->inventory.PickupItem("Cabinet Key");
+			ui->PrintDialogue(Vector2(-2, 14), "Picked up CABINET KEY!");
+			break;
+		case 1:
+			break;
+		}
+	}
 }
 
 void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player, bool isNothing)
@@ -109,4 +132,14 @@ void InteractionsManager::KitchenDoorInteracted(GameObject* KitchenDoor, GameObj
 void InteractionsManager::BathroomDoorInteracted(GameObject* BathroomDoor, GameObject* player)
 {
 	timer.increaseTimeTaken(5);
+}
+
+void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, GameObject* player)
+{
+
+}
+
+void InteractionsManager::Start()
+{
+	ui = GameManager::getGM()->gameUI;
 }

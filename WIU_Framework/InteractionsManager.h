@@ -1,12 +1,13 @@
 #pragma once
 #include "GameObject.h"
 #include "TimeSystem.h"
+#include "UI.h"
 class InteractionsManager
 {
 public:
 	//timer
 	TimeSystem timer;
-
+	UI* ui;
 	
 	
 
@@ -48,5 +49,7 @@ public:
 	void ClosetDoorInteracted(GameObject* closetDoor, GameObject* player);
 	void KitchenDoorInteracted(GameObject* KitchenDoor, GameObject* player);
 	void BathroomDoorInteracted(GameObject* BathroomDoor, GameObject* player);
+	void ToiletCabinetInteracted(GameObject* toiletCabinet, GameObject* player);
+	void Start();
 };
 

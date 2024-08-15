@@ -41,6 +41,8 @@ void OptionUI::AddOption(std::string* text)
 	options[optionsSize++] = text;
 }
 
+int OptionUI::size() {return optionsSize;}
+
 int OptionUI::PeekIndex(const std::string item) const
 {
 	bool isItemFound = false;

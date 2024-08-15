@@ -1,6 +1,9 @@
 #include "InventoryManager.h"
 
-PickupableItem::TypeOfPickup* InventoryManager::getItemInInventory(PickupableItem::TypeOfPickup item)
+#include "MyFunctions.cpp"
+#include "GameManager.h"
+using namespace myFunctions;
+std::string * InventoryManager::getItemInInventory(std::string item)
 {
 
 	for (int i = 0; i < inventoryCurrentCapacity; i++)
@@ -14,26 +17,35 @@ PickupableItem::TypeOfPickup* InventoryManager::getItemInInventory(PickupableIte
 InventoryManager::InventoryManager()
 {
 	Items = nullptr;
-	inventoryCurrentCapacity = 3;
+	inventoryCurrentCapacity = 0;
 	inventoryMaxCapacity = 0;
 }
 
-bool InventoryManager::PickupItem(PickupableItem::TypeOfPickup typeofPickup)
+bool InventoryManager::PickupItem(std::string typeofPickup)
 {
-	if (inventoryCurrentCapacity >= inventoryCurrentCapacity)
-		return false;
-	PickupableItem::TypeOfPickup* newItem = new PickupableItem::TypeOfPickup; 
+	//if (inventoryCurrentCapacity >= inventoryCurrentCapacity)
+	//	return false;
+	std::string * newItem = new std::string ; 
 	*newItem = typeofPickup;
 	Items = ArrayAdd(Items, newItem, inventoryCurrentCapacity);
 	return true;
 }
 
-PickupableItem::TypeOfPickup** InventoryManager::GetItems()
+std::string ** InventoryManager::GetItems()
 {
 	return Items;
 }
 
-bool InventoryManager::InventoryHasItems(PickupableItem::TypeOfPickup item1)
+void InventoryManager::DisplayItems()
+{
+
+	for (int i = 0; i < inventoryCurrentCapacity; i++)
+	{
+		GameManager::getGM()->gameUI->CreateText(*Items[i], Vector2(-2, 4 + i));
+	}
+}
+
+bool InventoryManager::InventoryHasItems(std::string item1)
 {
 	bool hasItem1 = false; 
 	for (int i = 0; i < inventoryCurrentCapacity; i++)
@@ -44,7 +56,7 @@ bool InventoryManager::InventoryHasItems(PickupableItem::TypeOfPickup item1)
 	return hasItem1;
 }
 
-bool InventoryManager::InventoryHasItems(PickupableItem::TypeOfPickup item1, PickupableItem::TypeOfPickup item2)
+bool InventoryManager::InventoryHasItems(std::string item1, std::string item2)
 {
 	bool hasItem1 = false , hasItem2 = false; 
 
@@ -58,7 +70,7 @@ bool InventoryManager::InventoryHasItems(PickupableItem::TypeOfPickup item1, Pic
 	return hasItem1 && hasItem2;
 }
 
-bool InventoryManager::InventoryHasItems(PickupableItem::TypeOfPickup item1, PickupableItem::TypeOfPickup item2, PickupableItem::TypeOfPickup item3)
+bool InventoryManager::InventoryHasItems(std::string item1, std::string item2, std::string item3)
 {
 	bool hasItem1 = false, hasItem2 = false, hasItem3 = false; 
 
@@ -75,16 +87,16 @@ bool InventoryManager::InventoryHasItems(PickupableItem::TypeOfPickup item1, Pic
 	return hasItem1 && hasItem2 && hasItem3;
 }
 
-void InventoryManager::DropItem(PickupableItem::TypeOfPickup dropItem)
+void InventoryManager::DropItem(std::string dropItem)
 {
-	PickupableItem::TypeOfPickup* item = getItemInInventory(dropItem);
+	std::string * item = getItemInInventory(dropItem);
 	Items = ArrayRemove(Items, item, inventoryCurrentCapacity);
 
 }
 
-void InventoryManager::UseItem(PickupableItem::TypeOfPickup useItem)
+void InventoryManager::UseItem(std::string useItem)
 {
-	PickupableItem::TypeOfPickup* item = getItemInInventory(useItem);
+	std::string * item = getItemInInventory(useItem);
 	Items = ArrayRemove(Items, item, inventoryCurrentCapacity);
 
 }

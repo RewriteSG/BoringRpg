@@ -48,7 +48,7 @@ void UI::CreateBox(const Vector2 position, const std::string text, const int wid
 {
 	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
 	CreateBorder(position, width, height);
-	CreateText(text, position + Vector2(2, 1));
+	CreateText(text, position + Vector2(3, 2));
 }
 void UI::CreateText(const std::string text, const Vector2 position) const
 {
@@ -129,7 +129,7 @@ int UI::PickDialogue(const Vector2 position, const std::string text) const
 		Sleep(70);
 	}
 
-	if (optionUI == nullptr)
+	if (optionUI == nullptr || optionUI->size() < 1)
 		throw std::invalid_argument("No option UI instance object");
 
 	choosenOption =  optionUI->PickOption(Vector2(0, 2));

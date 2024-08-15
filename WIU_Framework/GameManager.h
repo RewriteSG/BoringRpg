@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Robber.h"
 #include "UI.h"
+#include "InventoryManager.h"
 using namespace std;
 /// <summary>
 /// A GameManager class where it handles the Game win and lose condition as well as Handling player's input. 
@@ -18,14 +19,15 @@ class GameManager
 private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
-	UI* gameUI;
 
 public:
+	UI* gameUI;
 	Player* player;
 
 	Robber* robber;
 	static GameManager* getGM();
 	InteractionsManager InteractionsMgr;
+	InventoryManager inventory;
 	TimeSystem TimeSys;
 	
 	GameManager();

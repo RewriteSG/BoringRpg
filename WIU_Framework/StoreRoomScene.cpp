@@ -42,11 +42,6 @@ void StoreRoomScene::Start()
 
 
 	gm.CreatePlayer(Vector2(7, 5));
-
-	UI gameUI(Vector2(130, 12));
-	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15);
-	gameUI.CreateBox(Vector2(0, 17), "Dialogue:", 40, 10);
-
 }
 
 void StoreRoomScene::Update()
