@@ -29,7 +29,10 @@ public:
 		ToolBox,
 		Stove,
 		Bed,
-		TrashCan
+		TrashCan,
+		EmptyBoxType1,
+		EmptyBoxType2,
+		Box,
 	};
 	/// <summary>
 	/// 

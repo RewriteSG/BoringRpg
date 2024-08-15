@@ -15,13 +15,29 @@
 #include "ToiletBowlSprite.h"
 #include "ShowerAreaSprite.h"
 #include "ToiletCabinetSprite.h"
+#include "BoxSprite.h"
+#include "EmptyBoxType1Sprite.h"
+#include "EmptyBoxType2Sprite.h"
+#include "PlanksSprite.h"
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 {
 	furniture = type;
 	*GetPosition() = toPos;
 	switch (furniture)
 	{
-	case Furniture::SofaKey:
+	case Furniture::SofaKey:						
+		break;
+	case Furniture::Box:
+		SetSprite(new BoxSprite());
+		break;
+	case Furniture::Planks:
+		SetSprite(new PlanksSprite());
+		break;
+	case Furniture::EmptyBoxType1:
+		SetSprite(new EmptyBoxType1Sprite());
+		break;
+	case Furniture::EmptyBoxType2:
+		SetSprite(new EmptyBoxType2Sprite());
 		break;
 	case Furniture::ToiletCabinet:
 		SetSprite(new ToiletCabinetSprite());
@@ -59,8 +75,6 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	case Furniture::KitchenCabinet:
 		break;
 	case Furniture::Sink:
-		break;
-	case Furniture::Planks:
 		break;
 	case Furniture::CardBoardBox:
 		break;
