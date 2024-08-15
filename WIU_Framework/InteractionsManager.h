@@ -31,7 +31,7 @@ public:
 	/// Furnitures
 	void SofaInteracted(GameObject* sofa, GameObject* player);
 	void SofaInteracted(GameObject* sofa, GameObject* player, bool isNothing);
-	void SinkInteracted(GameObject* sink, GameObject* player);
+	void ShowerInteracted(GameObject* sink, GameObject* player);
 	void SinkInteracted(GameObject* sink, GameObject* player, bool isNothing);
 	void PlanksInteracted(GameObject* planks, GameObject* player);
 	void ToolboxInteracted(GameObject* box, GameObject* player);

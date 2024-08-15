@@ -19,7 +19,7 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 	}
 	else 
 	{
-		ui->PrintDialogue(Vector2(-2, 14), "You: I hid my STOREROOM KEY under the sofa so no one can find it.");
+		ui->PrintDialogue(Vector2(-2, 14), "You: I remember hiding my STOREROOM KEY under the sofa so no one can find it.");
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
 		int choosenItem = ui->PickDialogue(Vector2(-2, 14), "Take the key?");
@@ -41,7 +41,7 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player, b
 {
 }
 
-void InteractionsManager::SinkInteracted(GameObject* sink, GameObject* player)
+void InteractionsManager::ShowerInteracted(GameObject* sink, GameObject* player)
 {
 	timer.increaseTimeTaken(5);
 }

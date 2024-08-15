@@ -150,7 +150,7 @@ void Furniture::Collided(GameObject* obj)
 		GameManager::getGM()->InteractionsMgr.KitchenCabinetInteracted(this, obj);
 		break;
 	case Furniture::Sink:
-		GameManager::getGM()->InteractionsMgr.SinkInteracted(this, obj);
+		GameManager::getGM()->InteractionsMgr.ShowerInteracted(this, obj);
 		break;
 	case Furniture::Planks:
 		GameManager::getGM()->InteractionsMgr.PlanksInteracted(this, obj);
