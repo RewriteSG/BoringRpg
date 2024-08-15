@@ -13,6 +13,8 @@ private:
 	void FontSize(const Vector2 size);
 	
 public:
+	static int numberOfColumns;
+	static int numberOfRows;
 	Application(void);
 
 	void Init(void);

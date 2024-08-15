@@ -5,6 +5,9 @@
 #include <iostream>
 #include "Windows.h"
 
+int Application::numberOfColumns = 0;
+int Application::numberOfRows = 0;
+
 void Application::FontSize(const Vector2 size)
 {
 	CONSOLE_FONT_INFOEX fontex{sizeof(CONSOLE_FONT_INFOEX) };
@@ -39,9 +42,14 @@ void Application::Init(void)
 	ScreenSMaximised();
 	HideCursor();
 
-	for (int i = 0; i < 43; ++i)
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	numberOfColumns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	numberOfRows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+
+	for (int i = 0; i < numberOfRows; ++i)
 	{
-		for (int j = 0; j < 316; ++j)
+		for (int j = 0; j < numberOfColumns; ++j)
 		{
 			Scene::ChangeColor(Scene::BG_COLOR);
 			std::cout << " ";
