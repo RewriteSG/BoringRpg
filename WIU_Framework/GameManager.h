@@ -7,7 +7,9 @@
 #include "InteractionsManager.h"
 #include "TimeSystem.h"
 #include "Player.h"
+#include "UI.h"
 using namespace std;
+
 /// <summary>
 /// A GameManager class where it handles the Game win and lose condition as well as Handling player's input. 
 /// </summary>
@@ -16,6 +18,7 @@ class GameManager
 private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
+	UI* gameUI;
 
 public:
 	Player* player;

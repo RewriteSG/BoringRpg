@@ -3,7 +3,8 @@
 #include "Player.h"
 #include "Wall.h"
 #include "Furniture.h"
-
+#include "UI.h"
+#include "conio.h"
 void LivingRoomScene::Start()
 {
 	Scene::Start();
@@ -58,6 +59,11 @@ void LivingRoomScene::Start()
 	new Furniture(Furniture::ToiletDoor, Vector2(10, 7));
 
 	gm.CreatePlayer(Vector2(11, 6));
+
+	UI gameUI(Vector2(130, 12));
+	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15);
+	gameUI.CreateBox(Vector2(0, 17), "Dialogue:", 40, 10);
+
 }
 
 void LivingRoomScene::Update()
