@@ -20,6 +20,11 @@ int Vector2::GetY() const
     return y;
 }
 
+int& Vector2::GetY()
+{
+    return y;
+}
+
 void Vector2::SetXandY(int _x, int _y)
 {
     x = _x;

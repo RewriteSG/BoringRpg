@@ -191,7 +191,6 @@
     <ClInclude Include="BedSprite.h" />
     <ClInclude Include="BoxSprite.h" />
     <ClInclude Include="ClockSprite.h" />
-    <ClInclude Include="DialogueUI.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="DoorSprites.h" />
     <ClInclude Include="EmptyBoxType1Sprite.h" />

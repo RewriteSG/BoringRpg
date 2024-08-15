@@ -11,7 +11,6 @@ private:
 	void ScreenSMaximised(void);
 	void HideCursor(void);
 	void FontSize(const Vector2 size);
-	void DrawBG(void);
 	
 public:
 	static int numberOfColumns;
@@ -21,6 +20,8 @@ public:
 	void Init(void);
 	void Update(void);
 	void Exit(void);
+	
+	static void DrawBG(void);
 	
 };
 
