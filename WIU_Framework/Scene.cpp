@@ -2,12 +2,13 @@
 #include "Windows.h"
 
 
+GameManager Scene::gm = GameManager();
 bool Scene::GetContinuePgrm() const
 {
 	return ContinuePgrm;
 }
 
-Scene::Scene() : world(Vector2(1, 2), 16, 10), objectManager(), gm()
+Scene::Scene() : world(Vector2(1, 2), 16, 10), objectManager()
 {
 	ContinuePgrm = true;
 }
@@ -24,6 +25,11 @@ void Scene::Start()
 void Scene::Update()
 {
 	objectManager.UpdateObjects();  // update objects at the start of the frame
+}
+
+void Scene::UpdateGameObjectsPos()
+{
+	objectManager.UpdatePositions(); 
 }
 
 void Scene::Render()
@@ -96,6 +102,7 @@ void Scene::ChangeColor(TypeColor color)
 	case Scene::Black:
 		SetConsoleTextAttribute(hConsole, 0);
 		break;
+	
 	case Scene::White:
 		SetConsoleTextAttribute(hConsole, 119);
 		break;
@@ -138,6 +145,7 @@ void Scene::ChangeColor(TypeColor color, bool tochar)
 	case Scene::Black:
 		SetConsoleTextAttribute(hConsole, 0);
 		break;
+	
 	case Scene::White:
 		SetConsoleTextAttribute(hConsole, 15);
 		break;

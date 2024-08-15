@@ -4,19 +4,17 @@
 #include "ObjectManager.h"
 #include "GameManager.h"
 #include <iostream>
-#include "UI.h"
 class Scene
 {
-public:
 	World world;
 	ObjectManager objectManager;
-	GameManager gm;
-
+public:
+	static GameManager gm; 
 	bool ContinuePgrm;
 	Scene();
 	virtual void Start();
 	virtual void Update();
-	
+	void UpdateGameObjectsPos();
 	virtual void Render();
 	virtual void Exit();
 	bool GetContinuePgrm() const;

@@ -7,6 +7,7 @@ GameObject::GameObject(void)
 	symbol = '*';
 	ObjectManager::getObjectManager()->InstantiateObject(this);
 	IsActive = true;
+	isRenderSprite = true;
 	sprite = new Sprite();
 	Start();
 }
@@ -19,6 +20,7 @@ GameObject::GameObject(Vector2 toPos)
 	position = toPos;
 	IsActive = true;
 	sprite = new Sprite();
+	isRenderSprite = true;
 	Start();
 }
 
@@ -75,6 +77,16 @@ void GameObject::SetSprite(Sprite* _sprite)
 Sprite* GameObject::GetSprite(void)
 {
 	return sprite;
+}
+
+bool GameObject::IsRenderingSprite()
+{
+	return isRenderSprite;
+}
+
+void GameObject::SetRenderSprite(bool toBool)
+{
+	isRenderSprite = toBool;
 }
 
 bool GameObject::GetActive(void) const

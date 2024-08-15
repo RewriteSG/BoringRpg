@@ -1,8 +1,15 @@
 #pragma once
 #include "GameObject.h"
+#include "TimeSystem.h"
 class InteractionsManager
 {
 public:
+	//timer
+	TimeSystem timer;
+
+	
+	
+
 	bool hasSofaKeyCollected;
 	bool hasClosetDoorOpened;
 	bool hasCalledTheCops;

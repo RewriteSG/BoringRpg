@@ -36,6 +36,7 @@ public:
 
 
 	void UpdateObjects(void);
+	void UpdatePositions();
 	static ObjectManager* getObjectManager();
 };
 

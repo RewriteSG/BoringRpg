@@ -15,28 +15,23 @@
 #include "ToiletBowlSprite.h"
 #include "ShowerAreaSprite.h"
 #include "ToiletCabinetSprite.h"
+#include "ClockSprite.h"
+#include "SceneManager.h"
 #include "BoxSprite.h"
 #include "EmptyBoxType1Sprite.h"
 #include "EmptyBoxType2Sprite.h"
 #include "PlanksSprite.h"
-#include "SinkSprite.h"
-#include "KitchenTableSprite.h"
+
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 {
 	furniture = type;
 	*GetPosition() = toPos;
 	switch (furniture)
 	{
-	case Furniture::SofaKey:						
+	case Furniture::SofaKey:
 		break;
 	case Furniture::Box:
 		SetSprite(new BoxSprite());
-		break;
-	case Furniture::Sink:
-		SetSprite(new SinkSprite());
-		break;
-	case Furniture::KitchenTable:
-		SetSprite(new KitchenTableSprite());
 		break;
 	case Furniture::Planks:
 		SetSprite(new PlanksSprite());
@@ -62,7 +57,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	case Furniture::ToiletDoor:
 		SetSprite(new ToiletDoorSprite());
 		break;
-	case Furniture::Door:
+	case Furniture::BedRoomDoor:
 		SetSprite(new DoorSprites());
 		break;
 	case Furniture::EmptySofa:
@@ -82,6 +77,8 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		break;
 	case Furniture::KitchenCabinet:
 		break;
+	case Furniture::Sink:
+		break;
 	case Furniture::CardBoardBox:
 		break;
 	case Furniture::LivingroomTable:
@@ -90,20 +87,34 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	case Furniture::Bedroomtable:
 		SetSprite(new BedroomTableSprite());
 		break;
+	case Furniture::Bed:
+		SetSprite(new BedSprite());
+		break;
 	case Furniture::Phone:
 		break;
 	case Furniture::ToolBox:
 		break;
 	case Furniture::Stove:
 		break;
-	case Furniture::Bed:
-		SetSprite(new BedSprite());
-		break;
 	case Furniture::TrashCan:
+		break;
+	case Furniture::Clock:
+
+		SetSprite(new ClockSprite());
+		break;
+	case Furniture::LivingRoomDoor:
+		SetSprite(new DoorSprites());
 		break;
 	default:
 		break;
 	}
+}
+
+Furniture::Furniture(TypeOfFurniture type, Vector2 toPos, bool isInvisible)
+{
+	furniture = type;
+	*GetPosition() = toPos;
+	SetRenderSprite(false);
 }
 
 void Furniture::Start()
@@ -164,6 +175,25 @@ void Furniture::Collided(GameObject* obj)
 		break;
 	case Furniture::TrashCan:
 		GameManager::getGM()->InteractionsMgr.TrashCanInteracted(this, obj, 0);
+		break;
+	case Furniture::Clock:
+		break;
+	case Furniture::BedRoomDoor:
+		SceneManager::LoadScene("BedroomScene");
+		break;
+	case Furniture::ToiletBowl:
+		break;
+	case Furniture::ShowerArea:
+		break;
+	case Furniture::ToiletCabinet:
+		break;
+	case Furniture::ToiletDoor:
+		SceneManager::LoadScene("ToiletScene");
+		break;
+	case Furniture::StoreRoomDoor:
+		break;
+	case Furniture::LivingRoomDoor:
+		SceneManager::LoadScene("LivingRoomScene");
 		break;
 	default:
 		break;

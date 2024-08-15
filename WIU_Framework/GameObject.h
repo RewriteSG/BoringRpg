@@ -11,6 +11,7 @@ protected:
 	Vector2 prevPosition;
 	Sprite* sprite;
 	bool IsActive;
+	bool isRenderSprite;
 
 public:
 	GameObject(void);
@@ -33,6 +34,8 @@ public:
 	void SetSprite(Sprite* sprite);
 	Sprite* GetSprite(void);
 
+	bool IsRenderingSprite();
+	void SetRenderSprite(bool);
 	bool GetActive(void) const;
 	void SetActive(bool setActive);
 
