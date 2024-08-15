@@ -1,6 +1,6 @@
 #pragma once
 #include "Sprite.h"
-class ¡‹‘°Sprite :
+class ToiletBowlSprite :
     public Sprite
 {
 

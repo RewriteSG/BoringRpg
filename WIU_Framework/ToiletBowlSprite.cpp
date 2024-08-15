@@ -1,9 +1,9 @@
-#include "ÂíÍ°Sprite.h"
+#include "ShowerAreaSprite.h"
 #include "World.h"
 #include "Scene.h"
 #include <iostream>
 
-	void ÂíÍ°Sprite::Render(int x, int y, Vector2 topLeft)
+	void ShowerAreaSprite::Render(int x, int y, Vector2 topLeft)
 	{/*Scene::GotoXY(x + (CellX * x), 0 + y + (y * CellY), topLeft);
 	std::cout << " ";*/
 		if (x >= 10) {
