@@ -11,7 +11,7 @@ InteractionsManager::InteractionsManager()
 
 void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 {
-	Start();
+	/*Start();
 	ui->CreateOptionUI(Vector2(-2, 14), false);
 	if (hasStoreRoomKeyCollected) 
 	{
@@ -34,7 +34,78 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 		case 1:
 			break;
 		}
+	}*/
+	Start();
+	ui->CreateOptionUI(Vector2(-2, 14), false);
+	int choosenItem;
+	switch (trashCanInteractions)
+	{
+	case 0:
+		ui->PrintDialogue(Vector2(-2, 14), "A trash can, not remarkable in any way.");
+		ui->GetOptionUI()->AddOption(new std::string("Yes"));
+		ui->GetOptionUI()->AddOption(new std::string("No"));
+		choosenItem = ui->PickDialogue(Vector2(-2, 14), "Search the trash can?");
+		switch (choosenItem)
+		{
+		case 0:
+			timer.increaseTimeTaken(5);
+			ui->PrintDialogue(Vector2(-2, 14), "You searched the trash can and found nothing.");
+
+			break;
+		case 1:
+			break;
+		}
+		break;
+	case 1:
+		ui->PrintDialogue(Vector2(-2, 14), "You've been staring at it for a while, but it's just an ordinary trash can.");
+		ui->PrintDialogue(Vector2(-2, 14), "You: Maybe try again?");
+		ui->GetOptionUI()->AddOption(new std::string("Yes"));
+		ui->GetOptionUI()->AddOption(new std::string("No"));
+		choosenItem = ui->PickDialogue(Vector2(-2, 14), "Search the trash can?");
+		switch (choosenItem)
+		{
+		case 0:
+			timer.increaseTimeTaken(5);
+			ui->PrintDialogue(Vector2(-2, 14), "You searched the trash can and found nothing.");
+
+			break;
+		case 1:
+			break;
+		}
+		break;
+	case 2:
+		ui->PrintDialogue(Vector2(-2, 14), "You try to hold back the urge to open it.");
+		ui->GetOptionUI()->AddOption(new std::string("Yes"));
+		ui->GetOptionUI()->AddOption(new std::string("No"));
+		choosenItem = ui->PickDialogue(Vector2(-2, 14), "Search the trash can?");
+		switch (choosenItem)
+		{
+		case 0:
+			ui->PrintDialogue(Vector2(-2, 14), "As you continue staring at the trash cans, they seem to turn before your very eyes.");
+			ui->PrintDialogue(Vector2(-2, 14), "The edges are no longer rusty, and the dents are smoothed over.");
+			ui->PrintDialogue(Vector2(-2, 14), "From under the lid comes a faint golden glow, sweet and alluring.");
+			ui->PrintDialogue(Vector2(-2, 14), "For a moment, the trash cans turn into treasure chests...And it's happening again.");
+			ui->PrintDialogue(Vector2(-2, 14), "You take a depth breath and open the lid.");
+			ui->PrintDialogue(Vector2(-2, 14), "It's empty...");
+			ui->PrintDialogue(Vector2(-2, 14), "Wait!");
+			ui->PrintDialogue(Vector2(-2, 14), "You reach deeper into the trash can.");
+			ui->PrintDialogue(Vector2(-2, 14), "There is still nothing.");
+			ui->PrintDialogue(Vector2(-2, 14), "You pry deeper, hoping to find something valuable.");
+			ui->PrintDialogue(Vector2(-2, 14), "Time passed, and you didn't notice someone opening the front door and walk behind you.");
+			ui->PrintDialogue(Vector2(-2, 14), "???: Just what are you doing?");
+			ui->PrintDialogue(Vector2(-2, 14), "You: Who's- ");
+			ui->PrintDialogue(Vector2(-2, 14), "Before you could turn around, the mysterious man snaps your neck");
+			ui->PrintDialogue(Vector2(-2, 14), "You died.");
+			ui->PrintDialogue(Vector2(-2, 14), "Secret Ending: Obsessed with trash");
+			//Game ends here, restart everything
+			break;
+		case 1:
+			break;
+		}
+		break;
+
 	}
+	trashCanInteractions++;
 }
 
 void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player, bool isNothing)
