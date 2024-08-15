@@ -5,6 +5,9 @@
 #include <iostream>
 #include "Windows.h"
 
+int Application::numberOfColumns = 0;
+int Application::numberOfRows = 0;
+
 void Application::FontSize(const Vector2 size)
 {
 	CONSOLE_FONT_INFOEX fontex{sizeof(CONSOLE_FONT_INFOEX) };
@@ -13,6 +16,23 @@ void Application::FontSize(const Vector2 size)
 	fontex.dwFontSize.X = size.GetX(); // Width of each character in pixels
 	fontex.dwFontSize.Y = size.GetY(); // Height of each character in pixels
 	SetCurrentConsoleFontEx(hOut, false, &fontex);
+}
+void Application::DrawBG(void)
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	numberOfColumns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	numberOfRows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+
+	for (int i = 0; i < numberOfRows; ++i)
+	{
+		for (int j = 0; j < numberOfColumns; ++j)
+		{
+			Scene::ChangeColor(Scene::BG_COLOR);
+			std::cout << " ";
+		}
+		std::cout << std::endl;
+	}
 }
 void Application::ScreenSMaximised(void) 
 {
@@ -38,16 +58,7 @@ void Application::Init(void)
 	FontSize(Vector2(9, 18));
 	ScreenSMaximised();
 	HideCursor();
-
-	for (int i = 0; i < 43; ++i)
-	{
-		for (int j = 0; j < 172; ++j)
-		{
-			Scene::ChangeColor(Scene::BG_COLOR);
-			std::cout << " ";
-		}
-		std::cout << std::endl;
-	}
+	DrawBG();
 
 	sceneMgr->Start();
 }

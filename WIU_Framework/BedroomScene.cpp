@@ -63,10 +63,13 @@ void BedroomScene::Start()
 	new Furniture(Furniture::BedroomCabinet1, Vector2(3, 1));
 	new Furniture(Furniture::Bedroomtable, Vector2(5, 1));
 	new Furniture(Furniture::BedroomCabinet2, Vector2(13, 1));
-	UI gameUI(Vector2(130, 12));
-	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15);
-	gameUI.CreateBox(Vector2(0, 17), "Dialogue:", 40, 10);
+	new Furniture(Furniture::Door, Vector2(5, 9));
 
+	gm.CreatePlayer(Vector2(5, 8));
+
+	UI gameUI(Vector2(130, 12)); 
+	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15); 
+	gameUI.CreateBox(Vector2(0, 17), "Dialogue:", 40, 10); 
 }
 
 void BedroomScene::Update()
