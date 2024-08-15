@@ -165,6 +165,7 @@
     <ClCompile Include="ShowerAreaSprite.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StoreRoomDoorSprite.cpp" />
+    <ClCompile Include="StoreRoomScene.cpp" />
     <ClCompile Include="TelevisionSprite.cpp" />
     <ClCompile Include="TimeSystem.cpp" />
     <ClCompile Include="ToiletBowlSprite.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="ShowerAreaSprite.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StoreRoomDoorSprite.h" />
+    <ClInclude Include="StoreRoomScene.h" />
     <ClInclude Include="TelevisionSprite.h" />
     <ClInclude Include="TimeSystem.h" />
     <ClInclude Include="ToiletBowlSprite.h" />
