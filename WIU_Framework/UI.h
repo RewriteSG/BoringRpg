@@ -10,8 +10,11 @@ private:
 	int color;
 
 	void CreateBorder(const Vector2 position, const int width, const int height) const;
+
+	static int rows;
 public:
 	UI(const Vector2 position = Vector2(0, 0), const int _color = 0);
+	UI(const Vector2 position, const int _color, const int rows);
 	~UI(void);
 
 	void CreateBox(const Vector2 position, const std::string text, const int width, const int height) const;

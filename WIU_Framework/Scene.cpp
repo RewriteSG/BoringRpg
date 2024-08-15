@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Windows.h"
+#include "Application.h"
 
 
 GameManager Scene::gm = GameManager();
@@ -15,6 +16,7 @@ Scene::Scene() : world(Vector2(1, 2), 16, 10), objectManager()
 
 void Scene::Start()
 {
+	Application::DrawBG();
 	world.Start();
 	objectManager.Start();
 	gm.Start();

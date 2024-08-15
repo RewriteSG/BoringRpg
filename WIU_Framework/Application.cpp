@@ -23,7 +23,7 @@ void Application::DrawBG(void)
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
 	numberOfColumns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
 	numberOfRows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-
+	Scene::GotoXY(0, 0);
 	for (int i = 0; i < numberOfRows; ++i)
 	{
 		for (int j = 0; j < numberOfColumns; ++j)
@@ -58,13 +58,12 @@ void Application::Init(void)
 	FontSize(Vector2(9, 18));
 	ScreenSMaximised();
 	HideCursor();
-	DrawBG();
-
-	sceneMgr->Start();
 }
 
 void Application::Update(void)
 {
+	DrawBG();
+	sceneMgr->Start();
 	do
 	{
 		sceneMgr->Update();

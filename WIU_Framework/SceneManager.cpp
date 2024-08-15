@@ -21,6 +21,7 @@ void SceneManager::Start(void)
 
 void SceneManager::Update(void)
 {
+
 	currentScene->Update();
 	currentScene->Render();
 	currentScene->UpdateGameObjectsPos();

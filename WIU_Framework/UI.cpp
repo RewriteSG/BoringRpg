@@ -3,9 +3,17 @@
 #include "conio.h"
 #include "Windows.h"
 
+
+int UI::rows = 0;
+
 UI::UI(const Vector2 _position, const int _color) : optionUI(nullptr), position(_position), color(_color)
 {
 	Scene::ChangeColor(_color);
+}
+
+UI::UI(const Vector2 _position, const int _color, const int rows) : optionUI(nullptr), position(_position), color(_color)
+{
+	this->rows = rows;
 }
 
 UI::~UI(void)
