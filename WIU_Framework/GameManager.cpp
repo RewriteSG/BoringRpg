@@ -5,11 +5,13 @@
 #include "Windows.h"
 #include "SceneManager.h"
 #include "MainMenu.h"
+#include "Player.h"
+#include "conio.h"
 using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
 
-GameManager::GameManager()
+GameManager::GameManager() : gameUI(nullptr)
 {
 	GM_Instance = this;
 	//Weapon = nullptr;
@@ -29,17 +31,21 @@ void GameManager::Start()
 	GM_Instance = this;
 	GameEnded = false;
 	GameWon = true;
+
+	gameUI = new UI(Vector2(130, 12), 7);
+	gameUI->CreateOptionUI(Vector2(1, 19), false);
+
 }
 void GameManager::Update()
 {
-	GameEnded = false;
-	MainMenu* menu = dynamic_cast<MainMenu*>(SceneManager::currentScene);
-	if (menu)
-		return;
-	PromptInput();
+	/*for (int i = 0; i < inventory.count; i++)
+	{
+		gameUI->CreateOptionUI()
+	}*/
+	//gameUI->PickDialogue(Vector2(1, 19), "Pick one please");
 	HandleInput();
-	
 }
+
 void GameManager::Exit()
 {
 
@@ -47,9 +53,9 @@ void GameManager::Exit()
 
 void GameManager::PromptInput()
 {
-	Scene::GotoXY(110, 48);
+	Scene::GotoXY(110, 36);
 	cout << "Input:";
-	Scene::GotoXY(117, 48);
+	Scene::GotoXY(117, 36);
 }
 void GameManager::HandleInput(void)
 {
@@ -74,6 +80,7 @@ void GameManager::HandleInput(void)
 		//Move left
 		break;
 	}
+
 }
 
 bool GameManager::GetGameEnded() const

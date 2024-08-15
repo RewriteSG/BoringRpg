@@ -3,7 +3,6 @@
 #include "BedroomScene.h"
 #include "LivingRoomScene.h"
 #include "Windows.h"
-#include "ToiletScene.h"
 #include "MainMenu.h"
 #include <cwchar>
 Scene* SceneManager::currentScene = nullptr;
@@ -21,7 +20,11 @@ void SceneManager::Update(void)
 {
 	currentScene->Update();
 	currentScene->Render();
+
+	MainMenu* menu = dynamic_cast<MainMenu*>(currentScene);
+	if(!menu)
 	currentScene->gm.Update();
+	currentScene->Render(); 
 
 	if (nextScene) 
 	{

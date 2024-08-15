@@ -2,7 +2,7 @@
 #include "string"
 TimeSystem::TimeSystem()
 {
-	TimeLimitForRobber = 720;
+	RobberTime = 720;
 	TimeLimitForCops = 900;
 }
 
@@ -21,6 +21,10 @@ void TimeSystem::decreaseTimeTaken(int time)
 {
 	TimeTaken -= time;
 }
+void TimeSystem::increaseRobberTime(int time) {
+	RobberTime += time;
+}
+
 std::string TimeSystem::GetTimeinString(int time)
 {
 	//display time in min & sec

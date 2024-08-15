@@ -1,6 +1,8 @@
 #include "MainMenu.h"
 #include "SceneManager.h"
 #include "ExampleScene.h"
+#include "BedroomScene.h"
+#include "LivingRoomScene.h"
 #include "ToiletScene.h"
 void MainMenu::DrawClock(const int size) const
 {
@@ -71,8 +73,9 @@ void MainMenu::Start(void)
 
 void MainMenu::Update(void)
 {
-	UI systemUI(Vector2(172 / 2, 43 / 2));
-	systemUI.CreateOptionUI(" ", 112, 10, 10);
+	UI systemUI(Vector2(172 / 2, 43 / 2), 112);
+	systemUI.CreateOptionUI(Vector2(), true);	
+
 
 	systemUI.GetOptionUI()->AddOption(new std::string("Play"));
 	systemUI.GetOptionUI()->AddOption(new std::string("Endings"));
@@ -82,10 +85,10 @@ void MainMenu::Update(void)
 
 	switch (choice)
 	{
-	case 1:
-		SceneManager::LoadScene(new ToiletScene());
+	case 0:
+		SceneManager::LoadScene(new LivingRoomScene());
 		break;
-	case 3:
+	case 2:
 		exit(0);
 		break;
 	}
