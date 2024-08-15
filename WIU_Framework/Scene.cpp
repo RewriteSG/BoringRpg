@@ -106,6 +106,7 @@ void Scene::ChangeColor(TypeColor color)
 	case Scene::Black:
 		SetConsoleTextAttribute(hConsole, 0);
 		break;
+	
 	case Scene::White:
 		SetConsoleTextAttribute(hConsole, 119);
 		break;
@@ -148,6 +149,7 @@ void Scene::ChangeColor(TypeColor color, bool tochar)
 	case Scene::Black:
 		SetConsoleTextAttribute(hConsole, 0);
 		break;
+	
 	case Scene::White:
 		SetConsoleTextAttribute(hConsole, 15);
 		break;

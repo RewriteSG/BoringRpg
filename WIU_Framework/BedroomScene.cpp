@@ -67,6 +67,8 @@ void BedroomScene::Start()
 	new Furniture(Furniture::BedroomCabinet2, Vector2(13, 1));
 	new Furniture(Furniture::BedroomCabinet2, Vector2(13, 2), true);
 
+
+	new Robber(Vector2(6, 2));
 	gm.CreatePlayer(Vector2(5, 8));
 }
 

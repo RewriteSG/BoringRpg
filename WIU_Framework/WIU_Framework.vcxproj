@@ -156,6 +156,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerSprite.cpp" />
     <ClCompile Include="Robber.cpp" />
+    <ClCompile Include="RobberDownSprite.cpp" />
     <ClCompile Include="RobberSprite.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSprite.h" />
     <ClInclude Include="Robber.h" />
+    <ClInclude Include="RobberDownSprite.h" />
     <ClInclude Include="RobberSprite.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
