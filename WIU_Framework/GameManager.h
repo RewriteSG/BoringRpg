@@ -25,6 +25,7 @@ public:
 	static GameManager* getGM();
 	InteractionsManager InteractionsMgr;
 	TimeSystem TimeSys;
+	
 	GameManager();
 
 	void Start();

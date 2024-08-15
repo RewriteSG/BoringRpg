@@ -136,6 +136,8 @@ void World::Render(GameObject** objects, int objectsCount) const
 	for (int i = 0; i < objectsCount; i++)
 	{
 		pos = objects[i]->GetPosition();
+		if (!objects[i]->IsRenderingSprite())
+			continue;
 		if (*pos != objects[i]->GetPrevPosition())
 		{
 

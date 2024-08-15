@@ -133,6 +133,7 @@
     <ClCompile Include="BedroomScene.cpp" />
     <ClCompile Include="BedroomTableSprite.cpp" />
     <ClCompile Include="BedSprite.cpp" />
+    <ClCompile Include="ClockSprite.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="DoorSprites.cpp" />
     <ClCompile Include="EmptySofaSprite.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InteractionsManager.cpp" />
+    <ClCompile Include="InventoryManager.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="LivingRoomCabinetSprite.cpp" />
     <ClCompile Include="LivingRoomScene.cpp" />
@@ -151,6 +153,8 @@
     <ClCompile Include="MyFunctions.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="OptionUI.cpp" />
+    <ClCompile Include="PickupableItem.cpp" />
+    <ClCompile Include="PickupSprite.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerSprite.cpp" />
     <ClCompile Include="Robber.cpp" />
@@ -179,6 +183,7 @@
     <ClInclude Include="BedroomScene.h" />
     <ClInclude Include="BedroomTableSprite.h" />
     <ClInclude Include="BedSprite.h" />
+    <ClInclude Include="ClockSprite.h" />
     <ClInclude Include="DialogueUI.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="DoorSprites.h" />
@@ -189,6 +194,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InteractionsManager.h" />
+    <ClInclude Include="InventoryManager.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="LivingRoomCabinetSprite.h" />
     <ClInclude Include="LivingRoomScene.h" />
@@ -196,9 +202,10 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="OptionUI.h" />
+    <ClInclude Include="PickupableItem.h" />
+    <ClInclude Include="PickupSprite.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSprite.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Robber.h" />
     <ClInclude Include="RobberSprite.h" />
     <ClInclude Include="Scene.h" />

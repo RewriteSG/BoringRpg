@@ -8,6 +8,7 @@
 void LivingRoomScene::Start()
 {
 	Scene::Start();
+	new Furniture(Furniture::Clock, Vector2(12, 0)); 
 	new Wall(Vector2(0, 0));
 	new Wall(Vector2(0, 1));
 	new Wall(Vector2(0, 2));
@@ -52,12 +53,19 @@ void LivingRoomScene::Start()
 	new Wall(Vector2(14, 0));
 	new Furniture(Furniture::LivingRoomCabinet, Vector2(1, 1));
 	new Furniture(Furniture::Television, Vector2(3, 1));
+	new Furniture(Furniture::Television, Vector2(4, 1),true);
 	new Furniture(Furniture::LivingroomTable, Vector2(2, 4));
+	new Furniture(Furniture::LivingroomTable, Vector2(3, 4), true);
+	new Furniture(Furniture::LivingroomTable, Vector2(4, 4), true);
+	new Furniture(Furniture::LivingroomTable, Vector2(5, 4), true);
+	new Furniture(Furniture::LivingroomTable, Vector2(6, 4), true);
+	new Furniture(Furniture::LivingroomTable, Vector2(7, 5), true);
+	new Furniture(Furniture::LivingroomTable, Vector2(7, 4), true);
 	new Furniture(Furniture::EmptySofa, Vector2(1, 4));
-	new Furniture(Furniture::Door, Vector2(8, 0));
+	new Furniture(Furniture::SofaKey, Vector2(7, 6));
+	new Furniture(Furniture::BedRoomDoor, Vector2(8, 0));
 	new Furniture(Furniture::StoreRoomDoor, Vector2(0, 3));
 	new Furniture(Furniture::ToiletDoor, Vector2(10, 7));
-
 	gm.CreatePlayer(Vector2(11, 6));
 
 	UI gameUI(Vector2(130, 12));
