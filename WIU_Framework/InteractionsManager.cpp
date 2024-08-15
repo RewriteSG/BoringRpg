@@ -261,7 +261,7 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 		{
 		case 0:
 			timer.increaseTimeTaken(5);
-			ui->PrintDialogue(Vector2(-2, 14), "You ate some beta blockers, you feel calm as ever!");
+			ui->PrintDialogue(Vector2(-2, 14), "You took some beta blockers, you feel calm as ever!");
 			break;
 		case 1:
 			break;

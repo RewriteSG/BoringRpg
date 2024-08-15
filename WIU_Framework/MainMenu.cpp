@@ -65,7 +65,7 @@ void MainMenu::DrawClock(const int size) const
 void MainMenu::Start(void)
 {
 	Scene::ChangeColor(112);
-	std::string tittle = " EVERY SECOND COUNT! ";
+	std::string tittle = " EVERY SECOND COUNTS ";
 	Scene::GotoXY(172 / 2 - (int)tittle.length() / 2, 4);
 	std::cout << tittle;
 
