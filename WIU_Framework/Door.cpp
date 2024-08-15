@@ -18,7 +18,7 @@ void Door::Collided(GameObject* obj)
 		GameManager::getGM()->InteractionsMgr.ClosetDoorInteracted(this, obj);
 		break;
 	case Door::BathroomDoor:
-		GameManager::getGM()->InteractionsMgr.BathroomDoorInteracted(this, obj);
+		GameManager::getGM()->InteractionsMgr.ToiletDoorInteracted(this, obj);
 		break;
 	case Door::MainDoor:
 		GameManager::getGM()->InteractionsMgr.MainDoorInteracted(this, obj);

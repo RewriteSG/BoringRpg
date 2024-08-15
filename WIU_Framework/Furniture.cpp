@@ -179,7 +179,7 @@ void Furniture::Collided(GameObject* obj)
 	case Furniture::Clock:
 		break;
 	case Furniture::BedRoomDoor:
-		SceneManager::LoadScene("BedroomScene");
+	GameManager::getGM()->InteractionsMgr.BedroomDoorInteracted(this, obj);
 		break;
 	case Furniture::ToiletBowl:
 		break;
@@ -187,16 +187,15 @@ void Furniture::Collided(GameObject* obj)
 		break;
 	case Furniture::ToiletCabinet:
 		GameManager::getGM()->InteractionsMgr.ToiletCabinetInteracted(this, obj);
-
 		break;
 	case Furniture::ToiletDoor:
-		SceneManager::LoadScene("ToiletScene");
+		GameManager::getGM()->InteractionsMgr.ToiletDoorInteracted(this, obj);
 		break;
 	case Furniture::StoreRoomDoor:
 		SceneManager::LoadScene("StoreRoomScene");
 		break;
 	case Furniture::LivingRoomDoor:
-		SceneManager::LoadScene("LivingRoomScene");
+		GameManager::getGM()->InteractionsMgr.LivingRoomDoorInteracted(this, obj);
 		break;
 	default:
 		break;

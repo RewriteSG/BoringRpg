@@ -10,9 +10,9 @@ public:
 	UI* ui;
 	
 	
-
-	bool hasSofaKeyCollected;
-	bool hasClosetDoorOpened;
+	bool hasCabinetKeyCollected;
+	bool hasStoreRoomKeyCollected;
+	bool hasClosetKeyCollected;
 	bool hasCalledTheCops;
 	bool hasHammer;
 	bool hasNails;
@@ -21,6 +21,9 @@ public:
 	bool hasKnife;
 	bool hasDuctTape;
 	bool hasMetalPan;
+
+
+	int trashCanInteractions = 0;
 
 
 	InteractionsManager();
@@ -42,14 +45,14 @@ public:
 	void BedRoomCabinetInteracted(GameObject* bedRoomCabinet, GameObject* player);
 	void BedInteracted(GameObject* bed, GameObject* player);
 	void TelevisionInteracted(GameObject* bed, GameObject* player);
-
+	void ToiletCabinetInteracted(GameObject* toiletCabinet, GameObject* player);
 	/// Doors
 	void MainDoorInteracted(GameObject* MainDoor, GameObject* player);
 	void BedroomDoorInteracted(GameObject* BedroomDoor, GameObject* player);
 	void ClosetDoorInteracted(GameObject* closetDoor, GameObject* player);
 	void KitchenDoorInteracted(GameObject* KitchenDoor, GameObject* player);
-	void BathroomDoorInteracted(GameObject* BathroomDoor, GameObject* player);
-	void ToiletCabinetInteracted(GameObject* toiletCabinet, GameObject* player);
+	void ToiletDoorInteracted(GameObject* BathroomDoor, GameObject* player);
+	void LivingRoomDoorInteracted(GameObject* BathroomDoor, GameObject* player);
 	void Start();
 };
 
