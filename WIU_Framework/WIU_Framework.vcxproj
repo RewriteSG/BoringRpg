@@ -171,7 +171,6 @@
     <ClInclude Include="BedroomScene.h" />
     <ClInclude Include="BedroomTableSprite.h" />
     <ClInclude Include="BedSprite.h" />
-    <ClInclude Include="DialogueUI.h" />
     <ClInclude Include="EmptySofaSprite.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExampleScene.h" />

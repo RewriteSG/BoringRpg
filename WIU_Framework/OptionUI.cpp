@@ -65,7 +65,7 @@ void OptionUI::Clear(const Vector2 position) const
 {
 	for (int i = 0; i < optionsSize; ++i)
 	{
-		Scene::GotoXY(position.GetX(), position.GetY() + i, this->position);
+		Scene::GotoXY(position.GetX() - ((isCenter) ? (int)options[i]->length() / 2 : 0), position.GetY() + i, this->position);
 		for (char& ch : *options[i])
 		{
 			std::cout << " ";
@@ -105,9 +105,10 @@ int OptionUI::PickOption(const Vector2 position) const
 
 		if (key == '\r')
 		{
-			for (int i = 1; i <= optionsSize; ++i)
+
+			for (int i = 0; i < optionsSize; ++i)
 			{
-				if (counter == PeekIndex(*options[i - 1]))
+				if (counter - 1 == PeekIndex(*options[i]))
 					choosenOption = counter;
 			}
 			break;
