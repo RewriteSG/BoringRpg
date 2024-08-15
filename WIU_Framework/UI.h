@@ -15,7 +15,6 @@ public:
 	~UI(void);
 
 	void CreateBox(const Vector2 position, const std::string text, const int width, const int height) const;
-
 	void CreateText(const std::string text, const Vector2 position = Vector2()) const;
 
 	void CreateOptionUI(const Vector2 optionPosition, const bool isCenter);

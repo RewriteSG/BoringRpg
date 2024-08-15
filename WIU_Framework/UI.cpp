@@ -22,7 +22,24 @@ void UI::CreateBorder(const Vector2 position,  int width, const int height) cons
 		Scene::GotoXY(position.GetX(), position.GetY() + i, this->position);
 		for (int j = 0; j < width; ++j)
 		{
-			std::cout << " ";
+			if (i == 0 || i == height - 1)
+			{
+				Scene::ChangeColor(Scene::White);
+				std::cout << " ";
+			}
+			else
+			{
+				if (j == 0 || j == 1 || j == width - 2 || j == width - 1)
+				{
+					Scene::ChangeColor(Scene::White);
+					std::cout << " ";
+				}
+				else
+				{
+					Scene::ChangeColor(Scene::Black);
+					std::cout << " ";
+				}
+			}
 		}
 	}
 }
@@ -31,7 +48,7 @@ void UI::CreateBox(const Vector2 position, const std::string text, const int wid
 {
 	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
 	CreateBorder(position, width, height);
-	CreateText(text, position);
+	CreateText(text, position + Vector2(2, 1));
 }
 void UI::CreateText(const std::string text, const Vector2 position) const
 {
