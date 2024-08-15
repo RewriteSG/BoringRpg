@@ -34,11 +34,11 @@ void GameManager::Start()
 	GameWon = true;
 
 	gameUI = new UI(Vector2(130, 12), 7);
-	gameUI->CreateOptionUI(Vector2(1, 19), false);
 
 }
 void GameManager::Update()
 {
+	inventory.DisplayItems();
 	HandleInput();
 }
 
@@ -95,6 +95,10 @@ void GameManager::CreatePlayer(Vector2 toPos)
 	player = new Player();
 	if (SceneManager::prevScene == "BedroomScene")
 		toPos = Vector2(8, 1);
+	if (SceneManager::prevScene == "StoreRoomScene")
+		toPos = Vector2(1, 3);
+	if (SceneManager::prevScene == "ToiletScene")
+		toPos = Vector2(10, 6);
 	*player->GetPosition() = toPos;
 }
 void GameManager::CreateRobber(Vector2 toPos)

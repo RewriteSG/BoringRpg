@@ -21,6 +21,8 @@ public:
 	int PeekIndex(const std::string item) const;
 	void AddOption(std::string* text);
 
+	int size();
+
 	void Clear(const Vector2 position) const;
 	int PickOption(const Vector2 position) const;
 };

@@ -69,11 +69,6 @@ void LivingRoomScene::Start()
 	new Furniture(Furniture::StoreRoomDoor, Vector2(0, 3));
 	new Furniture(Furniture::ToiletDoor, Vector2(10, 7));
 	gm.CreatePlayer(Vector2(11, 6));
-
-	UI gameUI(Vector2(130, 12));
-	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15);
-	gameUI.CreateBox(Vector2(0, 17), "", 40, 10);
-
 	gm.CreateRobber(Vector2(5, 3));
 }
 

@@ -72,10 +72,6 @@ void BedroomScene::Start()
 
 	new Robber(Vector2(6, 2));
 	gm.CreatePlayer(Vector2(5, 8));
-
-	UI gameUI(Vector2(130, 12)); 
-	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15); 
-	gameUI.CreateBox(Vector2(0, 17), "", 40, 10); 
 }
 
 void BedroomScene::Update()
