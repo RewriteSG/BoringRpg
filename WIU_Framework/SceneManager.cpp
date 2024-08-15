@@ -20,6 +20,9 @@ void SceneManager::Update(void)
 {
 	currentScene->Update();
 	currentScene->Render();
+
+	MainMenu* menu = dynamic_cast<MainMenu*>(currentScene);
+	if(!menu)
 	currentScene->gm.Update();
 	currentScene->Render(); 
 

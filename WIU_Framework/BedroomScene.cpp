@@ -3,7 +3,8 @@
 #include "Player.h"
 #include "Wall.h"
 #include "Furniture.h"
-
+#include "UI.h"
+#include "conio.h"
 BedroomScene::BedroomScene()
 {
 }
@@ -59,15 +60,16 @@ void BedroomScene::Start()
 	new Wall(Vector2(13, 0));
 	new Wall(Vector2(14, 0));
 	new Furniture(Furniture::Bed, Vector2(1, 1));
-	new Furniture(Furniture::Bed, Vector2(1, 2),true);
-	new Furniture(Furniture::Bed, Vector2(2, 2), true);
 	new Furniture(Furniture::BedroomCabinet1, Vector2(3, 1));
 	new Furniture(Furniture::Bedroomtable, Vector2(5, 1));
-	new Furniture(Furniture::Bedroomtable, Vector2(6, 1), true);
 	new Furniture(Furniture::BedroomCabinet2, Vector2(13, 1));
-	new Furniture(Furniture::BedroomCabinet2, Vector2(13, 2), true);
+	new Furniture(Furniture::Door, Vector2(5, 9));
 
 	gm.CreatePlayer(Vector2(5, 8));
+
+	UI gameUI(Vector2(130, 12)); 
+	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15); 
+	gameUI.CreateBox(Vector2(0, 17), "Dialogue:", 40, 10); 
 }
 
 void BedroomScene::Update()

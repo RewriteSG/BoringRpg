@@ -1,13 +1,13 @@
 #include "Scene.h"
 #include "Windows.h"
 
-GameManager Scene::gm = GameManager();
+
 bool Scene::GetContinuePgrm() const
 {
 	return ContinuePgrm;
 }
 
-Scene::Scene() : world(Vector2(1, 2), 16, 10), objectManager()
+Scene::Scene() : world(Vector2(1, 2), 16, 10), objectManager(), gm()
 {
 	ContinuePgrm = true;
 }
@@ -16,14 +16,9 @@ void Scene::Start()
 {
 	world.Start();
 	objectManager.Start();
-	//gm.Start();
-
-	// Instantiate Objects here
-	// For Example 
-	//new Entity(Vector2(4, 4));
+	gm.Start();
 
 	world.Render();
-
 }
 
 void Scene::Update()
@@ -98,7 +93,6 @@ void Scene::ChangeColor(TypeColor color)
 		break;
 	case Scene::Yellow:
 		SetConsoleTextAttribute(hConsole, 102);
-		break;
 	case Scene::Black:
 		SetConsoleTextAttribute(hConsole, 0);
 		break;
