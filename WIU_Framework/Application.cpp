@@ -17,6 +17,23 @@ void Application::FontSize(const Vector2 size)
 	fontex.dwFontSize.Y = size.GetY(); // Height of each character in pixels
 	SetCurrentConsoleFontEx(hOut, false, &fontex);
 }
+void Application::DrawBG(void)
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	numberOfColumns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	numberOfRows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+
+	for (int i = 0; i < numberOfRows; ++i)
+	{
+		for (int j = 0; j < numberOfColumns; ++j)
+		{
+			Scene::ChangeColor(Scene::BG_COLOR);
+			std::cout << " ";
+		}
+		std::cout << std::endl;
+	}
+}
 void Application::ScreenSMaximised(void) 
 {
 	// Get the console window handle
@@ -41,21 +58,7 @@ void Application::Init(void)
 	FontSize(Vector2(9, 18));
 	ScreenSMaximised();
 	HideCursor();
-
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-	numberOfColumns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-	numberOfRows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-
-	for (int i = 0; i < numberOfRows; ++i)
-	{
-		for (int j = 0; j < numberOfColumns; ++j)
-		{
-			Scene::ChangeColor(Scene::BG_COLOR);
-			std::cout << " ";
-		}
-		std::cout << std::endl;
-	}
+	DrawBG();
 
 	sceneMgr->Start();
 }
