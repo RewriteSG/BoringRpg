@@ -9,7 +9,7 @@ private:
 
 	int color;
 
-	void CreateBorder(const Vector2 position, const int width, const int height) const;
+	void CreateBorder(const Vector2 position, const int height) const;
 
 	static int rows;
 public:
@@ -17,12 +17,12 @@ public:
 	UI(const Vector2 position, const int _color, const int rows);
 	~UI(void);
 
-	void CreateBox(const Vector2 position, const std::string text, const int width, const int height) const;
+	void CreateBox(const Vector2 position, const std::string text, const int height) const;
 	void CreateText(const std::string text, const Vector2 position = Vector2()) const;
 	
 	void CreateOptionUI(const Vector2 optionPosition, const bool isCenter);
 	OptionUI* GetOptionUI(void) const;
 
-	void PrintDialogue(const Vector2 position, const std::string text) const;
-	int PickDialogue(const Vector2 position, const std::string text) const;
+	void PrintDialogue(Vector2 position, const std::string text) const;
+	int PickDialogue(Vector2 position, const std::string text) const;
 };

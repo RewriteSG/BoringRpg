@@ -25,9 +25,9 @@ void SceneManager::Update(void)
 	MainMenu* menu = dynamic_cast<MainMenu*>(currentScene);
 	if (!menu && currentScene != nullptr)
 	{
-		UI gameUI(Vector2(130, 12));
-		gameUI.CreateBox(Vector2(-5, 0), "Inventory:", 45, 10);
-		gameUI.CreateBox(Vector2(-5, 12), "", 45, 20);
+		UI gameUI(Vector2(130, 12), 0, 45);
+		gameUI.CreateBox(Vector2(-5, 0), "Inventory:", 10);
+		gameUI.CreateBox(Vector2(-5, 12), "", 20);
 	}
 
 	currentScene->Update();

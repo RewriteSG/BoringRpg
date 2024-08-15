@@ -7,6 +7,7 @@ public:
 	Vector2(int _x, int _y);
 	int GetX() const;
 	int GetY() const;
+	int& GetY();
 	void SetXandY(int _x, int _y);
 	static int Distance(const Vector2& pos1, const Vector2& pos2);
 	static void Clamp(int& value, const int& max, const int& min);
