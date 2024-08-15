@@ -15,6 +15,7 @@ GameManager::GameManager() : gameUI(nullptr)
 {
 	GM_Instance = this;
 	//Weapon = nullptr;
+	robber = nullptr;
 	GameEnded = false;
 	GameWon = true;
 	player = nullptr;
@@ -38,11 +39,6 @@ void GameManager::Start()
 }
 void GameManager::Update()
 {
-	/*for (int i = 0; i < inventory.count; i++)
-	{
-		gameUI->CreateOptionUI()
-	}*/
-	//gameUI->PickDialogue(Vector2(1, 19), "Pick one please");
 	HandleInput();
 }
 

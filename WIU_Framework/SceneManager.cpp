@@ -25,7 +25,7 @@ void SceneManager::Update(void)
 	currentScene->Render();
 	currentScene->UpdateGameObjectsPos();
 	MainMenu* menu = dynamic_cast<MainMenu*>(currentScene);
-	if (!menu)
+	if (!menu && currentScene != nullptr)
 	currentScene->gm.Update();
 	currentScene->Render(); 
 
