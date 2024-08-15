@@ -3,16 +3,23 @@
 #include "RobberDownSprite.h"
 #include "TimeSystem.h"
 #include "GameManager.h"
-#include <chrono>
-#include <thread>
+#include "ObjectManager.h"
+#include "Application.h"
 #include <iostream>
+#include "RobberDownSprite.h"
+//#include <chrono>
+//#include <thread>
 
-bool IsRobberDead = true;
+
+
+
+
+Robber* Robber::robberInstance = nullptr;
 
 Robber::Robber()
 {
 	Start();
-    //robberInstance = this;
+    robberInstance = this;
 }
 Robber::Robber(Vector2 toPos)
 {
@@ -24,20 +31,20 @@ Robber::Robber(Vector2 toPos)
 void Robber::Start()
 {
    
-    //GetPosition()->SetXandY(3, 3);
-    if (IsRobberDead ==false) {
-        SetSprite(new RobberSprite());
-    }
-    else if(IsRobberDead == true) {
-        SetSprite(new RobberDownSprite());
-    }
+    GetPosition()->SetXandY(3, 3);
+    SetSprite(new RobberSprite());
 	
     //SetSprite(new RobberDownSprite());
 }
 void Robber::Update()
 {
-    
-        MoveTowardsPlayer(*GameManager::getGM()->player);
+    if (IsRobberDead && !dynamic_cast<RobberDownSprite*>(GetSprite())) {
+
+        SetSprite(new RobberDownSprite());
+        GameManager::getGM()->robberDown = true;
+    }
+    else if(!IsRobberDead)
+    MoveTowardsPlayer(*GameManager::getGM()->player);
     
  
 	/*switch (steps)
@@ -78,9 +85,9 @@ void Robber::OnDestroyed()
     {
 
         if (IsRobberDead == false) {
-            using namespace std::this_thread;
+         /*   using namespace std::this_thread;
             using namespace std::chrono;
-            srand(static_cast<unsigned int>(time(0)));
+            srand(static_cast<unsigned int>(time(0)));*/
 
 
 

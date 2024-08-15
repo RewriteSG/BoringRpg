@@ -22,8 +22,11 @@ private:
 
 public:
 	Player* player;
-
+	bool robberDown;
 	Robber* robber;
+	//Robber* drawif;
+
+
 	static GameManager* getGM();
 	InteractionsManager InteractionsMgr;
 	TimeSystem TimeSys;

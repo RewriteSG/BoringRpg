@@ -68,13 +68,19 @@ void LivingRoomScene::Start()
 	new Furniture(Furniture::BedRoomDoor, Vector2(8, 0));
 	new Furniture(Furniture::StoreRoomDoor, Vector2(0, 3));
 	new Furniture(Furniture::ToiletDoor, Vector2(10, 7));
-	gm.CreatePlayer(Vector2(11, 6));
 
+
+
+	gm.CreateRobber(Vector2(11, 6));
+	gm.CreatePlayer(Vector2(10, 6));
+	
 	UI gameUI(Vector2(130, 12));
 	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15);
 	gameUI.CreateBox(Vector2(0, 17), "", 40, 10);
 
-	gm.CreateRobber(Vector2(5, 3));
+
+	//if playerinteract with bedroom door delete this
+	//gm.CreateRobber(Vector2(11, 6));
 }
 
 void LivingRoomScene::Update()

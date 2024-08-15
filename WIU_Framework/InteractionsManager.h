@@ -48,5 +48,13 @@ public:
 	void ClosetDoorInteracted(GameObject* closetDoor, GameObject* player);
 	void KitchenDoorInteracted(GameObject* KitchenDoor, GameObject* player);
 	void BathroomDoorInteracted(GameObject* BathroomDoor, GameObject* player);
+
+
+	//robber door interact
+	//void robBedroomDoorInteracted(GameObject* BedroomDoor, GameObject* robber);
+
+
+
+
 };
 

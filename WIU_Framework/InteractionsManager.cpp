@@ -110,3 +110,10 @@ void InteractionsManager::BathroomDoorInteracted(GameObject* BathroomDoor, GameO
 {
 	timer.increaseTimeTaken(5);
 }
+
+//robber interaction
+
+//void InteractionsManager::robBedroomDoorInteracted(GameObject* BedroomDoor, GameObject* robber)
+//{
+	//timer.increaseTimeTaken(5);
+//}
