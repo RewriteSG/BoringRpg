@@ -191,6 +191,7 @@ void Furniture::Collided(GameObject* obj)
 		SceneManager::LoadScene("ToiletScene");
 		break;
 	case Furniture::StoreRoomDoor:
+		SceneManager::LoadScene("StoreRoomScene");
 		break;
 	case Furniture::LivingRoomDoor:
 		SceneManager::LoadScene("LivingRoomScene");

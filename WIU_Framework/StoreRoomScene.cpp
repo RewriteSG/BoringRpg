@@ -5,6 +5,7 @@
 #include "Furniture.h"
 #include "UI.h"
 #include "conio.h"
+#include "StoreRoomDoorSprite.h"
 void StoreRoomScene::Start()
 {
 	Scene::Start();
@@ -27,7 +28,8 @@ void StoreRoomScene::Start()
 	new Wall(Vector2(8, 6));
 	new Wall(Vector2(8, 4));
 	new Wall(Vector2(8, 3));
-	new Furniture(Furniture::StoreRoomDoor, Vector2(8, 5));
+	Furniture* door = new Furniture(Furniture::LivingRoomDoor, Vector2(8, 5));
+	door->SetSprite(new StoreRoomDoorSprite());
 	new Furniture(Furniture::Box, Vector2(5, 3));
 	new Furniture(Furniture::EmptyBoxType1, Vector2(5, 6));
 	new Furniture(Furniture::EmptyBoxType1, Vector2(6, 6));

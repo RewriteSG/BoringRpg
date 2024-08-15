@@ -6,6 +6,7 @@
 #include "LivingRoomScene.h"
 #include "ToiletScene.h"
 #include "BedroomScene.h"
+#include "StoreRoomScene.h"
 #include <cwchar>
 string SceneManager::prevScene = "nullptr";
 Scene* SceneManager::currentScene = nullptr;
@@ -53,6 +54,8 @@ void SceneManager::LoadScene(Scene* toScene) {
 		prevScene = "BedroomScene";
 	if (dynamic_cast<ToiletScene*>(currentScene))
 		prevScene = "ToiletScene";
+	if (dynamic_cast<StoreRoomScene*>(currentScene))
+		prevScene = "StoreRoomScene";
 	nextScene = toScene;
 }
 
@@ -63,6 +66,8 @@ void SceneManager::LoadScene(std::string toScene) {
 		LoadScene(new BedroomScene());
 	if (toScene == "ToiletScene")
 		LoadScene(new ToiletScene());
+	if (toScene == "StoreRoomScene")
+		LoadScene(new StoreRoomScene());
 
 }
 Scene* SceneManager::GetNextScene(void) {return nextScene;}

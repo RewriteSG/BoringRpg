@@ -95,6 +95,10 @@ void GameManager::CreatePlayer(Vector2 toPos)
 	player = new Player();
 	if (SceneManager::prevScene == "BedroomScene")
 		toPos = Vector2(8, 1);
+	if (SceneManager::prevScene == "StoreRoomScene")
+		toPos = Vector2(1, 3);
+	if (SceneManager::prevScene == "ToiletScene")
+		toPos = Vector2(10, 6);
 	*player->GetPosition() = toPos;
 }
 void GameManager::CreateRobber(Vector2 toPos)
