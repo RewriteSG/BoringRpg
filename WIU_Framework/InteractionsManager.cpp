@@ -116,14 +116,23 @@ void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* p
 		}
 		break;
 	case 2:
-		ui->PrintDialogue(Vector2(-2, 14), "You try to hold back the urge to open it. As you continue staring at the trash cans, they seem to turn before your very eyes. The edges are no longer rusty, and the dents are smoothed over. From under the lid comes a faint golden glow, sweet and alluring. For a moment, the trash cans turn into treasure chests. … And it’s happening again.");
+		ui->PrintDialogue(Vector2(-2, 14), "You try to hold back the urge to open it.");
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
 		choosenItem = ui->PickDialogue(Vector2(-2, 14), "Search the trash can?");
 		switch (choosenItem)
 		{
 		case 0:
-			ui->PrintDialogue(Vector2(-2, 14), "You take a depth breath and open the lid: It’s empty… Wait! You reach deeper into the trash can. There is still nothing. You pry deeper, hoping to find something valuable.");
+			ui->PrintDialogue(Vector2(-2, 14), "As you continue staring at the trash cans, they seem to turn before your very eyes.");
+			ui->PrintDialogue(Vector2(-2, 14), "The edges are no longer rusty, and the dents are smoothed over.");
+			ui->PrintDialogue(Vector2(-2, 14), "From under the lid comes a faint golden glow, sweet and alluring.");
+			ui->PrintDialogue(Vector2(-2, 14), "For a moment, the trash cans turn into treasure chests. … And it’s happening again.");
+			ui->PrintDialogue(Vector2(-2, 14), "You take a depth breath and open the lid.");
+			ui->PrintDialogue(Vector2(-2, 14), "It’s empty…");
+			ui->PrintDialogue(Vector2(-2, 14), "Wait!");
+			ui->PrintDialogue(Vector2(-2, 14), "You reach deeper into the trash can.");
+			ui->PrintDialogue(Vector2(-2, 14), "There is still nothing.");
+			ui->PrintDialogue(Vector2(-2, 14), "You pry deeper, hoping to find something valuable.");
 			ui->PrintDialogue(Vector2(-2, 14), "Time passed, and you didn’t notice someone opening the front door and walk behind you.");
 			ui->PrintDialogue(Vector2(-2, 14), "???: Just what are you doing?");
 			ui->PrintDialogue(Vector2(-2, 14), "You: Who's- ");
