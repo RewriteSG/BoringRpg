@@ -38,11 +38,6 @@ void GameManager::Start()
 }
 void GameManager::Update()
 {
-	/*for (int i = 0; i < inventory.count; i++)
-	{
-		gameUI->CreateOptionUI()
-	}*/
-	//gameUI->PickDialogue(Vector2(1, 19), "Pick one please");
 	HandleInput();
 }
 
