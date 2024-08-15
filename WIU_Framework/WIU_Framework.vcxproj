@@ -133,9 +133,12 @@
     <ClCompile Include="BedroomScene.cpp" />
     <ClCompile Include="BedroomTableSprite.cpp" />
     <ClCompile Include="BedSprite.cpp" />
+    <ClCompile Include="BoxSprite.cpp" />
     <ClCompile Include="ClockSprite.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="DoorSprites.cpp" />
+    <ClCompile Include="EmptyBoxType1Sprite.cpp" />
+    <ClCompile Include="EmptyBoxType2Sprite.cpp" />
     <ClCompile Include="EmptySofaSprite.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExampleScene.cpp" />
@@ -155,6 +158,7 @@
     <ClCompile Include="OptionUI.cpp" />
     <ClCompile Include="PickupableItem.cpp" />
     <ClCompile Include="PickupSprite.cpp" />
+    <ClCompile Include="PlanksSprite.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerSprite.cpp" />
     <ClCompile Include="Robber.cpp" />
@@ -185,10 +189,13 @@
     <ClInclude Include="BedroomScene.h" />
     <ClInclude Include="BedroomTableSprite.h" />
     <ClInclude Include="BedSprite.h" />
+    <ClInclude Include="BoxSprite.h" />
     <ClInclude Include="ClockSprite.h" />
     <ClInclude Include="DialogueUI.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="DoorSprites.h" />
+    <ClInclude Include="EmptyBoxType1Sprite.h" />
+    <ClInclude Include="EmptyBoxType2Sprite.h" />
     <ClInclude Include="EmptySofaSprite.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExampleScene.h" />
@@ -206,8 +213,10 @@
     <ClInclude Include="OptionUI.h" />
     <ClInclude Include="PickupableItem.h" />
     <ClInclude Include="PickupSprite.h" />
+    <ClInclude Include="PlanksSprite.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSprite.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Robber.h" />
     <ClInclude Include="RobberDownSprite.h" />
     <ClInclude Include="RobberSprite.h" />

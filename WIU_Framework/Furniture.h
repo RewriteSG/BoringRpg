@@ -30,7 +30,10 @@ public:
 		Stove,
 		Bed,
 		TrashCan,
-		LivingRoomDoor
+		LivingRoomDoor,
+		EmptyBoxType1,
+		EmptyBoxType2,
+		Box,
 
 	};
 

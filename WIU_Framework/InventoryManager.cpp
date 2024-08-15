@@ -25,6 +25,7 @@ bool InventoryManager::PickupItem(PickupableItem::TypeOfPickup typeofPickup)
 	PickupableItem::TypeOfPickup* newItem = new PickupableItem::TypeOfPickup; 
 	*newItem = typeofPickup;
 	Items = ArrayAdd(Items, newItem, inventoryCurrentCapacity);
+	return true;
 }
 
 PickupableItem::TypeOfPickup** InventoryManager::GetItems()

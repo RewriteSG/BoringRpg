@@ -101,7 +101,13 @@ void GameManager::CreatePlayer(Vector2 toPos)
 		toPos = Vector2(8, 1);
 	*player->GetPosition() = toPos;
 }
-
+void GameManager::CreateRobber(Vector2 toPos)
+{
+	if (robber)
+		robber = nullptr;
+	robber = new Robber();
+	*robber->GetPosition() = toPos;
+}
 char GameManager::_getch(void)
 {
 	char ch = 0;

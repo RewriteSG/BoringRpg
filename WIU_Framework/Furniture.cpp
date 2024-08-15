@@ -17,6 +17,10 @@
 #include "ToiletCabinetSprite.h"
 #include "ClockSprite.h"
 #include "SceneManager.h"
+#include "BoxSprite.h"
+#include "EmptyBoxType1Sprite.h"
+#include "EmptyBoxType2Sprite.h"
+#include "PlanksSprite.h"
 
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 {
@@ -25,6 +29,18 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	switch (furniture)
 	{
 	case Furniture::SofaKey:
+		break;
+	case Furniture::Box:
+		SetSprite(new BoxSprite());
+		break;
+	case Furniture::Planks:
+		SetSprite(new PlanksSprite());
+		break;
+	case Furniture::EmptyBoxType1:
+		SetSprite(new EmptyBoxType1Sprite());
+		break;
+	case Furniture::EmptyBoxType2:
+		SetSprite(new EmptyBoxType2Sprite());
 		break;
 	case Furniture::ToiletCabinet:
 		SetSprite(new ToiletCabinetSprite());
@@ -63,8 +79,6 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		break;
 	case Furniture::Sink:
 		break;
-	case Furniture::Planks:
-		break;
 	case Furniture::CardBoardBox:
 		break;
 	case Furniture::LivingroomTable:
@@ -73,14 +87,14 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	case Furniture::Bedroomtable:
 		SetSprite(new BedroomTableSprite());
 		break;
+	case Furniture::Bed:
+		SetSprite(new BedSprite());
+		break;
 	case Furniture::Phone:
 		break;
 	case Furniture::ToolBox:
 		break;
 	case Furniture::Stove:
-		break;
-	case Furniture::Bed:
-		SetSprite(new BedSprite());
 		break;
 	case Furniture::TrashCan:
 		break;
@@ -89,7 +103,6 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		SetSprite(new ClockSprite());
 		break;
 	case Furniture::LivingRoomDoor:
-
 		SetSprite(new DoorSprites());
 		break;
 	default:
