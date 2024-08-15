@@ -16,7 +16,7 @@ public:
 		KitchenCabinet,
 		Sink,
 		Planks,
-		Door,
+		BedRoomDoor,
 		ToiletBowl,
 		ShowerArea,
 		ToiletCabinet,
@@ -30,6 +30,7 @@ public:
 		Stove,
 		Bed,
 		TrashCan,
+		LivingRoomDoor
 
 	};
 

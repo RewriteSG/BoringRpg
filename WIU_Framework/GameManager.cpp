@@ -95,8 +95,10 @@ bool GameManager::GetGameWon() const
 void GameManager::CreatePlayer(Vector2 toPos)
 {
 	if (player)
-		delete player;
+		player = nullptr;
 	player = new Player();
+	if (SceneManager::prevScene == "BedroomScene")
+		toPos = Vector2(8, 1);
 	*player->GetPosition() = toPos;
 }
 

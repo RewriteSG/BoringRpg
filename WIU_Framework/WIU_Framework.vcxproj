@@ -133,6 +133,7 @@
     <ClCompile Include="BedroomScene.cpp" />
     <ClCompile Include="BedroomTableSprite.cpp" />
     <ClCompile Include="BedSprite.cpp" />
+    <ClCompile Include="ClockSprite.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="DoorSprites.cpp" />
     <ClCompile Include="EmptySofaSprite.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="BedroomScene.h" />
     <ClInclude Include="BedroomTableSprite.h" />
     <ClInclude Include="BedSprite.h" />
+    <ClInclude Include="ClockSprite.h" />
     <ClInclude Include="DialogueUI.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="DoorSprites.h" />
