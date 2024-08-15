@@ -3,12 +3,10 @@
 #include "Player.h"
 #include "Wall.h"
 #include "Furniture.h"
-#include "UI.h"
-#include "conio.h"
+#include "Robber.h"
 void LivingRoomScene::Start()
 {
 	Scene::Start();
-	new Furniture(Furniture::Clock, Vector2(12, 0)); 
 	new Wall(Vector2(0, 0));
 	new Wall(Vector2(0, 1));
 	new Wall(Vector2(0, 2));
@@ -59,19 +57,12 @@ void LivingRoomScene::Start()
 	new Furniture(Furniture::LivingroomTable, Vector2(4, 4), true);
 	new Furniture(Furniture::LivingroomTable, Vector2(5, 4), true);
 	new Furniture(Furniture::LivingroomTable, Vector2(6, 4), true);
-	new Furniture(Furniture::LivingroomTable, Vector2(7, 5), true);
 	new Furniture(Furniture::LivingroomTable, Vector2(7, 4), true);
+	new Furniture(Furniture::LivingroomTable, Vector2(7, 5), true);
 	new Furniture(Furniture::EmptySofa, Vector2(1, 4));
-	new Furniture(Furniture::SofaKey, Vector2(7, 6));
-	new Furniture(Furniture::BedRoomDoor, Vector2(8, 0));
-	new Furniture(Furniture::StoreRoomDoor, Vector2(0, 3));
-	new Furniture(Furniture::ToiletDoor, Vector2(10, 7));
+
+	new Robber(Vector2 (6,2));
 	gm.CreatePlayer(Vector2(11, 6));
-
-	UI gameUI(Vector2(130, 12));
-	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15);
-	gameUI.CreateBox(Vector2(0, 17), "Dialogue:", 40, 10);
-
 }
 
 void LivingRoomScene::Update()

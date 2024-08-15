@@ -12,6 +12,7 @@ class Robber :
 public:
     Robber();
     Robber(Vector2 toPos);
+   // static Robber* robberInstance;
 
 
     void Start() override;
@@ -19,10 +20,11 @@ public:
     void Collided(GameObject* collision) override;
     void OnDestroyed() override;
 
+   
     //positioning
    
 
-    void MoveTowardsPlayer( Player& player) ;
+    void MoveTowardsPlayer( Player& player);
 
 
 

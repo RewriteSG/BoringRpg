@@ -1,7 +1,6 @@
 #include "ExampleScene.h"
 #include "SceneManager.h"
 #include "Player.h"
-#include "Robber.h"
 #include "UI.h"
 #include "conio.h"
 void ExampleScene::Start()
@@ -11,7 +10,9 @@ void ExampleScene::Start()
 	gameUI.CreateBox(Vector2(0, 17), "Dialogue:", 40, 10);
 
 	new Player();
-	//new Robber();
+
+	//robber
+	new Robber();
 
 	Scene::Start();
 

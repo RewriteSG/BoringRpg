@@ -142,6 +142,7 @@ void World::Render(GameObject** objects, int objectsCount) const
 		{
 
 			//Scene::GotoXY(objects[i]->GetPrevPosition().GetX() + (CellX * (objects[i]->GetPrevPosition().GetX())), objects[i]->GetPrevPosition().GetY() + (CellY * objects[i]->GetPrevPosition().GetY()), topLeftPos);
+
 			Sprite::RenderVoid(objects[i]->GetPrevPosition().GetX(), objects[i]->GetPrevPosition().GetY(), topLeftPos);
 
 			Scene::GotoXY(pos->GetX()+ (CellX * (pos->GetX())), pos->GetY() + (CellY * pos->GetY()), topLeftPos);
