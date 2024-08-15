@@ -24,7 +24,6 @@ public:
 		StoreRoomDoor,
 		CardBoardBox,
 		LivingroomTable,
-		ToiletCabinet,
 		Bedroomtable,
 		Phone,
 		ToolBox,
