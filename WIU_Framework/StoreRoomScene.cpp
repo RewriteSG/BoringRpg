@@ -27,8 +27,19 @@ void StoreRoomScene::Start()
 	new Wall(Vector2(8, 6));
 	new Wall(Vector2(8, 4));
 	new Wall(Vector2(8, 3));
+	new Furniture(Furniture::StoreRoomDoor, Vector2(8, 5));
+	new Furniture(Furniture::Box, Vector2(5, 3));
+	new Furniture(Furniture::EmptyBoxType1, Vector2(5, 6));
+	new Furniture(Furniture::EmptyBoxType1, Vector2(6, 6));
+	new Furniture(Furniture::EmptyBoxType1, Vector2(7, 6));
+	new Furniture(Furniture::EmptyBoxType2, Vector2(4, 4));
+	new Furniture(Furniture::EmptyBoxType2, Vector2(4, 5));
+	new Furniture(Furniture::Planks, Vector2(6, 3));
+	
 
-	gm.CreatePlayer(Vector2(11, 6));
+
+
+	gm.CreatePlayer(Vector2(7, 5));
 
 	UI gameUI(Vector2(130, 12));
 	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15);
