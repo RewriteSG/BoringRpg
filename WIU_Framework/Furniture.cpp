@@ -19,6 +19,8 @@
 #include "EmptyBoxType1Sprite.h"
 #include "EmptyBoxType2Sprite.h"
 #include "PlanksSprite.h"
+#include "SinkSprite.h"
+#include "KitchenTableSprite.h"
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 {
 	furniture = type;
@@ -29,6 +31,12 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		break;
 	case Furniture::Box:
 		SetSprite(new BoxSprite());
+		break;
+	case Furniture::Sink:
+		SetSprite(new SinkSprite());
+		break;
+	case Furniture::KitchenTable:
+		SetSprite(new KitchenTableSprite());
 		break;
 	case Furniture::Planks:
 		SetSprite(new PlanksSprite());
@@ -73,8 +81,6 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		SetSprite(new TelevisionSprite());
 		break;
 	case Furniture::KitchenCabinet:
-		break;
-	case Furniture::Sink:
 		break;
 	case Furniture::CardBoardBox:
 		break;

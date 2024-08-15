@@ -33,6 +33,9 @@ public:
 		EmptyBoxType1,
 		EmptyBoxType2,
 		Box,
+		Fridge,
+		sink,
+		KitchenTable,
 	};
 	/// <summary>
 	/// 

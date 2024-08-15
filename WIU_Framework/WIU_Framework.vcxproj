@@ -146,6 +146,8 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InteractionsManager.cpp" />
     <ClCompile Include="Items.cpp" />
+    <ClCompile Include="KitchenScene.cpp" />
+    <ClCompile Include="KitchenTableSprite.cpp" />
     <ClCompile Include="LivingRoomCabinetSprite.cpp" />
     <ClCompile Include="LivingRoomScene.cpp" />
     <ClCompile Include="LivingroomTableSprite.cpp" />
@@ -162,6 +164,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShowerAreaSprite.cpp" />
+    <ClCompile Include="SinkSprite.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StoreRoomDoorSprite.cpp" />
     <ClCompile Include="StoreRoomScene.cpp" />
@@ -198,6 +201,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InteractionsManager.h" />
     <ClInclude Include="Items.h" />
+    <ClInclude Include="KitchenScene.h" />
+    <ClInclude Include="KitchenTableSprite.h" />
     <ClInclude Include="LivingRoomCabinetSprite.h" />
     <ClInclude Include="LivingRoomScene.h" />
     <ClInclude Include="LivingroomTableSprite.h" />
@@ -213,6 +218,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShowerAreaSprite.h" />
+    <ClInclude Include="SinkSprite.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StoreRoomDoorSprite.h" />
     <ClInclude Include="StoreRoomScene.h" />
