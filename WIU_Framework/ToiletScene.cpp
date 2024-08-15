@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Wall.h"
 #include "Furniture.h"
+#include "UI.h"
+#include "conio.h"
 
 void ToiletScene::Start()
 {
@@ -30,6 +32,10 @@ void ToiletScene::Start()
 	new Furniture(Furniture::มÜิก, Vector2(8, 5));
 	new Furniture(Furniture::ToiletCabinet, Vector2(5, 5));
 	gm.CreatePlayer(Vector2(7, 3));
+
+	UI gameUI(Vector2(130, 12));
+	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15);
+	gameUI.CreateBox(Vector2(0, 17), "Dialogue:", 40, 10);
 }
 
 void ToiletScene::Update()

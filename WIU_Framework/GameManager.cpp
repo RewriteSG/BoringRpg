@@ -42,7 +42,7 @@ void GameManager::Update()
 	{
 		gameUI->CreateOptionUI()
 	}*/
-	gameUI->PickDialogue(Vector2(1, 19), "Pick one please");
+	//gameUI->PickDialogue(Vector2(1, 19), "Pick one please");
 	HandleInput();
 }
 
