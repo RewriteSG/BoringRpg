@@ -1,10 +1,10 @@
-#include "¡‹‘°Sprite.h"
+#include "ToiletBowlSprite.h"
 #include "World.h"
 #include "Scene.h"
 #include <iostream>
 
 
-void ¡‹‘°Sprite::Render(int x, int y, Vector2 topLeft)
+void ToiletBowlSprite::Render(int x, int y, Vector2 topLeft)
 {
 
 	/*Scene::GotoXY(x + (CellX * x), 0 + y + (y * CellY), topLeft);

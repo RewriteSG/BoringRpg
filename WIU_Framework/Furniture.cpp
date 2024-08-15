@@ -12,8 +12,8 @@
 #include "DoorSprites.h"
 #include "StoreRoomDoorSprite.h"
 #include "ToiletDoorSprite.h"
-#include "¬ÌÕ∞Sprite.h"
-#include "¡‹‘°Sprite.h"
+#include "ToiletBowlSprite.h"
+#include "ShowerAreaSprite.h"
 #include "ToiletCabinetSprite.h"
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 {
@@ -26,11 +26,11 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	case Furniture::ToiletCabinet:
 		SetSprite(new ToiletCabinetSprite());
 		break;
-	case Furniture::¬ÌÕ∞:
-		SetSprite(new ¬ÌÕ∞Sprite());
+	case Furniture::ToiletBowl:
+		SetSprite(new ToiletBowlSprite());
 		break;
-	case Furniture::¡‹‘°:
-		SetSprite(new ¡‹‘°Sprite());
+	case Furniture::ShowerArea:
+		SetSprite(new ShowerAreaSprite());
 		break;
 	case Furniture::StoreRoomDoor:
 		SetSprite(new StoreRoomDoorSprite());

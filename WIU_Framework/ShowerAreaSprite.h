@@ -1,6 +1,6 @@
 #pragma once
 #include "Sprite.h"
-class ÂíÍ°Sprite :
+class ShowerAreaSprite :
     public Sprite
 {
 
