@@ -7,7 +7,7 @@ void ExampleScene::Start()
 {
 	UI gameUI(Vector2(130, 12));
 	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15);
-	gameUI.CreateBox(Vector2(0, 17), "Dialogue:", 40, 10);
+	gameUI.CreateBox(Vector2(0, 17), " ", 40, 10);
 
 	new Player();
 
