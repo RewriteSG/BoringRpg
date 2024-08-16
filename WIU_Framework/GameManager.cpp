@@ -34,7 +34,7 @@ void GameManager::Start()
 	GameWon = true;
 
 	gameUI = new UI(Vector2(130, 12), 7);
-
+	InteractionsMgr.Start();
 }
 void GameManager::Update()
 {

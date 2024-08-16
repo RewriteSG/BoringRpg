@@ -162,7 +162,7 @@ void Furniture::Collided(GameObject* obj)
 		GameManager::getGM()->InteractionsMgr.TableInteracted(this, obj);
 		break;
 	case Furniture::Phone:
-		GameManager::getGM()->InteractionsMgr.PhoneInteracted(this, obj);
+		GameManager::getGM()->InteractionsMgr.BedroomTableInteracted(this, obj);
 		break;
 	case Furniture::ToolBox:
 		GameManager::getGM()->InteractionsMgr.ToolboxInteracted(this, obj);

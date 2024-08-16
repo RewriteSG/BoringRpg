@@ -21,10 +21,9 @@ public:
 	bool hasKnife;
 	bool hasDuctTape;
 	bool hasMetalPan;
-
+	bool isDoorBarricaded;
 
 	int trashCanInteractions = 0;
-
 
 	InteractionsManager();
 
@@ -40,7 +39,7 @@ public:
 	void KitchenCabinetInteracted(GameObject* kitchenCabinet, GameObject* player);
 	void TrashCanInteracted(GameObject* trashCan, GameObject* player, int random);
 	void TableInteracted(GameObject* table, GameObject* player);
-	void PhoneInteracted(GameObject* phone, GameObject* player);
+	void BedroomTableInteracted(GameObject* phone, GameObject* player);
 	void LivingRoomCabinetInteracted(GameObject* livingRoomCabinet, GameObject* player);
 	void BedRoomCabinetInteracted(GameObject* bedRoomCabinet, GameObject* player);
 	void BedInteracted(GameObject* bed, GameObject* player);
