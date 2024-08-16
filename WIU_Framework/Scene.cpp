@@ -23,11 +23,26 @@ void Scene::Start()
 	gm.Start();
 
 	world.Render();
+
+	UI gameUI(Vector2(130, 12), 0, 45);
+	gameUI.CreateBox(Vector2(-5, -7), "Objective:", 6);
+	gameUI.CreateBox(Vector2(-5, 0), "Inventory:", 10);
+
+	UI gameUI2(Vector2(130, 12), 0, 175);
+	gameUI2.CreateBox(Vector2(-129, 22), "", 9);
+	gameUI.CreateText("Axiety Meter: ", Vector2(20, -9), 121);
+	gameUI.CreateText("YOU AT: " + getName(), Vector2(-5, -9), 121);
 }
 
 void Scene::Update()
 {
 	objectManager.UpdateObjects();  // update objects at the start of the frame
+	Render();
+
+	UpdateGameObjectsPos();
+
+	gm.Update();
+	Render();
 }
 
 void Scene::UpdateGameObjectsPos()

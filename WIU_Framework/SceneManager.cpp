@@ -23,24 +23,8 @@ void SceneManager::Start(void)
 
 void SceneManager::Update(void)
 {
-	MainMenu* menu = dynamic_cast<MainMenu*>(currentScene);
-	if (!menu && currentScene != nullptr)
-	{
-		UI gameUI(Vector2(130, 12), 0, 45);
-		gameUI.CreateBox(Vector2(-5, -7), "Objective:", 6);
-		gameUI.CreateBox(Vector2(-5, 0), "Inventory:", 10);
-		gameUI.CreateBox(Vector2(-5, 11), "", 20);
-		gameUI.CreateText("Axiety Meter: ", Vector2(20, -9), 121);
-		gameUI.CreateText("YOU AT: " + currentScene->getName(), Vector2(-5, -9), 121);
-	}
 
 	currentScene->Update();
-	currentScene->Render();
-	currentScene->UpdateGameObjectsPos();
-
-	if (!menu && currentScene != nullptr)
-	currentScene->gm.Update();
-	currentScene->Render(); 
 
 	if (nextScene) 
 	{
