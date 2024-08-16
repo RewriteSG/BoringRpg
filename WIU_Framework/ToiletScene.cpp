@@ -5,7 +5,10 @@
 #include "Furniture.h"
 #include "UI.h"
 #include "conio.h"
-
+ToiletScene::ToiletScene(void)
+{
+	name = "TOILET";
+}
 void ToiletScene::Start()
 {
 	Scene::Start();
