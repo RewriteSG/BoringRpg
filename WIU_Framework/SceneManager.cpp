@@ -8,6 +8,7 @@
 #include "BedroomScene.h"
 #include "StoreRoomScene.h"
 #include <cwchar>
+
 string SceneManager::prevScene = "nullptr";
 Scene* SceneManager::currentScene = nullptr;
 Scene* SceneManager::nextScene = nullptr;

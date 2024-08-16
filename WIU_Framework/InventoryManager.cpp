@@ -2,6 +2,7 @@
 
 #include "MyFunctions.cpp"
 #include "GameManager.h"
+#include "UI.h"
 using namespace myFunctions;
 std::string * InventoryManager::getItemInInventory(std::string item)
 {
@@ -36,7 +37,7 @@ std::string ** InventoryManager::GetItems()
 	return Items;
 }
 
-void InventoryManager::DisplayItems()
+void InventoryManager::DisplayItems() const
 {
 
 	for (int i = 0; i < inventoryCurrentCapacity; i++)
@@ -45,7 +46,7 @@ void InventoryManager::DisplayItems()
 	}
 }
 
-bool InventoryManager::InventoryHasItems(std::string item1)
+bool InventoryManager::InventoryHasItems(std::string item1) const
 {
 	bool hasItem1 = false; 
 	for (int i = 0; i < inventoryCurrentCapacity; i++)
@@ -56,7 +57,7 @@ bool InventoryManager::InventoryHasItems(std::string item1)
 	return hasItem1;
 }
 
-bool InventoryManager::InventoryHasItems(std::string item1, std::string item2)
+bool InventoryManager::InventoryHasItems(std::string item1, std::string item2) const
 {
 	bool hasItem1 = false , hasItem2 = false; 
 
@@ -70,7 +71,7 @@ bool InventoryManager::InventoryHasItems(std::string item1, std::string item2)
 	return hasItem1 && hasItem2;
 }
 
-bool InventoryManager::InventoryHasItems(std::string item1, std::string item2, std::string item3)
+bool InventoryManager::InventoryHasItems(std::string item1, std::string item2, std::string item3) const
 {
 	bool hasItem1 = false, hasItem2 = false, hasItem3 = false; 
 

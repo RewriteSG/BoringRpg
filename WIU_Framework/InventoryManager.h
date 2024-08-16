@@ -13,10 +13,10 @@ public:
 	bool PickupItem(std::string typeofPickup);
 	std::string** GetItems();
 
-	void DisplayItems();
-	bool InventoryHasItems(std::string item1);
-	bool InventoryHasItems(std::string item1, std::string item2);
-	bool InventoryHasItems(std::string item1, std::string item2, std::string item3);
+	void DisplayItems() const;
+	bool InventoryHasItems(std::string item1) const;
+	bool InventoryHasItems(std::string item1, std::string item2) const;
+	bool InventoryHasItems(std::string item1, std::string item2, std::string item3) const;
 	void DropItem(std::string dropItem);
 	void UseItem(std::string useItem);
 };

@@ -1,4 +1,6 @@
 #pragma once
+#define POINTX -2
+#define POINTY 13
 #include "GameObject.h"
 #include "TimeSystem.h"
 #include "UI.h"

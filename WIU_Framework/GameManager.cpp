@@ -39,7 +39,10 @@ void GameManager::Start()
 void GameManager::Update()
 {
 	inventory.DisplayItems();
-	HandleInput();
+	if (TimeSys.isTimeRunOut())
+		endingMrg.Start();
+	else
+		HandleInput();
 }
 
 void GameManager::Exit()
