@@ -177,6 +177,9 @@
     <ClCompile Include="StoreRoomScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AnxietySystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -336,6 +339,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StoreRoomScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnxietySystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
