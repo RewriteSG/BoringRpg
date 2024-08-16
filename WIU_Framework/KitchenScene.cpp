@@ -47,11 +47,6 @@ void KitchenScene::Start()
 	new Furniture(Furniture::Fridge, Vector2(3, 5));
 
 	gm.CreatePlayer(Vector2(3, 3));
-
-	UI gameUI(Vector2(130, 12));
-	gameUI.CreateBox(Vector2(), "Inventory:", 40, 15);
-	gameUI.CreateBox(Vector2(0, 17), "Dialogue:", 40, 10);
-
 }
 
 void KitchenScene::Update()

@@ -38,7 +38,7 @@ public:
 		Fridge,
 		sink,
 		KitchenTable,
-
+		KitchenDoor
 	};
 	/// <summary>
 	/// 
