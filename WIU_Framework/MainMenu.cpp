@@ -88,7 +88,7 @@ void MainMenu::Update(void)
 	switch (choice)
 	{
 	case 0:
-		SceneManager::LoadScene(new KitchenScene());
+		SceneManager::LoadScene(new ToiletScene());
 		break;
 	case 2:
 		exit(0);
