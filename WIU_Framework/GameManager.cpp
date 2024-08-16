@@ -19,7 +19,7 @@ GameManager::GameManager() : gameUI(nullptr)
 	GameEnded = false;
 	GameWon = true;
 	player = nullptr;
-	robberDown = false;
+	//robberDown = false;
 }
 
 GameManager* GameManager::getGM()
@@ -101,19 +101,19 @@ void GameManager::CreateRobber(Vector2 toPos)
 {
 	if (robber)
 		robber = nullptr;
-	
+
+	/*
 	if (robberDown) 
 	{
 
-	}
-		return;
+	}*/
+		//return;
 	robber = new Robber();
-//	if (drawif.IsRobberDead == false) {
+//
 	if (SceneManager::prevScene == "BedroomScene")
 	{
 		toPos = Vector2(8, 1);
 	}
-	//}
 	
 	*robber->GetPosition() = toPos;
 }

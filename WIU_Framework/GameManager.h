@@ -22,9 +22,9 @@ private:
 
 public:
 	Player* player;
-	bool robberDown;
+	//bool robberDown;
 	Robber* robber;
-	//Robber* drawif;
+	
 
 
 	static GameManager* getGM();
