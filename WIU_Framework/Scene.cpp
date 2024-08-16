@@ -12,6 +12,7 @@ bool Scene::GetContinuePgrm() const
 Scene::Scene() : world(Vector2(1, 2), 16, 10), objectManager()
 {
 	ContinuePgrm = true;
+	name = " ";
 }
 
 void Scene::Start()
@@ -170,4 +171,6 @@ void Scene::LowerString(string& _string)
 	}
 	_string = result;
 }
+
+std::string Scene::getName(void) const { return name; }
 

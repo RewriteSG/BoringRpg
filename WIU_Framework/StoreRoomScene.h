@@ -5,6 +5,7 @@ class StoreRoomScene :
 {
 
 public:
+    StoreRoomScene(void);
     void Start() override;
     void Update() override;
 

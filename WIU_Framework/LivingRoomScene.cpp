@@ -6,6 +6,10 @@
 #include "Robber.h"
 #include "UI.h"
 #include "conio.h"
+LivingRoomScene::LivingRoomScene(void)
+{
+	name = "LIVING ROOM";
+}
 void LivingRoomScene::Start()
 {
 	Scene::Start();
@@ -64,7 +68,7 @@ void LivingRoomScene::Start()
 	new Furniture(Furniture::LivingroomTable, Vector2(7, 4), true);
 	new Furniture(Furniture::LivingroomTable, Vector2(7, 5), true);
 	new Furniture(Furniture::EmptySofa, Vector2(1, 4));
-	new Furniture(Furniture::SofaKey, Vector2(7, 6));
+	new Furniture(Furniture::SofaKey, Vector2(7, 6),true);
 	new Furniture(Furniture::BedRoomDoor, Vector2(8, 0));
 	new Furniture(Furniture::StoreRoomDoor, Vector2(0, 3));
 	new Furniture(Furniture::ToiletDoor, Vector2(10, 7));

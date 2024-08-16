@@ -7,6 +7,7 @@
 #include "conio.h"
 BedroomScene::BedroomScene()
 {
+	name = "BEDROOM";
 }
 
 void BedroomScene::Start()
