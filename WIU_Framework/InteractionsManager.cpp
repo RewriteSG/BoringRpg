@@ -4,9 +4,19 @@
 #include "SceneManager.h"
 #include "Furniture.h"
 
-InteractionsManager::InteractionsManager()
+InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 {
-	timeSystem = &GameManager::getGM()->TimeSys;
+	hasCabinetKeyCollected = false;
+	hasCalledTheCops = false;
+	hasClosetKeyCollected = false;
+	hasDuctTape = false;
+	hasHammer = false;
+	hasKnife = false;
+	hasMetalPan = false;
+	hasPlanks = false;
+	hasNails = false;
+	hasShampoo = false;
+	hasStoreRoomKeyCollected = false;
 }
 
 void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
@@ -42,7 +52,6 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 	{
 	case 0:
 		ui->PrintDialogue(Vector2(-2, 14), "A trash can, not remarkable in any way.");
-		ui->PrintDialogue(Vector2(-2, 14), "As you continue staring at the trash cans, they seem to turn before your very eyes.");
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
 		choosenItem = ui->PickDialogue(Vector2(-2, 14), "Search the trash can?");
@@ -51,6 +60,7 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 		case 0:
 			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(-2, 14), "You searched the trash can and found nothing.");
+
 			break;
 		case 1:
 			break;
@@ -356,4 +366,6 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 void InteractionsManager::Start()
 {
 	ui = GameManager::getGM()->gameUI;
+	timeSystem = &GameManager::getGM()->TimeSys;
+
 }
