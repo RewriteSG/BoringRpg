@@ -58,10 +58,10 @@ void UI::CreateBox(const Vector2 position, const std::string text, const int hei
 	CreateBorder(position, height);
 	CreateText(text, position + Vector2(3, 2));
 }
-void UI::CreateText(const std::string text, const Vector2 position) const
+void UI::CreateText(const std::string text, const Vector2 position, int color) const
 {
 	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
-	Scene::ChangeColor(color + 7);
+	Scene::ChangeColor((color + 7 != this->color) ? color + 7 : this->color);
 	std::cout << text << std::endl;
 }
 

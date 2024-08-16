@@ -6,6 +6,11 @@
 #include "UI.h"
 #include "conio.h"
 #include "StoreRoomDoorSprite.h"
+StoreRoomScene::StoreRoomScene(void)
+{
+	name = "STORE ROOM";
+}
+
 void StoreRoomScene::Start()
 {
 	Scene::Start();

@@ -6,6 +6,8 @@
 #include <iostream>
 class Scene
 {
+protected:
+	std::string name;
 	World world;
 	ObjectManager objectManager;
 public:
@@ -39,5 +41,7 @@ public:
 	static void ChangeColor(TypeColor color, bool toCharColors);
 	static void ChangeColor(int);
 	static void LowerString(string& _string);
+
+	std::string getName(void) const;
 };
 
