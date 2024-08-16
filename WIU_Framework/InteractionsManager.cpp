@@ -529,6 +529,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 	ui->GetOptionUI()->AddOption(new std::string("Yes"));
 	ui->GetOptionUI()->AddOption(new std::string("No"));
 	int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Organise the drawer?");
+	int choosenInput;
 	switch (choosenItem)
 	{
 	case 0:
@@ -539,7 +540,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I wonder what this key is used for...");
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenInput = ui->PickDialogue(Vector2(POINTX, POINTY), "Keep the key?");
+		choosenInput = ui->PickDialogue(Vector2(POINTX, POINTY), "Keep the key?");
 		switch (choosenInput)
 		{
 			case 0:
