@@ -17,7 +17,7 @@ Scene::Scene() : world(Vector2(1, 2), 16, 10), objectManager()
 
 void Scene::Start()
 {
-	Application::DrawBG();
+	//Application::DrawBG();
 	world.Start();
 	objectManager.Start();
 	gm.Start();
@@ -28,7 +28,7 @@ void Scene::Start()
 	gameUI.CreateBox(Vector2(-5, -7), "Objective:", 6);
 	gameUI.CreateBox(Vector2(-5, 0), "Inventory:", 10);
 
-	UI gameUI2(Vector2(130, 12), 0, 175);
+	UI gameUI2(Vector2(130, 13), 0, 175);
 	gameUI2.CreateBox(Vector2(-129, 22), "", 9);
 	gameUI.CreateText("Axiety Meter: ", Vector2(20, -9), 121);
 	gameUI.CreateText("YOU AT: " + getName(), Vector2(-5, -9), 121);

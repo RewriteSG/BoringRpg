@@ -5,6 +5,7 @@
 #include "LivingRoomScene.h"
 #include "ToiletScene.h"
 #include "StoreRoomScene.h"
+#include "Application.h"
 void MainMenu::DrawClock(const int size) const
 {
 	const int width = size * 2;
@@ -64,6 +65,7 @@ void MainMenu::DrawClock(const int size) const
 
 void MainMenu::Start(void)
 {
+	Application::DrawBG();
 	Scene::ChangeColor(112);
 	std::string tittle = " EVERY SECOND COUNTS ";
 	Scene::GotoXY(172 / 2 - (int)tittle.length() / 2, 4);
@@ -83,10 +85,11 @@ void MainMenu::Update(void)
 	systemUI.GetOptionUI()->AddOption(new std::string("Quit"));
 
 	int choice = systemUI.GetOptionUI()->PickOption(Vector2(0, 5));
-
+	Scene::ChangeColor(Scene::Default);
 	switch (choice)
 	{
 	case 0:
+		system("cls");
 		SceneManager::LoadScene(new LivingRoomScene());
 		break;
 	case 2:
@@ -101,7 +104,7 @@ void MainMenu::Render(void)
 
 void MainMenu::Exit(void)
 {
-	Scene::ChangeColor(Scene::BG_COLOR);
+	Scene::ChangeColor(Scene::Default);
 }
 
 

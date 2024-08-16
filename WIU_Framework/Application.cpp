@@ -33,6 +33,8 @@ void Application::DrawBG(void)
 		}
 		std::cout << std::endl;
 	}
+
+	Scene::ChangeColor(Scene::Default);
 }
 void Application::ScreenSMaximised(void) 
 {
@@ -55,14 +57,14 @@ Application::Application(void) { sceneMgr = new SceneManager(); }
 
 void Application::Init(void)
 {
-	FontSize(Vector2(9, 18));
+	FontSize(Vector2(7, 16));
 	ScreenSMaximised();
 	HideCursor();
 }
 
 void Application::Update(void)
 {
-	DrawBG();
+	//DrawBG();
 	sceneMgr->Start();
 	do
 	{
