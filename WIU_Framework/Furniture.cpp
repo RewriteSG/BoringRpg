@@ -124,6 +124,8 @@ void Furniture::Start()
 void Furniture::Collided(GameObject* obj)
 {
 	Player* plr = dynamic_cast<Player*>(obj);
+
+
 	if (!plr)
 		return;
 	switch (furniture)
@@ -199,6 +201,83 @@ void Furniture::Collided(GameObject* obj)
 	case Furniture::Bedroomtable:
 
 		GameManager::getGM()->InteractionsMgr.BedroomTableInteracted(this, obj);
+		break;
+	default:
+		break;
+	}
+
+	Robber* rob = dynamic_cast<Robber*>(obj);
+
+	if (!rob)
+		return;
+	switch (furniture)
+	{
+	case Furniture::SofaKey:
+		GameManager::getGM()->InteractionsMgr.SofaInteracted(this, obj);
+		break;
+	case Furniture::EmptySofa:
+		GameManager::getGM()->InteractionsMgr.SofaInteracted(this, obj, true);
+		break;
+	case Furniture::BedroomCabinet1:
+		GameManager::getGM()->InteractionsMgr.BedRoomCabinetInteracted(this, obj);
+		break;
+	case Furniture::BedroomCabinet2:
+		GameManager::getGM()->InteractionsMgr.BedRoomCabinetInteracted(this, obj);
+		break;
+	case Furniture::LivingRoomCabinet:
+		GameManager::getGM()->InteractionsMgr.LivingRoomCabinetInteracted(this, obj);
+		break;
+	case Furniture::Television:
+		GameManager::getGM()->InteractionsMgr.TelevisionInteracted(this, obj);
+		break;
+	case Furniture::KitchenCabinet:
+		GameManager::getGM()->InteractionsMgr.KitchenCabinetInteracted(this, obj);
+		break;
+	case Furniture::Sink:
+		GameManager::getGM()->InteractionsMgr.SinkInteracted(this, obj);
+		break;
+	case Furniture::Planks:
+		GameManager::getGM()->InteractionsMgr.PlanksInteracted(this, obj);
+		break;
+	case Furniture::CardBoardBox:
+		GameManager::getGM()->InteractionsMgr.BoxInteracted(this, obj, GetID());
+		break;
+	case Furniture::LivingroomTable:
+		GameManager::getGM()->InteractionsMgr.TableInteracted(this, obj);
+		break;
+	case Furniture::Phone:
+		GameManager::getGM()->InteractionsMgr.PhoneInteracted(this, obj);
+		break;
+	case Furniture::ToolBox:
+		GameManager::getGM()->InteractionsMgr.ToolboxInteracted(this, obj);
+		break;
+	case Furniture::Stove:
+		GameManager::getGM()->InteractionsMgr.StoveInteracted(this, obj);
+		break;
+	case Furniture::Bed:
+		GameManager::getGM()->InteractionsMgr.BedInteracted(this, obj);
+		break;
+	case Furniture::TrashCan:
+		GameManager::getGM()->InteractionsMgr.TrashCanInteracted(this, obj, 0);
+		break;
+	case Furniture::Clock:
+		break;
+	case Furniture::BedRoomDoor:
+		SceneManager::LoadScene("BedroomScene");
+		break;
+	case Furniture::ToiletBowl:
+		break;
+	case Furniture::ShowerArea:
+		break;
+	case Furniture::ToiletCabinet:
+		break;
+	case Furniture::ToiletDoor:
+		SceneManager::LoadScene("ToiletScene");
+		break;
+	case Furniture::StoreRoomDoor:
+		break;
+	case Furniture::LivingRoomDoor:
+		SceneManager::LoadScene("LivingRoomScene");
 		break;
 	default:
 		break;

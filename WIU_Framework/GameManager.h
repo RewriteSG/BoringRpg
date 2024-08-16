@@ -23,8 +23,11 @@ private:
 public:
 	UI* gameUI;
 	Player* player;
-
+	//bool robberDown;
 	Robber* robber;
+	
+
+
 	static GameManager* getGM();
 	InteractionsManager InteractionsMgr;
 	InventoryManager inventory;

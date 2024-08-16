@@ -10,11 +10,13 @@ class Robber :
 
 
 public:
+    bool IsRobberDead = false;
+    static Robber* robberInstance;
     Robber();
     Robber(Vector2 toPos);
-   // static Robber* robberInstance;
+    
 
-
+    int x, y;
     void Start() override;
     void Update()override;
     void Collided(GameObject* collision) override;

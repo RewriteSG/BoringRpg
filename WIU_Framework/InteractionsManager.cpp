@@ -421,3 +421,10 @@ void InteractionsManager::Start()
 	timeSystem = &GameManager::getGM()->TimeSys;
 
 }
+
+//robber interaction
+
+//void InteractionsManager::robBedroomDoorInteracted(GameObject* BedroomDoor, GameObject* robber)
+//{
+	//timer.increaseTimeTaken(5);
+//}
