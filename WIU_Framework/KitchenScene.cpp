@@ -40,6 +40,11 @@ void KitchenScene::Start()
 	new Wall(Vector2(10,6));
 	new Furniture(Furniture::Sink, Vector2(4, 2));
 	new Furniture(Furniture::KitchenTable, Vector2(6, 2));
+	new Furniture(Furniture::KitchenCabinet, Vector2(8, 5));
+	new Furniture(Furniture::Stove, Vector2(7, 5));
+	new Furniture(Furniture::Stove, Vector2(6, 5));
+	new Furniture(Furniture::TrashCan, Vector2(5, 5));
+	new Furniture(Furniture::Fridge, Vector2(3, 5));
 
 	gm.CreatePlayer(Vector2(3, 3));
 
