@@ -6,7 +6,7 @@
 
 InteractionsManager::InteractionsManager()
 {
-
+	timeSystem = &GameManager::getGM()->TimeSys;
 }
 
 void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
@@ -48,7 +48,7 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 		switch (choosenItem)
 		{
 		case 0:
-			timer.increaseTimeTaken(5);
+			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(-2, 14), "You searched the trash can and found nothing.");
 
 			break;
@@ -65,7 +65,7 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 		switch (choosenItem)
 		{
 		case 0:
-			timer.increaseTimeTaken(5);
+			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(-2, 14), "You searched the trash can and found nothing.");
 
 			break;
@@ -114,7 +114,7 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player, b
 
 void InteractionsManager::ShowerInteracted(GameObject* sink, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::SinkInteracted(GameObject* sink, GameObject* player, bool isNothing)
@@ -123,27 +123,27 @@ void InteractionsManager::SinkInteracted(GameObject* sink, GameObject* player, b
 
 void InteractionsManager::PlanksInteracted(GameObject* planks, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::ToolboxInteracted(GameObject* box, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::BoxInteracted(GameObject* box, GameObject* player, int random)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::StoveInteracted(GameObject* stove, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::KitchenCabinetInteracted(GameObject* kitchenCabinet, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* player, int random)
@@ -161,7 +161,7 @@ void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* p
 		switch (choosenItem)
 		{
 		case 0:
-			timer.increaseTimeTaken(5);
+			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(-2, 14), "You searched the trash can and found nothing.");
 
 			break;
@@ -178,7 +178,7 @@ void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* p
 		switch (choosenItem)
 		{
 		case 0:
-			timer.increaseTimeTaken(5);
+			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(-2, 14), "You searched the trash can and found nothing.");
 
 			break;
@@ -223,22 +223,22 @@ void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* p
 
 void InteractionsManager::TableInteracted(GameObject* table, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::PhoneInteracted(GameObject* phone, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabinet, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::BedRoomCabinetInteracted(GameObject* bedRoomCabinet, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
@@ -249,7 +249,7 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 
 void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* player)
@@ -271,7 +271,7 @@ void InteractionsManager::BedroomDoorInteracted(GameObject* BedroomDoor, GameObj
 	switch (choosenItem)
 	{
 	case 0:
-		timer.increaseTimeTaken(5);
+		timeSystem->increaseTimeTaken(5);
 		SceneManager::LoadScene("BedroomScene");
 		break;
 	case 1:
@@ -281,12 +281,12 @@ void InteractionsManager::BedroomDoorInteracted(GameObject* BedroomDoor, GameObj
 
 void InteractionsManager::ClosetDoorInteracted(GameObject* closetDoor, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::KitchenDoorInteracted(GameObject* KitchenDoor, GameObject* player)
 {
-	timer.increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(5);
 }
 
 void InteractionsManager::ToiletDoorInteracted(GameObject* ToiletDoor, GameObject* player)
@@ -299,7 +299,7 @@ void InteractionsManager::ToiletDoorInteracted(GameObject* ToiletDoor, GameObjec
 	switch (choosenItem)
 	{
 	case 0:
-		timer.increaseTimeTaken(5);
+		timeSystem->increaseTimeTaken(5);
 		SceneManager::LoadScene("ToiletScene");
 		break;
 	case 1:
@@ -317,7 +317,7 @@ void InteractionsManager::LivingRoomDoorInteracted(GameObject* BathroomDoor, Gam
 	switch (choosenItem)
 	{
 	case 0:
-		timer.increaseTimeTaken(5);
+		timeSystem->increaseTimeTaken(5);
 		SceneManager::LoadScene("LivingRoomScene");
 		break;
 	case 1:
@@ -331,7 +331,7 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 	ui->CreateOptionUI(Vector2(-2, 14), false);
 	if (hasCabinetKeyCollected)
 	{
-		timer.increaseTimeTaken(5);
+		timeSystem->increaseTimeTaken(5);
 		ui->PrintDialogue(Vector2(-2, 14), "You unlocked the cabinet door!");
 		ui->PrintDialogue(Vector2(-2, 14), "You: I got some beta blockers inside that can calm me down");
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
@@ -340,7 +340,7 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 		switch (choosenItem)
 		{
 		case 0:
-			timer.increaseTimeTaken(5);
+			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(-2, 14), "You took some beta blockers, you feel calm as ever!");
 			break;
 		case 1:

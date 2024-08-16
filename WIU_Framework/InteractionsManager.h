@@ -6,7 +6,7 @@ class InteractionsManager
 {
 public:
 	//timer
-	TimeSystem timer;
+	TimeSystem* timeSystem;
 	UI* ui;
 	
 	
