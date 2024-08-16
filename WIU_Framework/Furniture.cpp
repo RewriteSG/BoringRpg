@@ -162,7 +162,6 @@ void Furniture::Collided(GameObject* obj)
 		GameManager::getGM()->InteractionsMgr.TableInteracted(this, obj);
 		break;
 	case Furniture::Phone:
-		GameManager::getGM()->InteractionsMgr.BedroomTableInteracted(this, obj);
 		break;
 	case Furniture::ToolBox:
 		GameManager::getGM()->InteractionsMgr.ToolboxInteracted(this, obj);
@@ -196,6 +195,10 @@ void Furniture::Collided(GameObject* obj)
 		break;
 	case Furniture::LivingRoomDoor:
 		GameManager::getGM()->InteractionsMgr.LivingRoomDoorInteracted(this, obj);
+		break;
+	case Furniture::Bedroomtable:
+
+		GameManager::getGM()->InteractionsMgr.BedroomTableInteracted(this, obj);
 		break;
 	default:
 		break;

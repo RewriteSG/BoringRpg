@@ -181,7 +181,6 @@ void InteractionsManager::TableInteracted(GameObject* table, GameObject* player)
 void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "There is a bunch of stuff on the table.");
 	ui->GetOptionUI()->AddOption(new std::string("Photograph"));
@@ -202,10 +201,55 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 		switch (timeSystem->TimeLoop)
 		{ 
 		case 0:
+		case 1:
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I left my phone on the table today.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should remember that next time.");
+			break;
+		default:
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should probably call the cops.");
+			ui->GetOptionUI()->AddOption(new std::string("Call the cops"));
+			ui->GetOptionUI()->AddOption(new std::string("Don't call the cops"));
+			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Call the cops?");
+			switch (choosenItem)
 			{
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I left my phone on the table today, I should remember next time.");
+			case 0:
+				if (hasCalledTheCops = false)
+				{
+					ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+					hasCalledTheCops = true;
+					timeSystem->increaseTimeTaken(5);
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "You called the cops.");
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "Cops: Hi, this is [REDACTED] police department, how may I help?");
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: YOU GOTTA SEND SOMEONE HERE!");
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: THERE IS A SERIAL KILLER ON THE LOOSE AND HE IS COMING FOR ME!");
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "Cops: Okay stay calm, help is on their way and will be there at 12:15.");
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: BUT I DON'T HAVE MUCH-");
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "They hung up.");
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Son of a-");
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I guess that I have to find a way to hold him off until they come.");
+					break;
+				}
+				else
+				{
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I already called the cops.");
+					break;
+				}
+			case 1:
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "They wouldn't believe me.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "Only I can help myself now.");
+				break;
 			}
+			break;
 		}
+
+		break;
+	case 2:
+		timeSystem->increaseTimeTaken(5);
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You winded up the music box, and it played something.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: This was my favourite toy when I was a kid.");
+		break;
+
+	default:
 		break;
 	}
 
