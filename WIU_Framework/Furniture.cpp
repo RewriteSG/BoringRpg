@@ -1,3 +1,4 @@
+
 #include "Furniture.h"
 #include "GameManager.h"
 #include "BedSprite.h"
@@ -21,6 +22,12 @@
 #include "EmptyBoxType1Sprite.h"
 #include "EmptyBoxType2Sprite.h"
 #include "PlanksSprite.h"
+#include "SinkSprite.h"
+#include "KitchenTableSprite.h"
+#include "KitchenCabinetSprite.h"
+#include "StoveSprite.h"
+#include "TrashCanSprite.h"
+#include "FridgeSprite.h"
 
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 {
@@ -32,6 +39,12 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		break;
 	case Furniture::Box:
 		SetSprite(new BoxSprite());
+		break;
+	case Furniture::Sink:
+		SetSprite(new SinkSprite());
+		break;
+	case Furniture::KitchenTable:
+		SetSprite(new KitchenTableSprite());
 		break;
 	case Furniture::Planks:
 		SetSprite(new PlanksSprite());
@@ -57,6 +70,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	case Furniture::ToiletDoor:
 		SetSprite(new ToiletDoorSprite());
 		break;
+		
 	case Furniture::BedRoomDoor:
 		SetSprite(new DoorSprites());
 		break;
@@ -76,8 +90,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		SetSprite(new TelevisionSprite());
 		break;
 	case Furniture::KitchenCabinet:
-		break;
-	case Furniture::Sink:
+		SetSprite(new KitchenCabinetSprite());
 		break;
 	case Furniture::CardBoardBox:
 		break;
@@ -87,6 +100,9 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	case Furniture::Bedroomtable:
 		SetSprite(new BedroomTableSprite());
 		break;
+	case Furniture::Fridge:
+		SetSprite(new FridgeSprite());
+		break;
 	case Furniture::Bed:
 		SetSprite(new BedSprite());
 		break;
@@ -95,16 +111,21 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	case Furniture::ToolBox:
 		break;
 	case Furniture::Stove:
+		SetSprite(new StoveSprite());
 		break;
 	case Furniture::TrashCan:
+		SetSprite(new TrashCanSprite());
 		break;
 	case Furniture::Clock:
-
 		SetSprite(new ClockSprite());
 		break;
 	case Furniture::LivingRoomDoor:
 		SetSprite(new DoorSprites());
 		break;
+	case Furniture::KitchenDoor:
+		SetSprite(new StoreRoomDoorSprite());
+		break;
+
 	default:
 		break;
 	}
@@ -124,6 +145,8 @@ void Furniture::Start()
 void Furniture::Collided(GameObject* obj)
 {
 	Player* plr = dynamic_cast<Player*>(obj);
+
+
 	if (!plr)
 		return;
 	switch (furniture)
@@ -135,10 +158,11 @@ void Furniture::Collided(GameObject* obj)
 		GameManager::getGM()->InteractionsMgr.SofaInteracted(this, obj, true);
 		break;
 	case Furniture::BedroomCabinet1:
-		GameManager::getGM()->InteractionsMgr.BedRoomCabinetInteracted(this, obj);
+		GameManager::getGM()->InteractionsMgr.BedRoomDrawerInteracted(this, obj);
 		break;
 	case Furniture::BedroomCabinet2:
-		GameManager::getGM()->InteractionsMgr.BedRoomCabinetInteracted(this, obj);
+
+		GameManager::getGM()->InteractionsMgr.ClosetDoorInteracted(this, obj);
 		break;
 	case Furniture::LivingRoomCabinet:
 		GameManager::getGM()->InteractionsMgr.LivingRoomCabinetInteracted(this, obj);
@@ -155,16 +179,16 @@ void Furniture::Collided(GameObject* obj)
 	case Furniture::Planks:
 		GameManager::getGM()->InteractionsMgr.PlanksInteracted(this, obj);
 		break;
-	case Furniture::CardBoardBox:
+	case Furniture::EmptyBoxType1:
+	case Furniture::EmptyBoxType2:
 		GameManager::getGM()->InteractionsMgr.BoxInteracted(this, obj, GetID());
 		break;
 	case Furniture::LivingroomTable:
 		GameManager::getGM()->InteractionsMgr.TableInteracted(this, obj);
 		break;
 	case Furniture::Phone:
-		GameManager::getGM()->InteractionsMgr.PhoneInteracted(this, obj);
 		break;
-	case Furniture::ToolBox:
+	case Furniture::Box:
 		GameManager::getGM()->InteractionsMgr.ToolboxInteracted(this, obj);
 		break;
 	case Furniture::Stove:
@@ -184,6 +208,7 @@ void Furniture::Collided(GameObject* obj)
 	case Furniture::ToiletBowl:
 		break;
 	case Furniture::ShowerArea:
+		GameManager::getGM()->InteractionsMgr.ShowerInteracted(this, obj);
 		break;
 	case Furniture::ToiletCabinet:
 		GameManager::getGM()->InteractionsMgr.ToiletCabinetInteracted(this, obj);
@@ -192,12 +217,20 @@ void Furniture::Collided(GameObject* obj)
 		GameManager::getGM()->InteractionsMgr.ToiletDoorInteracted(this, obj);
 		break;
 	case Furniture::StoreRoomDoor:
-		SceneManager::LoadScene("StoreRoomScene");
+		GameManager::getGM()->InteractionsMgr.StoreRoomDoorInteracted(this, obj);
 		break;
 	case Furniture::LivingRoomDoor:
 		GameManager::getGM()->InteractionsMgr.LivingRoomDoorInteracted(this, obj);
 		break;
+	case Furniture::Bedroomtable:
+
+		GameManager::getGM()->InteractionsMgr.BedroomTableInteracted(this, obj);
+		break;
+	case Furniture::KitchenDoor:
+		SceneManager::LoadScene("KitchenScene");
+		break;
 	default:
 		break;
 	}
+
 }
