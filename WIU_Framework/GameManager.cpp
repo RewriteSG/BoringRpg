@@ -7,6 +7,10 @@
 #include "MainMenu.h"
 #include "Player.h"
 #include "conio.h"
+#include "LivingRoomScene.h"
+#include "ToiletScene.h"
+#include "BedroomScene.h"
+#include "StoreRoomScene.h"
 using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
@@ -56,6 +60,7 @@ void GameManager::PromptInput()
 void GameManager::HandleInput(void)
 {
 	char input = _getch();
+	
 
 	switch (input)
 	{
@@ -76,6 +81,16 @@ void GameManager::HandleInput(void)
 		//Move left
 		break;
 	}
+
+	//LivingRoomScene* livingRoom = dynamic_cast<LivingRoomScene*>(SceneManager::currentScene);
+	//if (livingRoom)
+	//{
+	//	gameUI->CreateOptionUI(Vector2(-2, 13), false);
+	//	gameUI->GetOptionUI()->AddOption(new std::string("g"));
+	//	gameUI->GetOptionUI()->AddOption(new std::string("h"));
+	//	int chooseItem = gameUI->PickDialogue(Vector2(-2, 19), "Choose one?");
+	//	//if(chooseItem == 0)
+	//}
 
 }
 
