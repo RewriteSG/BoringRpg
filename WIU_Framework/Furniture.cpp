@@ -135,10 +135,11 @@ void Furniture::Collided(GameObject* obj)
 		GameManager::getGM()->InteractionsMgr.SofaInteracted(this, obj, true);
 		break;
 	case Furniture::BedroomCabinet1:
-		GameManager::getGM()->InteractionsMgr.BedRoomCabinetInteracted(this, obj);
+		GameManager::getGM()->InteractionsMgr.BedRoomDrawerInteracted(this, obj);
 		break;
 	case Furniture::BedroomCabinet2:
-		GameManager::getGM()->InteractionsMgr.BedRoomCabinetInteracted(this, obj);
+
+		GameManager::getGM()->InteractionsMgr.ClosetDoorInteracted(this, obj);
 		break;
 	case Furniture::LivingRoomCabinet:
 		GameManager::getGM()->InteractionsMgr.LivingRoomCabinetInteracted(this, obj);
@@ -155,7 +156,8 @@ void Furniture::Collided(GameObject* obj)
 	case Furniture::Planks:
 		GameManager::getGM()->InteractionsMgr.PlanksInteracted(this, obj);
 		break;
-	case Furniture::CardBoardBox:
+	case Furniture::EmptyBoxType1:
+	case Furniture::EmptyBoxType2:
 		GameManager::getGM()->InteractionsMgr.BoxInteracted(this, obj, GetID());
 		break;
 	case Furniture::LivingroomTable:
@@ -163,7 +165,7 @@ void Furniture::Collided(GameObject* obj)
 		break;
 	case Furniture::Phone:
 		break;
-	case Furniture::ToolBox:
+	case Furniture::Box:
 		GameManager::getGM()->InteractionsMgr.ToolboxInteracted(this, obj);
 		break;
 	case Furniture::Stove:
@@ -192,7 +194,7 @@ void Furniture::Collided(GameObject* obj)
 		GameManager::getGM()->InteractionsMgr.ToiletDoorInteracted(this, obj);
 		break;
 	case Furniture::StoreRoomDoor:
-		SceneManager::LoadScene("StoreRoomScene");
+		GameManager::getGM()->InteractionsMgr.StoreRoomDoorInteracted(this, obj);
 		break;
 	case Furniture::LivingRoomDoor:
 		GameManager::getGM()->InteractionsMgr.LivingRoomDoorInteracted(this, obj);

@@ -135,7 +135,6 @@
     <ClCompile Include="BedSprite.cpp" />
     <ClCompile Include="BoxSprite.cpp" />
     <ClCompile Include="ClockSprite.cpp" />
-    <ClCompile Include="Door.cpp" />
     <ClCompile Include="DoorSprites.cpp" />
     <ClCompile Include="EmptyBoxType1Sprite.cpp" />
     <ClCompile Include="EmptyBoxType2Sprite.cpp" />
@@ -191,7 +190,6 @@
     <ClInclude Include="BedSprite.h" />
     <ClInclude Include="BoxSprite.h" />
     <ClInclude Include="ClockSprite.h" />
-    <ClInclude Include="Door.h" />
     <ClInclude Include="DoorSprites.h" />
     <ClInclude Include="EmptyBoxType1Sprite.h" />
     <ClInclude Include="EmptyBoxType2Sprite.h" />
