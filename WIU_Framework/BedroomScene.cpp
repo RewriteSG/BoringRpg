@@ -5,6 +5,7 @@
 #include "Furniture.h"
 #include "UI.h"
 #include "conio.h"
+
 BedroomScene::BedroomScene()
 {
 }
@@ -69,8 +70,10 @@ void BedroomScene::Start()
 	new Furniture(Furniture::BedroomCabinet2, Vector2(13, 2), true);
 	new Furniture(Furniture::LivingRoomDoor, Vector2(5, 9));
 
+	//if (draw.IsRobberDead == false) {
 
-	new Robber(Vector2(6, 2));
+	////	gm.CreateRobber(Vector2(5, 8));
+	//}
 	gm.CreatePlayer(Vector2(5, 8));
 }
 

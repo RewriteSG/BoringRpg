@@ -3,16 +3,23 @@
 #include "RobberDownSprite.h"
 #include "TimeSystem.h"
 #include "GameManager.h"
-#include <chrono>
-#include <thread>
+#include "ObjectManager.h"
+#include "Application.h"
 #include <iostream>
+#include "RobberDownSprite.h"
+//#include <chrono>
+//#include <thread>
 
-bool IsRobberDead = true;
+
+
+
+
+Robber* Robber::robberInstance = nullptr;
 
 Robber::Robber()
 {
 	Start();
-    //robberInstance = this;
+    robberInstance = this;
 }
 Robber::Robber(Vector2 toPos)
 {
@@ -24,20 +31,29 @@ Robber::Robber(Vector2 toPos)
 void Robber::Start()
 {
    
-    //GetPosition()->SetXandY(3, 3);
-    if (IsRobberDead ==false) {
+    GetPosition()->SetXandY(3, 3);
+    if (IsRobberDead == false) {
         SetSprite(new RobberSprite());
+
     }
-    else if(IsRobberDead == true) {
+    else if (IsRobberDead==true) {
         SetSprite(new RobberDownSprite());
     }
-	
-    //SetSprite(new RobberDownSprite());
+ 
+  
 }
 void Robber::Update()
 {
+   // if (IsRobberDead && !dynamic_cast<RobberDownSprite*>(GetSprite())) {
+
+        //SetSprite(new RobberDownSprite());
+       // GameManager::getGM()->robberDown = true;
+   // }
+    //else if(!IsRobberDead)
+        if (IsRobberDead == false) {
+            MoveTowardsPlayer(*GameManager::getGM()->player);
+        }
     
-        MoveTowardsPlayer(*GameManager::getGM()->player);
     
  
 	/*switch (steps)
@@ -78,49 +94,40 @@ void Robber::OnDestroyed()
     {
 
         if (IsRobberDead == false) {
-            using namespace std::this_thread;
+         /*   using namespace std::this_thread;
             using namespace std::chrono;
-            srand(static_cast<unsigned int>(time(0)));
-
-
-
-
+            srand(static_cast<unsigned int>(time(0)));*/
 
             Vector2 playerPos = player.GetPosition(true);
 
 
             Vector2 RobberDirection;
 
+            //sleep_for(nanoseconds(10));
+          //   // sleep_until(system_clock::now() + seconds(1));
+            
 
 
-            if (position.GetX() < playerPos.GetX()) {
-                RobberDirection.SetXandY(1, 0);  //move right
+            int distX = position.GetX() - playerPos.GetX();
+            int distY = position.GetY() - playerPos.GetY();
+            if (distX> 1) {
+                RobberDirection.SetXandY(-1, 0);
                 GameManager::getGM()->TimeSys.increaseRobberTime(20);
-                //sleep_for(nanoseconds(10));
-               // sleep_until(system_clock::now() + seconds(1));
             }
-            else if (position.GetX() > playerPos.GetX()) {
-                RobberDirection.SetXandY(-1, 0); //move left
+            else if (distX < -1) {
+                RobberDirection.SetXandY(1, 0);
                 GameManager::getGM()->TimeSys.increaseRobberTime(20);
-                //sleep_for(nanoseconds(10));
-               // sleep_until(system_clock::now() + seconds(1));
             }
+            else if (distY > 1) {
+                RobberDirection.SetXandY(RobberDirection.GetX(), -1);
+                GameManager::getGM()->TimeSys.increaseRobberTime(20);
 
-
-            if (position.GetY() < playerPos.GetY()) {
-                //RobberDirection.SetXandY(0, 1);
-                RobberDirection.SetXandY(RobberDirection.GetX(), 1);  //move down
-                GameManager::getGM()->TimeSys.increaseRobberTime(20);
-                //sleep_for(nanoseconds(10));
-                //sleep_until(system_clock::now() + seconds(1));
             }
-            else if (position.GetY() > playerPos.GetY()) {
-                //RobberDirection.SetXandY(0, -1);
-                RobberDirection.SetXandY(RobberDirection.GetX(), -1); //move up
+            else if (distY < -1) {
+                RobberDirection.SetXandY(RobberDirection.GetX(), 1);
                 GameManager::getGM()->TimeSys.increaseRobberTime(20);
-                // sleep_for(nanoseconds(10));
-                 // sleep_until(system_clock::now() + seconds(1));
             }
+              
             else {
                 RobberDirection.SetXandY(0, 0);  //dont move
 
