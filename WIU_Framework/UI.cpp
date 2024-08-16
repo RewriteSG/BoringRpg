@@ -81,7 +81,7 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 
 	int numCh = 0;
 	char input = ' ';
-	int duration = 70;
+	int duration = 20;
 	int numOfCharsInLine = 0;
 	int numberOfLine = 1;
 	for (char& ch : textToPrint)
