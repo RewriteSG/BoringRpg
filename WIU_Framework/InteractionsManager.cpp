@@ -42,6 +42,7 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 	{
 	case 0:
 		ui->PrintDialogue(Vector2(-2, 14), "A trash can, not remarkable in any way.");
+		ui->PrintDialogue(Vector2(-2, 14), "As you continue staring at the trash cans, they seem to turn before your very eyes.");
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
 		choosenItem = ui->PickDialogue(Vector2(-2, 14), "Search the trash can?");
@@ -50,7 +51,6 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 		case 0:
 			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(-2, 14), "You searched the trash can and found nothing.");
-
 			break;
 		case 1:
 			break;

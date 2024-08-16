@@ -77,10 +77,13 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 	Vector2 originalPos = position;
 	Scene::ChangeColor(color + 7);
 	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
-	std::string textToPrint = text;
-	
+	std::string textToPrint = text + ' ';
+
 	int numCh = 0;
-	char input{};
+	char input = ' ';
+	int duration = 70;
+	int numOfCharsInLine = 0;
+	int numberOfLine = 1;
 	for (char& ch : textToPrint)
 	{
 		if (_kbhit())
@@ -89,48 +92,44 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 
 			if (input == '\r')
 			{
-				numCh = 0;
+				duration = 0;
+			}
+		}
+
+		if (ch == ' ') {
+			if (numCh - numOfCharsInLine >= rows - 6)
+			{
+				position.GetY()++; 
 				Scene::GotoXY(position.GetX(), position.GetY(), this->position);
-				for (char& ch : textToPrint)
+				numOfCharsInLine += numCh;
+				numberOfLine++;
+				numCh = 0; 
+			}
+		}
+		else {
+			for (int i = numCh + numOfCharsInLine; i < textToPrint.length(); i++)
+			{
+				char whatisThat = textToPrint[i];
+				if (textToPrint[i] == ' ') 
 				{
-					for (int i = numCh; i < textToPrint.length(); i++)
+					if (i - 1 - numOfCharsInLine >= rows - 6) 
 					{
-						if (textToPrint[i] == ' ') {
-							if (i - 1 >= rows - 6) {
-								position.GetY()++;
-								Scene::GotoXY(position.GetX(), position.GetY(), this->position);
-								numCh = 0;
-							}
-							break;
-						}
-
+						position.GetY()++;
+						Scene::GotoXY(position.GetX() , position.GetY(), this->position);
+						numOfCharsInLine += numCh;
+						numberOfLine++;
+						numCh = 0;
 					}
-
-					std::cout << ch;
-					numCh++;
+					break;
 				}
-				break;
+
 			}
 		}
+		if (!(ch == ' ' && numCh == 0))
+			std::cout << ch;
 
-		for (int i = numCh; i < textToPrint.length(); i++)
-		{
-			if (textToPrint[i] == ' ') {
-				if (i-1 >= rows - 6) {
-					position.GetY()++;
-					Scene::GotoXY(position.GetX() , position.GetY(), this->position);
-					numCh = 0;
-				}
-				break;
-			}
-
-		}
-
-		std::cout << ch;
-		Sleep(70);
 		numCh++;
-		
-
+		Sleep(duration);
 	}
 
 	while (true)
@@ -142,24 +141,13 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 
 	numCh = 0;
 	Scene::ChangeColor(color);
-	Scene::GotoXY(position.GetX(), originalPos.GetY(), this->position);
-	for (char& ch : textToPrint)
+	for (int i = 0; i < numberOfLine; ++i)
 	{
-		for (int i = numCh; i < textToPrint.length(); i++)
+		Scene::GotoXY(position.GetX(), originalPos.GetY() + i, this->position);
+		for (int j = 0; j < 40; ++j)
 		{
-			if (textToPrint[i] == ' ') {
-				if (i - 1 >= rows - 6) {
-					originalPos.GetY()++;
-					Scene::GotoXY(position.GetX(), originalPos.GetY()++, this->position);
-					numCh = 0;
-				}
-				break;
-			}
-
+			std::cout << ' ';
 		}
-
-		std::cout << ' ';
-		numCh++;
 	}
 }
 
@@ -170,10 +158,13 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 
 	Scene::ChangeColor(color);
 	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
-	std::string textToPrint = text;
+	std::string textToPrint = text + ' ';
 
-	int numCh= 0;
-	char input{};
+	int numCh = 0;
+	char input = ' ';
+	int duration = 70;
+	int numOfCharsInLine = 0;
+	int numberOfLine = 1;
 	for (char& ch : textToPrint)
 	{
 		if (_kbhit())
@@ -182,74 +173,58 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 
 			if (input == '\r')
 			{
-				numCh = 0;
+				duration = 0;
+			}
+		}
+
+		if (ch == ' ') {
+			if (numCh - numOfCharsInLine >= rows - 6)
+			{
+				position.GetY()++;
 				Scene::GotoXY(position.GetX(), position.GetY(), this->position);
-				for (char& ch : textToPrint)
+				numOfCharsInLine += numCh;
+				numberOfLine++;
+				numCh = 0;
+			}
+		}
+		else {
+			for (int i = numCh + numOfCharsInLine; i < textToPrint.length(); i++)
+			{
+				char whatisThat = textToPrint[i];
+				if (textToPrint[i] == ' ')
 				{
-					for (int i = numCh; i < textToPrint.length(); i++)
+					if (i - 1 - numOfCharsInLine >= rows - 6)
 					{
-						if (textToPrint[i] == ' ') {
-							if (i - 1 >= rows - 6) {
-								position.GetY()++;
-								Scene::GotoXY(position.GetX(), position.GetY(), this->position);
-								numCh = 0;
-							}
-							break;
-						}
-
+						position.GetY()++;
+						Scene::GotoXY(position.GetX(), position.GetY(), this->position);
+						numOfCharsInLine += numCh;
+						numberOfLine++;
+						numCh = 0;
 					}
-
-					std::cout << ch;
-					numCh++;
+					break;
 				}
-				break;
+
 			}
 		}
-
-
-		for (int i = numCh; i < textToPrint.length(); i++)
-		{
-			if (textToPrint[i] == ' ') {
-				if (i - 1 >= rows - 6) {
-					position.GetY()++;
-					Scene::GotoXY(position.GetX(), position.GetY(), this->position);
-					numCh = 0;
-				}
-				break;
-			}
-
-		}
-
-		std::cout << ch;
-		Sleep(70);
+		if (!(ch == ' ' && numCh == 0))
+			std::cout << ch;
+		Sleep(duration);
 		numCh++;
 	}
 
 	if (optionUI == nullptr || optionUI->size() < 1)
 		throw std::invalid_argument("No option UI instance object");
-
 	choosenOption =  optionUI->PickOption(Vector2(0, 2));
 
 	numCh = 0;
 	Scene::ChangeColor(color);
-	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
-	for (char& ch : textToPrint)
+	for (int i = 0; i < numberOfLine; ++i)
 	{
-		for (int i = numCh; i < textToPrint.length(); i++)
+		Scene::GotoXY(position.GetX(), originalPos.GetY() + i, this->position);
+		for (int j = 0; j < 40; ++j)
 		{
-			if (textToPrint[i] == ' ') {
-				if (i - 1 >= rows - 6) {
-					originalPos.GetY()++;
-					Scene::GotoXY(position.GetX(), originalPos.GetY()++, this->position);
-					numCh = 0;
-				}
-				break;
-			}
-
+			std::cout << ' ';
 		}
-
-		std::cout << ' ';
-		numCh++;
 	}
 
 	delete optionUI;
