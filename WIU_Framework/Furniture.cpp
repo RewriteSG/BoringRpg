@@ -183,6 +183,7 @@ void Furniture::Collided(GameObject* obj)
 	case Furniture::ToiletBowl:
 		break;
 	case Furniture::ShowerArea:
+		GameManager::getGM()->InteractionsMgr.ShowerInteracted(this, obj);
 		break;
 	case Furniture::ToiletCabinet:
 		GameManager::getGM()->InteractionsMgr.ToiletCabinetInteracted(this, obj);
