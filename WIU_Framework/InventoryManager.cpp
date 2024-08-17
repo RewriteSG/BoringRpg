@@ -36,16 +36,16 @@ std::string ** InventoryManager::GetItems()
 	return Items;
 }
 
-void InventoryManager::DisplayItems()
+void InventoryManager::DisplayItems() const
 {
 
 	for (int i = 0; i < inventoryCurrentCapacity; i++)
 	{
-		GameManager::getGM()->gameUI->CreateText(*Items[i], Vector2(-2, 4 + i));
+		GameManager::getGM()->gameUI->CreateText(*Items[i], Vector2(18, 4 + i));
 	}
 }
 
-bool InventoryManager::InventoryHasItems(std::string item1)
+bool InventoryManager::InventoryHasItems(std::string item1) const
 {
 	bool hasItem1 = false; 
 	for (int i = 0; i < inventoryCurrentCapacity; i++)
@@ -56,7 +56,7 @@ bool InventoryManager::InventoryHasItems(std::string item1)
 	return hasItem1;
 }
 
-bool InventoryManager::InventoryHasItems(std::string item1, std::string item2)
+bool InventoryManager::InventoryHasItems(std::string item1, std::string item2) const
 {
 	bool hasItem1 = false , hasItem2 = false; 
 
@@ -70,7 +70,7 @@ bool InventoryManager::InventoryHasItems(std::string item1, std::string item2)
 	return hasItem1 && hasItem2;
 }
 
-bool InventoryManager::InventoryHasItems(std::string item1, std::string item2, std::string item3)
+bool InventoryManager::InventoryHasItems(std::string item1, std::string item2, std::string item3) const
 {
 	bool hasItem1 = false, hasItem2 = false, hasItem3 = false; 
 

@@ -105,7 +105,6 @@ std::string GameManager::InputField(void)
 	char ch{};
 
 	Application::ShowCursor();
-
 	std::string text = "Input: ";
 	std::cout << text;
 	while (true) {
@@ -129,8 +128,8 @@ std::string GameManager::InputField(void)
 	}
 	Application::HideCursor();
 
-	Scene::GotoXY(Application::numberOfColumns / 2 - 81 + (int)text.length(), 45);
-	for (char& chtr : input)
+	Scene::GotoXY(Application::numberOfColumns / 2 - 81, 45);
+	for (char& chtr : input + text)
 		std::cout << ' ';
 
 	return input;
@@ -162,13 +161,6 @@ void GameManager::CreateRobber(Vector2 toPos)
 {
 	if (robber)
 		robber = nullptr;
-
-	/*
-	if (robberDown) 
-	{
-
-	}*/
-		//return;
 	robber = new Robber();
 //
 	if (SceneManager::prevScene == "BedroomScene")

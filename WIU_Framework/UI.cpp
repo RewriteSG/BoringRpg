@@ -144,7 +144,7 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 	for (int i = 0; i < numberOfLine; ++i)
 	{
 		Scene::GotoXY(position.GetX(), originalPos.GetY() + i, this->position);
-		for (int j = 0; j < 40; ++j)
+		for (int j = 0; j < 100; ++j)
 		{
 			std::cout << ' ';
 		}
@@ -156,13 +156,13 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 	Vector2 originalPos = position;
 	int choosenOption = 0;
 
-	Scene::ChangeColor(color);
+	Scene::ChangeColor(color + 7);
 	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
 	std::string textToPrint = text + ' ';
 
 	int numCh = 0;
 	char input = ' ';
-	int duration = 70;
+	int duration = 20;
 	int numOfCharsInLine = 0;
 	int numberOfLine = 1;
 	for (char& ch : textToPrint)
@@ -221,7 +221,7 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 	for (int i = 0; i < numberOfLine; ++i)
 	{
 		Scene::GotoXY(position.GetX(), originalPos.GetY() + i, this->position);
-		for (int j = 0; j < 40; ++j)
+		for (int j = 0; j < 100; ++j)
 		{
 			std::cout << ' ';
 		}
