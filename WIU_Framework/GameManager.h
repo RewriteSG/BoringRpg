@@ -41,6 +41,7 @@ public:
 
 	void PromptInput();
 	void HandleInput(void);
+	static std::string InputField(void);
 
 	bool GetGameEnded() const;
 	bool GetGameWon() const;

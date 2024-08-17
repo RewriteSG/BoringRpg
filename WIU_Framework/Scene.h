@@ -41,6 +41,7 @@ public:
 	static void ChangeColor(TypeColor color, bool toCharColors);
 	static void ChangeColor(int);
 	static void LowerString(string& _string);
+	static std::string tolowerString(std::string& _string);
 
 	std::string getName(void) const;
 };

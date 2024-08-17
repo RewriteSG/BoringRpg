@@ -75,25 +75,50 @@ void MainMenu::Start(void)
 
 void MainMenu::Update(void)
 {
-	UI systemUI(Vector2(Application::numberOfColumns / 2, Application::numberOfRows / 2), 112);
-	systemUI.CreateOptionUI(Vector2(), true);	
-
-
-	systemUI.GetOptionUI()->AddOption(new std::string("Play"));
-	systemUI.GetOptionUI()->AddOption(new std::string("Endings"));
-	systemUI.GetOptionUI()->AddOption(new std::string("Quit"));
-
-	int choice = systemUI.GetOptionUI()->PickOption(Vector2(0, 5));
-	Scene::ChangeColor(Scene::Default);
-	switch (choice)
+	std::string choices[3] = { "Play", "Endings", "Exit" };
+	int counter = 1;
+	char key;
+	int set[] = { 112, 112, 112 };
+	while (true)
 	{
-	case 0:
-		system("cls");
-		SceneManager::LoadScene(new LivingRoomScene());
-		break;
-	case 2:
-		exit(0);
-		break;
+		set[0] = 112;
+		set[1] = 112;
+		set[2] = 112;
+		if (counter == 1)
+			set[0] = 116;
+		if (counter == 2)
+			set[1] = 116;
+		if (counter == 3)
+			set[2] = 116;
+
+		for (int i = 0; i < 3; ++i)
+		{
+			Scene::GotoXY(Application::numberOfColumns / 2 - (int)choices[i].length() / 2, Application::numberOfRows / 2 + i + 2);
+			Scene::ChangeColor(set[i]);
+			std::cout << choices[i];
+		}
+
+		key = GameManager::_getch();
+
+		if (key == 'w' && (counter > 1 && counter <= 3))
+			counter--;
+
+		if (key == 's' && (counter > 0 && counter <= 2))
+			counter++;
+
+		if (key == '\r')
+		{
+			if (counter == 1)
+				SceneManager::LoadScene(new LivingRoomScene());
+			else if (counter == 2)
+			{
+
+			}
+			else
+				exit(0);
+
+			break;
+		}
 	}
 }
 

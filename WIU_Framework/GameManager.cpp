@@ -80,6 +80,9 @@ void GameManager::HandleInput(void)
 		*player->GetPosition() += Vector2(-1, 0);
 		//Move left
 		break;
+	case '/':
+		InputField();
+		break;
 	}
 
 	//LivingRoomScene* livingRoom = dynamic_cast<LivingRoomScene*>(SceneManager::currentScene);
@@ -92,6 +95,45 @@ void GameManager::HandleInput(void)
 	//	//if(chooseItem == 0)
 	//}
 
+}
+
+std::string GameManager::InputField(void)
+{
+	Scene::GotoXY(Application::numberOfColumns / 2 - 81, 45);
+	const int MAX_LENGTH = 50;
+	std::string input{};
+	char ch{};
+
+	Application::ShowCursor();
+
+	std::string text = "Input: ";
+	std::cout << text;
+	while (true) {
+		ch = GameManager::_getch(); // Get a single character input without echoing to the console
+
+		// Check if the Enter key is pressed
+		if (ch == '\r') {
+			break; // Stop input on Enter key
+		}
+
+		// Allow Backspace
+		if (ch == '\b' && !input.empty()) {
+			std::cout << "\b \b"; // Erase the last character from the console
+			input.pop_back();     // Remove the last character from the input
+		}
+		// Restrict the number of characters
+		else if (input.length() < MAX_LENGTH && ch != '\b') {
+			input += ch;          // Add character to input
+			std::cout << ch;      // Display the character
+		}
+	}
+	Application::HideCursor();
+
+	Scene::GotoXY(Application::numberOfColumns / 2 - 81 + (int)text.length(), 45);
+	for (char& chtr : input)
+		std::cout << ' ';
+
+	return input;
 }
 
 bool GameManager::GetGameEnded() const

@@ -1,5 +1,7 @@
 #include "OptionUI.h"
 #include "Scene.h"
+#include "Application.h"
+#include "string"
 
 OptionUI::OptionUI(Vector2 _position, const int& color, const bool _isCenter) : position(_position), optionsSize(0), optionsCapacity(0), isCenter(_isCenter)
 {
@@ -41,7 +43,7 @@ void OptionUI::AddOption(std::string* text)
 	options[optionsSize++] = text;
 }
 
-int OptionUI::size() {return optionsSize;}
+int OptionUI::size() const {return optionsSize;}
 
 int OptionUI::PeekIndex(const std::string item) const
 {
@@ -65,10 +67,10 @@ int OptionUI::PeekIndex(const std::string item) const
 
 void OptionUI::Clear(const Vector2 position) const
 {
-	for (int i = 0; i < optionsSize; ++i)
+	for (int i = 0; i < optionsSize + 1; ++i)
 	{
-		Scene::GotoXY(position.GetX() - ((isCenter) ? (int)options[i]->length() / 2 : 0), position.GetY() + i, this->position);
-		for (char& ch : *options[i])
+		Scene::GotoXY(position.GetX(), position.GetY() + i, this->position);
+		for (int i = 0; i < 100; ++i)
 		{
 			std::cout << " ";
 		}
@@ -77,50 +79,32 @@ void OptionUI::Clear(const Vector2 position) const
 
 int OptionUI::PickOption(const Vector2 position) const
 {
-	int counter = 1;
-	int choosenOption = -1;
-
-	int* colors = new int[optionsSize];
+	int choosenOption = 0;
 	for (int i = 0; i < optionsSize; ++i)
-		colors[i] = textColor;
-
-	while (true)
 	{
-		for (int i = 0; i < optionsSize; ++i)
-		{
-			if (counter - 1 == PeekIndex(*options[i]))
-				colors[i] = textColor + 4;
-		}
-
-		for (int i = 0; i < optionsSize; ++i)
-		{
-			Scene::GotoXY(position.GetX() - ((isCenter) ? (int)options[i]->length() / 2 : 0), position.GetY() + i, this->position);
-			PrintOption(*options[i], colors[i]);
-		}
-
-		char key = GameManager::_getch();
-
-		if (key == 'w' && (counter > 1 && counter <= optionsSize))
-			--counter;
-		else if (key == 's' && (counter > 0 && counter <= optionsSize - 1))
-			++counter;
-
-		if (key == '\r')
-		{
-
-			for (int i = 0; i < optionsSize; ++i)
-			{
-				if (counter - 1 == PeekIndex(*options[i]))
-					choosenOption = counter;
-			}
-			break;
-		}
-
-		for (int i = 0; i < optionsSize; ++i)
-			colors[i] = textColor;
+		Scene::GotoXY(position.GetX(), position.GetY() + i, this->position);
+		Scene::ChangeColor(textColor);
+		std::cout << *options[i];
 	}
 
-	delete[] colors;
+	std::string input{};
+
+	bool isCheckDone = false;
+	while (!isCheckDone)
+	{
+		input = GameManager::InputField();
+
+		for (int i = 0; i < optionsSize; ++i)
+		{
+			if (input == Scene::tolowerString(*options[i]))
+			{
+				isCheckDone = true;
+				choosenOption = i;
+				break;
+			}
+		}
+	}
+
 	Clear(position);
-	return choosenOption - 1;
+	return choosenOption;
 }

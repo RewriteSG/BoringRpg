@@ -30,8 +30,8 @@ void Scene::Start()
 	gameUI.CreateText("Axiety Meter: ", Vector2(20, -9));
 	gameUI.CreateText("YOU AT: " + getName(), Vector2(-5, -9));
 
-	UI gameUI2(Vector2(), 0, 171);
-	gameUI2.CreateBox(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), "", 13);
+	UI gameUI2(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
+	gameUI2.CreateBox(Vector2(), "", 13);
 }
 
 void Scene::Update()
@@ -177,6 +177,14 @@ void Scene::LowerString(string& _string)
 		result += tolower(letter);
 	}
 	_string = result;
+}
+
+std::string Scene::tolowerString(std::string& _string)
+{
+	std::string text{};
+	for (char& ch : _string)
+		text += tolower(ch);
+	return text;
 }
 
 std::string Scene::getName(void) const { return name; }
