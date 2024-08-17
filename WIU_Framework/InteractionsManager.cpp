@@ -1,4 +1,4 @@
-#define POINTX -126
+#define POINTX -116
 #define POINTY 24
 #include "InteractionsManager.h"
 #include "GameManager.h"

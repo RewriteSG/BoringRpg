@@ -144,8 +144,8 @@ void Furniture::Start()
 
 void Furniture::Collided(GameObject* obj)
 {
+	return;
 	Player* plr = dynamic_cast<Player*>(obj);
-
 
 	if (!plr)
 		return;

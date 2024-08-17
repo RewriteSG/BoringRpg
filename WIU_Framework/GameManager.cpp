@@ -7,10 +7,7 @@
 #include "MainMenu.h"
 #include "Player.h"
 #include "conio.h"
-#include "LivingRoomScene.h"
-#include "ToiletScene.h"
-#include "BedroomScene.h"
-#include "StoreRoomScene.h"
+#include "Furniture.h"
 using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
@@ -60,7 +57,6 @@ void GameManager::PromptInput()
 void GameManager::HandleInput(void)
 {
 	char input = _getch();
-	
 
 	switch (input)
 	{
@@ -80,8 +76,9 @@ void GameManager::HandleInput(void)
 		*player->GetPosition() += Vector2(-1, 0);
 		//Move left
 		break;
-	}
-
+	} 
+	Furniture* furnituresLeft;
+	//gameUI->CreateText("Gay", Vector2(-94, 24));
 	//LivingRoomScene* livingRoom = dynamic_cast<LivingRoomScene*>(SceneManager::currentScene);
 	//if (livingRoom)
 	//{
