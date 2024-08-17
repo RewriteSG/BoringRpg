@@ -9,8 +9,8 @@
 void MainMenu::DrawClock(const int size) const
 {
 	const int width = size * 2;
-	const int positionX = 172 / 2 - width / 2;
-	const int positionY = 43 / 2 - size / 2;
+	const int positionX = Application::numberOfColumns / 2 - width / 2;
+	const int positionY = Application::numberOfRows / 2 - size / 2;
 
 	for (int i = 0; i < size; ++i)
 	{
@@ -19,14 +19,14 @@ void MainMenu::DrawClock(const int size) const
 		{
 			if (i == 0 || i == size - 1)
 			{
-				Scene::ChangeColor(0);
+				Scene::ChangeColor(Scene::BG_COLOR);
 				std::cout << " ";
 			}
 			else
 			{
 				if (j == 0 || j == 1 || j == width - 2 || j == width - 1)
 				{
-					Scene::ChangeColor(0);
+					Scene::ChangeColor(Scene::BG_COLOR);
 					std::cout << " ";
 				}
 				else
@@ -65,10 +65,9 @@ void MainMenu::DrawClock(const int size) const
 
 void MainMenu::Start(void)
 {
-	Application::DrawBG();
 	Scene::ChangeColor(112);
 	std::string tittle = " EVERY SECOND COUNTS ";
-	Scene::GotoXY(172 / 2 - (int)tittle.length() / 2, 4);
+	Scene::GotoXY(Application::numberOfColumns / 2 - (int)tittle.length() / 2, 4);
 	std::cout << tittle;
 
 	DrawClock(30);
@@ -76,7 +75,7 @@ void MainMenu::Start(void)
 
 void MainMenu::Update(void)
 {
-	UI systemUI(Vector2(172 / 2, 43 / 2), 112);
+	UI systemUI(Vector2(Application::numberOfColumns / 2, Application::numberOfRows / 2), 112);
 	systemUI.CreateOptionUI(Vector2(), true);	
 
 

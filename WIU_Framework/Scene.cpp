@@ -9,7 +9,7 @@ bool Scene::GetContinuePgrm() const
 	return ContinuePgrm;
 }
 
-Scene::Scene() : world(Vector2(1, 2), 16, 10), objectManager()
+Scene::Scene() : world(Vector2(20, 2), 16, 10), objectManager()
 {
 	ContinuePgrm = true;
 	name = " ";
@@ -24,14 +24,14 @@ void Scene::Start()
 
 	world.Render();
 
-	UI gameUI(Vector2(130, 12), 0, 45);
+	UI gameUI(Vector2(150, 12), 0, 45);
 	gameUI.CreateBox(Vector2(-5, -7), "Objective:", 6);
 	gameUI.CreateBox(Vector2(-5, 0), "Inventory:", 10);
+	gameUI.CreateText("Axiety Meter: ", Vector2(20, -9));
+	gameUI.CreateText("YOU AT: " + getName(), Vector2(-5, -9));
 
-	UI gameUI2(Vector2(130, 13), 0, 175);
-	gameUI2.CreateBox(Vector2(-129, 22), "", 9);
-	gameUI.CreateText("Axiety Meter: ", Vector2(20, -9), 121);
-	gameUI.CreateText("YOU AT: " + getName(), Vector2(-5, -9), 121);
+	UI gameUI2(Vector2(), 0, 171);
+	gameUI2.CreateBox(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), "", 13);
 }
 
 void Scene::Update()
@@ -132,17 +132,9 @@ void Scene::ChangeColor(TypeColor color)
 		break;
 	}
 }
-
 void Scene::ChangeColor(TypeColor color, bool tochar)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	// you can loop k higher to see more color choices
-	//for (int k = 1; k < 255; k++)
-	//{
-	//	// pick the colorattribute k you want
-	//	SetConsoleTextAttribute(hConsole, k);
-	//	cout << k << " I want to be nice today!" << endl;
-	//}
 
 	switch (color)
 	{
