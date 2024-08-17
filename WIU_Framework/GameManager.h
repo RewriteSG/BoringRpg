@@ -23,9 +23,6 @@ private:
 public:
 	UI* gameUI;
 	Player* player;
-	//bool robberDown;
-	Robber* robber;
-	
 
 
 	static GameManager* getGM();
@@ -49,7 +46,5 @@ public:
 	
 	static char _getch(void);
 
-	//robber
-	void CreateRobber(Vector2 toPos);
 };
 

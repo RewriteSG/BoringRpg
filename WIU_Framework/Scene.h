@@ -14,6 +14,7 @@ public:
 	static GameManager gm; 
 	bool ContinuePgrm;
 	Scene();
+	ObjectManager* GetObjectManager();
 	virtual void Start();
 	virtual void Update();
 	void UpdateGameObjectsPos();

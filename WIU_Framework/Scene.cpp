@@ -15,6 +15,11 @@ Scene::Scene() : world(Vector2(33, 2), 16, 10), objectManager()
 	name = " ";
 }
 
+ObjectManager* Scene::GetObjectManager()
+{
+	return &objectManager;
+}
+
 void Scene::Start()
 {
 	//Application::DrawBG();
