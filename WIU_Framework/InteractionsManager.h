@@ -8,7 +8,8 @@ public:
 	//timer
 	TimeSystem* timeSystem;
 	UI* ui;
-	
+	bool isNailSetup;
+	bool isPlankSetup;
 	
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;
@@ -24,7 +25,6 @@ public:
 	bool isDoorBarricaded;
 
 	int trashCanInteractions = 0;
-
 	InteractionsManager();
 
 	/// Furnitures
