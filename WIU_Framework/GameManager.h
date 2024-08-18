@@ -25,14 +25,14 @@ public:
 	Player* player;
 	//bool robberDown;
 	Robber* robber;
-	
+
 
 
 	static GameManager* getGM();
 	InteractionsManager InteractionsMgr;
 	InventoryManager inventory;
 	TimeSystem TimeSys;
-	
+
 	GameManager();
 
 	void Start();
@@ -47,7 +47,7 @@ public:
 	bool GetGameWon() const;
 
 	void CreatePlayer(Vector2 toPos);
-	
+
 	static char _getch(void);
 
 	//robber
