@@ -29,6 +29,7 @@
 #include "TrashCanSprite.h"
 #include "FridgeSprite.h"
 
+
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 {
 	furniture = type;
@@ -131,6 +132,110 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	}
 }
 
+Furniture::Furniture(TypeOfFurniture type, Vector2 toPos, std::string toName)
+{
+	furniture = type;
+	*GetPosition() = toPos;
+	name = toName;
+
+	switch (furniture)
+	{
+	case Furniture::SofaKey:
+		break;
+	case Furniture::Box:
+		SetSprite(new BoxSprite());
+		break;
+	case Furniture::Sink:
+		SetSprite(new SinkSprite());
+		break;
+	case Furniture::KitchenTable:
+		SetSprite(new KitchenTableSprite());
+		break;
+	case Furniture::Planks:
+		SetSprite(new PlanksSprite());
+		break;
+	case Furniture::EmptyBoxType1:
+		SetSprite(new EmptyBoxType1Sprite());
+		break;
+	case Furniture::EmptyBoxType2:
+		SetSprite(new EmptyBoxType2Sprite());
+		break;
+	case Furniture::ToiletCabinet:
+		SetSprite(new ToiletCabinetSprite());
+		break;
+	case Furniture::ToiletBowl:
+		SetSprite(new ToiletBowlSprite());
+		break;
+	case Furniture::ShowerArea:
+		SetSprite(new ShowerAreaSprite());
+		break;
+	case Furniture::StoreRoomDoor:
+		SetSprite(new StoreRoomDoorSprite());
+		break;
+	case Furniture::ToiletDoor:
+		SetSprite(new ToiletDoorSprite());
+		break;
+
+	case Furniture::BedRoomDoor:
+		SetSprite(new DoorSprites());
+		break;
+	case Furniture::EmptySofa:
+		SetSprite(new EmptySofaSprite());
+		break;
+	case Furniture::BedroomCabinet1:
+		SetSprite(new BedroomCabinetSprite());
+		break;
+	case Furniture::BedroomCabinet2:
+		SetSprite(new BedroomCabinet2Sprite());
+		break;
+	case Furniture::LivingRoomCabinet:
+		SetSprite(new LivingRoomCabinetSprite());
+		break;
+	case Furniture::Television:
+		SetSprite(new TelevisionSprite());
+		break;
+	case Furniture::KitchenCabinet:
+		SetSprite(new KitchenCabinetSprite());
+		break;
+	case Furniture::CardBoardBox:
+		break;
+	case Furniture::LivingroomTable:
+		SetSprite(new LivingroomTableSprite());
+		break;
+	case Furniture::Bedroomtable:
+		SetSprite(new BedroomTableSprite());
+		break;
+	case Furniture::Fridge:
+		SetSprite(new FridgeSprite());
+		break;
+	case Furniture::Bed:
+		SetSprite(new BedSprite());
+		break;
+	case Furniture::Phone:
+		break;
+	case Furniture::ToolBox:
+		break;
+	case Furniture::Stove:
+		SetSprite(new StoveSprite());
+		break;
+	case Furniture::TrashCan:
+		SetSprite(new TrashCanSprite());
+		break;
+	case Furniture::Clock:
+		SetSprite(new ClockSprite());
+		break;
+	case Furniture::LivingRoomDoor:
+		SetSprite(new DoorSprites());
+		break;
+	case Furniture::KitchenDoor:
+		SetSprite(new StoreRoomDoorSprite());
+		break;
+
+	default:
+		break;
+	}
+}
+
 Furniture::Furniture(TypeOfFurniture type, Vector2 toPos, bool isInvisible)
 {
 	furniture = type;
@@ -144,8 +249,8 @@ void Furniture::Start()
 
 void Furniture::Collided(GameObject* obj)
 {
+	return;
 	Player* plr = dynamic_cast<Player*>(obj);
-
 
 	if (!plr)
 		return;
@@ -233,4 +338,9 @@ void Furniture::Collided(GameObject* obj)
 		break;
 	}
 
+}
+
+Furniture::TypeOfFurniture Furniture::GetFurnitureType()
+{
+	return furniture;
 }

@@ -68,8 +68,10 @@ public:
 	/// </summary>
 	TypeOfFurniture furniture;
 	Furniture(TypeOfFurniture type, Vector2 toPos);
+	Furniture(TypeOfFurniture type, Vector2 toPos, std::string toName);
 	Furniture(TypeOfFurniture type, Vector2 toPos, bool isInvisible);
 	void Start();
 	void Collided(GameObject* obj) override;
+	TypeOfFurniture GetFurnitureType();
 
 };

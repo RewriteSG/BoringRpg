@@ -9,10 +9,15 @@ bool Scene::GetContinuePgrm() const
 	return ContinuePgrm;
 }
 
-Scene::Scene() : world(Vector2(20, 2), 16, 10), objectManager()
+Scene::Scene() : world(Vector2(33, 2), 16, 10), objectManager()
 {
 	ContinuePgrm = true;
 	name = " ";
+}
+
+ObjectManager* Scene::GetObjectManager()
+{
+	return &objectManager;
 }
 
 void Scene::Start()

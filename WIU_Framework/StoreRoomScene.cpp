@@ -35,12 +35,12 @@ void StoreRoomScene::Start()
 	new Wall(Vector2(8, 3));
 	Furniture* door = new Furniture(Furniture::LivingRoomDoor, Vector2(8, 5));
 	door->SetSprite(new StoreRoomDoorSprite());
-	new Furniture(Furniture::Box, Vector2(5, 3));
-	new Furniture(Furniture::EmptyBoxType1, Vector2(5, 6));
-	new Furniture(Furniture::EmptyBoxType1, Vector2(6, 6));
-	new Furniture(Furniture::EmptyBoxType1, Vector2(7, 6));
-	new Furniture(Furniture::EmptyBoxType2, Vector2(4, 4));
-	new Furniture(Furniture::EmptyBoxType2, Vector2(4, 5));
+	new Furniture(Furniture::Box, Vector2(5, 3), string("Box Labeled 1")); 
+	new Furniture(Furniture::EmptyBoxType1, Vector2(5, 6), string("Box Labeled 2")); 
+	new Furniture(Furniture::EmptyBoxType1, Vector2(6, 6), string("Box Labeled 3")); 
+	new Furniture(Furniture::EmptyBoxType1, Vector2(7, 6), string("Box Labeled 4"));
+	new Furniture(Furniture::EmptyBoxType2, Vector2(4, 4), string("Box Labeled 5")); 
+	new Furniture(Furniture::EmptyBoxType2, Vector2(4, 5), string("Box Labeled 6")); 
 	new Furniture(Furniture::Planks, Vector2(6, 3));
 	
 
