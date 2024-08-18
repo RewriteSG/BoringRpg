@@ -2,7 +2,7 @@
 #include "string"
 TimeSystem::TimeSystem()
 {
-	TimeLoop = 2;
+	TimeLoop = 0;
 	TimeTaken = 0;
 	RobberTime = 720;
 	TimeLimitForCops = 900;

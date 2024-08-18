@@ -505,6 +505,7 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 				case 0:
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid inside.");
 					//closet endings, differ if player has knife/pan and duct tape
+					break;
 				case 1:
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Seems like a bad idea...");
 
@@ -563,59 +564,80 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 {
 	//on first loop player will go sleep
 	//on second loop onwards player will not sleep
-	//bedroom cabinet key is under the bed
 
+	Start();
+	ui->CreateOptionUI(Vector2(POINTX, 13), false);
+	switch (timeSystem->TimeLoop)
+	{
+	case 0:
+	case 1:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You went to sleep.");
+		// play first loop ending
+		break;
+	default:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can't sleep...");
+		break;
+	}
 }
 
 void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* player)
 {
-	timeSystem->increaseTimeTaken(5);
-
+	Start();
+	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 }
 
 void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* player)
 {
 	Start();
 	ui->CreateOptionUI(Vector2(POINTX, 13), false);
-	if (hasHammer && hasPlanks && hasNails)
+	switch (timeSystem->TimeLoop)
 	{
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I could barricade the door, this can buy some time.");
-		ui->GetOptionUI()->AddOption(new std::string("Yes"));
-		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Barricade the door with PLANKS and NAILS?");
-		switch (choosenItem)
+	case 0:
+	case 1:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Strange... I can't open the door.");
+		break;
+	default:
+		if (hasHammer && hasPlanks && hasNails)
 		{
-		case 0:
-			timeSystem->increaseTimeTaken(5);
-			isDoorBarricaded = true;
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There, all good.");
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "Successfully barricaded the door!");
-			break;
-		case 1:
-			break;
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I could barricade the door, this can buy some time.");
+			ui->GetOptionUI()->AddOption(new std::string("Yes"));
+			ui->GetOptionUI()->AddOption(new std::string("No"));
+			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Barricade the door with PLANKS and NAILS?");
+			switch (choosenItem)
+			{
+			case 0:
+				timeSystem->increaseTimeTaken(5);
+				isDoorBarricaded = true;
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There, all good.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "Successfully barricaded the door!");
+				break;
+			case 1:
+				break;
+			}
 		}
-	}
-	if (hasShampoo)
-	{
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I could make the entrance slippery, this can buy some time.");
-		ui->GetOptionUI()->AddOption(new std::string("Yes"));
-		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Make the entrance slippery with SHAMPOO?");
-		switch (choosenItem)
+		if (hasShampoo)
 		{
-		case 0:
-			timeSystem->increaseTimeTaken(5);
-			isDoorBarricaded = true;
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There, all good.");
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "Successfully made the floor slippery!");
-			break;
-		case 1:
-			break;
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I could make the entrance slippery, this can buy some time.");
+			ui->GetOptionUI()->AddOption(new std::string("Yes"));
+			ui->GetOptionUI()->AddOption(new std::string("No"));
+			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Make the entrance slippery with SHAMPOO?");
+			switch (choosenItem)
+			{
+			case 0:
+				timeSystem->increaseTimeTaken(5);
+				isDoorBarricaded = true;
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There, all good.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "Successfully made the floor slippery!");
+				break;
+			case 1:
+				break;
+			}
 		}
-	}
-	else
-	{
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Strange, the door can't be opened");
+		else
+		{
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Strange, the door can't be opened");
+		}
 	}
 }
 
@@ -639,7 +661,20 @@ void InteractionsManager::BedroomDoorInteracted(GameObject* BedroomDoor, GameObj
 
 void InteractionsManager::KitchenDoorInteracted(GameObject* KitchenDoor, GameObject* player)
 {
-	timeSystem->increaseTimeTaken(5);
+	Start();
+	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	ui->GetOptionUI()->AddOption(new std::string("Yes"));
+	ui->GetOptionUI()->AddOption(new std::string("No"));
+	int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the KITCHEN?");
+	switch (choosenItem)
+	{
+	case 0:
+		timeSystem->increaseTimeTaken(5);
+		SceneManager::LoadScene("KitchenScene");
+		break;
+	case 1:
+		break;
+	}
 }
 
 void InteractionsManager::ToiletDoorInteracted(GameObject* ToiletDoor, GameObject* player)
@@ -703,6 +738,14 @@ void InteractionsManager::StoreRoomDoorInteracted(GameObject* storeRoomDoor, Gam
 	{
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I need a key to unlock the store room.");
 	}
+}
+
+void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
+{
+	// show the current time
+	Start();
+	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: ");
 }
 
 void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, GameObject* player)

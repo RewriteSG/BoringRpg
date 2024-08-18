@@ -1,5 +1,5 @@
 #include "InventoryManager.h"
-
+#include "UI.h"
 #include "MyFunctions.cpp"
 #include "GameManager.h"
 using namespace myFunctions;
