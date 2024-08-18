@@ -11,6 +11,7 @@
 #include "ToiletScene.h"
 #include "BedroomScene.h"
 #include "StoreRoomScene.h"
+#include "Furniture.h"
 using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
@@ -59,8 +60,464 @@ void GameManager::PromptInput()
 }
 void GameManager::HandleInput(void)
 {
-	char input = _getch();
 	
+	Furniture* furnituresLeft, * furnituresRight, * furnituresUp, * furnituresDown;
+	furnituresLeft = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() - 1, player->GetPosition()->GetY())));
+	furnituresRight = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() + 1, player->GetPosition()->GetY())));
+	furnituresUp = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() - 1)));
+	furnituresDown = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() + 1)));
+	Furniture::TypeOfFurniture typeofFurniture;
+	std::string ToPrint = "blank";
+	if (furnituresLeft || furnituresRight || furnituresUp || furnituresDown)
+		ToPrint = "There is a ";
+	if (furnituresLeft)
+	{
+		typeofFurniture = furnituresLeft->GetFurnitureType();
+		switch (typeofFurniture)
+		{
+		case Furniture::SofaKey:
+			ToPrint += "Sofa";
+			break;
+		case Furniture::Clock:
+			ToPrint += "Clock";
+			break;
+		case Furniture::EmptySofa:
+			ToPrint += "Sofa";
+			break;
+		case Furniture::BedroomCabinet1:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::BedroomCabinet2:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::LivingRoomCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::Television:
+			ToPrint += "Television";
+			break;
+		case Furniture::KitchenCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::Sink:
+			ToPrint += "Sink";
+			break;
+		case Furniture::Planks:
+			ToPrint += "Planks";
+			break;
+		case Furniture::Door:
+			ToPrint += "Door";
+			break;
+		case Furniture::BedRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::ToiletBowl:
+			ToPrint += "Toilet Bowl";
+			break;
+		case Furniture::ShowerArea:
+			ToPrint += "Shower";
+			break;
+		case Furniture::ToiletCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::ToiletDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::StoreRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::CardBoardBox:
+			ToPrint += furnituresLeft->GetName();
+			break;
+		case Furniture::LivingroomTable:
+			ToPrint += "Table";
+			break;
+		case Furniture::Bedroomtable:
+			ToPrint += "Table";
+			break;
+		case Furniture::Phone:
+			ToPrint += "Phone";
+			break;
+		case Furniture::ToolBox:
+			ToPrint += "Toolbox";
+			break;
+		case Furniture::Stove:
+			ToPrint += "Stove";
+			break;
+		case Furniture::Bed:
+			ToPrint += "Bed";
+			break;
+		case Furniture::TrashCan:
+			ToPrint += "Trash Can";
+			break;
+		case Furniture::LivingRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::EmptyBoxType1:
+			ToPrint += furnituresLeft->GetName();
+			break;
+		case Furniture::EmptyBoxType2:
+			ToPrint += furnituresLeft->GetName();
+			break;
+		case Furniture::Box:
+			ToPrint += furnituresLeft->GetName();
+			break;
+		case Furniture::Fridge:
+			ToPrint += "Fridge";
+			break;
+		case Furniture::sink:
+			ToPrint += "Sink";
+			break;
+		case Furniture::KitchenTable:
+			ToPrint += "Table";
+			break;
+		case Furniture::KitchenDoor:
+			ToPrint += "Door";
+			break;
+		default:
+			break;
+		}
+	}
+	if (furnituresRight)
+	{
+		if (furnituresLeft)
+			ToPrint += " and a ";
+		typeofFurniture = furnituresRight->GetFurnitureType();
+		switch (typeofFurniture)
+		{
+		case Furniture::SofaKey:
+			ToPrint += "Sofa";
+			break;
+		case Furniture::Clock:
+			ToPrint += "Clock";
+			break;
+		case Furniture::EmptySofa:
+			ToPrint += "Sofa";
+			break;
+		case Furniture::BedroomCabinet1:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::BedroomCabinet2:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::LivingRoomCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::Television:
+			ToPrint += "Television";
+			break;
+		case Furniture::KitchenCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::Sink:
+			ToPrint += "Sink";
+			break;
+		case Furniture::Planks:
+			ToPrint += "Planks";
+			break;
+		case Furniture::Door:
+			ToPrint += "Door";
+			break;
+		case Furniture::BedRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::ToiletBowl:
+			ToPrint += "Toilet Bowl";
+			break;
+		case Furniture::ShowerArea:
+			ToPrint += "Shower";
+			break;
+		case Furniture::ToiletCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::ToiletDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::StoreRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::CardBoardBox:
+			ToPrint += furnituresRight->GetName();
+			break;
+		case Furniture::LivingroomTable:
+			ToPrint += "Table";
+			break;
+		case Furniture::Bedroomtable:
+			ToPrint += "Table";
+			break;
+		case Furniture::Phone:
+			ToPrint += "Phone";
+			break;
+		case Furniture::ToolBox:
+			ToPrint += "Toolbox";
+			break;
+		case Furniture::Stove:
+			ToPrint += "Stove";
+			break;
+		case Furniture::Bed:
+			ToPrint += "Bed";
+			break;
+		case Furniture::TrashCan:
+			ToPrint += "Trash Can";
+			break;
+		case Furniture::LivingRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::EmptyBoxType1:
+			ToPrint += furnituresRight->GetName();
+			break;
+		case Furniture::EmptyBoxType2:
+			ToPrint += furnituresRight->GetName();
+			break;
+		case Furniture::Box:
+			ToPrint += furnituresRight->GetName();
+			break;
+		case Furniture::Fridge:
+			ToPrint += "Fridge";
+			break;
+		case Furniture::sink:
+			ToPrint += "Sink";
+			break;
+		case Furniture::KitchenTable:
+			ToPrint += "Table";
+			break;
+		case Furniture::KitchenDoor:
+			ToPrint += "Door";
+			break;
+		default:
+			break;
+		}
+	}
+	if (furnituresUp)
+	{
+		if (furnituresLeft || furnituresRight)
+			ToPrint += " and a ";
+		typeofFurniture = furnituresUp->GetFurnitureType();
+		switch (typeofFurniture)
+		{
+		case Furniture::SofaKey:
+			ToPrint += "Sofa";
+			break;
+		case Furniture::Clock:
+			ToPrint += "Clock";
+			break;
+		case Furniture::EmptySofa:
+			ToPrint += "Sofa";
+			break;
+		case Furniture::BedroomCabinet1:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::BedroomCabinet2:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::LivingRoomCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::Television:
+			ToPrint += "Television";
+			break;
+		case Furniture::KitchenCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::Sink:
+			ToPrint += "Sink";
+			break;
+		case Furniture::Planks:
+			ToPrint += "Planks";
+			break;
+		case Furniture::Door:
+			ToPrint += "Door";
+			break;
+		case Furniture::BedRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::ToiletBowl:
+			ToPrint += "Toilet Bowl";
+			break;
+		case Furniture::ShowerArea:
+			ToPrint += "Shower";
+			break;
+		case Furniture::ToiletCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::ToiletDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::StoreRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::CardBoardBox:
+			ToPrint += furnituresUp->GetName();
+			break;
+		case Furniture::LivingroomTable:
+			ToPrint += "Table";
+			break;
+		case Furniture::Bedroomtable:
+			ToPrint += "Table";
+			break;
+		case Furniture::Phone:
+			ToPrint += "Phone";
+			break;
+		case Furniture::ToolBox:
+			ToPrint += "Toolbox";
+			break;
+		case Furniture::Stove:
+			ToPrint += "Stove";
+			break;
+		case Furniture::Bed:
+			ToPrint += "Bed";
+			break;
+		case Furniture::TrashCan:
+			ToPrint += "Trash Can";
+			break;
+		case Furniture::LivingRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::EmptyBoxType1:
+			ToPrint += furnituresUp->GetName();
+			break;
+		case Furniture::EmptyBoxType2:
+			ToPrint += furnituresUp->GetName();
+			break;
+		case Furniture::Box:
+			ToPrint += furnituresUp->GetName();
+			break;
+		case Furniture::Fridge:
+			ToPrint += "Fridge";
+			break;
+		case Furniture::sink:
+			ToPrint += "Sink";
+			break;
+		case Furniture::KitchenTable:
+			ToPrint += "Table";
+			break;
+		case Furniture::KitchenDoor:
+			ToPrint += "Door";
+			break;
+		default:
+			break;
+		}
+	}
+	if (furnituresDown)
+	{
+
+		if (furnituresLeft || furnituresRight || furnituresUp)
+			ToPrint += " and a ";
+		typeofFurniture = furnituresDown->GetFurnitureType();
+		switch (typeofFurniture)
+		{
+		case Furniture::SofaKey:
+			ToPrint += "Sofa";
+			break;
+		case Furniture::Clock:
+			ToPrint += "Clock";
+			break;
+		case Furniture::EmptySofa:
+			ToPrint += "Sofa";
+			break;
+		case Furniture::BedroomCabinet1:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::BedroomCabinet2:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::LivingRoomCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::Television:
+			ToPrint += "Television";
+			break;
+		case Furniture::KitchenCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::Sink:
+			ToPrint += "Sink";
+			break;
+		case Furniture::Planks:
+			ToPrint += "Planks";
+			break;
+		case Furniture::Door:
+			ToPrint += "Door";
+			break;
+		case Furniture::BedRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::ToiletBowl:
+			ToPrint += "Toilet Bowl";
+			break;
+		case Furniture::ShowerArea:
+			ToPrint += "Shower";
+			break;
+		case Furniture::ToiletCabinet:
+			ToPrint += "Cabinet";
+			break;
+		case Furniture::ToiletDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::StoreRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::CardBoardBox:
+			ToPrint += furnituresDown->GetName();
+			break;
+		case Furniture::LivingroomTable:
+			ToPrint += "Table";
+			break;
+		case Furniture::Bedroomtable:
+			ToPrint += "Table";
+			break;
+		case Furniture::Phone:
+			ToPrint += "Phone";
+			break;
+		case Furniture::ToolBox:
+			ToPrint += "Toolbox";
+			break;
+		case Furniture::Stove:
+			ToPrint += "Stove";
+			break;
+		case Furniture::Bed:
+			ToPrint += "Bed";
+			break;
+		case Furniture::TrashCan:
+			ToPrint += "Trash Can";
+			break;
+		case Furniture::LivingRoomDoor:
+			ToPrint += "Door";
+			break;
+		case Furniture::EmptyBoxType1:
+			ToPrint += furnituresDown->GetName();
+			break;
+		case Furniture::EmptyBoxType2:
+			ToPrint += furnituresDown->GetName();
+			break;
+		case Furniture::Box:
+			ToPrint += furnituresDown->GetName();
+			break;
+		case Furniture::Fridge:
+			ToPrint += "Fridge";
+			break;
+		case Furniture::sink:
+			ToPrint += "Sink";
+			break;
+		case Furniture::KitchenTable:
+			ToPrint += "Table";
+			break;
+		case Furniture::KitchenDoor:
+			ToPrint += "Door";
+			break;
+		default:
+			break;
+		}
+	}
+	if (ToPrint != "blank")
+		ToPrint += " next to you.";
+	else
+		ToPrint = "There is nothing around the player.";
+
+	gameUI->CreateText("                                                           ", Vector2(-94, 24));
+	gameUI->CreateText(ToPrint, Vector2(-94, 24));
+
+	char input = _getch();
 
 	switch (input)
 	{
