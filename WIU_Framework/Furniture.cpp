@@ -37,17 +37,22 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 	switch (furniture)
 	{
 	case Furniture::SofaKey:
+		name = "Sofa";
 		break;
 	case Furniture::Box:
+		name = "Box";
 		SetSprite(new BoxSprite());
 		break;
 	case Furniture::Sink:
+		name = "Sink";
 		SetSprite(new SinkSprite());
 		break;
 	case Furniture::KitchenTable:
+		name = "Kitchen Table";
 		SetSprite(new KitchenTableSprite());
 		break;
 	case Furniture::Planks:
+		name = "Planks";
 		SetSprite(new PlanksSprite());
 		break;
 	case Furniture::EmptyBoxType1:
@@ -57,73 +62,97 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		SetSprite(new EmptyBoxType2Sprite());
 		break;
 	case Furniture::ToiletCabinet:
+		name = "Toilet Cabinet";
 		SetSprite(new ToiletCabinetSprite());
 		break;
 	case Furniture::ToiletBowl:
+		name = "Toilet Bowl";
 		SetSprite(new ToiletBowlSprite());
 		break;
 	case Furniture::ShowerArea:
+		name = "Shower";
 		SetSprite(new ShowerAreaSprite());
 		break;
 	case Furniture::StoreRoomDoor:
+		name = "Store Room Door";
 		SetSprite(new StoreRoomDoorSprite());
 		break;
 	case Furniture::ToiletDoor:
+		name = "Toilet Door";
 		SetSprite(new ToiletDoorSprite());
 		break;
 		
 	case Furniture::BedRoomDoor:
+		name = "Bedroom Door";
 		SetSprite(new DoorSprites());
 		break;
 	case Furniture::EmptySofa:
+		name = "Sofa";
 		SetSprite(new EmptySofaSprite());
 		break;
 	case Furniture::BedroomCabinet1:
+		name = "Cabinet";
 		SetSprite(new BedroomCabinetSprite());
 		break;
 	case Furniture::BedroomCabinet2:
+		name = "Cabinet";
 		SetSprite(new BedroomCabinet2Sprite());
 		break;
 	case Furniture::LivingRoomCabinet:
+		name = "Cabinet";
 		SetSprite(new LivingRoomCabinetSprite());
 		break;
 	case Furniture::Television:
+		name = "Television";
 		SetSprite(new TelevisionSprite());
 		break;
 	case Furniture::KitchenCabinet:
+		name = "Cabinet";
 		SetSprite(new KitchenCabinetSprite());
 		break;
 	case Furniture::CardBoardBox:
+
 		break;
 	case Furniture::LivingroomTable:
+		name = "Table";
 		SetSprite(new LivingroomTableSprite());
 		break;
 	case Furniture::Bedroomtable:
+		name = "Table";
 		SetSprite(new BedroomTableSprite());
 		break;
 	case Furniture::Fridge:
+		name = "Fridge";
 		SetSprite(new FridgeSprite());
 		break;
 	case Furniture::Bed:
+		name = "Bed";
 		SetSprite(new BedSprite());
 		break;
 	case Furniture::Phone:
+		name = "Phone";
 		break;
 	case Furniture::ToolBox:
+		name = "Tool Box";
 		break;
 	case Furniture::Stove:
+		name = "Stove";
 		SetSprite(new StoveSprite());
 		break;
 	case Furniture::TrashCan:
+		name = "Trash Can";
 		SetSprite(new TrashCanSprite());
 		break;
 	case Furniture::Clock:
+		name = "Clock";
 		SetSprite(new ClockSprite());
 		break;
 	case Furniture::LivingRoomDoor:
+		name = "Living Room Door";
 		SetSprite(new DoorSprites());
 		break;
 	case Furniture::KitchenDoor:
+		name = "Kitchen Door";
 		SetSprite(new StoreRoomDoorSprite());
 		break;
 
@@ -241,6 +270,131 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos, bool isInvisible)
 	furniture = type;
 	*GetPosition() = toPos;
 	SetRenderSprite(false);
+	switch (furniture)
+	{
+	case Furniture::SofaKey:
+		name = "Sofa";
+		break;
+	case Furniture::Box:
+		name = "Box";
+		//SetSprite(new BoxSprite());
+		break;
+	case Furniture::Sink:
+		name = "Sink";
+		//SetSprite(new SinkSprite());
+		break;
+	case Furniture::KitchenTable:
+		name = "Kitchen Table";
+		//SetSprite(new KitchenTableSprite());
+		break;
+	case Furniture::Planks:
+		name = "Planks";
+		//SetSprite(new PlanksSprite());
+		break;
+	case Furniture::EmptyBoxType1:
+		//SetSprite(new EmptyBoxType1Sprite());
+		break;
+	case Furniture::EmptyBoxType2:
+		//SetSprite(new EmptyBoxType2Sprite());
+		break;
+	case Furniture::ToiletCabinet:
+		name = "Toilet Cabinet";
+		//SetSprite(new ToiletCabinetSprite());
+		break;
+	case Furniture::ToiletBowl:
+		name = "Toilet Bowl";
+		//SetSprite(new ToiletBowlSprite());
+		break;
+	case Furniture::ShowerArea:
+		name = "Shower";
+		//SetSprite(new ShowerAreaSprite());
+		break;
+	case Furniture::StoreRoomDoor:
+		name = "Store Room Door";
+		//SetSprite(new StoreRoomDoorSprite());
+		break;
+	case Furniture::ToiletDoor:
+		name = "Toilet Door";
+		//SetSprite(new ToiletDoorSprite());
+		break;
+
+	case Furniture::BedRoomDoor:
+		name = "Bedroom Door";
+		//SetSprite(new DoorSprites());
+		break;
+	case Furniture::EmptySofa:
+		name = "Sofa";
+		//SetSprite(new EmptySofaSprite());
+		break;
+	case Furniture::BedroomCabinet1:
+		name = "Cabinet";
+		//SetSprite(new BedroomCabinetSprite());
+		break;
+	case Furniture::BedroomCabinet2:
+		name = "Cabinet";
+		//SetSprite(new BedroomCabinet2Sprite());
+		break;
+	case Furniture::LivingRoomCabinet:
+		name = "Cabinet";
+		//SetSprite(new LivingRoomCabinetSprite());
+		break;
+	case Furniture::Television:
+		name = "Television";
+		//SetSprite(new TelevisionSprite());
+		break;
+	case Furniture::KitchenCabinet:
+		name = "Cabinet";
+		//SetSprite(new KitchenCabinetSprite());
+		break;
+	case Furniture::CardBoardBox:
+
+		break;
+	case Furniture::LivingroomTable:
+		name = "Table";
+		//SetSprite(new LivingroomTableSprite());
+		break;
+	case Furniture::Bedroomtable:
+		name = "Table";
+		//SetSprite(new BedroomTableSprite());
+		break;
+	case Furniture::Fridge:
+		name = "Fridge";
+		//SetSprite(new FridgeSprite());
+		break;
+	case Furniture::Bed:
+		name = "Bed";
+		//SetSprite(new BedSprite());
+		break;
+	case Furniture::Phone:
+		name = "Phone";
+		break;
+	case Furniture::ToolBox:
+		name = "Tool Box";
+		break;
+	case Furniture::Stove:
+		name = "Stove";
+		//SetSprite(new StoveSprite());
+		break;
+	case Furniture::TrashCan:
+		name = "Trash Can";
+		//SetSprite(new TrashCanSprite());
+		break;
+	case Furniture::Clock:
+		name = "Clock";
+		//SetSprite(new ClockSprite());
+		break;
+	case Furniture::LivingRoomDoor:
+		name = "Living Room Door";
+		//SetSprite(new DoorSprites());
+		break;
+	case Furniture::KitchenDoor:
+		name = "Kitchen Door";
+		//SetSprite(new StoreRoomDoorSprite());
+		break;
+
+	default:
+		break;
+	}
 }
 
 void Furniture::Start()
