@@ -53,6 +53,7 @@ public:
 	void ToiletDoorInteracted(GameObject* BathroomDoor, GameObject* player);
 	void LivingRoomDoorInteracted(GameObject* BathroomDoor, GameObject* player);
 	void StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player);
+	void ClockInteracted(GameObject* clock, GameObject* player);
 	void Start();
 };
 
