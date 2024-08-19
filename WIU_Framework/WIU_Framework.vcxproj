@@ -141,6 +141,7 @@
     <ClCompile Include="EmptyBoxType2Sprite.cpp" />
     <ClCompile Include="EmptySofaSprite.cpp" />
     <ClCompile Include="EndingManager.cpp" />
+    <ClCompile Include="Endings.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExampleScene.cpp" />
     <ClCompile Include="FridgeSprite.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="EmptyBoxType2Sprite.h" />
     <ClInclude Include="EmptySofaSprite.h" />
     <ClInclude Include="EndingManager.h" />
+    <ClInclude Include="Endings.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExampleScene.h" />
     <ClInclude Include="FridgeSprite.h" />

@@ -12,6 +12,7 @@
 #include "BedroomScene.h"
 #include "StoreRoomScene.h"
 #include "KitchenScene.h"
+#include "Endings.h"
 #include "Furniture.h"
 #include "Scene.h"
 using namespace myFunctions;
@@ -280,10 +281,15 @@ void GameManager::HandleInput(void)
 
 			}
 			
+			else if (stringInput == "show endings") {
+				//Endings
+				SceneManager::LoadScene("EndingScene");
+			}
 			else if (stringInput == "move")
 			{
 				break;
 			}
+			
 			else {
 				ui.CreateText("Invalid input", Vector2(2, 3));
 				goto InvalidInput;
@@ -365,6 +371,7 @@ void GameManager::CreatePlayer(Vector2 toPos)
 		toPos = Vector2(8, 1);
 	if (SceneManager::prevScene == "StoreRoomScene")
 		toPos = Vector2(1, 3);
+
 	if (SceneManager::prevScene == "ToiletScene")
 		toPos = Vector2(9, 6);
 	if (SceneManager::prevScene == "KitchenScene")
