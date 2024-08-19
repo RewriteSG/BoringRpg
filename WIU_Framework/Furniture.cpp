@@ -155,6 +155,10 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		name = "Kitchen Door";
 		SetSprite(new StoreRoomDoorSprite());
 		break;
+	case Furniture::MainDoor:
+		name = "Main Door";
+		SetSprite(new StoreRoomDoorSprite());
+		break;
 
 	default:
 		break;
