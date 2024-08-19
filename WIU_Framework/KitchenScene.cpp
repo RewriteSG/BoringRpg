@@ -5,6 +5,7 @@
 #include "Furniture.h"
 #include "UI.h"
 #include "conio.h"
+#include "StoreRoomDoorSprite.h"
 KitchenScene::KitchenScene(void)
 {
 	name = SceneManager::GetSceneName(SceneManager::KITCHEN);
@@ -49,7 +50,8 @@ void KitchenScene::Start()
 	new Furniture(Furniture::Stove, Vector2(6, 5));
 	new Furniture(Furniture::TrashCan, Vector2(5, 5));
 	new Furniture(Furniture::Fridge, Vector2(3, 5));
-
+	Furniture* door = new Furniture(Furniture::LivingRoomDoor, Vector2(2, 3));
+	door->SetSprite(new StoreRoomDoorSprite());
 	gm.CreatePlayer(Vector2(3, 3));
 }
 

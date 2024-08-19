@@ -2,6 +2,7 @@
 #include "UI.h"
 #include "MyFunctions.cpp"
 #include "GameManager.h"
+#include "Scene.h"
 using namespace myFunctions;
 std::string * InventoryManager::getItemInInventory(std::string item)
 {
@@ -26,7 +27,8 @@ bool InventoryManager::PickupItem(std::string typeofPickup)
 	//if (inventoryCurrentCapacity >= inventoryCurrentCapacity)
 	//	return false;
 	std::string * newItem = new std::string ; 
-	*newItem = typeofPickup;
+	*newItem = Scene::tolowerString(typeofPickup);
+
 	Items = ArrayAdd(Items, newItem, inventoryCurrentCapacity);
 	return true;
 }

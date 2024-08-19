@@ -141,6 +141,7 @@
     <ClCompile Include="EmptyBoxType2Sprite.cpp" />
     <ClCompile Include="EmptySofaSprite.cpp" />
     <ClCompile Include="EndingManager.cpp" />
+    <ClCompile Include="Endings.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExampleScene.cpp" />
     <ClCompile Include="FridgeSprite.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MyFunctions.cpp" />
+    <ClCompile Include="ObjectivesManager.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="OptionUI.cpp" />
     <ClCompile Include="PickupableItem.cpp" />
@@ -205,6 +207,7 @@
     <ClInclude Include="EmptyBoxType2Sprite.h" />
     <ClInclude Include="EmptySofaSprite.h" />
     <ClInclude Include="EndingManager.h" />
+    <ClInclude Include="Endings.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExampleScene.h" />
     <ClInclude Include="FridgeSprite.h" />
@@ -221,6 +224,7 @@
     <ClInclude Include="LivingRoomScene.h" />
     <ClInclude Include="LivingroomTableSprite.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="ObjectivesManager.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="OptionUI.h" />
     <ClInclude Include="PickupableItem.h" />

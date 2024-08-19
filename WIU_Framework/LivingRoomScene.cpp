@@ -27,7 +27,6 @@ void LivingRoomScene::Start()
 	new Wall(Vector2(12, 3));
 	new Wall(Vector2(12, 4));
 	new Wall(Vector2(12, 5));
-	new Wall(Vector2(12, 6));
 	new Wall(Vector2(1, 7));
 	new Wall(Vector2(2, 7));
 	new Wall(Vector2(3, 7));
@@ -71,6 +70,7 @@ void LivingRoomScene::Start()
 	new Furniture(Furniture::StoreRoomDoor, Vector2(0, 3));
 	new Furniture(Furniture::ToiletDoor, Vector2(9, 7));
 	new Furniture(Furniture::KitchenDoor, Vector2(12, 2));
+	new Furniture(Furniture::MainDoor, Vector2(12, 6));
 	gm.CreatePlayer(Vector2(11, 6));
 	//gm.CreateRobber(Vector2(5, 3));
 }

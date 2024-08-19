@@ -13,6 +13,7 @@ public:
 		STOREROOM,
 		BEDROOM,
 		KITCHEN,
+		ENDINGS
 	};
 
 	static Scene* nextScene;

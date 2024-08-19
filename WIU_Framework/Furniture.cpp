@@ -52,7 +52,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		SetSprite(new KitchenTableSprite());
 		break;
 	case Furniture::Planks:
-		name = "Planks";
+		name = "Shelf";
 		SetSprite(new PlanksSprite());
 		break;
 	case Furniture::EmptyBoxType1:
@@ -67,11 +67,11 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		break;
 	case Furniture::ToiletBowl:
 		name = "Toilet Bowl";
-		SetSprite(new ToiletBowlSprite());
+		SetSprite(new ShowerAreaSprite()); 
 		break;
 	case Furniture::ShowerArea:
 		name = "Shower";
-		SetSprite(new ShowerAreaSprite());
+		SetSprite(new ToiletBowlSprite());
 		break;
 	case Furniture::StoreRoomDoor:
 		name = "Store Room Door";
@@ -95,7 +95,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		SetSprite(new BedroomCabinetSprite());
 		break;
 	case Furniture::BedroomCabinet2:
-		name = "Cabinet";
+		name = "Closet";
 		SetSprite(new BedroomCabinet2Sprite());
 		break;
 	case Furniture::LivingRoomCabinet:
@@ -153,6 +153,10 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		break;
 	case Furniture::KitchenDoor:
 		name = "Kitchen Door";
+		SetSprite(new StoreRoomDoorSprite());
+		break;
+	case Furniture::MainDoor:
+		name = "Main Door";
 		SetSprite(new StoreRoomDoorSprite());
 		break;
 
@@ -288,7 +292,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos, bool isInvisible)
 		//SetSprite(new KitchenTableSprite());
 		break;
 	case Furniture::Planks:
-		name = "Planks";
+		name = "Shelf";
 		//SetSprite(new PlanksSprite());
 		break;
 	case Furniture::EmptyBoxType1:
@@ -489,11 +493,114 @@ void Furniture::Collided(GameObject* obj)
 	case Furniture::KitchenDoor:
 		GameManager::getGM()->InteractionsMgr.KitchenDoorInteracted(this, obj);
 		break;
+	case Furniture::Fridge:
+		break;
 	default:
 		break;
 	}
 
 }
+void Furniture::InteractFurniture(GameObject* obj)
+{
+	Player* plr = dynamic_cast<Player*>(obj);
+	GameManager::getGM()->ClearDialogue();
+	if (!plr)
+		return;
+	switch (furniture)
+	{
+	case Furniture::SofaKey:
+		GameManager::getGM()->InteractionsMgr.SofaInteracted(this, obj);
+		break;
+	case Furniture::EmptySofa:
+		GameManager::getGM()->InteractionsMgr.SofaInteracted(this, obj, true);
+		break;
+	case Furniture::BedroomCabinet1:
+		GameManager::getGM()->InteractionsMgr.BedRoomDrawerInteracted(this, obj);
+		break;
+	case Furniture::BedroomCabinet2:
+
+		GameManager::getGM()->InteractionsMgr.ClosetDoorInteracted(this, obj);
+		break;
+	case Furniture::LivingRoomCabinet:
+		GameManager::getGM()->InteractionsMgr.LivingRoomCabinetInteracted(this, obj);
+		break;
+	case Furniture::Television:
+		GameManager::getGM()->InteractionsMgr.TelevisionInteracted(this, obj);
+		break;
+
+	case Furniture::KitchenCabinet:
+		GameManager::getGM()->InteractionsMgr.KitchenCabinetInteracted(this, obj);
+		break;
+	case Furniture::Sink:
+		GameManager::getGM()->InteractionsMgr.ShowerInteracted(this, obj);
+		break;
+	case Furniture::Planks:
+		GameManager::getGM()->InteractionsMgr.PlanksInteracted(this, obj);
+		break;
+	case Furniture::EmptyBoxType1:
+	case Furniture::EmptyBoxType2:
+		GameManager::getGM()->InteractionsMgr.BoxInteracted(this, obj, GetID());
+		break;
+	case Furniture::LivingroomTable:
+		GameManager::getGM()->InteractionsMgr.TableInteracted(this, obj);
+		break;
+	case Furniture::Phone:
+		break;
+	case Furniture::Box:
+		GameManager::getGM()->InteractionsMgr.ToolboxInteracted(this, obj);
+		break;
+	case Furniture::Stove:
+		GameManager::getGM()->InteractionsMgr.StoveInteracted(this, obj);
+		break;
+	case Furniture::Bed:
+		GameManager::getGM()->InteractionsMgr.BedInteracted(this, obj);
+		break;
+	case Furniture::TrashCan:
+		GameManager::getGM()->InteractionsMgr.TrashCanInteracted(this, obj, 0);
+		break;
+	case Furniture::Clock:
+		GameManager::getGM()->InteractionsMgr.ClockInteracted(this, obj);
+		break;
+	case Furniture::BedRoomDoor:
+		GameManager::getGM()->InteractionsMgr.BedroomDoorInteracted(this, obj);
+		break;
+	case Furniture::ToiletBowl:
+		break;
+	case Furniture::ShowerArea:
+		GameManager::getGM()->InteractionsMgr.ShowerInteracted(this, obj);
+		break;
+	case Furniture::ToiletCabinet:
+		GameManager::getGM()->InteractionsMgr.ToiletCabinetInteracted(this, obj);
+		break;
+	case Furniture::ToiletDoor:
+		GameManager::getGM()->InteractionsMgr.ToiletDoorInteracted(this, obj);
+		break;
+	case Furniture::StoreRoomDoor:
+		GameManager::getGM()->InteractionsMgr.StoreRoomDoorInteracted(this, obj);
+		break;
+	case Furniture::LivingRoomDoor:
+		GameManager::getGM()->InteractionsMgr.LivingRoomDoorInteracted(this, obj);
+		break;
+	case Furniture::Bedroomtable:
+
+		GameManager::getGM()->InteractionsMgr.BedroomTableInteracted(this, obj);
+		break;
+	case Furniture::KitchenDoor:
+		GameManager::getGM()->InteractionsMgr.KitchenDoorInteracted(this, obj);
+		break;
+	case Furniture::MainDoor:
+		GameManager::getGM()->InteractionsMgr.MainDoorInteracted(this, obj);
+
+		break;
+	default:
+		break;
+	}
+}
+
+
+	
+
+
 
 Furniture::TypeOfFurniture Furniture::GetFurnitureType()
 {

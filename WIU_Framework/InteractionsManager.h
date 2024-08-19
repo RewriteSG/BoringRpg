@@ -4,14 +4,22 @@
 #include "UI.h"
 class InteractionsManager
 {
+	void SeperateInput(std::string input, std::string& input1, std::string& input2);
 public:
 	//timer
 	TimeSystem* timeSystem;
 	UI* ui;
+<<<<<<< HEAD
 	bool isSoapSetup;
 	bool isBarricadeSetup;
 	bool isPlayerHidden;
 	
+=======
+	bool isNailSetup;
+	bool isPlankSetup;
+	bool isPlayerHidden;
+
+>>>>>>> Prototype-ver-1.6
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;
 	bool hasClosetKeyCollected;
@@ -55,8 +63,15 @@ public:
 	void LivingRoomDoorInteracted(GameObject* BathroomDoor, GameObject* player);
 	void StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player);
 	void ClockInteracted(GameObject* clock, GameObject* player);
+	bool UseItem(std::string useItem, GameObject* player);
+	void BarricadeDoor(GameObject* door, GameObject* player);
 	void Start();
+<<<<<<< HEAD
 
 	void Reset(void);
+=======
+	void Start(bool isGameStarted);
+	
+>>>>>>> Prototype-ver-1.6
 };
 

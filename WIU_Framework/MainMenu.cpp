@@ -7,6 +7,7 @@
 #include "StoreRoomScene.h"
 #include "Application.h"
 #include "SpatialInteractionManagerInterop.h"
+#include "Endings.h"
 #include "UI.h"
 #include "KitchenScene.h"
 void MainMenu::DrawClock(const int size) const
@@ -61,6 +62,8 @@ void MainMenu::DrawClock(const int size) const
 			std::cout << " ";
 		}
 
+
+
 		Scene::GotoXY(width / 2 - i, size / 2 - i, Vector2(positionX, positionY));
 		std::cout << " ";
 	}
@@ -69,9 +72,9 @@ void MainMenu::DrawClock(const int size) const
 void MainMenu::Start(void)
 {
 	Scene::ChangeColor(112);
-	std::string tittle = " EVERY SECOND COUNTS ";
-	Scene::GotoXY(Application::numberOfColumns / 2 - (int)tittle.length() / 2, 4);
-	std::cout << tittle;
+	std::string title = " EVERY SECOND COUNTS ";
+	Scene::GotoXY(Application::numberOfColumns / 2 - (int)title.length() / 2, 4);
+	std::cout << title;
 
 	DrawClock(30);
 }
@@ -116,17 +119,20 @@ void MainMenu::Update(void)
 				system("cls");
 				UI ui = UI(Vector2(130, 12), 7, 100);
 				UI gameUI2(Vector2(Application::numberOfColumns / 2 - 171 / 2, 8), 0, 171);
-				gameUI2.CreateBox(Vector2(), "", 40);
-				ui.PrintDialogue(Vector2(-105, 10), "You come home from work");
-				ui.PrintDialogue(Vector2(-105, 10), "tired");
-				ui.PrintDialogue(Vector2(-105, 10), "and exhausted...");
+				//gameUI2.CreateBox(Vector2(), "", 40);
+				ui.PrintDialogue(Vector2(-105, 10), "You came home from work, tired and exhausted.");
 				ui.PrintDialogue(Vector2(-105, 10), "You: Damn... so many customers today...");
+				ui.PrintDialogue(Vector2(-105, 10), "You: I really need to get some rest...");
+				ui.PrintDialogue(Vector2(-105, 10), "As you arrived at the door, you reached for your keys in your pocket.");
+				ui.PrintDialogue(Vector2(-105, 10), "When you insert the key and turned, you walked into the living room.");
+				ui.PrintDialogue(Vector2(-105, 10), "You decide to take a shower and watch the news before going to bed.");
 
 				SceneManager::LoadScene(new BedroomScene());
 			}
 				
 			else if (counter == 2)
 			{
+				SceneManager::LoadScene(new Endings());
 
 			}
 			else

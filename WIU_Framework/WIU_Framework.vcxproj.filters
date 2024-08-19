@@ -207,6 +207,9 @@
     <ClCompile Include="EndingManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Endings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -390,6 +393,9 @@
       <Filter>Header Files\Sprites</Filter>
     </ClInclude>
     <ClInclude Include="EndingManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Endings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

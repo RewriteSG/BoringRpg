@@ -17,6 +17,7 @@ public:
 		Sink,
 		Planks,
 		Door,
+		MainDoor,
 		BedRoomDoor,
 		ToiletBowl,
 		ShowerArea,
