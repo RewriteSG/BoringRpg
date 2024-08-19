@@ -5,6 +5,7 @@
 #include "Furniture.h"
 #include "UI.h"
 #include "conio.h"
+#include "ToiletDoorSprite.h"
 ToiletScene::ToiletScene(void)
 {
 	name = SceneManager::GetSceneName(SceneManager::TOILET);
@@ -30,7 +31,8 @@ void ToiletScene::Start()
 	new Wall(Vector2(9, 5));
 	new Wall(Vector2(9, 6));
 
-	new Furniture(Furniture::ToiletDoor, Vector2(7, 2)); 
+	Furniture* door = new Furniture(Furniture::LivingRoomDoor, Vector2(7, 2)); 
+	door->SetSprite(new ToiletDoorSprite());
 	new Furniture(Furniture::ToiletBowl, Vector2(8, 5));
 	new Furniture(Furniture::ShowerArea, Vector2(5, 3));
 	new Furniture(Furniture::ToiletCabinet, Vector2(5, 5));
