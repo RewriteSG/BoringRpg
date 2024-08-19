@@ -9,6 +9,10 @@
 
 InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 {
+	isPlayerHidden = false;
+	isNailSetup = false;
+	isPlankSetup = false;
+
 	hasCabinetKeyCollected = false;
 	hasCalledTheCops = false;
 	hasClosetKeyCollected = false;

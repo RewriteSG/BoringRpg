@@ -7,7 +7,7 @@
 #include "conio.h"
 ToiletScene::ToiletScene(void)
 {
-	name = "TOILET";
+	name = SceneManager::GetSceneName(SceneManager::TOILET);
 }
 void ToiletScene::Start()
 {

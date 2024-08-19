@@ -5,6 +5,7 @@ class KitchenScene :
 {
 
 public:
+    KitchenScene(void);
     void Start() override;
     void Update() override;
 

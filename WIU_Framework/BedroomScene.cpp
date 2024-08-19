@@ -8,7 +8,7 @@
 
 BedroomScene::BedroomScene()
 {
-	name = "BEDROOM";
+	name = SceneManager::GetSceneName(SceneManager::BEDROOM);
 }
 
 void BedroomScene::Start()

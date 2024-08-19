@@ -12,12 +12,14 @@
 #include "BedroomScene.h"
 #include "StoreRoomScene.h"
 #include "Furniture.h"
+#include "Scene.h"
 using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
 
 GameManager::GameManager() : gameUI(nullptr)
 {
+	whatScenePlayerIn = "";
 	GM_Instance = this;
 	//Weapon = nullptr;
 	//robber = nullptr;
@@ -44,7 +46,13 @@ void GameManager::Start()
 void GameManager::Update()
 {
 	inventory.DisplayItems();
-	HandleInput();
+	if (TimeSys.TimeTaken >= TimeSys.RobberTime)
+	{
+		whatScenePlayerIn = SceneManager::currentScene->getName();
+		ending.Update();
+	}
+	else
+		HandleInput();
 }
 
 void GameManager::Exit()
@@ -58,6 +66,7 @@ void GameManager::PromptInput()
 	cout << "Input:";
 	Scene::GotoXY(117, 36);
 }
+
 void GameManager::HandleInput(void)
 {
 	
@@ -201,19 +210,7 @@ void GameManager::CreatePlayer(Vector2 toPos)
 		toPos = Vector2(10, 6);
 	*player->GetPosition() = toPos;
 }
-void GameManager::CreateRobber(Vector2 toPos)
-{
-	if (robber)
-		robber = nullptr;
-	robber = new Robber();
-//
-	if (SceneManager::prevScene == "BedroomScene")
-	{
-		toPos = Vector2(8, 1);
-	}
-	
-	*robber->GetPosition() = toPos;
-}
+
 char GameManager::_getch(void)
 {
 	char ch = 0;
