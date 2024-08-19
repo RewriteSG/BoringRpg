@@ -4,8 +4,17 @@ using namespace std;
 class SceneManager
 {
 private:
-
+	static std::string sceneName[];
 public:
+	enum SCENENAME
+	{
+		LIVING_ROOM,
+		TOILET,
+		STOREROOM,
+		BEDROOM,
+		KITCHEN,
+	};
+
 	static Scene* nextScene;
 	static Scene* currentScene;
 	static string prevScene; 
@@ -17,5 +26,8 @@ public:
 	static void LoadScene(Scene* toScene);
 	static void LoadScene(std::string toScene);
 	static Scene* GetNextScene(void);
+
+	static std::string GetSceneName(const SCENENAME type);
+	static std::string GetSceneName(const int index);
 };
 

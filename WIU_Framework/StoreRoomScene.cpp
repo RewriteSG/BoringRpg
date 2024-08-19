@@ -8,7 +8,7 @@
 #include "StoreRoomDoorSprite.h"
 StoreRoomScene::StoreRoomScene(void)
 {
-	name = "STORE ROOM";
+	name = SceneManager::GetSceneName(SceneManager::STOREROOM);
 }
 
 void StoreRoomScene::Start()

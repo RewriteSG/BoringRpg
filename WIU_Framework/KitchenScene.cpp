@@ -5,6 +5,10 @@
 #include "Furniture.h"
 #include "UI.h"
 #include "conio.h"
+KitchenScene::KitchenScene(void)
+{
+	name = SceneManager::GetSceneName(SceneManager::KITCHEN);
+}
 void KitchenScene::Start()
 {
 	Scene::Start();

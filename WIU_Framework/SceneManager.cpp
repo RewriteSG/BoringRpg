@@ -12,6 +12,7 @@
 string SceneManager::prevScene = "nullptr";
 Scene* SceneManager::currentScene = nullptr;
 Scene* SceneManager::nextScene = nullptr;
+std::string SceneManager::sceneName[5] = { "LIVING ROOM", "TOILET", "STOREROOM", "BEDROOM", "KITCHEN" };
 
 void SceneManager::Start(void)
 {
@@ -25,6 +26,7 @@ void SceneManager::Update(void)
 {
 
 	currentScene->Update();
+
 
 	if (nextScene) 
 	{
@@ -71,3 +73,13 @@ void SceneManager::LoadScene(std::string toScene) {
 
 }
 Scene* SceneManager::GetNextScene(void) {return nextScene;}
+
+std::string SceneManager::GetSceneName(const SCENENAME type)
+{
+	return sceneName[type];
+}
+
+std::string SceneManager::GetSceneName(const int index)
+{
+	return sceneName[index];
+}

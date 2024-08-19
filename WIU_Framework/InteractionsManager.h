@@ -10,6 +10,7 @@ public:
 	UI* ui;
 	bool isNailSetup;
 	bool isPlankSetup;
+	bool isPLayerHudden;
 	
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;

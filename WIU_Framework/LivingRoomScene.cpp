@@ -8,7 +8,7 @@
 #include "conio.h"
 LivingRoomScene::LivingRoomScene(void)
 {
-	name = "LIVING ROOM";
+	name = SceneManager::GetSceneName(SceneManager::LIVING_ROOM);
 }
 void LivingRoomScene::Start()
 {
