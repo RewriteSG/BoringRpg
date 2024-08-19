@@ -20,6 +20,11 @@ void TimeSystem::increaseTimeTaken(int time)
 	TimeTaken += time;
 }
 
+bool TimeSystem::isTimeRunOut(void) const
+{
+	return TimeTaken >= RobberTime;
+}
+
 void TimeSystem::decreaseTimeTaken(int time)
 {
 	TimeTaken -= time;
