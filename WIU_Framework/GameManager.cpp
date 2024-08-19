@@ -53,8 +53,11 @@ void GameManager::Update()
 		whatScenePlayerIn = SceneManager::currentScene->getName();
 		ending.Update();
 	}
-	else
+	else 
+	{
+		objManager.displayObjectives();
 		HandleInput();
+	}
 }
 
 void GameManager::Exit()

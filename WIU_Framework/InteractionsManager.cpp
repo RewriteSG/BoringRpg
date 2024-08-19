@@ -508,6 +508,7 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 				{
 				case 0:
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid inside.");
+					isPlayerHidden = true;
 					//closet endings, differ if player has knife/pan and duct tape
 					break;
 				case 1:
