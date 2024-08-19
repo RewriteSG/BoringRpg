@@ -46,7 +46,6 @@ void GameManager::Start()
 void GameManager::Update()
 {
 	inventory.DisplayItems();
-	TimeSys.TimeTaken = TimeSys.RobberTime;
 	if (TimeSys.TimeTaken >= TimeSys.RobberTime)
 	{
 		whatScenePlayerIn = SceneManager::currentScene->getName();

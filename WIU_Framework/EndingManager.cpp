@@ -41,6 +41,5 @@ void EndingManager::Update()
 			break;
 		}
 
-		if()
 	}
 }
