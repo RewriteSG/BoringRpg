@@ -8,7 +8,6 @@ public:
 	TimeSystem();
 	void CountLoop(int);
 	void increaseTimeTaken(int time);
-	bool isTimeRunOut(void) const;
 	void decreaseTimeTaken(int time);
 	void increaseRobberTime(int time);
 
