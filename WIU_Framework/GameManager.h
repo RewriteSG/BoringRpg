@@ -10,6 +10,7 @@
 #include "Robber.h"
 #include "UI.h"
 #include "InventoryManager.h"
+#include "Furniture.h"
 using namespace std;
 /// <summary>
 /// A GameManager class where it handles the Game win and lose condition as well as Handling player's input. 
@@ -32,7 +33,7 @@ public:
 	InteractionsManager InteractionsMgr;
 	InventoryManager inventory;
 	TimeSystem TimeSys;
-
+	
 	GameManager();
 
 	void Start();

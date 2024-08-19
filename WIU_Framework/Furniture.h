@@ -73,5 +73,6 @@ public:
 	void Start();
 	void Collided(GameObject* obj) override;
 	TypeOfFurniture GetFurnitureType();
+	void InteractFurniture(GameObject* obj);
 
 };

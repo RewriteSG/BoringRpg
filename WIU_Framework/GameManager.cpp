@@ -11,6 +11,7 @@
 #include "ToiletScene.h"
 #include "BedroomScene.h"
 #include "StoreRoomScene.h"
+#include "KitchenScene.h"
 #include "Furniture.h"
 using namespace myFunctions;
 
@@ -124,10 +125,188 @@ void GameManager::HandleInput(void)
 		//Move left
 		break;
 	case '/':
-		InputField();
-		break;
-	}
+		
 
+		while (true) {
+
+			gameUI->CreateText("Options: Enter, Exit, Interact, Move.  ", Vector2(-50, 24));
+		InvalidInput:
+			string stringInput = InputField();
+			//move for doors only
+			
+			bool showHelp = false;
+			string ItemFromInput;
+			int chCount;
+			//for (char ch : stringInput)
+			//{
+			//	if(ch)
+			//}
+		    if (stringInput == "interact") {
+				//+ ToPrint
+
+				gameUI->CreateText("Interact with what? Enter 'Object'" , Vector2(-50, 26));
+				
+				stringInput = InputField();
+				if (furnituresUp) {
+
+					std::string strName = furnituresUp->GetName();
+					strName = Scene::tolowerString(strName);
+					if (stringInput == strName) {
+						furnituresUp->InteractFurniture(player);
+					}
+					
+				}
+				if (furnituresLeft) {
+
+					std::string strName = furnituresLeft->GetName();
+					strName = Scene::tolowerString(strName);
+					if (stringInput == strName) {
+						furnituresLeft->InteractFurniture(player);
+					}
+				}
+				if (furnituresDown) {
+
+					std::string strName = furnituresDown->GetName();
+					strName = Scene::tolowerString(strName);
+					if (stringInput == strName) {
+						furnituresDown->InteractFurniture(player);
+					}
+				}
+				if (furnituresRight) {
+
+					std::string strName = furnituresRight->GetName();
+					strName = Scene::tolowerString(strName);
+					if (stringInput == strName) {
+						furnituresRight->InteractFurniture(player);
+					}
+				}
+			}
+			else if (stringInput == "enter") {
+				LivingRoomScene* livingRoom = dynamic_cast<LivingRoomScene*>(SceneManager::currentScene);
+				if (livingRoom) {
+
+					if (furnituresUp)
+					{
+						Furniture::TypeOfFurniture typeofFurniture = furnituresUp->GetFurnitureType();
+
+						// Check if the furniture is a BedRoomDoor
+						if (typeofFurniture == Furniture::BedRoomDoor)
+						{
+							SceneManager::LoadScene("BedroomScene");
+						}
+					}
+					else if (furnituresRight)
+					{
+						Furniture::TypeOfFurniture typeofFurniture = furnituresRight->GetFurnitureType();
+
+						// Check if the furniture is a kitchenDoor
+						if (typeofFurniture == Furniture::KitchenDoor)
+						{
+							SceneManager::LoadScene("KitchenScene");
+						}
+					}
+					else if (furnituresDown)
+					{
+						Furniture::TypeOfFurniture typeofFurniture = furnituresDown->GetFurnitureType();
+
+						// Check if the furniture is a kitchenDoor
+						if (typeofFurniture == Furniture::ToiletDoor)
+						{
+							SceneManager::LoadScene("ToiletScene");
+						}
+					}
+					else if (furnituresLeft)
+					{
+						Furniture::TypeOfFurniture typeofFurniture = furnituresLeft->GetFurnitureType();
+
+						// Check if the furniture is a kitchenDoor
+						if (typeofFurniture == Furniture::StoreRoomDoor)
+						{
+							SceneManager::LoadScene("StoreRoomScene");
+						}
+					}
+				}
+			}
+				else if (stringInput == "exit") {
+					//kitchen room must finish first. add in living room door
+					KitchenScene* Kitchen = dynamic_cast<KitchenScene*>(SceneManager::currentScene);
+					if (Kitchen) {
+
+						if (furnituresLeft)
+						{
+							Furniture::TypeOfFurniture typeofFurniture = furnituresLeft->GetFurnitureType();
+
+							//Check if the furniture is a BedRoomDoor
+							if (typeofFurniture == Furniture::LivingRoomDoor)
+							{
+								SceneManager::LoadScene("LivingRoomScene");
+
+							}
+
+						}
+					}
+					ToiletScene* Toilet = dynamic_cast<ToiletScene*>(SceneManager::currentScene);
+					if (Toilet) {
+
+						if (furnituresUp)
+						{
+							Furniture::TypeOfFurniture typeofFurniture = furnituresUp->GetFurnitureType();
+
+							// Check if the furniture is a BedRoomDoor
+							if (typeofFurniture == Furniture::LivingRoomDoor)
+							{
+								SceneManager::LoadScene("LivingRoomScene");
+
+							}
+
+						}
+					}
+					StoreRoomScene* StoreRoom = dynamic_cast<StoreRoomScene*>(SceneManager::currentScene);
+					if (StoreRoom) {
+
+						if (furnituresRight)
+						{
+							Furniture::TypeOfFurniture typeofFurniture = furnituresRight->GetFurnitureType();
+
+							// Check if the furniture is a BedRoomDoor
+							if (typeofFurniture == Furniture::LivingRoomDoor)
+							{
+								SceneManager::LoadScene("LivingRoomScene");
+
+							}
+
+						}
+					}
+					BedroomScene* BedRoom = dynamic_cast<BedroomScene*>(SceneManager::currentScene);
+					if (BedRoom) {
+						if (furnituresDown)
+						{
+							Furniture::TypeOfFurniture typeofFurniture = furnituresDown->GetFurnitureType();
+
+							// Check if the furniture is a BedRoomDoor
+							if (typeofFurniture == Furniture::LivingRoomDoor)
+							{
+
+								SceneManager::LoadScene("LivingRoomScene");
+
+
+							}
+						}
+					}
+				}
+			
+			else if (stringInput == "move")
+			{
+				break;
+			}
+			else {
+				gameUI->CreateText("Invalid input", Vector2(-105, 24));
+				goto InvalidInput;
+			}
+
+			break;
+		}
+	}
 	//LivingRoomScene* livingRoom = dynamic_cast<LivingRoomScene*>(SceneManager::currentScene);
 	//if (livingRoom)
 	//{
