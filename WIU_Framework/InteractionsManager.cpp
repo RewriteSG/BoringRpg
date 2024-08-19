@@ -501,13 +501,14 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 			if (hasClosetKeyCollected)
 			{
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "The closet seems big enough for a person to hide inside.");
-				ui->GetOptionUI()->AddOption(new std::string("Yes"));
-				ui->GetOptionUI()->AddOption(new std::string("No"));
+				ui->GetOptionUI()->AddOption(new std::string("Hide"));
+				ui->GetOptionUI()->AddOption(new std::string("Leave"));
 				int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Hide inside?");
 				switch (choosenItem)
 				{
 				case 0:
-					ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid inside.");
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid inside.");		
+					isPlayerHidden = true;
 					//closet endings, differ if player has knife/pan and duct tape
 					break;
 				case 1:
