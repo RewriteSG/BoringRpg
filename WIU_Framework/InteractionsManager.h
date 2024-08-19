@@ -12,6 +12,8 @@ public:
 	bool isNailSetup;
 	bool isPlankSetup;
 	bool isPlayerHidden;
+	bool isSoapSetup;
+	bool isBarricadeSetup;
 
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;

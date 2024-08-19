@@ -273,7 +273,7 @@ void EndingManager::Update(void)
 			break;
 		}
 
-<<<<<<< HEAD
+
 		if (isPlayerWithKiller)
 		{
 			if (!playerGotBothWeapon)
@@ -290,13 +290,11 @@ void EndingManager::Update(void)
 
 		isPoliceCame = GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops;
 
-		if(isPoliceCame)
+		if (isPoliceCame)
 			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Fortunately, the police arrived on time and provided you assistance. ");
 
 		if (isPlayerFound || isWeaponUse || isPoliceCame)
 			break;
-=======
->>>>>>> Prototype-ver-1.6
 	}
 
 	if ((isPlayerFound && !GameManager::getGM()->InteractionsMgr.hasCalledTheCops)

@@ -97,23 +97,23 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 		if (ch == ' ') {
 			if (numCh - numOfCharsInLine >= rows - 6)
 			{
-				position.GetY()++; 
+				position.GetY()++;
 				Scene::GotoXY(position.GetX(), position.GetY(), this->position);
 				numOfCharsInLine += numCh;
 				numberOfLine++;
-				numCh = 0; 
+				numCh = 0;
 			}
 		}
 		else {
 			for (int i = numCh + numOfCharsInLine; i < textToPrint.length(); i++)
 			{
 				char whatisThat = textToPrint[i];
-				if (textToPrint[i] == ' ') 
+				if (textToPrint[i] == ' ')
 				{
-					if (i - 1 - numOfCharsInLine >= rows - 6) 
+					if (i - 1 - numOfCharsInLine >= rows - 6)
 					{
 						position.GetY()++;
-						Scene::GotoXY(position.GetX() , position.GetY(), this->position);
+						Scene::GotoXY(position.GetX(), position.GetY(), this->position);
 						numOfCharsInLine += numCh;
 						numberOfLine++;
 						numCh = 0;
@@ -125,9 +125,8 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 		}
 		if (!(ch == ' ' && numCh == 0))
 			std::cout << ch;
-
-		numCh++;
 		Sleep(duration);
+		numCh++;
 	}
 
 	while (true)

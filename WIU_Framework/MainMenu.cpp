@@ -127,7 +127,7 @@ void MainMenu::Update(void)
 				ui.PrintDialogue(Vector2(-105, 10), "When you insert the key and turned, you walked into the living room.");
 				ui.PrintDialogue(Vector2(-105, 10), "You decide to take a shower and watch the news before going to bed.");
 
-				SceneManager::LoadScene(new BedroomScene());
+				SceneManager::LoadScene(new LivingRoomScene());
 			}
 				
 			else if (counter == 2)

@@ -43,9 +43,8 @@ void GameManager::Start()
 	GM_Instance = this;
 	GameEnded = false;
 	GameWon = true;
-	gameUI = new UI(Vector2(130, 12), 7);
+	gameUI = new UI(Vector2(130, 12), 0, 169);
 	InteractionsMgr.Start();
-	TimeSys.TimeTaken = TimeSys.RobberTime;
 }
 void GameManager::Update()
 {
@@ -58,10 +57,7 @@ void GameManager::Update()
 		LoopStarted = true;
 	}
 	inventory.DisplayItems();
-<<<<<<< HEAD
 
-=======
->>>>>>> Prototype-ver-1.6
 	if (TimeSys.TimeTaken >= TimeSys.RobberTime)
 	{
 		whatScenePlayerIn = SceneManager::currentScene->getName();
@@ -130,7 +126,7 @@ void GameManager::HandleInput(void)
 
 	ClearDialogue();
 	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
-	ui.CreateText(ToPrint, Vector2(2, 2));
+	ui.CreateText(ToPrint, Vector2(3, 2));
 
 	ui.CreateText("[ (W)(A)(S)(D): Move                         ]", Vector2(10, 0));
 	char input = _getch();
@@ -165,14 +161,16 @@ void GameManager::HandleInput(void)
 		{
 
 			ui.CreateText("[ Options: Enter, Exit, Interact, Move, Use  ]", Vector2(10, 0));
-			//ClearDialogue(); 
+			//ClearDialogue();
 			if(EmptyDialogue)
-				ui.CreateText(ToPrint, Vector2(2, 2));
+				ui.CreateText(ToPrint, Vector2(3, 2));
 			string stringInput = InputField();
 			string ItemFromInput = "";
 			string KeywordFromInput = "";
 			//move for doors only
-			
+			if (stringInput.empty())
+				break;
+
 			int chCount = 0;
 			for (char ch : stringInput)
 			{
@@ -237,17 +235,17 @@ void GameManager::HandleInput(void)
 				}
 				if (!checkValidInput)
 				{
-					ui.PrintDialogue( Vector2(2, 3), "Unknown Object, Enter Valid Object name. ");
+					ui.PrintDialogue( Vector2(3, 3), "Unknown Object, Enter Valid Object name. ");
 					EmptyDialogue = false;
 				}
 			}else
 		    if (stringInput == "interact") {
 				//+ ToPrint
 				ClearDialogue();
-				ui.PrintDialogue(Vector2(2,2), "Interact with what? Enter 'interact <object name>'");
-				ui.CreateText( "Interact with what? Enter 'interact <object name>'", Vector2(2, 2));
+				ui.PrintDialogue(Vector2(3,2), "Interact with what? Enter 'interact <object name>'");
+				ui.CreateText( "Interact with what? Enter 'interact <object name>'", Vector2(3, 2));
 				EmptyDialogue = false;
-				DisplayFurnituresAroundPlayer(Vector2(2, 3));
+				DisplayFurnituresAroundPlayer(Vector2(3, 3));
 			}
 			else if (stringInput == "enter") 
 			{
@@ -330,7 +328,7 @@ void GameManager::HandleInput(void)
 			else if (stringInput == "use")
 			{
 				ClearDialogue(); 
-				ui.PrintDialogue(Vector2(2, 2), "for use, Enter 'use <item name>' or you can enter 'use <item name> with <item name>'. ");
+				ui.PrintDialogue(Vector2(3, 2), "for use, Enter 'use <item name>' or you can enter 'use <item name> with <item name>'. ");
 				ui.CreateText("for use, Enter 'use <item name>' or you can enter 'use <item name> with <item name>'. ", Vector2(2, 2));
 				EmptyDialogue = false; 
 
@@ -344,13 +342,10 @@ void GameManager::HandleInput(void)
 			{
 				break;
 			}
-			
 			else {
 				ClearDialogue(); 
-				ui.PrintDialogue( Vector2(2, 2), "Invalid input, Enter 'help' for commands. ");
-				ui.CreateText("Invalid input, Enter 'help' for commands. ", Vector2(2, 2));
+				ui.CreateText("Invalid input, Enter 'help' for commands. ", Vector2(3, 2));
 				EmptyDialogue = false; 
-
 			}
 
 		}
@@ -475,9 +470,9 @@ void GameManager::CreatePlayer(Vector2 toPos)
 void GameManager::ClearDialogue()
 {
 	EmptyDialogue = true;
-	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
+	UI ui(Vector2(Application::numberOfColumns / 2 - 167 / 2, 35), 0, 169);
 	std::string clearDialogue;
-	for (int i = 0; i < 169; i++)
+	for (int i = 0; i < 166; i++)
 	{
 		clearDialogue += ' ';
 	}

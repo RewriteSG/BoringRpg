@@ -26,7 +26,7 @@ void InteractionsManager::SeperateInput(std::string input, std::string& input1, 
 
 	input1 = input.substr(0, chCount); 
 	if (space)
-		input2 = input.substr(chCount+1);
+		input2 = input.substr(static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(chCount) + 1);
 	else
 		input2 = "";
 }
@@ -36,7 +36,8 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 	isPlayerHidden = false;
 	isNailSetup = false;
 	isPlankSetup = false;
-
+	isSoapSetup = false;
+	isBarricadeSetup = false;
 
 
 	hasCabinetKeyCollected = false;
@@ -766,7 +767,6 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 {
 	// show the current time
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
 		GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
 }
@@ -935,9 +935,10 @@ void InteractionsManager::Start(bool isGameStarted)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: He comes at 12:12, I still have time.");
 		break;
 	default:
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Im back again...");
+		/*ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Im back again...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Whatever I did last time didn't work.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");*/
+		break;
 	}
 }
 
