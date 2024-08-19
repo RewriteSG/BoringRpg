@@ -508,6 +508,7 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 				{
 				case 0:
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid inside.");
+					isPlayerHidden = true;
 					//closet endings, differ if player has knife/pan and duct tape
 					break;
 				case 1:
@@ -750,6 +751,7 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 	Start();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: ");
+	timeSystem->GetTimeinString(timeSystem->TimeTaken);
 }
 
 void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, GameObject* player)
