@@ -69,9 +69,9 @@ void MainMenu::DrawClock(const int size) const
 void MainMenu::Start(void)
 {
 	Scene::ChangeColor(112);
-	std::string tittle = " EVERY SECOND COUNTS ";
-	Scene::GotoXY(Application::numberOfColumns / 2 - (int)tittle.length() / 2, 4);
-	std::cout << tittle;
+	std::string title = " EVERY SECOND COUNTS ";
+	Scene::GotoXY(Application::numberOfColumns / 2 - (int)title.length() / 2, 4);
+	std::cout << title;
 
 	DrawClock(30);
 }
