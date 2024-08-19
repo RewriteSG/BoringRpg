@@ -7,6 +7,7 @@
 #include "StoreRoomScene.h"
 #include "Application.h"
 #include "SpatialInteractionManagerInterop.h"
+#include "Endings.h"
 #include "UI.h"
 void MainMenu::DrawClock(const int size) const
 {
@@ -129,6 +130,7 @@ void MainMenu::Update(void)
 				
 			else if (counter == 2)
 			{
+				SceneManager::LoadScene(new Endings());
 
 			}
 			else
