@@ -19,7 +19,7 @@ void PlayerSprite::Render(int x, int y, Vector2 topLeft)
 
 
 	Scene::GotoXY(3 + x + (CellX * x), 0 + y + (y * CellY), topLeft);
-	Scene::ChangeColor(Scene::Green,true);
+	Scene::ChangeColor(Scene::Green);
 	std::cout << "GG";
 
 	Scene::GotoXY(1 + x + (CellX * x), 1 + y + (y * CellY), topLeft);

@@ -115,7 +115,7 @@ void MainMenu::Update(void)
 				system("cls");
 				UI ui = UI(Vector2(130, 12), 7);
 				UI gameUI2(Vector2(Application::numberOfColumns / 2 - 171 / 2, 8), 0, 171);
-				gameUI2.CreateBox(Vector2(), "", 40);
+				//gameUI2.CreateBox(Vector2(), "", 40);
 				ui.PrintDialogue(Vector2(-105, 10), "You came home from work, tired and exhausted.");
 				ui.PrintDialogue(Vector2(-105, 10), "You: Damn... so many customers today...");
 				ui.PrintDialogue(Vector2(-105, 10), "You: I really need to get some rest...");

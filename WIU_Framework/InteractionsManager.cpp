@@ -587,7 +587,7 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 }
 
@@ -647,96 +647,86 @@ void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* p
 
 void InteractionsManager::BedroomDoorInteracted(GameObject* BedroomDoor, GameObject* player)
 {
-	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	ui->GetOptionUI()->AddOption(new std::string("Yes"));
-	ui->GetOptionUI()->AddOption(new std::string("No"));
-	int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the BEDROOM?");
-	switch (choosenItem)
-	{
-	case 0:
-		timeSystem->increaseTimeTaken(5);
 		SceneManager::LoadScene("BedroomScene");
-		break;
-	case 1:
-		break;
-	}
+	//Start();
+	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	//ui->GetOptionUI()->AddOption(new std::string("Yes"));
+	//ui->GetOptionUI()->AddOption(new std::string("No"));
+	//int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the BEDROOM?");
+	//switch (choosenItem)
+	//{
+	//case 0:
+	//	timeSystem->increaseTimeTaken(5);
+	//	break;
+	//case 1:
+	//	break;
+	//}
 }
 
 void InteractionsManager::KitchenDoorInteracted(GameObject* KitchenDoor, GameObject* player)
 {
-	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	ui->GetOptionUI()->AddOption(new std::string("Yes"));
-	ui->GetOptionUI()->AddOption(new std::string("No"));
-	int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the KITCHEN?");
-	switch (choosenItem)
-	{
-	case 0:
-		timeSystem->increaseTimeTaken(5);
 		SceneManager::LoadScene("KitchenScene");
-		break;
-	case 1:
-		break;
-	}
+	//Start();
+	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	//ui->GetOptionUI()->AddOption(new std::string("Yes"));
+	//ui->GetOptionUI()->AddOption(new std::string("No"));
+	//int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the KITCHEN?");
+	//switch (choosenItem)
+	//{
+	//case 0:
+	//	timeSystem->increaseTimeTaken(5);
+	//	break;
+	//case 1:
+	//	break;
+	//}
 }
 
 void InteractionsManager::ToiletDoorInteracted(GameObject* ToiletDoor, GameObject* player)
 {
-	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	ui->GetOptionUI()->AddOption(new std::string("Yes"));
-	ui->GetOptionUI()->AddOption(new std::string("No"));
-	int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the TOILET?");
-	switch (choosenItem)
-	{
-	case 0:
-		timeSystem->increaseTimeTaken(5);
 		SceneManager::LoadScene("ToiletScene");
-		break;
-	case 1:
-			break;
-	}
+	//Start();
+	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	//ui->GetOptionUI()->AddOption(new std::string("Yes"));
+	//ui->GetOptionUI()->AddOption(new std::string("No"));
+	//int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the TOILET?");
+	//switch (choosenItem)
+	//{
+	//case 0:
+	//	timeSystem->increaseTimeTaken(5);
+	//	break;
+	//case 1:
+	//		break;
+	//}
 
 }
 
 void InteractionsManager::LivingRoomDoorInteracted(GameObject* BathroomDoor, GameObject* player)
 {
-	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	ui->GetOptionUI()->AddOption(new std::string("Yes"));
-	ui->GetOptionUI()->AddOption(new std::string("No"));
-	int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the LIVING ROOM?");
-	switch (choosenItem)
-	{
-	case 0:
-		timeSystem->increaseTimeTaken(5);
 		SceneManager::LoadScene("LivingRoomScene");
-		break;
-	case 1:
-		break;
-	}
+	//Start();
+	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	//ui->GetOptionUI()->AddOption(new std::string("Yes"));
+	//ui->GetOptionUI()->AddOption(new std::string("No"));
+	//int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the LIVING ROOM?");
+	//switch (choosenItem)
+	//{
+	//case 0:
+	//	timeSystem->increaseTimeTaken(5);
+	//	break;
+	//case 1:
+	//	break;
+	//}
 }
 
 void InteractionsManager::StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 
 	if (hasStoreRoomKeyCollected)
 	{
-		ui->GetOptionUI()->AddOption(new std::string("Yes"));
-		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the STORE ROOM?");
-		switch (choosenItem)
-		{
-		case 0:
-			timeSystem->increaseTimeTaken(5);
-			SceneManager::LoadScene("StoreRoomScene");
-			break;
-		case 1:
-			break;
-		}
+
+		SceneManager::LoadScene("StoreRoomScene");
 	}
 	else
 	{
@@ -749,7 +739,8 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 	// show the current time
 	Start();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: ");
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
+		GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
 }
 
 void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, GameObject* player)

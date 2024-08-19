@@ -67,11 +67,11 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		break;
 	case Furniture::ToiletBowl:
 		name = "Toilet Bowl";
-		SetSprite(new ToiletBowlSprite());
+		SetSprite(new ShowerAreaSprite()); 
 		break;
 	case Furniture::ShowerArea:
 		name = "Shower";
-		SetSprite(new ShowerAreaSprite());
+		SetSprite(new ToiletBowlSprite());
 		break;
 	case Furniture::StoreRoomDoor:
 		name = "Store Room Door";
@@ -501,7 +501,7 @@ void Furniture::Collided(GameObject* obj)
 void Furniture::InteractFurniture(GameObject* obj)
 {
 	Player* plr = dynamic_cast<Player*>(obj);
-
+	GameManager::getGM()->ClearDialogue();
 	if (!plr)
 		return;
 	switch (furniture)

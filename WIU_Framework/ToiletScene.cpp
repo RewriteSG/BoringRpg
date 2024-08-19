@@ -33,8 +33,8 @@ void ToiletScene::Start()
 
 	Furniture* door = new Furniture(Furniture::LivingRoomDoor, Vector2(7, 2)); 
 	door->SetSprite(new ToiletDoorSprite());
-	new Furniture(Furniture::ToiletBowl, Vector2(8, 5));
-	new Furniture(Furniture::ShowerArea, Vector2(5, 3));
+	new Furniture(Furniture::ShowerArea, Vector2(8, 5));
+	new Furniture(Furniture::ToiletBowl, Vector2(5, 3));
 	new Furniture(Furniture::ToiletCabinet, Vector2(5, 5));
 	gm.CreatePlayer(Vector2(7, 3));
 }

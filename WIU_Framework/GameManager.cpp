@@ -110,9 +110,9 @@ void GameManager::HandleInput(void)
 	else
 		ToPrint = "There is nothing around the player.";
 
-	gameUI->CreateText("                                                           ", Vector2(-94, 24));
-	gameUI->CreateText(ToPrint, Vector2(-94, 24));
-
+	ClearDialogue();
+	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
+	ui.CreateText(ToPrint, Vector2(2, 2));
 	char input = _getch();
 
 	switch (input)
@@ -120,17 +120,21 @@ void GameManager::HandleInput(void)
 	case 'w':
 		//Move up
 		*player->GetPosition() += Vector2(0, -1);
+		TimeSys.increaseTimeTaken(1);
 		break;
 	case 's':
 		*player->GetPosition() += Vector2(0, 1);
+		TimeSys.increaseTimeTaken(1);
 		//Move down
 		break;
 	case 'd':
 		*player->GetPosition() += Vector2(1, 0);
+		TimeSys.increaseTimeTaken(1);
 		//Move right
 		break;
 	case 'a':
 		*player->GetPosition() += Vector2(-1, 0);
+		TimeSys.increaseTimeTaken(1);
 		//Move left
 		break;
 	case '/':
@@ -138,178 +142,150 @@ void GameManager::HandleInput(void)
 
 		while (true) {
 
-			gameUI->CreateText("Options: Enter, Exit, Interact, Move.  ", Vector2(-50, 24));
+			ui.CreateText(" Options: Enter, Exit, Interact, Move.  ", Vector2(10, 0));
+			ClearDialogue(); 
 		InvalidInput:
+
+			ui.CreateText(ToPrint, Vector2(2, 2));
 			string stringInput = InputField();
+			string ItemFromInput = "";
+			string KeywordFromInput = "";
 			//move for doors only
 			
 			bool showHelp = false;
-			string ItemFromInput;
-			int chCount;
-			//for (char ch : stringInput)
-			//{
-			//	if(ch)
-			//}
-		    if (stringInput == "interact") {
-				//+ ToPrint
-
-				gameUI->CreateText("Interact with what? Enter 'Object'" , Vector2(-50, 26));
-				
-				stringInput = InputField();
+			int chCount = 0;
+			for (char ch : stringInput)
+			{
+				if (ch == ' ')
+				{
+					chCount++; 
+					break;
+				}
+				else
+					chCount++;
+			}
+			for (int i = 0; i < chCount-1; i++)
+			{
+				KeywordFromInput += stringInput[i];
+			}
+			for (int i = chCount; i < stringInput.length(); i++)
+			{
+				ItemFromInput += stringInput[i];
+			}
+			if (KeywordFromInput == "interact" && ItemFromInput != "") 
+			{
+				bool checkValidInput = false; 
 				if (furnituresUp) {
 
 					std::string strName = furnituresUp->GetName();
 					strName = Scene::tolowerString(strName);
-					if (stringInput == strName) {
+					if (ItemFromInput == strName) {
 						furnituresUp->InteractFurniture(player);
 					}
-					
+					if (!checkValidInput)
+						checkValidInput = (ItemFromInput == strName);
 				}
 				if (furnituresLeft) {
 
 					std::string strName = furnituresLeft->GetName();
 					strName = Scene::tolowerString(strName);
-					if (stringInput == strName) {
+					if (ItemFromInput == strName) {
 						furnituresLeft->InteractFurniture(player);
 					}
+					if (!checkValidInput)
+						checkValidInput = (ItemFromInput == strName);
 				}
 				if (furnituresDown) {
 
 					std::string strName = furnituresDown->GetName();
 					strName = Scene::tolowerString(strName);
-					if (stringInput == strName) {
+					if (ItemFromInput == strName) {
 						furnituresDown->InteractFurniture(player);
 					}
+					if (!checkValidInput)
+						checkValidInput = (ItemFromInput == strName);
 				}
 				if (furnituresRight) {
 
 					std::string strName = furnituresRight->GetName();
 					strName = Scene::tolowerString(strName);
-					if (stringInput == strName) {
+					if (ItemFromInput == strName) {
 						furnituresRight->InteractFurniture(player);
 					}
+					if (!checkValidInput)
+						checkValidInput = (ItemFromInput == strName);
 				}
+				if (!checkValidInput)
+				{
+					ui.CreateText("Unknown Object, Enter Valid Object name. ", Vector2(2, 3));
+					goto InvalidInput;
+				}
+			}else
+		    if (stringInput == "interact") {
+				//+ ToPrint
+
+				ui.CreateText("Interact with what? Enter 'interact <object name>'" , Vector2(2,3));
+				goto InvalidInput;
 			}
-			else if (stringInput == "enter") {
-				LivingRoomScene* livingRoom = dynamic_cast<LivingRoomScene*>(SceneManager::currentScene);
-				if (livingRoom) {
+			else if (stringInput == "enter") 
+			{
+				if (furnituresUp) {
 
-					if (furnituresUp)
-					{
-						Furniture::TypeOfFurniture typeofFurniture = furnituresUp->GetFurnitureType();
+					if (furnituresUp->GetFurnitureType() == Furniture::BedRoomDoor || furnituresUp->GetFurnitureType() == Furniture::KitchenDoor
+						|| furnituresUp->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresUp->GetFurnitureType() == Furniture::ToiletDoor) {
 
-						// Check if the furniture is a BedRoomDoor
-						if (typeofFurniture == Furniture::BedRoomDoor)
-						{
-							SceneManager::LoadScene("BedroomScene");
-						}
-					}
-					else if (furnituresRight)
-					{
-						Furniture::TypeOfFurniture typeofFurniture = furnituresRight->GetFurnitureType();
-
-						// Check if the furniture is a kitchenDoor
-						if (typeofFurniture == Furniture::KitchenDoor)
-						{
-							SceneManager::LoadScene("KitchenScene");
-						}
-					}
-					else if (furnituresDown)
-					{
-						Furniture::TypeOfFurniture typeofFurniture = furnituresDown->GetFurnitureType();
-
-						// Check if the furniture is a kitchenDoor
-						if (typeofFurniture == Furniture::ToiletDoor)
-						{
-							SceneManager::LoadScene("ToiletScene");
-						}
-					}
-					else if (furnituresLeft)
-					{
-						Furniture::TypeOfFurniture typeofFurniture = furnituresLeft->GetFurnitureType();
-
-						// Check if the furniture is a kitchenDoor
-						if (typeofFurniture == Furniture::StoreRoomDoor)
-						{
-							SceneManager::LoadScene("StoreRoomScene");
-						}
+						furnituresUp->InteractFurniture(player);
 					}
 				}
+
+				if (furnituresRight) {
+
+					if (furnituresRight->GetFurnitureType() == Furniture::BedRoomDoor || furnituresRight->GetFurnitureType() == Furniture::KitchenDoor
+						|| furnituresRight->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresRight->GetFurnitureType() == Furniture::ToiletDoor)
+						furnituresRight->InteractFurniture(player);
+				}
+
+				if (furnituresLeft) {
+
+					if (furnituresLeft->GetFurnitureType() == Furniture::BedRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::KitchenDoor
+						|| furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::ToiletDoor)
+						furnituresLeft->InteractFurniture(player);
+				}
+
+				if (furnituresDown) {
+
+					if (furnituresDown->GetFurnitureType() == Furniture::BedRoomDoor || furnituresDown->GetFurnitureType() == Furniture::KitchenDoor
+						|| furnituresDown->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresDown->GetFurnitureType() == Furniture::ToiletDoor)
+						furnituresDown->InteractFurniture(player);
+				}
+
 			}
-				else if (stringInput == "exit") {
-					//kitchen room must finish first. add in living room door
-					KitchenScene* Kitchen = dynamic_cast<KitchenScene*>(SceneManager::currentScene);
-					if (Kitchen) {
+			else if (stringInput == "exit") {
 
-						if (furnituresLeft)
-						{
-							Furniture::TypeOfFurniture typeofFurniture = furnituresLeft->GetFurnitureType();
+				if (furnituresUp)
+					if (furnituresUp->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresUp->GetFurnitureType() == Furniture::MainDoor)
+						furnituresUp->InteractFurniture(player);
 
-							//Check if the furniture is a BedRoomDoor
-							if (typeofFurniture == Furniture::LivingRoomDoor)
-							{
-								SceneManager::LoadScene("LivingRoomScene");
+				if (furnituresDown)
+					if (furnituresDown->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresDown->GetFurnitureType() == Furniture::MainDoor)
+						furnituresDown->InteractFurniture(player);
 
-							}
+				if (furnituresLeft)
+					if (furnituresLeft->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::MainDoor)
+						furnituresLeft->InteractFurniture(player);
 
-						}
-					}
-					ToiletScene* Toilet = dynamic_cast<ToiletScene*>(SceneManager::currentScene);
-					if (Toilet) {
+				if (furnituresRight)
+					if (furnituresRight->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresRight->GetFurnitureType() == Furniture::MainDoor)
+						furnituresRight->InteractFurniture(player);
 
-						if (furnituresUp)
-						{
-							Furniture::TypeOfFurniture typeofFurniture = furnituresUp->GetFurnitureType();
-
-							// Check if the furniture is a BedRoomDoor
-							if (typeofFurniture == Furniture::LivingRoomDoor)
-							{
-								SceneManager::LoadScene("LivingRoomScene");
-
-							}
-
-						}
-					}
-					StoreRoomScene* StoreRoom = dynamic_cast<StoreRoomScene*>(SceneManager::currentScene);
-					if (StoreRoom) {
-
-						if (furnituresRight)
-						{
-							Furniture::TypeOfFurniture typeofFurniture = furnituresRight->GetFurnitureType();
-
-							// Check if the furniture is a BedRoomDoor
-							if (typeofFurniture == Furniture::LivingRoomDoor)
-							{
-								SceneManager::LoadScene("LivingRoomScene");
-
-							}
-
-						}
-					}
-					BedroomScene* BedRoom = dynamic_cast<BedroomScene*>(SceneManager::currentScene);
-					if (BedRoom) {
-						if (furnituresDown)
-						{
-							Furniture::TypeOfFurniture typeofFurniture = furnituresDown->GetFurnitureType();
-
-							// Check if the furniture is a BedRoomDoor
-							if (typeofFurniture == Furniture::LivingRoomDoor)
-							{
-
-								SceneManager::LoadScene("LivingRoomScene");
-
-
-							}
-						}
-					}
-				}
+			}
 			
 			else if (stringInput == "move")
 			{
 				break;
 			}
 			else {
-				gameUI->CreateText("Invalid input", Vector2(-105, 24));
+				ui.CreateText("Invalid input", Vector2(2, 3));
 				goto InvalidInput;
 			}
 
@@ -346,14 +322,18 @@ std::string GameManager::InputField(void)
 			
 			break; // Stop input on Enter key
 		}
-
+		if ((ch == ' ' && input.length() == 0))
+			continue;
+		if (input.length() > 0)
+			if ((input[input.length() - 1] == ' ' && ch == ' '))
+				continue;
 		// Allow Backspace
 		if (ch == '\b' && !input.empty()) {
 			std::cout << "\b \b"; // Erase the last character from the console
 			input.pop_back();     // Remove the last character from the input
 		}
 		// Restrict the number of characters
-		else if (input.length() < MAX_LENGTH && ch != '\b') {
+		else if (input.length() < MAX_LENGTH && ch != '\b' && ch != '\t') {
 			input += ch;          // Add character to input
 			std::cout << ch;      // Display the character
 		}
@@ -386,8 +366,25 @@ void GameManager::CreatePlayer(Vector2 toPos)
 	if (SceneManager::prevScene == "StoreRoomScene")
 		toPos = Vector2(1, 3);
 	if (SceneManager::prevScene == "ToiletScene")
-		toPos = Vector2(10, 6);
+		toPos = Vector2(9, 6);
+	if (SceneManager::prevScene == "KitchenScene")
+		toPos = Vector2(11, 2);
 	*player->GetPosition() = toPos;
+}
+
+void GameManager::ClearDialogue()
+{
+	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
+	std::string clearDialogue;
+	for (int i = 0; i < 169; i++)
+	{
+		clearDialogue += ' ';
+	}
+	for (int h = 1; h < 12; h++)
+	{
+		ui.CreateText(clearDialogue, Vector2(1, h));
+
+	}
 }
 
 char GameManager::_getch(void)

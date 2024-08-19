@@ -48,7 +48,7 @@ public:
 	bool GetGameWon() const;
 
 	void CreatePlayer(Vector2 toPos);
-
+	void ClearDialogue();
 	static char _getch(void);
 };
 
