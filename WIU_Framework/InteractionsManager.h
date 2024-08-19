@@ -1,9 +1,12 @@
 #pragma once
+#define POINTX -2
+#define POINTY 13
 #include "GameObject.h"
 #include "TimeSystem.h"
 #include "UI.h"
 class InteractionsManager
 {
+	void SeperateInput(std::string input, std::string& input1, std::string& input2);
 public:
 	//timer
 	TimeSystem* timeSystem;
@@ -11,7 +14,7 @@ public:
 	bool isSoapSetup;
 	bool isBarricadeSetup;
 	bool isPlayerHidden;
-	
+
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;
 	bool hasClosetKeyCollected;
@@ -55,8 +58,10 @@ public:
 	void LivingRoomDoorInteracted(GameObject* BathroomDoor, GameObject* player);
 	void StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player);
 	void ClockInteracted(GameObject* clock, GameObject* player);
+	void UseItem(std::string useItem, GameObject* player);
+	void BarricadeDoor(GameObject* door, GameObject* player);
 	void Start();
-
-	void Reset(void);
+	void Start(bool isGameStarted);
+	
 };
 

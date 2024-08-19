@@ -29,6 +29,7 @@ GameManager::GameManager() : gameUI(nullptr)
 	GameWon = true;
 	player = nullptr;
 	//robberDown = false;
+	LoopStarted = false;
 }
 
 GameManager* GameManager::getGM()
@@ -47,6 +48,14 @@ void GameManager::Start()
 }
 void GameManager::Update()
 {
+	if (!LoopStarted) {
+		ClearDialogue();
+		InteractionsMgr.Start(LoopStarted);
+		//inventory.PickupItem("planks");
+		//inventory.PickupItem("hammer");
+		//inventory.PickupItem("nails");
+		LoopStarted = true;
+	}
 	inventory.DisplayItems();
 
 	TimeSys.TimeTaken = TimeSys.RobberTime;
@@ -55,8 +64,11 @@ void GameManager::Update()
 		whatScenePlayerIn = SceneManager::currentScene->getName();
 		ending.Start();
 	}
-	else
+	else 
+	{
+		objManager.displayObjectives();
 		HandleInput();
+	}
 }
 
 void GameManager::Exit()
@@ -145,7 +157,7 @@ void GameManager::HandleInput(void)
 
 		while (true) {
 
-			ui.CreateText(" Options: Enter, Exit, Interact, Move.  ", Vector2(10, 0));
+			ui.CreateText(" Options: Enter, Exit, Interact, Move, Use  ", Vector2(10, 0));
 			ClearDialogue(); 
 		InvalidInput:
 
@@ -282,7 +294,9 @@ void GameManager::HandleInput(void)
 						furnituresRight->InteractFurniture(player);
 
 			}
-			
+			else if (KeywordFromInput == "use") {
+				InteractionsMgr.UseItem(ItemFromInput,player);
+			}
 			else if (stringInput == "show endings") {
 				//Endings
 				SceneManager::LoadScene("EndingScene");

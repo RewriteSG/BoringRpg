@@ -2,7 +2,7 @@
 #include "string"
 TimeSystem::TimeSystem()
 {
-	TimeLoop = 0;
+	TimeLoop = 3;
 	TimeTaken = 0;
 	// 720 = 12 minutes
 	RobberTime = 120;
@@ -18,6 +18,11 @@ void TimeSystem::CountLoop(int time)
 void TimeSystem::increaseTimeTaken(int time)
 {
 	TimeTaken += time;
+}
+
+bool TimeSystem::isTimeRunOut(void) const
+{
+	return TimeTaken >= RobberTime;
 }
 
 void TimeSystem::decreaseTimeTaken(int time)

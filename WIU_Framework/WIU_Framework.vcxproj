@@ -160,6 +160,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MyFunctions.cpp" />
+    <ClCompile Include="ObjectivesManager.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="OptionUI.cpp" />
     <ClCompile Include="PickupableItem.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="LivingRoomScene.h" />
     <ClInclude Include="LivingroomTableSprite.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="ObjectivesManager.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="OptionUI.h" />
     <ClInclude Include="PickupableItem.h" />

@@ -122,7 +122,7 @@ void MainMenu::Update(void)
 				ui.PrintDialogue(Vector2(-105, 10), "You: I really need to get some rest...");
 				ui.PrintDialogue(Vector2(-105, 10), "As you arrived at the door, you reached for your keys in your pocket.");
 				ui.PrintDialogue(Vector2(-105, 10), "When you insert the key and turned, you walked into the living room.");
-				ui.PrintDialogue(Vector2(-105, 10), "You decide to watch the news first before going to bed.");
+				ui.PrintDialogue(Vector2(-105, 10), "You decide to take a shower and watch the news before going to bed.");
 
 				SceneManager::LoadScene(new BedroomScene());
 			}
