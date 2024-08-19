@@ -29,6 +29,7 @@ GameManager::GameManager() : gameUI(nullptr)
 	GameWon = true;
 	player = nullptr;
 	//robberDown = false;
+	LoopStarted = false;
 }
 
 GameManager* GameManager::getGM()
@@ -47,6 +48,11 @@ void GameManager::Start()
 }
 void GameManager::Update()
 {
+	if (!LoopStarted) {
+		ClearDialogue();
+		InteractionsMgr.Start(LoopStarted);
+		LoopStarted = true;
+	}
 	inventory.DisplayItems();
 	if (TimeSys.TimeTaken >= TimeSys.RobberTime)
 	{

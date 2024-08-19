@@ -5,6 +5,7 @@
 #include "ObjectManager.h"
 #include "SceneManager.h"
 #include "Furniture.h"
+#include "ObjectivesManager.h"
 
 
 InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
@@ -12,6 +13,8 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 	isPlayerHidden = false;
 	isNailSetup = false;
 	isPlankSetup = false;
+
+
 
 	hasCabinetKeyCollected = false;
 	hasCalledTheCops = false;
@@ -62,12 +65,27 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player, b
 
 void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* player)
 {
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "Just a normal shower.");
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "Just a normal shower."); int choosenItem =0;
+	bool* hasTakenShower = &(GameManager::getGM()->objManager).hasTakenShower;
+
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
 	case 1:
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I used to hide behind the shower during hide and seek when I was younger.");
+
+		ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+		ui->GetOptionUI()->AddOption(new std::string("Yes"));
+		ui->GetOptionUI()->AddOption(new std::string("No"));
+		choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take a shower?");
+		switch (choosenItem)
+		{
+		case 0:
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You took a shower.");
+			*hasTakenShower = true;
+			break;
+		case 1:
+			break;
+		}
 		break;
 	default:
 
@@ -76,7 +94,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can probably hide here.");
 		ui->GetOptionUI()->AddOption(new std::string("Hide"));
 		ui->GetOptionUI()->AddOption(new std::string("Don't hide"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Hide behind the shower?");
+		choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Hide behind the shower?");
 		switch (choosenItem)
 		{
 		case 0:
@@ -567,16 +585,16 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 
 void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 {
-	//on first loop player will go sleep
-	//on second loop onwards player will not sleep
-
 	Start();
 	ui->CreateOptionUI(Vector2(POINTX, 13), false);
+
+	bool* hasSlept = &(GameManager::getGM()->objManager).hasSlept;
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
 	case 1:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You went to sleep.");
+		*hasSlept = true;
 		// play first loop ending
 		break;
 	default:
@@ -588,8 +606,31 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* player)
 {
 	Start();
-	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+
+	bool* hasWatchedTV = &(GameManager::getGM()->objManager).hasWatchedTV;
+	switch (timeSystem->TimeLoop)
+	{
+	case 0:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Serial killer? Not really my problem, it's not like he would target me anyways.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should go to bed now.");
+		*hasWatchedTV = true;
+		break;
+	case 1:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Did they run out of news? This is literally the same as yesterday!");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, I should just find some other things to do now.");
+		*hasWatchedTV = true;
+		break;
+	default:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+		*hasWatchedTV = true;
+		break;
+	}
 }
 
 void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* player)
@@ -776,7 +817,43 @@ void InteractionsManager::Start()
 {
 	ui = GameManager::getGM()->gameUI;
 	timeSystem = &GameManager::getGM()->TimeSys;
+	
+}
 
+void InteractionsManager::Start(bool isGameStarted)
+{
+	ObjectivesManager* objManager = &(GameManager::getGM()->objManager);
+	//Start();
+	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	switch (timeSystem->TimeLoop)
+	{
+	case 0:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "I should take a shower first.");
+		break;
+	case 1:
+		objManager->hasTakenShower = false;
+		objManager->hasWatchedTV = false;
+		objManager->hasSlept = false;
+
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "Huh? How am I here? I remember being asleep.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "Did overworking make me so tired that I lost my memory for the day?");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "Whatever, I don't want to think too much.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "Strange, I don't feel tired though...so I don't think I can sleep.");
+		break;
+	case 2:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You appear at the door again");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: WHAT WAS THAT!? I JUST GOT KILLED IN MY HOUSE!");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You quickly calm down and think about the situation.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV, and it is showing the same news.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you are stuck in a time loop of getting killed over and over.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: He comes at 12:12, I still have time.");
+		break;
+	default:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Im back again...");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Whatever I did last time didn't work.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");
+	}
 }
 
 //robber interaction

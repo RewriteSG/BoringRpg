@@ -11,7 +11,7 @@ public:
 	bool isNailSetup;
 	bool isPlankSetup;
 	bool isPlayerHidden;
-	
+
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;
 	bool hasClosetKeyCollected;
@@ -56,5 +56,7 @@ public:
 	void StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player);
 	void ClockInteracted(GameObject* clock, GameObject* player);
 	void Start();
+	void Start(bool isGameStarted);
+	
 };
 

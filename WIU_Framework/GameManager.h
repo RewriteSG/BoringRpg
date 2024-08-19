@@ -23,6 +23,7 @@ class GameManager
 private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
+	bool LoopStarted;
 
 public:
 	UI* gameUI;
