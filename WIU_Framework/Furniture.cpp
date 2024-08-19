@@ -586,6 +586,10 @@ void Furniture::InteractFurniture(GameObject* obj)
 	case Furniture::KitchenDoor:
 		GameManager::getGM()->InteractionsMgr.KitchenDoorInteracted(this, obj);
 		break;
+	case Furniture::MainDoor:
+		GameManager::getGM()->InteractionsMgr.MainDoorInteracted(this, obj);
+
+		break;
 	default:
 		break;
 	}
