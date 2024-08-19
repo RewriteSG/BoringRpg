@@ -45,6 +45,7 @@ void GameManager::Start()
 	GameWon = true;
 	gameUI = new UI(Vector2(130, 12), 7);
 	InteractionsMgr.Start();
+	TimeSys.TimeTaken = TimeSys.RobberTime;
 }
 void GameManager::Update()
 {
@@ -57,10 +58,14 @@ void GameManager::Update()
 		LoopStarted = true;
 	}
 	inventory.DisplayItems();
+<<<<<<< HEAD
+
+=======
+>>>>>>> Prototype-ver-1.6
 	if (TimeSys.TimeTaken >= TimeSys.RobberTime)
 	{
 		whatScenePlayerIn = SceneManager::currentScene->getName();
-		ending.Update();
+		ending.Start();
 	}
 	else 
 	{
