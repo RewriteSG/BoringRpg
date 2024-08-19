@@ -3,7 +3,6 @@
 #include "MyFunctions.cpp"
 #include "GameManager.h"
 #include "Scene.h"
-#include "UI.h"
 using namespace myFunctions;
 std::string * InventoryManager::getItemInInventory(std::string item)
 {
