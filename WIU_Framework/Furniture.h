@@ -72,6 +72,7 @@ public:
 	Furniture(TypeOfFurniture type, Vector2 toPos, bool isInvisible);
 	void Start();
 	void Collided(GameObject* obj) override;
+	void InteractFurniture(GameObject* obj);
 	TypeOfFurniture GetFurnitureType();
 
 };
