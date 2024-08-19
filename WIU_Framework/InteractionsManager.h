@@ -8,8 +8,8 @@ public:
 	//timer
 	TimeSystem* timeSystem;
 	UI* ui;
-	bool isNailSetup;
-	bool isPlankSetup;
+	bool isSoapSetup;
+	bool isBarricadeSetup;
 	bool isPlayerHidden;
 	
 	bool hasCabinetKeyCollected;
@@ -56,5 +56,7 @@ public:
 	void StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player);
 	void ClockInteracted(GameObject* clock, GameObject* player);
 	void Start();
+
+	void Reset(void);
 };
 

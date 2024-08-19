@@ -30,14 +30,16 @@ void TimeSystem::increaseRobberTime(int time) {
 
 std::string TimeSystem::GetTimeinString(int time)
 {
+
 	//display time in min & sec
 	int minute = time / 60;
 	int second = time % 60;
 	std::string toReturn;
-	std::string minuteStr = std::to_string(minute) + "m";
-	std::string secondStr = std::to_string(second) + "s";
+	toReturn += "TIME: 00:";
+	std::string minuteStr = ((minute < 10) ? "0" + std::to_string(minute) : std::to_string(minute)) + ":";
+	std::string secondStr = (second < 10) ? "0" + std::to_string(second) : std::to_string(second);
 
-	toReturn = minuteStr + secondStr; 
+	toReturn += minuteStr + secondStr; 
 	//std::cout << minute << ":" << second << std::endl;
 	return toReturn;
 }

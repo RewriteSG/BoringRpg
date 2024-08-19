@@ -11,7 +11,7 @@ private:
 
 	void CreateBorder(const Vector2 position, const int height) const;
 
-	static int rows;
+	int rows;
 public:
 	UI(const Vector2 position = Vector2(0, 0), const int _color = 0);
 	UI(const Vector2 position, const int _color, const int rows);

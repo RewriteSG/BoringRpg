@@ -10,8 +10,8 @@
 InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 {
 	isPlayerHidden = false;
-	isNailSetup = false;
-	isPlankSetup = false;
+	isSoapSetup = false;
+	isBarricadeSetup = false;
 
 	hasCabinetKeyCollected = false;
 	hasCalledTheCops = false;
@@ -776,6 +776,11 @@ void InteractionsManager::Start()
 {
 	ui = GameManager::getGM()->gameUI;
 	timeSystem = &GameManager::getGM()->TimeSys;
+
+}
+
+void InteractionsManager::Reset(void)
+{
 
 }
 
