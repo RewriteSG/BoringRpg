@@ -10,8 +10,8 @@
 InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 {
 	isPlayerHidden = false;
-	isNailSetup = false;
-	isPlankSetup = false;
+	isSoapSetup = false;
+	isBarricadeSetup = false;
 
 	hasCabinetKeyCollected = false;
 	hasCalledTheCops = false;
@@ -588,7 +588,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 {
 	Start();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 }
 
 void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* player)
@@ -784,6 +784,11 @@ void InteractionsManager::Start()
 {
 	ui = GameManager::getGM()->gameUI;
 	timeSystem = &GameManager::getGM()->TimeSys;
+
+}
+
+void InteractionsManager::Reset(void)
+{
 
 }
 

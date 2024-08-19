@@ -8,6 +8,7 @@
 #include "Application.h"
 #include "SpatialInteractionManagerInterop.h"
 #include "UI.h"
+#include "KitchenScene.h"
 void MainMenu::DrawClock(const int size) const
 {
 	const int width = size * 2;
@@ -113,7 +114,7 @@ void MainMenu::Update(void)
 			if (counter == 1) {
 				Scene::ChangeColor(Scene::Default);
 				system("cls");
-				UI ui = UI(Vector2(130, 12), 7);
+				UI ui = UI(Vector2(130, 12), 7, 100);
 				UI gameUI2(Vector2(Application::numberOfColumns / 2 - 171 / 2, 8), 0, 171);
 				gameUI2.CreateBox(Vector2(), "", 40);
 				ui.PrintDialogue(Vector2(-105, 10), "You come home from work");
@@ -121,8 +122,7 @@ void MainMenu::Update(void)
 				ui.PrintDialogue(Vector2(-105, 10), "and exhausted...");
 				ui.PrintDialogue(Vector2(-105, 10), "You: Damn... so many customers today...");
 
-				SceneManager::LoadScene(new LivingRoomScene());
-
+				SceneManager::LoadScene(new BedroomScene());
 			}
 				
 			else if (counter == 2)

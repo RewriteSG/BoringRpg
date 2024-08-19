@@ -11,8 +11,9 @@ public:
 	void decreaseTimeTaken(int time);
 	void increaseRobberTime(int time);
 
-	std::string GetTimeinString( int second);
+	//std::string GetTimeinString( int second);
 
+	static std::string GetTimeinString(int second);
 
 
 };
