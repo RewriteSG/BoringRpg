@@ -56,7 +56,7 @@ public:
 	void LivingRoomDoorInteracted(GameObject* BathroomDoor, GameObject* player);
 	void StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player);
 	void ClockInteracted(GameObject* clock, GameObject* player);
-	void UseItem(std::string useItem, GameObject* player);
+	bool UseItem(std::string useItem, GameObject* player);
 	void BarricadeDoor(GameObject* door, GameObject* player);
 	void Start();
 	void Start(bool isGameStarted);

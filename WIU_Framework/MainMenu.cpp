@@ -61,6 +61,8 @@ void MainMenu::DrawClock(const int size) const
 			std::cout << " ";
 		}
 
+
+
 		Scene::GotoXY(width / 2 - i, size / 2 - i, Vector2(positionX, positionY));
 		std::cout << " ";
 	}

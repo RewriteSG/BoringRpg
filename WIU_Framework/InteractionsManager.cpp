@@ -17,16 +17,16 @@ void InteractionsManager::SeperateInput(std::string input, std::string& input1, 
 		if (ch == ' ')
 		{
 			space = true;
-			chCount++;
+			//chCount++;
 			break;
 		}
 		else
 			chCount++;
 	}
 
-	input1 = input.substr(0, chCount-1); 
+	input1 = input.substr(0, chCount); 
 	if (space)
-		input2 = input.substr(chCount);
+		input2 = input.substr(chCount+1);
 	else
 		input2 = "";
 }
@@ -771,7 +771,7 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 		GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
 }
 
-void InteractionsManager::UseItem(std::string useItem, GameObject* player)
+bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 {
 	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
 
@@ -786,14 +786,14 @@ void InteractionsManager::UseItem(std::string useItem, GameObject* player)
 	{
 		GameManager::getGM()->ClearDialogue();
 		ui.PrintDialogue(Vector2(2,2), "No " + useItem1 + " in Inventory");
-		return;
+		return false;
 	}
 	if(keyword != "with" && keyword.length() > 0)
 	{
-		GameManager::getGM()->ClearDialogue();
 
+		GameManager::getGM()->ClearDialogue();
 		ui.PrintDialogue(Vector2(2,2), "Invalid Input");
-		return;
+		return false;
 	}
 	else if (keyword == "with")
 	{
@@ -802,14 +802,15 @@ void InteractionsManager::UseItem(std::string useItem, GameObject* player)
 		if (!GameManager::getGM()->inventory.InventoryHasItems(useItem2) ) 
 		{
 
+			GameManager::getGM()->ClearDialogue(); 
 			ui.PrintDialogue(Vector2(2,2), "No " + useItem2 + " in Inventory");
-			return;
+			return false;
 		}
 		if (keyword != "with" && keyword.length() > 0)
 		{
 			GameManager::getGM()->ClearDialogue();
 			ui.PrintDialogue(Vector2(2,2), "Invalid Input");
-			return;
+			return false;
 		}
 		else if (keyword == "with")
 		{
@@ -817,7 +818,7 @@ void InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			{
 				GameManager::getGM()->ClearDialogue();
 				ui.PrintDialogue(Vector2(2,2), "No " + useItem3 + " in Inventory");
-				return;
+				return false;
 			}
 		}
 	}
@@ -829,9 +830,9 @@ void InteractionsManager::UseItem(std::string useItem, GameObject* player)
 	furnituresRight = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() + 1, player->GetPosition()->GetY())));
 	furnituresUp = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() - 1)));
 	furnituresDown = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() + 1)));
-
 	
-	ui.CreateText("Use item(s) on what? Enter 'on <Object Name>'", Vector2(2, 3)); 
+	ui.CreateText("Use item(s) on what? Enter 'on <Object Name>'", Vector2(2, 2)); 
+	GameManager::getGM()->DisplayFurnituresAroundPlayer(Vector2(2, 3)); //print at (2,3);
 	std::string input = GameManager::getGM()->InputField(); 
 	//int itemsUsing = 0;
 	if (furnituresRight) 
@@ -860,10 +861,12 @@ void InteractionsManager::UseItem(std::string useItem, GameObject* player)
 				GameManager::getGM()->ClearDialogue();
 				ui.PrintDialogue(Vector2(2,2), "I dont have enough items to use on the main door!");
 			}
+			return true;
 		}
 
 	}
 
+	return false;
 }
 
 

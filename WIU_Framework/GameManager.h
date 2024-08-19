@@ -24,6 +24,7 @@ private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
 	bool LoopStarted;
+	bool EmptyDialogue = true;
 
 public:
 	UI* gameUI;
@@ -50,6 +51,7 @@ public:
 	bool GetGameEnded() const;
 	bool GetGameWon() const;
 
+	void DisplayFurnituresAroundPlayer(Vector2);
 	void CreatePlayer(Vector2 toPos);
 	void ClearDialogue();
 	static char _getch(void);

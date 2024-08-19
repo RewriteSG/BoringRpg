@@ -63,6 +63,7 @@ void UI::CreateText(const std::string text, const Vector2 position, int color) c
 	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
 	Scene::ChangeColor((color + 7 != this->color) ? color + 7 : this->color);
 	std::cout << text << std::endl;
+	Scene::ChangeColor(Scene::Default); 
 }
 
 void UI::CreateOptionUI(const Vector2 optionPosition, const bool isCenter)
@@ -149,6 +150,7 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 			std::cout << ' ';
 		}
 	}
+	Scene::ChangeColor(Scene::Default);
 }
 
 int UI::PickDialogue(Vector2 position, const std::string text) const
@@ -226,6 +228,7 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 			std::cout << ' ';
 		}
 	}
+	Scene::ChangeColor(Scene::Default);
 
 	delete optionUI;
 	return choosenOption;
