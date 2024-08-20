@@ -122,7 +122,7 @@ void GameManager::HandleInput(void)
 	if (ToPrint != "blank")
 		ToPrint += " next to you.";
 	else
-		ToPrint = "There is nothing around the player.";
+		ToPrint = "There is nothing around the you.";
 
 	ClearDialogue();
 	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
