@@ -72,7 +72,7 @@ void Endings::ending1()
                  |                      __________________                                                                                  |
                  |                      |                |                                                                                  |
                  |                      |                |                                                                                  |
-                 |                      |                |                              You Are Dead                                        |
+                 |                      |                |                              You were killed by the killer!                      |
                  |                      |                |                                                                                  |
                  |                      |                |                                                                                  |
                  |                      |                |                                                                                  |
@@ -121,7 +121,7 @@ void Endings::ending2()
                 |                                                                                                                          |
                 |                                                                                                                          |
                 |                              ___________                                                                                 |
-                |                             /           \                    You Are Dead                                                |
+                |                             /           \                    You commited suicide...                                     |
                 |                            |   X    X   |                                                                                |
                 |                            |            |\                                                                               |
                 |                             \__________/  \                                                                              |
@@ -163,8 +163,8 @@ void Endings::ending3()
                   |                                                                                                                          |
                   |                                                                                                                          |
                   |               \                            \              You Survived!             /                          /         |
-                  |                \                            \            The Killer is             /                          /          |
-                  |                 \                            \          under arrestent           /                          /           |
+                  |                \                            \             The Killer is            /                          /          |
+                  |                 \                            \            under arrest.           /                          /           |
                   |                  \                            \                                  /                          /            |
                   |                   \                            \                                /                          /             |
                   |                    \                            \                              /                          /              |
@@ -245,7 +245,7 @@ void Endings::ending5()
 
                   __________________________________________________________________________________________________________________________
                  |                      ________                                                  ________                                  |
-                 |                      |      |                   You Are Dead                   |      |                                  |
+                 |                      |      |        You were found dead in your sleep.        |      |                                  |
                  |                      |      |__________________________________________________|      |                                  |
                  |                      |      |                                                  |      |                                  |
                  |                      |      |                                                  |      |                                  |

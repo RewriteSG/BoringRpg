@@ -27,7 +27,6 @@ GameManager::GameManager() : gameUI(nullptr), TimeSys()
 	GameWon = true;
 	player = nullptr;
 	LoopStarted = false;
-	TimeSys.TimeLoop = 1;
 	firstLoop = TimeSys.TimeLoop == 0;
 }
 
