@@ -236,15 +236,6 @@ EndingManager::EndingManager(void)
 
 void EndingManager::Start(void)
 {
-	GameManager::getGM()->InteractionsMgr.hasKnife = true;
-	GameManager::getGM()->InteractionsMgr.hasMetalPan = true;
-	GameManager::getGM()->InteractionsMgr.isPlayerHidden = true;
-	GameManager::getGM()->InteractionsMgr.hasCalledTheCops = true;
-	GameManager::getGM()->InteractionsMgr.isSoapSetup = true;
-	GameManager::getGM()->InteractionsMgr.isBarricadeSetup = true;
-	GameManager::getGM()->InteractionsMgr.hasDuctTape = true;
-
-
 	ui = nullptr;
 	killerCurrentScene = "";
 	isPlayerFound = false;
@@ -376,8 +367,8 @@ void EndingManager::Exit()
 {
 	dialogues.clear();
 	GameManager::getGM()->TimeSys.CountLoop(0);
-	SceneManager::prevScene = "";
 	SceneManager::LoadScene("LivingRoomScene");
+	SceneManager::prevScene = "";
 }
 
 int EndingManager::EndingUnlock(void) const
