@@ -7,7 +7,7 @@ void EndingManager::PlayLivingRoom(void)
 {
 	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was trying to open the MAIN DOOR. ");
 	if (GameManager::getGM()->InteractionsMgr.isBarricadeSetup) {
-		*time += 60;
+		*time += 120;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As the door barricaded. This would take some time for the killer to break into the house. ");
 	}
 	else 
@@ -26,7 +26,7 @@ void EndingManager::PlayLivingRoom(void)
 
 	if (GameManager::getGM()->InteractionsMgr.isSoapSetup)
 	{
-		*time += 90;
+		*time += 60;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The serial killer had stepped on the soap and fell down. This would take some time for the killer to recover. ");
 	}
 }
@@ -261,6 +261,7 @@ void EndingManager::Update(void)
 
 	for (int i = 0; i < 5 && !GameManager::getGM()->InteractionsMgr.isPlayerSucide; ++i)
 	{
+
 		killerCurrentScene = SceneManager::GetSceneName(i);
 		isPlayerWithKiller = GameManager::getGM()->whatScenePlayerIn == killerCurrentScene;
 		isPoliceCame = GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops;
@@ -314,7 +315,7 @@ void EndingManager::Update(void)
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-year-old man successfully defended himself by attempting with well-preapred measures until police arrived. ");
 		endingNum = 2;
 	}
-	else if (!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasKnife)
+	else if (!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasKnife && !GameManager::getGM()->InteractionsMgr.isPlayerSucide)
 	{
 		dialogues.push_back("[BREAKING NEWS]: The serial killer had been killed at BLK 243 Chicken Street in the " + killerCurrentScene + ". Suspect claimed that it was just self defence, but police still caught him for further investigation. ");
 		endingNum = 3;

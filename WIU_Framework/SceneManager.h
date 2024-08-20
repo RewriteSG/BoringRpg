@@ -9,8 +9,8 @@ public:
 	enum SCENENAME
 	{
 		LIVING_ROOM,
-		TOILET,
 		STOREROOM,
+		TOILET,
 		BEDROOM,
 		KITCHEN,
 		ENDINGS

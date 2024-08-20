@@ -5,11 +5,11 @@
 #include "InteractionsManager.h"
 TimeSystem::TimeSystem()
 {
-	TimeLoop = 0;
+	TimeLoop = 2;
 	TimeTaken = 0;
 	// 720 = 12 minutes
-	RobberTime = 200;
-	TimeLimitForCops = 300;
+	RobberTime = 300;
+	TimeLimitForCops = 420;
 }
 
 void TimeSystem::CountLoop(int time)

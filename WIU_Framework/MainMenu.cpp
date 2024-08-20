@@ -135,7 +135,7 @@ void MainMenu::Update(void)
 			{
 				Scene::ChangeColor(Scene::Default);
 				system("cls");
-				UI ui = UI(Vector2(130, 12), 7);
+				UI ui = UI(Vector2(130, 12), 0, 200);
 				UI gameUI2(Vector2(Application::numberOfColumns / 2 - 171 / 2, 8), 0, 171);
 				ui.PrintDialogue(Vector2(-105, 10), "Heres the place where will show all the unlocked endings. Press 'Enter'for the next ending");
 				SceneManager::LoadScene(new Endings());
