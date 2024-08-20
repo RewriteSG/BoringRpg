@@ -64,6 +64,7 @@ void GameManager::Update()
 	{
 		if (firstLoop)
 			return;
+		TimeSys.TimeTaken = TimeSys.RobberTime;
 		whatScenePlayerIn = SceneManager::currentScene->getName();
 		ending.Start();
 	}
@@ -415,16 +416,6 @@ void GameManager::HandleInput(void)
 		break;
 
 	}
-	//LivingRoomScene* livingRoom = dynamic_cast<LivingRoomScene*>(SceneManager::currentScene);
-	//if (livingRoom)
-	//{
-	//	gameUI->CreateOptionUI(Vector2(-2, 13), false);
-	//	gameUI->GetOptionUI()->AddOption(new std::string("g"));
-	//	gameUI->GetOptionUI()->AddOption(new std::string("h"));
-	//	int chooseItem = gameUI->PickDialogue(Vector2(-2, 19), "Choose one?");
-	//	//if(chooseItem == 0)
-	//}
-
 }
 
 std::string GameManager::InputField(void)
