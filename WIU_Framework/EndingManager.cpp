@@ -328,7 +328,7 @@ void EndingManager::Update(void)
 	}
 	else if (GameManager::getGM()->InteractionsMgr.isPlayerSleeping)
 	{
-		//dialogueIndex
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer slowly moved towards you without making any sound, raising his sharp blade and stabing you vigorously. ");
 		dialogues.push_back("[BREAKING NEWS]: A 25-year-old man was found dead in " + GameManager::getGM()->whatScenePlayerIn + " at at BLK 243 Chicken Street. The dead body was discovered on his bed with multiple stab wounds on his back. ");
 		endingNum = 6;
 	}
