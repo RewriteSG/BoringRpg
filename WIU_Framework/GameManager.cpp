@@ -59,7 +59,7 @@ void GameManager::Update()
 	}
 	inventory.DisplayItems();
 
-	if (TimeSys.TimeTaken >= TimeSys.RobberTime or InteractionsMgr.isPlayerSucide)
+	if (TimeSys.TimeTaken >= TimeSys.RobberTime or InteractionsMgr.isPlayerSucide or InteractionsMgr.isPlayerHidden)
 	{
 		whatScenePlayerIn = SceneManager::currentScene->getName();
 		ending.Start();
@@ -149,13 +149,13 @@ void GameManager::HandleInput(void)
 	if (ToPrint != "blank")
 		ToPrint += " next to you.";
 	else
-		ToPrint = "There is nothing around the you.";
+		ToPrint = "There is nothing around you.";
 
 	ClearDialogue();
 	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
 	ui.CreateText(ToPrint, Vector2(3, 2));
 
-	ui.CreateText("[ (W)(A)(S)(D): Move                         ]", Vector2(10, 0));
+	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0));
 	char input = _getch();
 
 
@@ -186,8 +186,8 @@ void GameManager::HandleInput(void)
 
 		while (true) 
 		{
-
-			ui.CreateText("[ Options: Enter, Exit, Interact, Move, Use  ]", Vector2(10, 0));
+			//					[ (W)(A)(S)(D): Move  (/): To enable input field ]
+			ui.CreateText("[ Options: Enter, Exit, Interact, Move, Use      ]", Vector2(10, 0));
 			//ClearDialogue();
 			if(EmptyDialogue)
 				ui.CreateText(ToPrint, Vector2(3, 2));
@@ -356,15 +356,25 @@ void GameManager::HandleInput(void)
 			{
 				if(InteractionsMgr.UseItem(ItemFromInput,player))
 					break;
+				else {
+
+					ClearDialogue();
+					//ui.PrintDialogue(Vector2(3, 2), "'Use': use any item by entering 'use' <item name> 'on' <object name>.");
+					ui.CreateText("'Use': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(3, 2));
+					//ui.PrintDialogue(Vector2(3, 3), " - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>");
+					ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(2, 3));
+					EmptyDialogue = false;
+				}
 
 			}
 			else if (stringInput == "use")
 			{
 				ClearDialogue(); 
-				ui.PrintDialogue(Vector2(3, 2), "for use, Enter 'use <item name>' or you can enter 'use <item name> with <item name>'. ");
-				ui.CreateText("for use, Enter 'use <item name>' or you can enter 'use <item name> with <item name>'. ", Vector2(3, 2));
-				EmptyDialogue = false; 
-
+				ui.PrintDialogue(Vector2(3, 2), "'Use': use any item by entering 'use' <item name> 'on' <object name>.");
+				ui.CreateText("'Use': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(	3, 2));
+				ui.PrintDialogue( Vector2(3, 3), " - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>");
+				ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(2, 3));
+				EmptyDialogue = false;
 
 			}
 			else if (stringInput == "show endings") {
@@ -375,11 +385,12 @@ void GameManager::HandleInput(void)
 
 				ClearDialogue();
 				
-				ui.CreateText("Enter / exit: transition through rooms by doors", Vector2(4, 2));
-				ui.CreateText("Interact: To trigger item interaction, use to figure out what object does.", Vector2(4, 3));
-				ui.CreateText("Move: Allow your character to move after clickling '/'.", Vector2(4, 4));
-				ui.CreateText("Use: use any item ", Vector2(4, 5));
-				ui.CreateText("Press 'Enter' again to move. ", Vector2(4, 6));
+				ui.CreateText("'Enter' / 'exit': transition through rooms by doors", Vector2(4, 2));
+				ui.CreateText("'Interact': To trigger item interaction, use to figure out what object does by entering 'interact' or 'i' <Object name>", Vector2(4, 3));
+				ui.CreateText("'Move': Allow your character to move after entering '/'.", Vector2(4, 4));
+				ui.CreateText("'Use': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(4, 5));
+				ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(4, 6));
+				ui.CreateText("Press 'Enter' again to move. ", Vector2(4, 7));
 
 				EmptyDialogue = false;
 			}
@@ -549,7 +560,7 @@ void GameManager::ClearDialogue()
 	}
 	for (int h = 1; h < 12; h++)
 	{
-		ui.CreateText(clearDialogue, Vector2(1, h));
+		ui.CreateText(clearDialogue, Vector2(0, h));
 
 	}
 }

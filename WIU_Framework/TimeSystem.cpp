@@ -8,13 +8,12 @@ TimeSystem::TimeSystem()
 	TimeLoop = 3;
 	TimeTaken = 0;
 	// 720 = 12 minutes
-	RobberTime = 120;
+	RobberTime = 200;
 	TimeLimitForCops = 300;
 }
 
 void TimeSystem::CountLoop(int time)
-{
-	TimeLoop++;
+{	TimeLoop++;
 	TimeTaken = 0;
 	GameManager::getGM()->LoopStarted = false;
 	GameManager::getGM()->inventory = InventoryManager();

@@ -103,7 +103,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		SetSprite(new LivingRoomCabinetSprite());
 		break;
 	case Furniture::Television:
-		name = "Television";
+		name = "TV";
 		SetSprite(new TelevisionSprite());
 		break;
 	case Furniture::KitchenCabinet:
@@ -343,7 +343,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos, bool isInvisible)
 		//SetSprite(new LivingRoomCabinetSprite());
 		break;
 	case Furniture::Television:
-		name = "Television";
+		name = "TV";
 		//SetSprite(new TelevisionSprite());
 		break;
 	case Furniture::KitchenCabinet:
