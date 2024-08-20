@@ -5,7 +5,7 @@
 #include "InteractionsManager.h"
 TimeSystem::TimeSystem()
 {
-	TimeLoop = 3;
+	TimeLoop = 1;
 	TimeTaken = 0;
 	// 720 = 12 minutes
 	RobberTime = 300;
