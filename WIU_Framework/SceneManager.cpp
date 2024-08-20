@@ -13,7 +13,7 @@
 string SceneManager::prevScene = "nullptr";
 Scene* SceneManager::currentScene = nullptr;
 Scene* SceneManager::nextScene = nullptr;
-std::string SceneManager::sceneName[6] = { "LIVING ROOM", "TOILET", "STOREROOM", "BEDROOM", "KITCHEN", "ENDINGS"};
+std::string SceneManager::sceneName[6] = { "LIVING ROOM", "STOREROOM", "TOILET", "BEDROOM", "KITCHEN", "ENDINGS"};
 
 void SceneManager::Start(void)
 {

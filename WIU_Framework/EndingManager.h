@@ -31,7 +31,7 @@ private:
 	void KnifeEnding(void);
 
 public:
-	EndingManager(void) = default;
+	EndingManager(void);
 	void Start(void);
 	void Update(void);
 	void Exit(void);
