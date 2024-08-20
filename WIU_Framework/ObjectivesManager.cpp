@@ -4,7 +4,7 @@
 #include "ObjectManager.h"
 #include "SceneManager.h"
 #include "Furniture.h"
-
+#include "Windows.h"
 ObjectivesManager::ObjectivesManager()
 {
 
@@ -47,6 +47,13 @@ void ObjectivesManager::displayObjectives() const
 			{
 				ui->CreateText("              ", Vector2(29, -5));
 				ui->CreateText("Watch TV", Vector2(29, -5));
+			} 
+			else if (hasWatchedTV && hasTakenShower)
+			{
+				ui->CreateText("              ", Vector2(29, -5));
+				ui->CreateText("Stay Awake.", Vector2(29, -5));
+				Sleep(3000);
+				GameManager::getGM()->TimeSys.TimeTaken = GameManager::getGM()->TimeSys.RobberTime;
 			}
 			break;
 		default:

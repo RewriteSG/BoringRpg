@@ -19,17 +19,15 @@ using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
 
-GameManager::GameManager() : gameUI(nullptr)
+GameManager::GameManager() : gameUI(nullptr), TimeSys()
 {
 	whatScenePlayerIn = "";
 	GM_Instance = this;
-	//Weapon = nullptr;
-	//robber = nullptr;
 	GameEnded = false;
 	GameWon = true;
 	player = nullptr;
-	//robberDown = false;
 	LoopStarted = false;
+	firstLoop = TimeSys.TimeLoop == 0;
 }
 
 GameManager* GameManager::getGM()
@@ -52,10 +50,6 @@ void GameManager::Update()
 	if (!LoopStarted) {
 		ClearDialogue();
 		InteractionsMgr.Start(LoopStarted);
-		/*inventory.PickupItem("planks");
-		inventory.PickupItem("hammer");
-		inventory.PickupItem("nails");
-		inventory.PickupItem("soap");*/
 		LoopStarted = true;
 	}
 	inventory.DisplayItems();
@@ -64,6 +58,7 @@ void GameManager::Update()
 	{
 		if (firstLoop)
 			return;
+		TimeSys.TimeTaken = TimeSys.RobberTime;
 		whatScenePlayerIn = SceneManager::currentScene->getName();
 		ending.Start();
 	}
@@ -88,7 +83,7 @@ void GameManager::PromptInput()
 
 void GameManager::HandleInput(void)
 {
-	if (player == nullptr)
+	if (player == nullptr || TimeSys.TimeTaken >= TimeSys.RobberTime)
 		return;
 	Furniture* furnituresLeft, * furnituresRight, * furnituresUp, * furnituresDown;
 	furnituresLeft = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() - 1, player->GetPosition()->GetY())));
@@ -415,16 +410,6 @@ void GameManager::HandleInput(void)
 		break;
 
 	}
-	//LivingRoomScene* livingRoom = dynamic_cast<LivingRoomScene*>(SceneManager::currentScene);
-	//if (livingRoom)
-	//{
-	//	gameUI->CreateOptionUI(Vector2(-2, 13), false);
-	//	gameUI->GetOptionUI()->AddOption(new std::string("g"));
-	//	gameUI->GetOptionUI()->AddOption(new std::string("h"));
-	//	int chooseItem = gameUI->PickDialogue(Vector2(-2, 19), "Choose one?");
-	//	//if(chooseItem == 0)
-	//}
-
 }
 
 std::string GameManager::InputField(void)

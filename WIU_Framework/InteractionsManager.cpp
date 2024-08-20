@@ -131,6 +131,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 		case 0:
 			//trigger hiding in bathroom ending
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid in the shower."); //remove this later
+			isPlayerHidden = true;
 			break;
 		case 1:
 			ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
@@ -368,7 +369,6 @@ void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* p
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You pry deeper, hoping to find something valuable.");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: ...");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: WTF am I doing...");
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "Secret Ending: Instincts");
 			//Game ends here, restart everything
 			break;
 		case 1:
@@ -604,13 +604,13 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
-	case 1:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You went to sleep.");
 		*hasSlept = true;
 		isPlayerSleeping = true;
 		GameManager::getGM()->firstLoop = false;
 		// play first loop ending
 		break;
+		
 	default:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can't sleep...");
 		break;
@@ -644,6 +644,14 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Someone is gonna get fired.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, I should just find some other things to do now.");
 		*hasWatchedTV = true;
+		break;
+
+	case 2:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: It's the same news...again...");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you are stuck in a time loop of getting killed over and over.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
 		break;
 	default:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
@@ -781,8 +789,9 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "I should really go to bed now.");
 		break;
 
-	case 1:
+	default:
 		timeSystem->increaseTimeTaken(2);
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I remember that he comes at 00:05, I still have time.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
 			GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
 		break;
@@ -1076,7 +1085,7 @@ void InteractionsManager::Start()
 void InteractionsManager::Start(bool isGameStarted)
 {
 	ObjectivesManager* objManager = &(GameManager::getGM()->objManager);
-	//Start();
+	Start();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	switch (timeSystem->TimeLoop)
 	{
@@ -1090,22 +1099,20 @@ void InteractionsManager::Start(bool isGameStarted)
 
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Huh? How am I here? I remember being asleep.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Did overworking make me so tired that I lost my memory for the day?");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "I still remember the dream, it felt like I got stabbed.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "I can still feel it till now...it felt too real...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Whatever, I don't want to think too much.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Strange, I don't feel tired though...so I don't think I can sleep.");
 		break;
 	case 2:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You appear at the door again");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: WHAT WAS THAT!? I JUST GOT KILLED IN MY HOUSE!");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You quickly calm down and think about the situation.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV, and it is showing the same news.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you are stuck in a time loop of getting killed over and over.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: He comes at 12:12, I still have time.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You quickly calm down and decide to check the TV.");
 		break;
 	default:
-		/*ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Im back again...");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Im back again...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Whatever I did last time didn't work.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");*/
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");
 		break;
 	}
 }
