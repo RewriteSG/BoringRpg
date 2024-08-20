@@ -19,21 +19,21 @@ void PlayerSprite::Render(int x, int y, Vector2 topLeft)
 
 
 	Scene::GotoXY(3 + x + (CellX * x), 0 + y + (y * CellY), topLeft);
-	Scene::ChangeColor(Scene::Green);
-	std::cout << "GG";
+	Scene::ChangeColor(Scene::Green,true);
+	std::cout << "()";
 
 	Scene::GotoXY(1 + x + (CellX * x), 1 + y + (y * CellY), topLeft);
-	std::cout << "GGGGGG";
+	std::cout << "[====]";
 
 	Scene::GotoXY(0 + x + (CellX * x), 2 + y + (y * CellY), topLeft);
-	std::cout << "G";
+	std::cout << "|";
 	Scene::GotoXY(2 + x + (CellX * x), 2 + y + (y * CellY), topLeft);
-	std::cout << "GGGG";
+	std::cout << "[==]";
 	Scene::GotoXY(7 + x + (CellX * x), 2 + y + (y * CellY), topLeft);
-	std::cout << "G";
+	std::cout << "|";
 	Scene::GotoXY(2 + x + (CellX * x), 3 + y + (y * CellY), topLeft);
-	std::cout << "G";
+	std::cout << "|";
 	Scene::GotoXY(5 + x + (CellX * x), 3 + y + (y * CellY), topLeft);
-	std::cout << "G";
+	std::cout << "|";
 	Scene::ChangeColor(Scene::Default);
 }
