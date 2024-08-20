@@ -1099,6 +1099,8 @@ void InteractionsManager::Start(bool isGameStarted)
 
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Huh? How am I here? I remember being asleep.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Did overworking make me so tired that I lost my memory for the day?");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "I still remember the dream, it felt like I got stabbed.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "I can still feel it till now...it felt too real...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Whatever, I don't want to think too much.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Strange, I don't feel tired though...so I don't think I can sleep.");
 		break;
