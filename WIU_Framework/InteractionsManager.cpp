@@ -39,6 +39,7 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 	isSoapSetup = false;
 	isBarricadeSetup = false;
 	isPlayerSleeping = false;
+	isPlayerSucide = false;
 
 	isClosetUnlocked = false;
 	isStoreRoomUnlocked = false;
@@ -607,6 +608,7 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You went to sleep.");
 		*hasSlept = true;
 		isPlayerSleeping = true;
+		GameManager::getGM()->firstLoop = false;
 		// play first loop ending
 		break;
 	default:
@@ -772,9 +774,21 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 {
 	// show the current time
 	Start();
-	timeSystem->increaseTimeTaken(2);
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
-		GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
+	switch (timeSystem->TimeLoop)
+	{
+	case 0:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "It's quite late.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "I should really go to bed now.");
+		break;
+
+	case 1:
+		timeSystem->increaseTimeTaken(2);
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
+			GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
+		break;
+
+	}
+	
 }
 
 bool InteractionsManager::UseItem(std::string useItem, GameObject* player)

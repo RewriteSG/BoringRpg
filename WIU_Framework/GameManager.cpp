@@ -60,7 +60,7 @@ void GameManager::Update()
 	}
 	inventory.DisplayItems();
 
-	if (TimeSys.TimeTaken >= TimeSys.RobberTime or InteractionsMgr.isPlayerSucide or InteractionsMgr.isPlayerHidden)
+	if (TimeSys.TimeTaken >= TimeSys.RobberTime or InteractionsMgr.isPlayerSucide or InteractionsMgr.isPlayerHidden or InteractionsMgr.isPlayerSleeping)
 	{
 		if (firstLoop)
 			return;
@@ -88,7 +88,8 @@ void GameManager::PromptInput()
 
 void GameManager::HandleInput(void)
 {
-	
+	if (player == nullptr)
+		return;
 	Furniture* furnituresLeft, * furnituresRight, * furnituresUp, * furnituresDown;
 	furnituresLeft = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() - 1, player->GetPosition()->GetY())));
 	furnituresRight = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() + 1, player->GetPosition()->GetY())));
