@@ -23,10 +23,10 @@ class GameManager
 private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
-	bool LoopStarted;
 	bool EmptyDialogue = true;
 
 public:
+	bool LoopStarted;
 	UI* gameUI;
 	Player* player;
 
