@@ -131,6 +131,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 		case 0:
 			//trigger hiding in bathroom ending
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid in the shower."); //remove this later
+			isPlayerHidden = true;
 			break;
 		case 1:
 			ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
@@ -607,7 +608,8 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 	case 1:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You went to sleep.");
 		*hasSlept = true;
-		isPlayerSleeping = true;
+		isPlayerSleeping
+		= true;
 		GameManager::getGM()->firstLoop = false;
 		// play first loop ending
 		break;
@@ -781,7 +783,7 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "I should really go to bed now.");
 		break;
 
-	case 1:
+	default:
 		timeSystem->increaseTimeTaken(2);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
 			GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
