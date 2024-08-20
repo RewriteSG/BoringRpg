@@ -45,6 +45,7 @@ void GameManager::Start()
 	GameWon = true;
 	gameUI = new UI(Vector2(130, 12), 0, 150);
 	InteractionsMgr.Start();
+	firstLoop = TimeSys.TimeLoop == 0;
 }
 void GameManager::Update()
 {
@@ -61,6 +62,8 @@ void GameManager::Update()
 
 	if (TimeSys.TimeTaken >= TimeSys.RobberTime or InteractionsMgr.isPlayerSucide or InteractionsMgr.isPlayerHidden)
 	{
+		if (firstLoop)
+			return;
 		whatScenePlayerIn = SceneManager::currentScene->getName();
 		ending.Start();
 	}

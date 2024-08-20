@@ -35,7 +35,6 @@ public:
 	void Start(void);
 	void Update(void);
 	void Exit(void);
-	void Exit(void);
 
 	int EndingUnlock(void) const;
 };

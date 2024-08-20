@@ -27,6 +27,7 @@ private:
 
 public:
 	bool LoopStarted;
+	bool firstLoop;
 	UI* gameUI;
 	Player* player;
 
