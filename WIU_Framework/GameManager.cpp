@@ -370,7 +370,18 @@ void GameManager::HandleInput(void)
 				//Endings
 				SceneManager::LoadScene("EndingScene");
 			}
-			
+			else if (stringInput == "help") {
+
+				ClearDialogue();
+				
+				ui.CreateText("Enter / exit: transition through rooms by doors", Vector2(4, 2));
+				ui.CreateText("Interact: To trigger item interaction, use to figure out what object does.", Vector2(4, 3));
+				ui.CreateText("Move: Allow your character to move after clickling '/'.", Vector2(4, 4));
+				ui.CreateText("Use: use any item ", Vector2(4, 5));
+				ui.CreateText("Press 'Enter' again to move. ", Vector2(4, 6));
+
+				EmptyDialogue = false;
+			}
 			else if (stringInput == "move")
 			{
 				break;
