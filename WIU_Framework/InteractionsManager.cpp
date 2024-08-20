@@ -605,13 +605,13 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
-	case 1:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You went to sleep.");
 		*hasSlept = true;
 		isPlayerSleeping = true;
 		GameManager::getGM()->firstLoop = false;
 		// play first loop ending
 		break;
+		
 	default:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can't sleep...");
 		break;
@@ -784,6 +784,7 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 
 	default:
 		timeSystem->increaseTimeTaken(2);
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I remember that he comes at 00:05, I still have time.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
 			GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
 		break;
@@ -1097,11 +1098,12 @@ void InteractionsManager::Start(bool isGameStarted)
 	case 2:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You appear at the door again");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: WHAT WAS THAT!? I JUST GOT KILLED IN MY HOUSE!");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You quickly calm down and think about the situation.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You quickly calm down and decide to check the TV.");
+
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV, and it is showing the same news.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you are stuck in a time loop of getting killed over and over.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: He comes at 00:05, I still have time.");
+
 		break;
 	default:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Im back again...");
