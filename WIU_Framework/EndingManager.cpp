@@ -217,6 +217,19 @@ void EndingManager::KnifeEnding(void)
 	}
 }
 
+EndingManager::EndingManager(void)
+{
+	ui = nullptr;
+	killerCurrentScene = "";
+	isPlayerFound = false;
+	isPlayerGetKilled = false;
+	isPlayerWithKiller = false;
+	isWeaponUse = false;
+	dialogueIndex = 0;
+	time = nullptr;
+	ui = nullptr;
+}
+
 void EndingManager::Start(void)
 {
 	//GameManager::getGM()->InteractionsMgr.hasKnife = true;
