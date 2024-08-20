@@ -93,6 +93,7 @@ public:
 	void BedRoomDrawerImage(bool);
 	void BedImage();
 	void TelevisionImage();
+	void TelevisionImage(bool);
 	void ToiletCabinetImage();
 	void ToiletCabinetImage(bool);
 	void BedroomDoorImage();
@@ -102,5 +103,17 @@ public:
 	void ToiletBowlImage();
 	void LivingRoomDoorImage();
 	void StoreRoomDoorImage();
+	void KeyImage();
+	void ClockImage();
+	void FridgeImage();
+	void KitchenTableImage();
+	void BarricadeDoorImage();
+	void KnifeImage();
+	void HammerAndNailsImage();
+	void PlanksItemImage(); 
+	void SoapImage();
+	void DuctTapeImage();
+	void MetalPanImage();
+
 };
 

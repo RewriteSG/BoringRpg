@@ -525,7 +525,7 @@ void Furniture::InteractFurniture(GameObject* obj)
 		GameManager::getGM()->InteractionsMgr.KitchenCabinetInteracted(this, obj);
 		break;
 	case Furniture::Sink:
-		GameManager::getGM()->InteractionsMgr.ShowerInteracted(this, obj);
+		GameManager::getGM()->InteractionsMgr.SinkInteracted(this, obj, true);
 		break;
 	case Furniture::Planks:
 		GameManager::getGM()->InteractionsMgr.PlanksInteracted(this, obj);

@@ -7,7 +7,7 @@
 #include "Furniture.h"
 #include "ObjectivesManager.h"
 #include "Application.h"
-
+#include "Windows.h"
 void InteractionsManager::SeperateInput(std::string input, std::string& input1, std::string& input2)
 {
 	int chCount = 0;
@@ -78,6 +78,7 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 			timeSystem->increaseTimeTaken(5);
 			hasStoreRoomKeyCollected = true;
 			GameManager::getGM()->inventory.PickupItem("StoreRoomKey");
+			KeyImage();
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up storeroom key!");
 			break;
 		case 1:
@@ -160,7 +161,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 void InteractionsManager::SinkInteracted(GameObject* sink, GameObject* player, bool isNothing)
 {
 	Start();
-
+	SinkImage();
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "There's some dirty dishes.");
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Oops... I should clean that up.");
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Later :D");
@@ -173,10 +174,12 @@ void InteractionsManager::PlanksInteracted(GameObject* planks, GameObject* playe
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (hasPlanks)
 	{
+		PlanksImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I already have the planks.");
 	}
 	else
 	{
+		PlanksImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's some wooden planks on the shelf.");
 		switch (timeSystem->TimeLoop)
 		{
@@ -209,10 +212,12 @@ void InteractionsManager::ToolboxInteracted(GameObject* box, GameObject* player)
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (hasNails and hasHammer)
 	{
+		ToolboxImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I already have the tools.");
 	}
 	else
 	{
+		ToolboxImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's only one hammer inside the toolbox, with some nails.");
 		switch (timeSystem->TimeLoop)
 		{
@@ -256,10 +261,12 @@ void InteractionsManager::StoveInteracted(GameObject* stove, GameObject* player)
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (hasMetalPan)
 	{
+		StoveImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else I can do here.");
 	}
 	else
 	{
+		StoveImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's a pan at the top of the stove.");
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
@@ -284,10 +291,12 @@ void InteractionsManager::KitchenCabinetInteracted(GameObject* kitchenCabinet, G
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (hasKnife)
 	{
+		KitchenCabinetImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else I can do here.");
 	}
 	else
 	{
+		KitchenCabinetImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's some knives in the cabinet.");
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
@@ -297,6 +306,7 @@ void InteractionsManager::KitchenCabinetInteracted(GameObject* kitchenCabinet, G
 		case 0:
 			timeSystem->increaseTimeTaken(5);
 			hasKnife = true;
+			KnifeImage();
 			GameManager::getGM()->inventory.PickupItem("knife");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up knife!");
 			break;
@@ -311,9 +321,11 @@ void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* p
 	Start();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	int choosenItem;
+	TrashCanImage();
 	switch (trashCanInteractions)
 	{
 	case 0:
+		
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "A trash can, not remarkable in any way.");
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
@@ -387,7 +399,7 @@ void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* p
 void InteractionsManager::TableInteracted(GameObject* table, GameObject* player)
 {
 	Start();
-
+	TableImage();
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "You tried to search the table.");
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "But there was nothing on it.");
 	timeSystem->increaseTimeTaken(5);
@@ -396,6 +408,7 @@ void InteractionsManager::TableInteracted(GameObject* table, GameObject* player)
 void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameObject* player)
 {
 	Start();
+	BedroomTableImage();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "There is a bunch of stuff on the table.");
 	ui->GetOptionUI()->AddOption(new std::string("Photograph"));
@@ -479,10 +492,12 @@ void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabi
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (hasDuctTape)
 	{
+		LivingRoomCabinetImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There's nothing else inside.");
 	}
 	else
 	{
+		LivingRoomCabinetImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Inside the big cabinet, there's only a roll of duct tape.");
 		switch (timeSystem->TimeLoop)
 		{
@@ -514,7 +529,7 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 {
 	Start();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-
+	ClosetDoorImage();
 	timeSystem->increaseTimeTaken(5);
 	switch (timeSystem->TimeLoop) 
 	{
@@ -561,6 +576,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (!hasClosetKeyCollected) {
 
+		BedRoomDrawerImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There is some stuff in the drawer.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "It's quite messy.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should really clean this up...");
@@ -574,6 +590,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 			ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You cleaned up the drawer.");
+			BedRoomDrawerImage(true);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "While you were organizing, you found a key inside.");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I wonder what this key is used for...");
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
@@ -585,6 +602,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 				hasClosetKeyCollected = true;
 				GameManager::getGM()->inventory.PickupItem("UnknownKey");
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up a key But you don't know what is it for...");
+				KeyImage();
 				break;
 			case 1:
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think I have any use of this.");
@@ -598,6 +616,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 	}
 	else 
 	{
+		BedRoomDrawerImage(true);
 
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Seems like the drawer is organized already.");
 
@@ -613,6 +632,7 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
+		BedImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You went to sleep.");
 		*hasSlept = true;
 		isPlayerSleeping = true;
@@ -631,11 +651,13 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 	Start();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 
+	TelevisionImage();
 	bool* hasWatchedTV = &(GameManager::getGM()->objManager).hasWatchedTV;
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
+		TelevisionImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Serial killer? Not really my problem, it's not like he would target me anyways.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: It's quite near my house though...");
@@ -643,31 +665,43 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nothing bad will happen.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: By tomorrow morning he should be caught.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should go to bed now.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
+		TelevisionImage(); 
 		*hasWatchedTV = true;
 		break;
 	case 1:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
+		TelevisionImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Did they run out of news? This is literally the same as yesterday!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Are they just that lazy?");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Someone is gonna get fired.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, I should just find some other things to do now.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
+		TelevisionImage();
 		*hasWatchedTV = true;
 		break;
 
 	case 2:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
+		TelevisionImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: It's the same news...again...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you are stuck in a time loop of getting killed over and over.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
+		TelevisionImage();
 		break;
 	default:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
+		TelevisionImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
+		TelevisionImage();
 		*hasWatchedTV = true;
 		break;
 	}
+	Sleep(500);
 }
 
 void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* player)
@@ -688,6 +722,7 @@ void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* p
 		}
 		else
 		{
+			BarricadeDoorImage();
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have barricaded the door.");
 		}
 		
@@ -751,6 +786,7 @@ void InteractionsManager::ToiletDoorInteracted(GameObject* ToiletDoor, GameObjec
 
 void InteractionsManager::ToiletBowlInteracted(GameObject* ToiletBowl, GameObject* player)
 {
+	ToiletBowlImage();
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "Just a toilet bowl, nothing else.");
 }
 
@@ -792,6 +828,7 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 {
 	// show the current time
 	Start();
+	ClockImage();
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
@@ -931,6 +968,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 				timeSystem->increaseTimeTaken(50);
 				isBarricadeSetup = true;
 				ui.PrintDialogue(Vector2(3,2), "You: There, all good.");
+				BarricadeDoorImage();
 				ui.PrintDialogue(Vector2(3,2), "Successfully barricaded the door!");
 				GameManager::getGM()->inventory.UseItem(useItem1);
 				GameManager::getGM()->inventory.UseItem(useItem2);
@@ -939,7 +977,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			else 
 			{
 				GameManager::getGM()->ClearDialogue();
-				ui.PrintDialogue(Vector2(3,2), "I dont have enough items to use on the main door!");
+				ui.PrintDialogue(Vector2(3,2), "I dont have enough items to use on the main door! Maybe i need nails, planks or hammer?");
 			}
 			return true;
 		}
@@ -1038,6 +1076,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 		if (usingKnife)
 		{
 			GameManager::getGM()->ClearDialogue();
+			KnifeImage();
 			ui.PrintDialogue(Vector2(3, 2), "This better work...");
 			isPlayerSucide = true;
 			GameManager::getGM()->inventory.UseItem(useItem1);
@@ -1045,7 +1084,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 		else
 		{
 			GameManager::getGM()->ClearDialogue();
-			ui.PrintDialogue(Vector2(3, 2), "I dont have anything to use on myself!");
+			ui.PrintDialogue(Vector2(3, 2), "I dont think i can use that on myself...");
 		}
 		return true;
 	}
@@ -1060,10 +1099,12 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 		timeSystem->increaseTimeTaken(5);
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
+		ToiletCabinetImage();
 		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Search the cabinet?");
 		switch (choosenItem)
 		{
 		case 0:
+			ToiletCabinetImage(true);
 			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You look through the cabinet!");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "But you found nothing useful.");
@@ -1856,70 +1897,776 @@ void InteractionsManager::BedImage()
 
 void InteractionsManager::TelevisionImage()
 {
-	const char* image = R"(
+	const char* image = R"(@@&##&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&##&@@
+@G. :J&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&!  :G@
+@B7J@@@@@@@#BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Y~ :G@
+@@@@@@@@@@@5!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?PGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGPPB@@@@@@@@@~.G@
+@@@@@@@@@@@5!!777777777777777777777777777777777777777777777!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Y&@@@@@@@&~.G@
+@@@@@@@@@@@5!!77777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@#^.G@
+@@@@@@@@@GJ77777777777777777777777777777777777777777777777777777777777777777777777777777777777777?P@@@@@@@#B&@
+@@@@@@@@@P!!777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@@@@
+@@@@@@@@@P7!777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@@@@
+@@@@@@@@@P7!777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@@@@
+@@@@@@@@@P7!77777777777777777777777777777777777777777777777777777777777777777777777777777777777777YB&@@@@@@@@@
+@@@@@@@@@P7!77777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@@
+@@@@@@@#5J7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777!7P@@@@@@@@@
+@@@@@@@P!!7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777!7P@@@@@@@@@
+@@@@@@@P7!7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777!7P@@@@@@@@@
+@@@@@@@P7!7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777!7P@@@@@@@@@
+@@@@@@@P7!7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!P@@@@@@@@@
+@@@@@@@P7!77777777777777777777777777777777777777777777777777777777777777777777777777777777777777777JG@@@@@@@@@
+@@@@@@@P7!77777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@@@@
+@@@@@@@P7!77777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@@@@
+@@@@@@@P!!77777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@@@@
+@@@@@@@&BY7!777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@@@@
+@@@@@@@@@P7!777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@@@@
+@@@@@@@@@P7!777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@@@@
+@@@@@@@@@P?7777777777777777777777777777777777777777777777777777777777777777777777777777777777777!!5@@@@@@@@@@@
+@@@@@@@@@@@5!!77777777777777777777777777777777777777777777777777777777777777777777777777777777777?P@@@@@@@@@@@
+@@@@@@@@@@@5!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!77777777777777777777777!!!Y@@@@@@@@@GG&@
+@@@@@@@@@@@B55555555555555555555555555555555555555555555555555555555P5?!!!!!!!!!!!!!!!!!!!!!7555G@@@@@@@@&^ G@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@BPPGGGGGGGGGGGGGGGGGPPB@@@@@@@@@@@P7.:G@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@7  :G@
+@B~7&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Y:   :G@
+@@#&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&####&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::TelevisionImage(bool)
+{
+	const char* image = R"(@@&##&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&##&@@
+@G. :J&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&!  :G@
+@B7J@@@@@@@B555555P&@@@@@@@@@@@@@@@@@&P555555PPPPPPPPPPPPPB@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Y~ :G@
+@@@@@@@@@@@5777777JB&###############&G?777777^            .?YJJJJJJJJJJJJJJJJJYYYYYYYYYYYYYYYYYYG@@@@@@@@@~.G@
+@@@@@@@@@@@&&&&&&&#GPPPPPPPPPPPPPPPPPG#&&&&@@Y        .JP55YYYYYYYYYYYYYYYYYY!                  !&@@@@@@@&~.G@
+@@@@@@@@@@@BPPPPPPGGGGGGGGGGGGGGGGGGGGGPPPP#@J      .YGJ7?????????????????75@@GPP!              7@@@@@@@@#^.G@
+@@@@@@@@@#GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG#@J    .5BJ~.....................^Y@@@@B7             :Y@@@@@@@#B&@
+@@@@@@@@@#GPGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG#@J  .5#?:...!B@&5^.:.:...^P@@G~..:^:^5@Y              7@@@@@@@@@@@
+@@@@@@@@@#GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG#@J  :G@?  ~B@&&@@&Y:...:5&@@&&@G^ ....:J&@&!          ?@@@@@@@@@@@
+@@@@@@@@@#GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG#@? Y@@&7  !#G ~&G: ::::. ^B#::#B^ .:::. :P@7          ?@@@@@@@@@@@
+@@@@@@@@@#GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG#@J !G@&7  !&&?Y@G: ::::. ^B@JJ@#^ .:::: .G@7          ~P#@@@@@@@@@
+@@@@@@@@@#GPGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG#@Y   P@?. ^JPPP57. ..... .?PPPP?^..::.:!J5J^            ?@@@@@@@@@
+@@@@@@@&#GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG#@J  .G@7 .....  ~5P555555Y^  ....:::: .P@?              J@@@@@@@@@
+@@@@@@@#GPGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG#@J   ^7PP~ .::..^7G@@@@@@@#5~..::..  ?GY!:              J@@@@@@@@@
+@@@@@@@#GPGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG#@J    .G@@P^ .::..:~P@@@@&J~:... !B&#Y^.                J@@@@@@@@@
+@@@@@@@#GPGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG&@Y      ~B@@P~.::::::^^^^^:..!G@&P7Y@@#7                J@@@@@@@@@
+@@@@@@@#BGBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGGB#&&?      :B&?7B&&&&&&&#####&&&B7~!~~~~5&Y.               J@@@@@@@@@
+@@@@@@@&BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB##J         .!GB7^~~~~~~~~~~~~~~~~~~~~~~~~~~5#J:.          .^5@@@@@@@@@
+@@@@@@@Y                                          .G@?:^~~~~~~~~~~~~~~~~~~~~~~~~~~~:^B@7          ?@@@@@@@@@@@
+@@@@@@@Y                        !JJJJJJJJJJJJJJJJ?Y#@G5555555555555555555555555555555&@P??JJJJJ?^ 7@@@@@@@@@@@
+@@@@@@@J                    ~Y555P555555PPP55555PPPYYY5555555555555555555555555555555555PPPP55B@&5G@@@@@@@@@@@
+@@@@@@@#P!                !G@@BJ!!5GGGGY~^~?GBGJ~^!5GGGGBB5~?GY~^~~~~~~~~~~~^?GY~?GBG?~~~~~~~~!JJYG@@@@@@@@@@@
+@@@@@@@@@J              !BP???!~~7B@@@@@&5!Y@@@5~^7B@@&Y??7~Y@@#Y~~!!!!!!~~?B@@G!5@G?!!!!!!!!!!~~~Y@@@@@@@@@@@
+@@@@@@@@@J            !B@@P~~~!!~7B@@B?J@B!Y@@@5~^7G@@#?~~~!!!5@@&Y~~!!!~?B@@B7~~P@P~~!!!!!!!!!!~~Y@@@@@@@@@@@
+@@@@@@@@@Y.           ?@B!~!!!!!~7B@@B7?#@@@@@@5~^7G@@@&G7~!!!~!P@57G@@#??&#7~~~~Y&@@Y~~!!!!!!!!~~Y@@@@@@@@@@@
+@@@@@@@@@@@?       :?&@&5!~!!!!!~7B@@#7^~JB@@@@5~^7B@@&Y7?7!~!~!Y#@@&###@@&P7~!!!!?B@5~~!!!!!!!!!7P@@@@@@@@@@@
+@@@@@@@@@@@7      ^#@BY~^~~~~~~~^!5BB5!^~^^?GBGJ~^!5GGGGBB5!^~~~^~YG?^^7PP7~~!!~~YB#GJ~~!!!!~~~^J@@@@@@@@@GG&@
+@@@@@@@@@@@P?????7Y&&5Y55555555555YYYY55555YYYYY555YYYYYYYY5555555YY5Y7^^^~~~~~~~~^^^~~~~~~~!Y5YG@@@@@@@@&^ G@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@BPPPPPPPPPPPPPPPPPPPPPG@@@@@@@@@@@P7.:G@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@7  :G@
+@B~7&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Y:   :G@
+@@#&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&####&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
 void InteractionsManager::ToiletCabinetImage()
 {
-	const char* image = R"(
+	const char* image = R"(@@&##############&######&######################################################################&######&####&@@
+@G:                :^^.                                                                          ^^^.      :G@
+@G:               ^#@@#?!77777777777777777777777777777777777!!!7777777777777777777777777777777!!5@@@Y      :G@
+@G:               ^#&5Y5555555555555555555555555555555555555B@#555555555555555555555555555555555YYB@Y      :G@
+@G:               ~#B.                                      !@5                                   ?@Y      :G@
+@G:               ~#B:                                    ^5&@5                                   J@Y      :G@
+@G:               ~#B:                                    7@B~.                                   J@Y      :G@
+@G:               ~#B:                                    7&P                                     ?@Y      :G@
+@G:             ^B#^                                      7&P.                                      Y@J    :G@
+@G:             ^##^                                      7&P.                                      Y@J    :G@
+@G:             ^##^                                      7&P.                                      Y@J    :G@
+@G:             ^##^                                      7&P.                                      Y@J    :G@
+@G:             :#&^                                  :J? !&P ^Y!                                   Y@J    :G@
+@G:           .JP?^.                                  ~&B:~&5 ?@Y                                   :!YP~  :G@
+@G:           :B&~                                    ^#B.~&5 ?@Y                                     5@?  :G@
+@G:           :B&~                                    ^B@&&@@&@@J                                     5@?  :G@
+@G:           :B&~                                      ~#@@@@Y                                       5@?  :G@
+@G:           :B&~                                      ~#@@@@Y                                       5@?  :G@
+@G:           :B&~                                      ^#@@@@J                                       5@?  :G@
+@G:           :B&~                                    .!5@@@@@B?^                                     5@?  :G@
+@G:           :B&~                                    ^&@JY@B?G@Y                                     5@?  :G@
+@G:           :B&~                                    ^#G.~&5 7@Y                                     5@?  :G@
+@G:           :B&~                                    ^#B.~&5 ?@Y                                     5@?  :G@
+@G:           :B&~                                     .. !&P. ..                                     5@?  :G@
+@G:           :B&~                                        7&P.                                        5@?  :G@
+@G:           .5G7:                                       7&P.                                      .^5B!  :G@
+@G:             :##:                                      7&P.                                      Y@J    :G@
+@G:             ^#@5~                                     !&P                                     :?B@J    :G@
+@G:             .!5@@P555555555555555555555555555555555555B@&5555555555555555555555555555555555555#@#?^    :G@
+@G:                ~77777777777777777777777777777777777777!!!77777777777777777777777777777777777777!:      :G@
+@G:                                                                                                        :G@
+@@&########################################################################################################&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
 void InteractionsManager::ToiletCabinetImage(bool)
 {
-	const char* image = R"(
+	const char* image = R"(@@@@@@@@@@@&##########################################&########################################&######&####&@@
+@&BBBBBBB#B?^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                            ^^^.      :G@
+@G:        ?GGG&@@@@@#BB############################BJ!!!!!!!!!7777777777777777777777777777777!!5@@@Y      :G@
+@G:           .P@BB@&P55J!!!!7777777777777777777777!?PBBBBBB&@#555555555555555555555555555555555YYB@Y      :G@
+@G:           :G&J75PPB@@BBGY7!7777777777777777777777!!!!!!!5@Y                                   ?@Y      :G@
+@G:           :G@Y7777?Y5555G##BBBBBBBBBBBBBBBBBBBBBBBBBBBBB&@5                                   J@Y      :G@
+@G:           :G@Y7777777777?YJY#@GY555555555555555555555YG@G~.                                   J@Y      :G@
+@G:           :G@Y777777777777!?B@5??JJJJJJJJJJJJJJJJJJJ??P@5                                     ?@Y      :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJJJJ??P@P.                                      Y@J    :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJJJJJYPBJ.                                      Y@J    :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJJJ?5@G.                                        Y@J    :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJJJ?5@G.                                        Y@J    :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJJJ?5@G.  !Y!                                   Y@J    :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJJ??5@G.  J@Y                                   :!YP~  :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJ?YB@@P.  J@Y                                     5@?  :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJ?5@B~  !#@@J                                     5@?  :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJ?5@B:  ?@5                                       5@?  :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJ?5@G:  ?@5                                       5@?  :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJ?5&#?: 7@5                                       5@?  :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJ?Y#@@P.7@#?^                                     5@?  :G@
+@G:           :G@Y7777777777777?B@5???????????????????Y#@@P..7B@Y                                     5@?  :G@
+@G:           :G@Y777777777777!?B@&####################@@@P.  ?@Y                                     5@?  :G@
+@G:           :G@Y777777777777P&@&PJJYJJYYYYYYYYYYYYYYJJP@G.  J@Y                                     5@?  :G@
+@G:           :G@Y777777777?P@@@5?777777777777777777777!Y@G.  ...                                     5@?  :G@
+@G:           :G@Y77777777P@@&57777777777777777777777777Y@G.                                          5@?  :G@
+@G:           :G@Y777777?JG#5777777777777777777777777777Y@G.                                        .^5B!  :G@
+@#?!77!:      :G@Y77?Y55G#577777777777777777777777777777Y@G.                                        Y@J    :G@
+@&PY5#@#J?JY?. G@Y!!Y@@GY!!777777777777777777777777777!!Y@P.                                      :?B@J    :G@
+@G.  :?JJJJJJYP&@#GG#@@BGBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB#@&P55555555555555555555555555555555555555#@#?^    :G@
+@G:          ^7!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!7777777777777777777777777777777777777777!:      :G@
+@G:                                                                                                        :G@
+@@&########################################################################################################&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
 void InteractionsManager::BedroomDoorImage()
 {
-	const char* image = R"(
+	const char* image = R"(@@&#####################&##########################################################&#######################&@@
+@G:                       .^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^.                         :G@
+@G:                       J@&GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG&@Y                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                           .::.   ?@5                         :G@
+@G:                       J@J                                         .!P##P~. ?@5                         :G@
+@G:                       J@J                                        :#@^  ~@B.7@5                         :G@
+@G:                       J@J                                        .?5JJJY5! ?@5                         :G@
+@G:                       J@J                                           7YY7   ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@@&#######################&@&##################################################&@&#########################&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
 void InteractionsManager::ClosetDoorImage()
 {
-	const char* image = R"(
+	const char* image = R"(@@&#####################&##########################################################&#######################&@@
+@G:                       .^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^.                         :G@
+@G:                       J@&GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG&@Y                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                           .::.   ?@5                         :G@
+@G:                       J@J                                         .!P##P~. ?@5                         :G@
+@G:                       J@J                                        :#@^  ~@B.7@5                         :G@
+@G:                       J@J                                        .?5JJJY5! ?@5                         :G@
+@G:                       J@J                                           7YY7   ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@@&#######################&@&##################################################&@&#########################&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
 void InteractionsManager::KitchenDoorImage()
 {
-	const char* image = R"(
+	const char* image = R"(@@&#####################&##########################################################&#######################&@@
+@G:                       .^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^.                         :G@
+@G:                       J@&GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG&@Y                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                           .::.   ?@5                         :G@
+@G:                       J@J                                         .!P##P~. ?@5                         :G@
+@G:                       J@J                                        :#@^  ~@B.7@5                         :G@
+@G:                       J@J                                        .?5JJJY5! ?@5                         :G@
+@G:                       J@J                                           7YY7   ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@@&#######################&@&##################################################&@&#########################&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
 void InteractionsManager::ToiletDoorImage()
 {
-	const char* image = R"(
+	const char* image = R"(@@&#####################&##########################################################&#######################&@@
+@G:                       .^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^.                         :G@
+@G:                       J@&GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG&@Y                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                           .::.   ?@5                         :G@
+@G:                       J@J                                         .!P##P~. ?@5                         :G@
+@G:                       J@J                                        :#@^  ~@B.7@5                         :G@
+@G:                       J@J                                        .?5JJJY5! ?@5                         :G@
+@G:                       J@J                                           7YY7   ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@@&#######################&@&##################################################&@&#########################&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
 void InteractionsManager::ToiletBowlImage()
 {
-	const char* image = R"(
+	const char* image = R"(@@&#################&@@###&@@@&##########################################&@@@@&####&@&#####################&@@
+@G:                 !@B~  ?@@G!                                          :P@@P     5@?                     :G@
+@G:                 ^5&@5 ?@J                                              ^557^   5@?                     :G@
+@G:                   !@5 ?@Y                                                7@G.  5@?                     :G@
+@G:                   7&#YJ?^                                                7@P.  5@?                     :G@
+@G:                   !&@@Y                                                  7@P   5@?                     :G@
+@G:                   7&P^JB?                                                .:JB? Y@?                     :G@
+@G:                   7@5 ?@Y                                                  ?@Y Y@?                     :G@
+@G:                   !#5:J@J                                                 .J@Y Y@?                     :G@
+@G:                     7@@@?                                                7&@B7 ?BJ:.                   :G@
+@G:                     ?@&PJ!:                                              7@5     P@7                   :G@
+@G:                     ?@J Y@?                                              7@G.   .P@7                   :G@
+@G:                     ?@Y ^?5Y^                                          :JY?~    .P@7                   :G@
+@G:                     ?@5   ^?P5^                                      .Y#@G      .P@7                   :G@
+@G:                     ?@5    .P@&BBBBBBBBBB#B7                       :5&@#!.      .P@7                   :G@
+@G:                     ?@5      ~B@@#J77????7?P&&##############&#7  :5@@B~    .    .P&7                   :G@
+@G:                   !&@&######&@@#J~!!!!!!!!!!7777777777777777!7P&&&@#!^P&#######@&?                     :G@
+@G:                   7@P       P@@G?~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!~7P&&G!.       5@?                     :G@
+@G:                   7@P     :7B&J~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!~~J@&?^     5@?                     :G@
+@G:                   ^JY?~  .5@@&J~!!!!!!!!~?5555555555Y!~~~~~~!!!!!!!!!75GBPJ~   5@?                     :G@
+@G:                     ?@5  .5@@&J~!!!!!!!?P#@@@@@@@@@@&GPPPPGPJ~~~!!!!!!!~~Y@P   Y@?                     :G@
+@G:                     ?@Y  .5@@&J~!!!!!!!5@@###########&&&&&&&#BBGJ!!!!!!!~Y@&P5P&@?                     :G@
+@G:                     ?@@B! Y@@&J~!!!!!!!5@@###################&@@Y!!!!!!!!!?P@@@5^.                     :G@
+@G:                      .Y@J 5&7:G#J~!!!!!5@@####################@@Y!!!!!!!!!!5@@@?                       :G@
+@G:                         5@?  :B&J~!!!!!!!P@@################&@@#Y!!!!!!!~Y&@&@@J                       :G@
+@G:                         5@?  :B&?~!!!!!!!Y###@@@&#########@@@#Y!!!!!!!!!7P@5 ?@J                       :G@
+@G:                         5@?  :G@P?7!!!!!!!!~!5BBB@@@&&&&@@@BJ~~!!!!!!!~J@@G! J@J                       :G@
+@G:                         5@?  :G@@#7~~~~~~!!!!!~~!5GGPPPPGGJ!~!!!!!!~~75P57   J@J                       :G@
+@G:                         5@?  .~Y&@BGGGGGPJ~~~~~~~~~~~~~~~~!!!~~~~!YGBGY!     J@J                       :G@
+@G:                         5@?     ~!777!!P@@BBBBBBBBBB###B5!~!Y##BB#@@Y^       J@J                       :G@
+@G:                         5@?            .^^^^^^^^^^^^^:?&@###J^^^^^^:         J@J                       :G@
+@@&#########################&@&###########################&@@@@@&########&#######&@&#######################&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
 void InteractionsManager::LivingRoomDoorImage()
 {
-	const char* image = R"(
+	const char* image = R"(@@&#####################&##########################################################&#######################&@@
+@G:                       .^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^.                         :G@
+@G:                       J@&GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG&@Y                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                           .::.   ?@5                         :G@
+@G:                       J@J                                         .!P##P~. ?@5                         :G@
+@G:                       J@J                                        :#@^  ~@B.7@5                         :G@
+@G:                       J@J                                        .?5JJJY5! ?@5                         :G@
+@G:                       J@J                                           7YY7   ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@@&#######################&@&##################################################&@&#########################&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
 void InteractionsManager::StoreRoomDoorImage()
 {
+	const char* image = R"(@@&#####################&##########################################################&#######################&@@
+@G:                       .^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^.                         :G@
+@G:                       J@&GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG&@Y                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                           .::.   ?@5                         :G@
+@G:                       J@J                                         .!P##P~. ?@5                         :G@
+@G:                       J@J                                        :#@^  ~@B.7@5                         :G@
+@G:                       J@J                                        .?5JJJY5! ?@5                         :G@
+@G:                       J@J                                           7YY7   ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@G:                       J@J                                                  ?@5                         :G@
+@@&#######################&@&##################################################&@&#########################&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::KeyImage()
+{
+	const char* image = R"(@@&########################################################################################################&@@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                 !55J.                                  :G@
+@G:                                                               7G&@@@GPGJ.                              :G@
+@G:                                                             7B@@@@@@@@@@BB#J                           :G@
+@G:                                                         7#&#@@@@@@@@@@@@@@@@&&&?                       :G@
+@G:                                                    ...7#@@@@@@@&7  ^P@&&&##&@@@J                       :G@
+@G:                                                  .7#@@@@@@@@@@@&J:         !B&B7                       :G@
+@G:                                                 .G@@@@@@#PB@@@@@@@J~!~.                                :G@
+@G:                                                ~Y#@@@@&5~ ^YYY#@@@@@@#^                                :G@
+@G:                                              !5&@@@@&Y~       ^J&@57?7.                                :G@
+@G:                                          !PPP&@@@@&J^           ^!.                                    :G@
+@G:                                        !B@@@@@@@&?.                                                    :G@
+@G:                                      !#@@@@@&?...                                                      :G@
+@G:                            .P@@&&&&&&&&@@Y:.::.                                                        :G@
+@G:                           .~P&PJJY5PPP5YJG&&&@&!                                                       :G@
+@G:                          .P@GJ5PGB@@GB@&P5YJY#@Y~.                                                     :G@
+@G:                          .5@P5&@5J57 .?B@BYJYP#@&~                                                     :G@
+@G:                          .5@P5&@P!   :?B@BYYYJY@&~                                                     :G@
+@G:                          .5@GJ5G@@GPP#@&P5YYYBBJ~.                                                     :G@
+@G:                          .5@@#5J5PPPPP55YYYJY&@!                                                       :G@
+@G:                            ^P@@&&&&&@B5JYG@@#?.                                                        :G@
+@G:                                    !B@###&#?                                                           :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@@&########################################################################################################&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::ClockImage()
+{
+
+	const char* image = R"(@@&####################################################################&###################################&@@
+@G:                                        .^^^^^^^^^^^^^^^^^^^^^^^^^^                                     :G@
+@G:                                 ~7!!!!!5&@&&&&&&&&&&&&&&&&&&&&&&@#J!!!!!!^                             :G@
+@G:                           ~JJ??YB@&&&&&BP5PPPGB#######BPPPPPPPPP5P#&&&&@@#J??^                         :G@
+@G:                       ~Y55G&&#&#P5PPPG#&&&&&&@@GYYYYYYP#&&&&&&&&##GPPPPGB##@@#Y^                       :G@
+@G:                     ~P&@@BGPPPPG#@&@@BJ?JJJJJJ?~^^^^^^~?JJJJJJ?J#@@&@#GPPPPGBB#BP~                     :G@
+@G:                   ~G@@&GPPPP#@@#J!777!^^^^^^^^^^~~~~~~^^^^^^^^^^!777!J#@@#PPPPPGB#G~                   :G@
+@G:                   7&@GPPB@@&@&J~^^^^^^^~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^~J&@&@@#PPPGG&B~                 :G@
+@G:                 !#&GPPPG&@Y^^~^^^~~~~~~~~~~~~~~~~~~~~~^^^^~~~~~~~~~~~^^^~^^J&@@#GPPPG@B^               :G@
+@G:               ^#@GPPPG#@@B?^^^~~~~~~~~~~~~~~~~~~~~~~^^~7!~^~~~~~~~~~~~~~^~~^^J#@@#GPG&B7.              :G@
+@G:             .^?B#GPPB@&G?^^~~~~~~~~~~~~~~~~~~~~~~~~~^^J@B~^~~~~~~~~~~~~~~~~~~^^?B@@BP5G@B^             :G@
+@G:             :#@GPPPP#@P^:~~~~~~~~~~~~~~~~~~~~~~~^^^^^^J@G~^~~~~~~~~~~~~~~~~~~~~^^?PBBGG@B:             :G@
+@G:           .75BBGPPG#GY7~^~~~~~~~~~~~~~~~~~~~~~^^!Y5!::J@B~^~~~~~~~~~~~~~~~~~~~~~^:~G@BPBB57.           :G@
+@G:           :G@BPPPP#@P^:~~~~~~~~~~~~~~~~~~~~~~~^^!#&7!PPJ7~^~~~~~~~~~~~~~~~~~~~~~^^~G@BPPB@G:           :G@
+@G:           :G@BPPPPB@P~^~~~~~~~~~~~~~~~~~~~~~~~^^!##!7&B~:^~~~~~~~~~~~~~~~~~~~~~~^^~G@BPPB@G.           :G@
+@G:           :G@BPPPPB@P~^~~~~~~~~~~~~~~~~~~~~~~~~^~~?B@@G!^^~~~~~~~~~~~~~~~~~~~~~~^^~G@BPPPPB&5.         :G@
+@G:           ^G@BPPPPB@P~^~~~~~~~~~~~~~~~~~~~~~~~~~^^7#@@G!^^~~~~~~~~~~~~~~~~~~~~~~^^~G@BPPPPB@P.         :G@
+@G:         .P@BPPPPPPB@P~^~~~~~~~~~~~~~~~~~~~~~~~~~^^7#@&5~^^~~~~~~~~~~~~~~~~~~~~~~^^~5&@@GPPB@P.         :G@
+@G:         .P@BPPPPPPB@P~^~~~~~~~~~~~~~~~~~~~~~~~~~^^!PP~:^~~~~~~~~~~~~~~~~~~~~~~~~~~^:~B@BPPB@P.         :G@
+@G:         .P@BPPPPPPB@P^:~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^~~~~~~~~~~~~~~~~~~~~~~~~~~~~^:~B@BPPB@P.         :G@
+@G:         .P@BPPPPPPB@&P?~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~JPBBGPPB@P.         :G@
+@G:         .P@BPPPPPPGG&@P~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^:~B@BPPG#@@P.         :G@
+@G:         .P@BPPPPPPPP#@P^^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^~5#BGPPPB@B!.          :G@
+@G:           ^G@BPPPPPP#@P~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^~5&@@BPPG&@@P.           :G@
+@G:           .P&BPPPPPPPP#@Y^^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^~5@@@BPPPPB@B^             :G@
+@G:             :B@GPPPPPP#&P7~^^^^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^~!P@@&BPPPPG@@&5:             :G@
+@G:             ^B@#GPPPPPPP&@G???~^^^^^^~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^~?J?5&@&BPPPPPB#BY:               :G@
+@G:             .7G@@#GPPPPPB##&@@PYYY5?^:^^^^^^^^^^^^^^^^^^^^^^^^:^?55YY5#&&#PPPPPGB##GJ:                 :G@
+@G:                !5@@&&#BPPPPPGB#####BPPPPPPPPPPPPPPPPPPPPPPPPPPPPB####BP5PPPPPB&@@G7.                   :G@
+@G:                 .~!!5@@&&&@&&#GPPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBGPPPPG#&&&&@@P!!!.                     :G@
+@G:                      ^^^^^:~G@@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@B~:^^^.                         :G@
+@@&#############################&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#######&#######################&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::FridgeImage()
+{
 	const char* image = R"(
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::KitchenTableImage()
+{
+	const char* image = R"(
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::BarricadeDoorImage()
+{
+	const char* image = R"(@@&#####################&##########################################################&#######################&@@
+@G:                       .^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^.                         :G@
+@G:                       J@&GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGPP#@Y                         :G@
+@G:                       J@J                                                .7G@BJJJJ7:                   :G@
+@G:                       J@J                                     !PP555555555J?7?J?J&@B?:                 :G@
+@G:                       J@J                         :5BGGGGGGGGGJ7777777777^ ~P7   :7#@!                 :G@
+@G:                       J@J                7B#BBBBB#G7^~~~~~~~~~.            :~:    .G&!                 :G@
+@G:                 .     Y@Y  .5&&########&#J:.::::::.                          ?#@#! 5@@G^               :G@
+@G:               ~G&######&##&B!          .                            ...7&@#&#? J&J. ~#&~               :G@
+@G:             ^##^  .^:                                           :^^7#@#B#J  ^:   J#@@#5^               :G@
+@G:             ^##^  ~GJ                                       :!!?#@#GGY.    !G?     G@J^.               :G@
+@G:             ^##^                                    .7J????J#@#55J:               .!P@&^               :G@
+@G:             ^##:  ~5?                  ^Y55555555YYJP@@@@@#J??:                75!   ^?Y?.             :G@
+@G:             ^B@B?  !^     7GGGGGGGGGGGG&@G7!7!!~?&@@@@B7~!:                    ~7. ?GPG@#^             :G@
+@G:              .7&@#GGBBBBBB@@J^^~~~~~~~~~^.   JB#P!:^^^:                          ?#@@?^^:              :G@
+@G:         .Y&&###&@@@@5^Y@5:::.            ?#@#?.::                               .P@?                   :G@
+@G:        5&?  .::.    7#&&##########&5:7&@#?                                 .:.:Y#?                     :G@
+@G:      .^G@?  :PP^                ^^^7G&#?                               .^^^?G#B7                       :G@
+@G:      Y@&5~                  ~77?PBBJ                                ~!!?P&@B!                          :G@
+@G:      Y@7  .7?:        ^?JJJJY5PJ.                               ~??5@@G7 .J#@#J??:                     :G@
+@G:      Y@#J: !7:      ^5&@BJJ?:                               !55P@@P??!     :??J#@#5555?.               :G@
+@G:      :!B@&GGY:    ^P57!!:                               ~PBGY7777~.            :!!!!?&@#J:             :G@
+@G:        .^~~^!P#BBB&@5                               ^P&#5~^~.                    JG~ .7&#^             :G@
+@G:             ^B#!.:::.                         :5@&&&P^.:.                        .:.  ^#B^             :G@
+@G:         ^P@@G^   :.                      .:.^P@@&#&@B~.:::::::::::::         ?#?    :B#~               :G@
+@G:        ?#@@?.   ~B5.               .^~~^~JB#B#G~  :5#BBBBBBBBBBBBB#G7^~~~~~^^^^~~~~^!#&~               :G@
+@G:          7G@@Y~     ^7^       ~777!JPGGBG7                         .YBGGGGG#@&GGGGGGGGY:               :G@
+@G:            7555JJJ~ ^57   ~JJJ5555P?                                       ?@Y                         :G@
+@G:               .7G@@5^ :Y55YJY?.                                            ?@5                         :G@
+@G:                  ^5@@G&@G!.                                                ?@5                         :G@
+@G:                    :^^5@J                                                  ?@5                         :G@
+@@&##################&####&@&##################################################&@&#########################&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::KnifeImage()
+{
+	const char* image = R"(@@&########################################################################################################&@@
+@G:                                                                                                        :G@
+@G:                                                                        .~77777!:                       :G@
+@G:                                                                     !??P@@PY5#@J                       :G@
+@G:                                                                   !P@@5??~   J@J                       :G@
+@G:                                                                 ?B@@J^       J@J                       :G@
+@G:                                                             ?#&B?^^:         J@J                       :G@
+@G:                                                         !#@#J:.:           7#@@?                       :G@
+@G:                                                      ::.?&Y.              .J@5                         :G@
+@G:                                                    :7G&#J               :J@@B?                         :G@
+@G:                                                ~77?GY.                 ~&@G7                           :G@
+@G:                                              ~Y55PJ.                  !P@G                             :G@
+@G:                                            !55?:                    7G@@Y~                             :G@
+@G:                                          7G5!.                   .?B@@J:                               :G@
+@G:                                        7B5~.                     :B@?.                                 :G@
+@G:                                    ~B@&Y:                    .Y&@B!                                    :G@
+@G:                                    7@G^..                  .Y@@#!                                      :G@
+@G:                                 .7#@@@@@@5^^~~^          ^5@@B!                                        :G@
+@G:                               ^?&@@@@@@@@@@#G@@5!!~    ~P@@P!                                          :G@
+@G:                           ~??J#@@@@@@@@@@#Y: !55P@@5??P@@5~                                            :G@
+@G:                       ~YYY#@@@@@@@@@@@@B?:       !JJJJJ?~                                              :G@
+@G:                     ~P&@@@@@@@@@@@@@@B7:                                                               :G@
+@G:                 ^P#B#@@@@@@@@@@@@B!:^:                                                                 :G@
+@G:                 ~#@@@@@@@@@@@@@B!                                                                      :G@
+@G:                   !B@@@@@@&&@B~                                                                        :G@
+@G:                     !B#B#B!                                                                            :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@@&########################################################################################################&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::HammerAndNailsImage()
+{
+	const char* image = R"(@@&########################################################################################################&@@
+@G:                                                                                                        :G@
+@G:                                                 .~!77!^                                                :G@
+@G:                                                 :B@PG@@YJJ~                                            :G@
+@G:                                                 :B#. !JJJJY5555J:                                      :G@
+@G:                                                 :B@B?     :7!7B@&5^                                    :G@
+@G:                                                  .7&@&Y.      .^^!P##5:                                :G@
+@G:                                                     !#@@Y.         ~B@@5:                              :G@
+@G:                                                       !B@#@@Y.         !BP^                            :G@
+@G:                                                           !B@@?          !BP~.                         :G@
+@G:                                                             J@?            !G57:                       :G@
+@G:                                                           :?B@G7:            ~55?:                     :G@
+@G:                                                       :JYYB@@@@@!              Y@#J^                   :G@
+@G:                                                   .YGPB@@@@@@@@@#5^      ^PBGGG&@@@7                   :G@
+@G:                                              J#BBB#@@@@@@@@@@@@@@&!  ^P&#5~^~~~^^G&7                   :G@
+@G:                                        7#&&#&@@@@@@@@@@@@@@@@@@@@@&&&G~.:.       P@7                   :G@
+@G:                               .::..7#@@@@@@@@@@@@@@@@@@@@&#&&&&&#&#&@#~       ..:G@7                   :G@
+@G:                           :^:!B@@@@@@@@@@@@@@@@@@@@#BBB#J          :5##P!^~^^5@@B#G~                   :G@
+@G:                       :!~!G@@@@@@@@@@@@@@@@@@@@BPGY.                   ^5BGGGGP!                       :G@
+@G:                     :7G@@@@@@@@@@@@@@@@@@BYYY5J:                                 !J:                   :G@
+@G:                     ?@@@@@@@@@@@@@@@@BJ??^            ~5?        .JY:            ~?YY5J:               :G@
+@G:                     7@@@@@@@@@@@@#?~!^                .~JPGP!     ^75GGJ.      7PPP@@@&^               :G@
+@G:                     ?@@@@@@&?:^^^:                  ^P#B#@@@J   J#BB@@@G:  !B#B@@Y^^^:!GP:             :G@
+@G:                      .Y@Y...                    :P&#&@G^.:.:Y&&#&@@#! .!B&#&@@@Y.      ::              :G@
+@G:                                             ^P@&#@#!   .?&@#&#7 .:.~B@@@&Y. :.:5@@&!                   :G@
+@G:                                            7B@&7~B@@G.:G&B7  ^^!B@&BGGB5~:^Y@@BBB#G?^.                 :G@
+@G:                                          :!~7B@#PPPP5?^  ~!7G@&GG5: :~~Y@@GGP!     YP~                 :G@
+@G:                                      :7?JB@#55J:    :Y5JG@&55Y^   !5@@G557                             :G@
+@G:                                    ^Y#@#J??^          :?Y?^      .7JJ!                                 :G@
+@G:                                    :!7!:                                                               :G@
+@G:                                                                                                        :G@
+@@&########################################################################################################&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+
+void InteractionsManager::PlanksItemImage()
+{
+	const char* image = R"(@@&########################################################################################################&@@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                           ~PGGGGG5^                                    :G@
+@G:                                                       ~G#B&@BJ?Y#@&B#5:                                :G@
+@G:                                                 :P&&&&GJ????77!77????YB&#&&Y.                          :G@
+@G:                                        .:.:Y&&&&#J777777777777777777777777?P@@#?                       :G@
+@G:                                    .^^^J#@#5!!777777777777777777777!!7?J?P@@B7                         :G@
+@G:                               ~77!!JB&#5!!!777777777777777777777!7J5YP@@@&P!                           :G@
+@G:                         ^????JPBBBBP7!!!7777777777777777777!!!!7YPGGGGGGG5??JJJJ?:                     :G@
+@G:  ^Y5555555555555555555YY#@@@#5?!!!!!77777777777777777!!!!!JGBGGGG5?!!!!!!?PGPPP&@#J:                   :G@
+@G:  ?@&5Y5555555555555YYY#@BYYY7!7777777777777777777!!!?G#B##G5Y55Y?!77777777!!!!!?Y#@#PPGGY.             :G@
+@G:  ?@G!!!!!!!!!!!!!!JB&#PJ7!!!7777777777777777777!?G&&BYJJJJ?!!!!!777777777777777!7G@PJJJJ5G#B#B?        :G@
+@G:  7&@&@&577777!JB@&GJ??777777777777777777777777?B#Y???7!777777777777777777777777!7G@@#J!!7???P@5        :G@
+@G: ..:J&@&&&&&@@@BJ777777777777777777777!77?P&&&&#Y!!!!7777777????????????????????P&&&@#J!777!!5&5:       :G@
+@G.~&@#5!!!!!?YBBJ!777777777777777777!!7JJJP#5!!!?JJJJJJJJJJJJP#&################&#5!!7!!!!!!!!!!!P@Y      :G@
+@G.~@&5Y555YYGGJ!777777777777777!!!7JYY5GBBPYJYJY#@#BBBBBBBBBBY!~!!!!!!!!!!!!!!!!!!!!!7JY555555555#@Y      :G@
+@G::J5555Y5&@BY7!7777777777777!7JPPG@@@@P55#@@@@@@@B55PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPG@@GY55555555Y!      :G@
+@G:        ^J&@#5?!77777777!!!YB@@P?????JJJ?????????JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ7.                 :G@
+@G:          :?&@J~!!777!!YB#BY!!~.                                                                        :G@
+@G:            .!G&&G?!!Y#@@5^                                                                             :G@
+@G:               !#@&&&@@Y.                                                                               :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@@&########################################################################################################&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::SoapImage()
+{
+	const char* image = R"(@@&##########################################&########&####################################################&@@
+@G:                                            .^^^^:                                                      :G@
+@G:                                            Y@@@@&J~!7777777777777!.                                    :G@
+@G:                                            5@@@@@@@PJYYYYYYYYY5555J????!.                              :G@
+@G:                                            ^J#@@@@&5JJJYYYYY5Y^   P@@@@B:                              :G@
+@G:                                              ^!~?#&?J@#?!777!7YGGB@&J~!~.                              :G@
+@G:                                                 :B#:^&G.      :~~~^:                                   :G@
+@G:                                                 :B#:^&G.                                               :G@
+@G:                                   .::::::::::::.~##~!&B^ .J@@&&&&&&&@G^                                :G@
+@G:                                  ~#@&#####################&#Y!~!!!~?&B^                                :G@
+@G:                                  ~##7~!!!!!!!!!!!!!!!!!!!!!!!!!!!!~?&B^                                :G@
+@G:                                  ~##7~!!!!!!!!~~!!!!!!~~!!!!!!!!!!~?&B^                                :G@
+@G:                                  ~##7~!!!!!!!YGGGGGGGGGGY!~!!!!!!!~?&B^                                :G@
+@G:                                  ~##7~!!!!!~7B@GYYYYYYG@@#Y!!!!!!!~?&#^                                :G@
+@G:                                  ~#@&P7!!!!~7B@Y~~!!!!7?JJ?!!!!!!7GB7:                                 :G@
+@G:                                    7&B7~!!!~7B@Y!!!!!!!!!!!!!!!!~7##~                                  :G@
+@G:                                    !&B7~!!!!7P@@&Y!!!!!!!!!!!!!!~7#&~                                  :G@
+@G:                                    !&B7~!!!!!~7P&@&Y7!!!!!!!!!!!7JGP^                                  :G@
+@G:                                    !@#!~!!!!!!!~75#@@5?!!!!!!!~7#&!                                    :G@
+@G:                                    ^J55J!!!!!!!!!~75#@@PJ!!!!!~7B&!                                    :G@
+@G:                                      7@B!~!!!!~~!!!~!JG@B7~!!!~7B&!                                    :G@
+@G:                                      7@B!!!!75##P77PBB#@B7~!!!~7B&!                                    :G@
+@G:                                      7@B!!!!!7Y#@&&@&Y??7!!!!!~7B&!                                    :G@
+@G:                                      7&G7!!!!!!777777!!!!!!!!!~7B&!                                    :G@
+@G:                                        ?@G!!!!!!!!!!!!!!!!!!!!~7B&!                                    :G@
+@G:                                        ?@G!~!!!!!!!!!!!!!!!!!!~!B&!                                    :G@
+@G:                                        ?@#J7~~!!!!!!!!!!!!~!?5Y5@@!                                    :G@
+@G:                                        ?@@@#PPPPPPPPPPPPPPPP55555J^                                    :G@
+@G:                                        ^????JJJJJJJJJJJJJJJJ^                                          :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@@&########################################################################################################&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::DuctTapeImage()
+{
+	const char* image = R"(@@&########################################################################################################&@@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                            ^!!!!!!!!!!^                                                :G@
+@G:                            .   .~77777777777????77Y&#J777777777777777~.   .                            :G@
+@G:                        ...^7?JJ??5&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&5??JJ?7^.                          :G@
+@G:                       ^777?Y#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#5J7~:.                       :G@
+@G:                       ^7!7B@@@@@@@@@@@@@@@@@@PJJJJJJJJP&@@@@@@@@@@@@@@@@@@BY!!7^                       :G@
+@G:                       ^7!!J55YYP&@@@@@@@@@@@@GJJJJJJJJP&@@@@@@@@@@@@@@@&P?~?P57:                       :G@
+@G:                       :75BBGGGGGYJJJJJJJJJJJJY5&@@@@@@@@@@@@@@GJJJJJJJJ?~?G@@G7:                       :G@
+@G:                       :7G@@@@@@@#B##########BJ!7??????????????!!5########&@@@P7:                       :G@
+@G:                       :7P@@@@@@@@@@@@@@@@@@@@@&&&&&&&&&&&&&&&&&&@@@@@@@@@@@@@P7:                       :G@
+@G:                       :7G@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@P7:                       :G@
+@G:                       :7P###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@G7:                       :G@
+@G:                       :~~^~7P#BBBBBBB#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@BY~.                       :G@
+@G:                           :^^::^^^^::7PGGGGGGGGPG&@@@@@@@@#PPGGGGGGGGGGGGGGJ^.                         :G@
+@G:                                       :::::::.:~7YPP5555PPJ!^::::::::::::::.                           :G@
+@G:                                                .:..........:.                                          :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@@&########################################################################################################&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::MetalPanImage()
+{
+	const char* image = R"(@@&########################################################################################################&@@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                 .7JJ???????JJ7.                                                                        :G@
+@G:              ?555GBBBBBBBBBBBG5Y5557                                                                   :G@
+@G:           .?B@@B5J?JJJJJJJJJ?J5GPB@@GPG7                                                               :G@
+@G:           .G@GYJJJJJJJJJJJJJJJJJJJY55B@5                                                               :G@
+@G:         .5&PJJJJJJYYYYYYYYYYYYJJJJJJJJYP#@#7                                                           :G@
+@G:         .P@P?JJJYY5YYYYYYYYYYYYY5YJJJJJJJB&J.                                                          :G@
+@G:        .~P#5JJJY5YYYYYYYYYYYYYYYY55YJJJJJ?J#@Y:                                                        :G@
+@G:        5@G?JJJJY5YYYYYYYYYYYYYYYYYY55YJJJJJP#@@!                                                       :G@
+@G:        5@GJJJJJY5YYYYYYYYYYYYYYYYYY55YYJJJJ?J#&!                                                       :G@
+@G:        5@GJJJJJY5YYYYYYYYYYYYYYYYYYYY55YJJJJJ#&~                                                       :G@
+@G:        5@G?JJJJJYY5YYYYYYYYYYYYYYYYYY55YJJJJJ#@#Y^                                                     :G@
+@G:        .~P#5JJJJJY5YYYYYYYYYYYYYYYYYY55YJJJJJY5@&~                                                     :G@
+@G:         .P@PJJJJJY5YYYYYYYYYYYYYYYY55YJJJJJJJ?Y&#~                                                     :G@
+@G:         .P@GJJJJJJYYY555YYYYYYYYYY555YJJJJJJJB@@#!...                                                  :G@
+@G:         .J#@&5?JJJJJJYYYY55555555YYYYYJJJJJ?JB@@@@@@B!.                                                :G@
+@G:           .G@B5JJJJJJJJJYYYYYYYYYYJJJJJJJJJYP#@@@@@@@@B7:                                              :G@
+@G:           .7P@@B5J?JJJJJJJJJJJJJJJJJJJJ?JYG&@@@@@@@@@@@@B???^                                          :G@
+@G:              ~5@@&PJ?JJJJJJJJJJJJJJ??5B##@@G?7J#@@@@@@@@@@@@BYYJ^                                      :G@
+@G:                ~!!J#&##############&&P7!!!!:   :?#@@@@@@@@@@@@@@#5:                                    :G@
+@G:                   .^~^^^^^^^^^^^^^^~~:           .7#@@@@@@@@@@@@@@&P^                                  :G@
+@G:                                                     !#@@@@@@@@@@@@@@@P^                                :G@
+@G:                                                       !B@#&@@@@@@@@@@@@@@P.                            :G@
+@G:                                                           !B@@@@@@@@@@@@@P.                            :G@
+@G:                                                             !P&@@@@@@@GPG?.                            :G@
+@G:                                                               !Y5YYY5?.                                :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@@&########################################################################################################&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
