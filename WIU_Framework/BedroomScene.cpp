@@ -58,8 +58,8 @@ void BedroomScene::Start()
 	new Furniture(Furniture::BedroomCabinet1, Vector2(3, 1));
 	new Furniture(Furniture::Bedroomtable, Vector2(5, 1));
 	new Furniture(Furniture::Bedroomtable, Vector2(6, 1), true);
-	new Furniture(Furniture::BedroomCabinet2, Vector2(10, 1));
-	new Furniture(Furniture::BedroomCabinet2, Vector2(10, 2), true);
+	new Furniture(Furniture::Closet, Vector2(10, 1));
+	new Furniture(Furniture::Closet, Vector2(10, 2), true);
 	new Furniture(Furniture::LivingRoomDoor, Vector2(5, 5));
 
 	//if (draw.IsRobberDead == false) {
