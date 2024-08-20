@@ -101,5 +101,7 @@ void InventoryManager::UseItem(std::string useItem)
 	std::string * item = getItemInInventory(useItem);
 	Items = ArrayRemove(Items, item, inventoryCurrentCapacity);
 
+	UI gameUI(Vector2(150, 12), 0, 45);
+	gameUI.CreateBox(Vector2(-5, 0), "Inventory:", 10);
 }
 

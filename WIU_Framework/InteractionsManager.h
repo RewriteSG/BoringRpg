@@ -14,6 +14,8 @@ public:
 	bool isPlayerHidden;
 	bool isSoapSetup;
 	bool isBarricadeSetup;
+	bool isPlayerSleeping;
+	bool isStoreRoomUnlocked;
 
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;
@@ -22,7 +24,7 @@ public:
 	bool hasHammer;
 	bool hasNails;
 	bool hasPlanks;
-	bool hasShampoo;
+	bool hasSoap;
 	bool hasKnife;
 	bool hasDuctTape;
 	bool hasMetalPan;

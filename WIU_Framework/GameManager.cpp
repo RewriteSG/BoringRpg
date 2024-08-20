@@ -51,9 +51,10 @@ void GameManager::Update()
 	if (!LoopStarted) {
 		ClearDialogue();
 		InteractionsMgr.Start(LoopStarted);
-		//inventory.PickupItem("planks");
-		//inventory.PickupItem("hammer");
-		//inventory.PickupItem("nails");
+		/*inventory.PickupItem("planks");
+		inventory.PickupItem("hammer");
+		inventory.PickupItem("nails");
+		inventory.PickupItem("soap");*/
 		LoopStarted = true;
 	}
 	inventory.DisplayItems();
