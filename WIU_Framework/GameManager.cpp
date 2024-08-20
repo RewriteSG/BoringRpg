@@ -19,17 +19,16 @@ using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
 
-GameManager::GameManager() : gameUI(nullptr)
+GameManager::GameManager() : gameUI(nullptr), TimeSys()
 {
 	whatScenePlayerIn = "";
 	GM_Instance = this;
-	//Weapon = nullptr;
-	//robber = nullptr;
 	GameEnded = false;
 	GameWon = true;
 	player = nullptr;
-	//robberDown = false;
 	LoopStarted = false;
+	TimeSys.TimeLoop = 1;
+	firstLoop = TimeSys.TimeLoop == 0;
 }
 
 GameManager* GameManager::getGM()
@@ -52,10 +51,6 @@ void GameManager::Update()
 	if (!LoopStarted) {
 		ClearDialogue();
 		InteractionsMgr.Start(LoopStarted);
-		/*inventory.PickupItem("planks");
-		inventory.PickupItem("hammer");
-		inventory.PickupItem("nails");
-		inventory.PickupItem("soap");*/
 		LoopStarted = true;
 	}
 	inventory.DisplayItems();
@@ -88,7 +83,7 @@ void GameManager::PromptInput()
 
 void GameManager::HandleInput(void)
 {
-	if (player == nullptr)
+	if (player == nullptr || TimeSys.TimeTaken >= TimeSys.RobberTime)
 		return;
 	Furniture* furnituresLeft, * furnituresRight, * furnituresUp, * furnituresDown;
 	furnituresLeft = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() - 1, player->GetPosition()->GetY())));
