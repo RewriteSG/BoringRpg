@@ -43,7 +43,7 @@ void GameManager::Start()
 	GM_Instance = this;
 	GameEnded = false;
 	GameWon = true;
-	gameUI = new UI(Vector2(130, 12), 0, 169);
+	gameUI = new UI(Vector2(130, 12), 0, 150);
 	InteractionsMgr.Start();
 }
 void GameManager::Update()
@@ -91,6 +91,32 @@ void GameManager::HandleInput(void)
 	furnituresRight = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() + 1, player->GetPosition()->GetY())));
 	furnituresUp = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() - 1)));
 	furnituresDown = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() + 1)));
+	
+	Furniture*** lists = new Furniture**[4];
+	lists[0] = &furnituresLeft; 
+	lists[1] = &furnituresRight; 
+	lists[2] = &furnituresUp; 
+	lists[3] = &furnituresDown; 
+	int loopCount;
+	for (int i = 0; i < 4; i++)
+	{
+		loopCount = 0;
+
+		for (int x = i+1; loopCount < 3; loopCount++)
+		{
+			if (x >= 4)
+				x = 0;
+			if (*lists[i] && *lists[x]) {
+				if ((*lists[i])->GetName() == (*lists[x])->GetName()) {
+					*lists[x] = nullptr;
+				}
+			}
+			x++;
+		}
+
+
+	}
+	delete[] lists;
 	Furniture::TypeOfFurniture typeofFurniture;
 	std::string ToPrint = "blank";
 	if (furnituresLeft || furnituresRight || furnituresUp || furnituresDown)
@@ -98,7 +124,6 @@ void GameManager::HandleInput(void)
 	if (furnituresLeft)
 	{
 		ToPrint += furnituresLeft->GetName();
-
 	}
 	if (furnituresRight)
 	{
@@ -130,7 +155,7 @@ void GameManager::HandleInput(void)
 	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
 	ui.CreateText(ToPrint, Vector2(3, 2));
 
-	ui.CreateText("[ (W)(A)(S)(D): Move                                   ]", Vector2(10, 0));
+	ui.CreateText("[ (W)(A)(S)(D): Move                         ]", Vector2(10, 0));
 	char input = _getch();
 
 
@@ -162,7 +187,7 @@ void GameManager::HandleInput(void)
 		while (true) 
 		{
 
-			ui.CreateText("[ Options: Enter, Exit, Interact, Move, Use, Help  ]", Vector2(10, 0));
+			ui.CreateText("[ Options: Enter, Exit, Interact, Move, Use  ]", Vector2(10, 0));
 			//ClearDialogue();
 			if(EmptyDialogue)
 				ui.CreateText(ToPrint, Vector2(3, 2));
@@ -195,7 +220,8 @@ void GameManager::HandleInput(void)
 			if ((KeywordFromInput == "interact" || KeywordFromInput == "i") && ItemFromInput != "")
 			{
 				bool checkValidInput = false; 
-				if (furnituresUp) {
+				if (furnituresUp) 
+				{
 
 					std::string strName = furnituresUp->GetName();
 					strName = Scene::tolowerString(strName);
@@ -205,7 +231,8 @@ void GameManager::HandleInput(void)
 					if (!checkValidInput)
 						checkValidInput = (ItemFromInput == strName);
 				}
-				if (furnituresLeft) {
+				if (furnituresLeft) 
+				{
 
 					std::string strName = furnituresLeft->GetName();
 					strName = Scene::tolowerString(strName);
@@ -215,7 +242,8 @@ void GameManager::HandleInput(void)
 					if (!checkValidInput)
 						checkValidInput = (ItemFromInput == strName);
 				}
-				if (furnituresDown) {
+				if (furnituresDown)
+				{
 
 					std::string strName = furnituresDown->GetName();
 					strName = Scene::tolowerString(strName);
@@ -225,7 +253,8 @@ void GameManager::HandleInput(void)
 					if (!checkValidInput)
 						checkValidInput = (ItemFromInput == strName);
 				}
-				if (furnituresRight) {
+				if (furnituresRight) 
+				{
 
 					std::string strName = furnituresRight->GetName();
 					strName = Scene::tolowerString(strName);
@@ -237,11 +266,13 @@ void GameManager::HandleInput(void)
 				}
 				if (!checkValidInput)
 				{
-					ui.PrintDialogue( Vector2(3, 3), "Unknown Object, Enter Valid Object name. ");
+					ui.PrintDialogue(Vector2(3, 3), "Unknown Object, Enter Valid Object name. ");
 					EmptyDialogue = false;
 				}
+				else
+					break;
 			}else
-		    if (stringInput == "interact") {
+		    if (stringInput == "interact" || stringInput == "i") {
 				//+ ToPrint
 				ClearDialogue();
 				ui.PrintDialogue(Vector2(3,2), "Interact with what? Enter 'interact <object name>'");
@@ -292,7 +323,7 @@ void GameManager::HandleInput(void)
 						break;
 					}
 				}
-			
+
 			}
 			else if (stringInput == "exit") {
 
@@ -437,12 +468,38 @@ void GameManager::DisplayFurnituresAroundPlayer(Vector2 printAtPos)
 {
 
 	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171); 
+
 	Furniture* furnituresLeft, * furnituresRight, * furnituresUp, * furnituresDown;
 	furnituresLeft = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() - 1, player->GetPosition()->GetY())));
 	furnituresRight = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() + 1, player->GetPosition()->GetY())));
 	furnituresUp = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() - 1)));
 	furnituresDown = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() + 1)));
-	ui.CreateText("Objects around you.", (Vector2(printAtPos.GetX(), printAtPos.GetY())));
+
+	Furniture*** lists = new Furniture * *[4];
+	lists[0] = &furnituresLeft;
+	lists[1] = &furnituresRight;
+	lists[2] = &furnituresUp;
+	lists[3] = &furnituresDown;
+	int loopCount;
+	for (int i = 0; i < 4; i++)
+	{
+		loopCount = 0;
+
+		for (int x = i + 1; loopCount < 3; loopCount++)
+		{
+			if (x >= 4)
+				x = 0;
+			if (*lists[i] && *lists[x]) {
+				if ((*lists[i])->GetName() == (*lists[x])->GetName()) {
+					*lists[x] = nullptr;
+				}
+			}
+			x++;
+		}
+
+
+	}
+	delete[] lists; ui.CreateText("Objects around you.", (Vector2(printAtPos.GetX(), printAtPos.GetY())));
 	int count = 0;
 	if (furnituresLeft) {
 		count++; 
