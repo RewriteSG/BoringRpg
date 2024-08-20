@@ -236,13 +236,13 @@ EndingManager::EndingManager(void)
 
 void EndingManager::Start(void)
 {
-	//GameManager::getGM()->InteractionsMgr.hasKnife = true;
-	//GameManager::getGM()->InteractionsMgr.hasMetalPan = true;
-	//GameManager::getGM()->InteractionsMgr.isPlayerHidden = true;
-	//GameManager::getGM()->InteractionsMgr.hasCalledTheCops = true;
-	//GameManager::getGM()->InteractionsMgr.isSoapSetup = true;
-	//GameManager::getGM()->InteractionsMgr.isBarricadeSetup = true;
-	//GameManager::getGM()->InteractionsMgr.hasDuctTape = true;
+	GameManager::getGM()->InteractionsMgr.hasKnife = true;
+	GameManager::getGM()->InteractionsMgr.hasMetalPan = true;
+	GameManager::getGM()->InteractionsMgr.isPlayerHidden = true;
+	GameManager::getGM()->InteractionsMgr.hasCalledTheCops = true;
+	GameManager::getGM()->InteractionsMgr.isSoapSetup = true;
+	GameManager::getGM()->InteractionsMgr.isBarricadeSetup = true;
+	GameManager::getGM()->InteractionsMgr.hasDuctTape = true;
 
 
 	ui = nullptr;
@@ -268,7 +268,7 @@ void EndingManager::Update(void)
 	Vector2 uiPos = Vector2(Application::numberOfColumns / 2 - 100, Application::numberOfRows / 2);
 	ui = new UI(uiPos, 0, 150);
 
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 5 && !GameManager::getGM()->InteractionsMgr.isPlayerSucide; ++i)
 	{
 		killerCurrentScene = SceneManager::GetSceneName(i);
 		isPlayerWithKiller = GameManager::getGM()->whatScenePlayerIn == killerCurrentScene;
@@ -318,26 +318,36 @@ void EndingManager::Update(void)
 			break;
 	}
 
-	if ((isPlayerFound && !GameManager::getGM()->InteractionsMgr.hasCalledTheCops)
-		|| (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken < GameManager::getGM()->TimeSys.TimeLimitForCops))
+	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops && !hasWeapon)
 	{
-		dialogues.push_back("[BREAKING NEWS]: A 25-years-old man was tragically found dead in the " + killerCurrentScene + " at BLK 243 Kranji Street yesterday around 12:" + to_string(*time / 60) + " AM, prompting police to launch a homicide investigation. If you find any suspicious, please contact us at 999. ");
-		endingNum = 1;
-	}
-	else if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops)
-	{
-		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-years-old man successfully defended himself by attempting with well-preapred measures until police arrived. ");
+		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-year-old man successfully defended himself by attempting with well-preapred measures until police arrived. ");
 		endingNum = 2;
 	}
 	else if (!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasMetalPan && GameManager::getGM()->InteractionsMgr.hasDuctTape)
 	{
-		dialogues.push_back("[BREAKING NEWS]: The serial killer was captured by a 25-years-old man. The police immediately arrived to the crime scene to arrest that serial killer. ");
+		dialogues.push_back("[BREAKING NEWS]: The serial killer was captured by a 25-year-old man. The police immediately arrived to the crime scene to arrest that serial killer. ");
 		endingNum = 3;
 	}
 	else if (!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasKnife)
 	{
-		dialogues.push_back("[BREAKING NEWS]: The serial killer had been killed at BLK 243 Kranji Street in the " + killerCurrentScene + ". Suspect claimed that it was just self defence, but police still caught him for further investigation. ");
+		dialogues.push_back("[BREAKING NEWS]: The serial killer had been killed at BLK 243 Chicken Street in the " + killerCurrentScene + ". Suspect claimed that it was just self defence, but police still caught him for further investigation. ");
 		endingNum = 4;
+	}
+	else if (GameManager::getGM()->InteractionsMgr.isPlayerSucide)
+	{
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You raised your blade, and stabbed yourself without any hesitation. ");
+		dialogues.push_back("[BREAKING NEWS]: A 25-year-old man was found dead in " + GameManager::getGM()->whatScenePlayerIn + " at at BLK 243 Chicken Street. It was suspected to be a suicide case, but police was still on working for further investigation. ");
+		endingNum = 5;
+	}
+	else if (GameManager::getGM()->InteractionsMgr.isPlayerSleeping)
+	{
+		dialogues.push_back("[BREAKING NEWS]: A 25-year-old man was found dead in " + GameManager::getGM()->whatScenePlayerIn + " at at BLK 243 Chicken Street. The dead body was discovered on his bed with multiple stab wounds on his back. ");
+		endingNum = 6;
+	}
+	else
+	{
+		dialogues.push_back("[BREAKING NEWS]: A 25-year-old man was tragically found dead in the " + killerCurrentScene + " at BLK 243 Chicken Street yesterday around 12:" + to_string(*time / 60) + " AM, prompting police to launch a homicide investigation. If you find any suspicious, please contact us at 999. ");
+		endingNum = 1;
 	}
 
 	int index = dialogueIndex;
@@ -366,6 +376,7 @@ void EndingManager::Exit()
 {
 	dialogues.clear();
 	GameManager::getGM()->TimeSys.CountLoop(0);
+	SceneManager::prevScene = "";
 	SceneManager::LoadScene("LivingRoomScene");
 }
 
