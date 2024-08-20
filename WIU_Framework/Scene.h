@@ -10,6 +10,7 @@ protected:
 	std::string name;
 	World world;
 	ObjectManager objectManager;
+	bool drawnASCII;
 public:
 	static GameManager gm; 
 	bool ContinuePgrm;
@@ -43,7 +44,9 @@ public:
 	static void ChangeColor(int);
 	static void LowerString(string& _string);
 	static std::string tolowerString(std::string& _string);
-	static void DrawASCII_Art(string ascii_art, int x, int y, int color);
+	static void DrawASCII_Art(string ascii_art, int x, int y, int color);  
+
+	static void ClearASCII_Art(int x, int y, int color); 
 	std::string getName(void) const;
 };
 

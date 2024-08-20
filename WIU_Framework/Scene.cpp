@@ -13,6 +13,7 @@ Scene::Scene() : world(Vector2(33, 2), 16, 10), objectManager()
 {
 	ContinuePgrm = true;
 	name = " ";
+	drawnASCII = false;
 }
 
 ObjectManager* Scene::GetObjectManager()
@@ -57,6 +58,10 @@ void Scene::UpdateGameObjectsPos()
 
 void Scene::Render()
 {
+	if (drawnASCII) {
+		drawnASCII = false;
+		ClearASCII_Art(0, 0, 15);
+	}
 	world.Update(objectManager.GetObjects(), objectManager.GetObjectsCount()); // Always call this method before render  
 	world.Render(objectManager.GetObjects(), objectManager.GetObjectsCount());
 
@@ -195,6 +200,7 @@ std::string Scene::tolowerString(std::string& _string)
 void Scene::DrawASCII_Art(string ascii_art, int x, int y, int color)
 {
 	int indexY = 0;
+	SceneManager::currentScene->drawnASCII = true;
 	for (int i = 0; i < ascii_art.length(); i++)
 	{
 
@@ -221,6 +227,68 @@ void Scene::DrawASCII_Art(string ascii_art, int x, int y, int color)
 	}
 
 }
+void Scene::ClearASCII_Art(int x, int y, int color)
+{
+	const char* image = R"(                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+                                                                                                              
+)";
+	string ascii_art = image;
+	int indexY = 0;
+	for (int i = 0; i < ascii_art.length(); i++)
+	{
 
+		GotoXY(x, y + indexY, SceneManager::currentScene->world.GetTopLeft());
+		for (int x = i; x < ascii_art.length(); x++)
+		{
+			char test = ascii_art[x];
+			if (ascii_art[x] == '\n')
+			{
+				indexY++;
+				i = x;
+				break;
+			}
+			else
+			{
+				cout << ascii_art[x];
+			}
+			if ((x + 1 == ascii_art.length()))
+			{
+				i = ascii_art.length();
+			}
+
+		}
+	}
+
+}
 std::string Scene::getName(void) const { return name; }
 

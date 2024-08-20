@@ -74,5 +74,33 @@ public:
 
 	// --------------- Interactions Images ---------------
 	void MainDoorImage();
+	void SofaImage();
+	void TableImage();
+	void SinkImage();
+	void PlanksImage();
+	void PlanksImage(bool);
+	void ToolboxImage();
+	void ToolboxImage(bool);
+	void StoveImage();
+	void StoveImage(bool);
+	void KitchenCabinetImage();
+	void KitchenCabinetImage(bool);
+	void TrashCanImage();
+	void BedroomTableImage();
+	void LivingRoomCabinetImage();
+	void LivingRoomCabinetImage(bool);
+	void BedRoomDrawerImage();
+	void BedRoomDrawerImage(bool);
+	void BedImage();
+	void TelevisionImage();
+	void ToiletCabinetImage();
+	void ToiletCabinetImage(bool);
+	void BedroomDoorImage();
+	void ClosetDoorImage();
+	void KitchenDoorImage();
+	void ToiletDoorImage();
+	void ToiletBowlImage();
+	void LivingRoomDoorImage();
+	void StoreRoomDoorImage();
 };
 
