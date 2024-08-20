@@ -57,7 +57,7 @@ void GameManager::Update()
 		LoopStarted = true;
 	}
 	inventory.DisplayItems();
-	//TimeSys.TimeTaken = TimeSys.RobberTime;
+
 	if (TimeSys.TimeTaken >= TimeSys.RobberTime)
 	{
 		whatScenePlayerIn = SceneManager::currentScene->getName();
@@ -97,6 +97,7 @@ void GameManager::HandleInput(void)
 	if (furnituresLeft)
 	{
 		ToPrint += furnituresLeft->GetName();
+
 	}
 	if (furnituresRight)
 	{
@@ -122,13 +123,13 @@ void GameManager::HandleInput(void)
 	if (ToPrint != "blank")
 		ToPrint += " next to you.";
 	else
-		ToPrint = "There is nothing around the player.";
+		ToPrint = "There is nothing around the you.";
 
 	ClearDialogue();
-	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 169);
+	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
 	ui.CreateText(ToPrint, Vector2(3, 2));
 
-	ui.CreateText("[ (W)(A)(S)(D): Move                         ]", Vector2(10, 0));
+	ui.CreateText("[ (W)(A)(S)(D): Move                                   ]", Vector2(10, 0));
 	char input = _getch();
 
 
@@ -160,7 +161,7 @@ void GameManager::HandleInput(void)
 		while (true) 
 		{
 
-			ui.CreateText("[ Options: Enter, Exit, Interact, Move, Use  ]", Vector2(10, 0));
+			ui.CreateText("[ Options: Enter, Exit, Interact, Move, Use, Help  ]", Vector2(10, 0));
 			//ClearDialogue();
 			if(EmptyDialogue)
 				ui.CreateText(ToPrint, Vector2(3, 2));
@@ -243,7 +244,7 @@ void GameManager::HandleInput(void)
 				//+ ToPrint
 				ClearDialogue();
 				ui.PrintDialogue(Vector2(3,2), "Interact with what? Enter 'interact <object name>'");
-				ui.CreateText( "Interact with what? Enter 'interact <object name>'", Vector2(3, 2));
+				ui.CreateText( "Interact with what? Enter 'interact <object name>'", Vector2(4, 2));
 				EmptyDialogue = false;
 				DisplayFurnituresAroundPlayer(Vector2(3, 3));
 			}
@@ -290,7 +291,7 @@ void GameManager::HandleInput(void)
 						break;
 					}
 				}
-
+			
 			}
 			else if (stringInput == "exit") {
 
@@ -337,6 +338,18 @@ void GameManager::HandleInput(void)
 			else if (stringInput == "show endings") {
 				//Endings
 				SceneManager::LoadScene("EndingScene");
+			}
+			else if (stringInput == "help") {
+
+				ClearDialogue();
+				
+				ui.CreateText("Enter / exit: transition through rooms by doors", Vector2(4, 2));
+				ui.CreateText("Interact: To trigger item interaction, use to figure out what object does.", Vector2(4, 3));
+				ui.CreateText("Move: Allow your character to move after clickling '/'.", Vector2(4, 4));
+				ui.CreateText("Use: use any item ", Vector2(4, 5));
+				ui.CreateText("Press 'Enter' again to move. ", Vector2(4, 6));
+
+				EmptyDialogue = false;
 			}
 			else if (stringInput == "move")
 			{
@@ -470,9 +483,9 @@ void GameManager::CreatePlayer(Vector2 toPos)
 void GameManager::ClearDialogue()
 {
 	EmptyDialogue = true;
-	UI ui(Vector2(Application::numberOfColumns / 2 - 167 / 2, 35), 0, 165);
+	UI ui(Vector2(Application::numberOfColumns / 2 - 167 / 2, 35), 0, 169);
 	std::string clearDialogue;
-	for (int i = 0; i < 165; i++)
+	for (int i = 0; i < 166; i++)
 	{
 		clearDialogue += ' ';
 	}
