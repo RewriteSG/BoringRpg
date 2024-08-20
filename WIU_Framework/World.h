@@ -28,5 +28,6 @@ public:
 	void Update(GameObject** objects, int objectsCount);
 	void Render(GameObject** objects, int objectsCount) const;
 	void Render();
+	Vector2 GetTopLeft();
 };
 

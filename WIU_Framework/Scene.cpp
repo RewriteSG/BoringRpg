@@ -192,5 +192,35 @@ std::string Scene::tolowerString(std::string& _string)
 	return text;
 }
 
+void Scene::DrawASCII_Art(string ascii_art, int x, int y, int color)
+{
+	int indexY = 0;
+	for (int i = 0; i < ascii_art.length(); i++)
+	{
+
+		GotoXY(x, y+indexY, SceneManager::currentScene->world.GetTopLeft());
+		for (int x = i; x < ascii_art.length(); x++)
+		{
+			char test = ascii_art[x];
+			if (ascii_art[x] == '\n') 
+			{
+				indexY++; 
+				i = x;
+				break;
+			}
+			else
+			{
+				cout<<ascii_art[x]; 
+			}
+			if ((x + 1 == ascii_art.length()))
+			{
+				i = ascii_art.length();
+			}
+
+		}
+	}
+
+}
+
 std::string Scene::getName(void) const { return name; }
 

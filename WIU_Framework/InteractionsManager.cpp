@@ -664,6 +664,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* player)
 {
 	Start();
+	MainDoorImage();
 	ui->CreateOptionUI(Vector2(POINTX, 13), false);
 	switch (timeSystem->TimeLoop)
 	{
@@ -1115,6 +1116,43 @@ void InteractionsManager::Start(bool isGameStarted)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");
 		break;
 	}
+}
+
+void InteractionsManager::MainDoorImage()
+{
+	const char* image = R"(@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@                                                                                                          @@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+
 }
 
 //robber interaction

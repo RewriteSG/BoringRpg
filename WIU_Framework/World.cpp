@@ -179,3 +179,8 @@ void World::Render()
 	}
 	Scene::ChangeColor(Scene::BG_COLOR);
 }
+
+Vector2 World::GetTopLeft()
+{
+	return topLeftPos;
+}

@@ -70,5 +70,9 @@ public:
 	void Start();
 	void Start(bool isGameStarted);
 	
+
+
+	// --------------- Interactions Images ---------------
+	void MainDoorImage();
 };
 

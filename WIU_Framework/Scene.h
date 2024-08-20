@@ -43,7 +43,7 @@ public:
 	static void ChangeColor(int);
 	static void LowerString(string& _string);
 	static std::string tolowerString(std::string& _string);
-
+	static void DrawASCII_Art(string ascii_art, int x, int y, int color);
 	std::string getName(void) const;
 };
 
