@@ -45,6 +45,7 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 	hasCabinetKeyCollected = false;
 	hasCalledTheCops = false;
 	hasClosetKeyCollected = false;
+	isPlayerSucide = false;
 	hasDuctTape = false;
 	hasHammer = false;
 	hasKnife = false;
@@ -778,7 +779,7 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 
 bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 {
-	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
+	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
 
 	std::string keyword;
 	std::string useItem1; 
@@ -791,7 +792,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 	if (!GameManager::getGM()->inventory.InventoryHasItems(useItem1))
 	{
 		GameManager::getGM()->ClearDialogue();
-		ui.PrintDialogue(Vector2(2,2), "No " + useItem1 + " in Inventory");
+		ui.PrintDialogue(Vector2(3,2), "No " + useItem1 + " in Inventory");
 		return false;
 	}
 	if ((keyword != "with" && keyword != "and") && keyword.length() > 0)
@@ -872,7 +873,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 	furnituresRight = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() + 1, player->GetPosition()->GetY())));
 	furnituresUp = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() - 1)));
 	furnituresDown = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() + 1)));
-	
+	GameManager::getGM()->ClearDialogue();
 	ui.CreateText("Use item(s) on what? Enter 'on <Object Name>'", Vector2(3, 2)); 
 	GameManager::getGM()->DisplayFurnituresAroundPlayer(Vector2(2, 3)); //print at (2,3);
 	std::string input = "";
@@ -895,7 +896,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 				ui.PrintDialogue(Vector2(3, 2), "Using Nails, Planks and Hammer on the main door.");
 				ui.PrintDialogue(Vector2(3,2), "You: I could barricade the door, this can buy some time.");
 				timeSystem->increaseTimeTaken(50);
-				isDoorBarricaded = true; 
+				isBarricadeSetup = true;
 				ui.PrintDialogue(Vector2(3,2), "You: There, all good.");
 				ui.PrintDialogue(Vector2(3,2), "Successfully barricaded the door!");
 				GameManager::getGM()->inventory.UseItem(useItem1);
@@ -932,7 +933,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 	}
 	if (furnituresLeft)
 	{
-		if (furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor && (input == "on door" || input == "on storeroom door" || input == "on storeroom"))
+		if (furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor && (input == "on door" || input == "on storeroom door" || input == "on store room door") || input == "on storeroom")
 		{
 			bool usingStoreroomKey = useItem1 == "storeroomkey";
 
@@ -1042,6 +1043,7 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 
 void InteractionsManager::FridgeInteracted(GameObject* fridge, GameObject* player)
 {
+	
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing in the fridge.");
 }
 

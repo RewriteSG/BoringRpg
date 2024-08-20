@@ -42,6 +42,7 @@ void StoreRoomScene::Start()
 	new Furniture(Furniture::EmptyBoxType2, Vector2(4, 4), string("Box 5")); 
 	new Furniture(Furniture::EmptyBoxType2, Vector2(4, 5), string("Box 6")); 
 	new Furniture(Furniture::Planks, Vector2(6, 3));
+	new Furniture(Furniture::Planks, Vector2(7, 3), true);
 	
 
 

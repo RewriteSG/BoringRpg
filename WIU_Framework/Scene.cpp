@@ -32,7 +32,7 @@ void Scene::Start()
 	UI gameUI(Vector2(150, 12), 0, 45);
 	gameUI.CreateBox(Vector2(-5, -7), "Objective:", 6);
 	gameUI.CreateBox(Vector2(-5, 0), "Inventory:", 10);
-	gameUI.CreateText("Axiety Meter: ", Vector2(20, -9));
+	//gameUI.CreateText("Axiety Meter: ", Vector2(20, -9));
 	gameUI.CreateText("YOU AT: " + getName(), Vector2(-5, -9));
 
 	UI gameUI2(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
