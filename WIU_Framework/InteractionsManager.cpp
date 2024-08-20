@@ -1042,6 +1042,7 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 
 void InteractionsManager::FridgeInteracted(GameObject* fridge, GameObject* player)
 {
+	
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing in the fridge.");
 }
 
