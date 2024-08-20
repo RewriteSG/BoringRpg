@@ -60,7 +60,7 @@ void GameManager::Update()
 	}
 	inventory.DisplayItems();
 
-	if (TimeSys.TimeTaken >= TimeSys.RobberTime or InteractionsMgr.isPlayerSucide or InteractionsMgr.isPlayerHidden)
+	if (TimeSys.TimeTaken >= TimeSys.RobberTime or InteractionsMgr.isPlayerSucide or InteractionsMgr.isPlayerHidden or InteractionsMgr.isPlayerSleeping)
 	{
 		if (firstLoop)
 			return;

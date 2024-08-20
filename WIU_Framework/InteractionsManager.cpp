@@ -608,6 +608,7 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You went to sleep.");
 		*hasSlept = true;
 		isPlayerSleeping = true;
+		GameManager::getGM()->firstLoop = false;
 		// play first loop ending
 		break;
 	default:
