@@ -131,6 +131,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 		case 0:
 			//trigger hiding in bathroom ending
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid in the shower."); //remove this later
+			isPlayerHidden = true;
 			break;
 		case 1:
 			ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
@@ -781,7 +782,7 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "I should really go to bed now.");
 		break;
 
-	case 1:
+	default:
 		timeSystem->increaseTimeTaken(2);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
 			GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
@@ -1100,12 +1101,12 @@ void InteractionsManager::Start(bool isGameStarted)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV, and it is showing the same news.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you are stuck in a time loop of getting killed over and over.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: He comes at 12:12, I still have time.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: He comes at 00:05, I still have time.");
 		break;
 	default:
-		/*ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Im back again...");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Im back again...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Whatever I did last time didn't work.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");*/
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");
 		break;
 	}
 }

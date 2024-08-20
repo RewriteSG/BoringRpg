@@ -7,7 +7,7 @@ void EndingManager::PlayLivingRoom(void)
 {
 	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was trying to open the MAIN DOOR. ");
 	if (GameManager::getGM()->InteractionsMgr.isBarricadeSetup) {
-		*time += 60;
+		*time += 120;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As the door barricaded. This would take some time for the killer to break into the house. ");
 	}
 	else 
@@ -26,7 +26,7 @@ void EndingManager::PlayLivingRoom(void)
 
 	if (GameManager::getGM()->InteractionsMgr.isSoapSetup)
 	{
-		*time += 90;
+		*time += 60;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The serial killer had stepped on the soap and fell down. This would take some time for the killer to recover. ");
 	}
 }
@@ -236,15 +236,6 @@ EndingManager::EndingManager(void)
 
 void EndingManager::Start(void)
 {
-	GameManager::getGM()->InteractionsMgr.hasKnife = true;
-	GameManager::getGM()->InteractionsMgr.hasMetalPan = true;
-	GameManager::getGM()->InteractionsMgr.isPlayerHidden = true;
-	GameManager::getGM()->InteractionsMgr.hasCalledTheCops = true;
-	GameManager::getGM()->InteractionsMgr.isSoapSetup = true;
-	GameManager::getGM()->InteractionsMgr.isBarricadeSetup = true;
-	GameManager::getGM()->InteractionsMgr.hasDuctTape = true;
-
-
 	ui = nullptr;
 	killerCurrentScene = "";
 	isPlayerFound = false;
@@ -270,6 +261,7 @@ void EndingManager::Update(void)
 
 	for (int i = 0; i < 5 && !GameManager::getGM()->InteractionsMgr.isPlayerSucide; ++i)
 	{
+
 		killerCurrentScene = SceneManager::GetSceneName(i);
 		isPlayerWithKiller = GameManager::getGM()->whatScenePlayerIn == killerCurrentScene;
 		isPoliceCame = GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops;
