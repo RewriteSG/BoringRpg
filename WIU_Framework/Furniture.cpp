@@ -52,7 +52,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		SetSprite(new KitchenTableSprite());
 		break;
 	case Furniture::Planks:
-		name = "Planks";
+		name = "Shelf";
 		SetSprite(new PlanksSprite());
 		break;
 	case Furniture::EmptyBoxType1:
@@ -95,7 +95,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		SetSprite(new BedroomCabinetSprite());
 		break;
 	case Furniture::BedroomCabinet2:
-		name = "Cabinet";
+		name = "Closet";
 		SetSprite(new BedroomCabinet2Sprite());
 		break;
 	case Furniture::LivingRoomCabinet:
@@ -292,7 +292,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos, bool isInvisible)
 		//SetSprite(new KitchenTableSprite());
 		break;
 	case Furniture::Planks:
-		name = "Planks";
+		name = "Shelf";
 		//SetSprite(new PlanksSprite());
 		break;
 	case Furniture::EmptyBoxType1:
@@ -492,6 +492,8 @@ void Furniture::Collided(GameObject* obj)
 		break;
 	case Furniture::KitchenDoor:
 		GameManager::getGM()->InteractionsMgr.KitchenDoorInteracted(this, obj);
+		break;
+	case Furniture::Fridge:
 		break;
 	default:
 		break;

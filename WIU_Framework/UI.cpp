@@ -3,10 +3,7 @@
 #include "conio.h"
 #include "Windows.h"
 
-
-int UI::rows = 0;
-
-UI::UI(const Vector2 _position, const int _color) : optionUI(nullptr), position(_position), color(_color)
+UI::UI(const Vector2 _position, const int _color) : optionUI(nullptr), position(_position), color(_color), rows(1)
 {
 	Scene::ChangeColor(_color);
 }
@@ -67,7 +64,7 @@ void UI::CreateText(const std::string text, const Vector2 position, int color) c
 
 void UI::CreateOptionUI(const Vector2 optionPosition, const bool isCenter)
 {
-	optionUI = new OptionUI(position + optionPosition, color, isCenter);
+	optionUI = new OptionUI(position + optionPosition, color + 7, isCenter);
 }
 
 OptionUI* UI::GetOptionUI(void) const { return optionUI; }
@@ -144,10 +141,8 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 	for (int i = 0; i < numberOfLine; ++i)
 	{
 		Scene::GotoXY(position.GetX(), originalPos.GetY() + i, this->position);
-		for (int j = 0; j < 100; ++j)
-		{
+		for (int j = 0; j < rows; ++j)
 			std::cout << ' ';
-		}
 	}
 }
 
@@ -221,7 +216,7 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 	for (int i = 0; i < numberOfLine; ++i)
 	{
 		Scene::GotoXY(position.GetX(), originalPos.GetY() + i, this->position);
-		for (int j = 0; j < 100; ++j)
+		for (int j = 0; j < rows; ++j)
 		{
 			std::cout << ' ';
 		}

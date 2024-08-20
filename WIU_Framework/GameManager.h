@@ -11,6 +11,7 @@
 #include "UI.h"
 #include "InventoryManager.h"
 #include "EndingManager.h"
+#include "ObjectivesManager.h"
 class Scene;
 
 using namespace std;
@@ -22,6 +23,7 @@ class GameManager
 private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
+	bool LoopStarted;
 
 public:
 	UI* gameUI;
@@ -33,6 +35,7 @@ public:
 	TimeSystem TimeSys;
 	EndingManager ending;
 	std::string whatScenePlayerIn;
+	ObjectivesManager objManager;
 
 	GameManager();
 
