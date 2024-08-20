@@ -369,7 +369,6 @@ void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* p
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You pry deeper, hoping to find something valuable.");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: ...");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: WTF am I doing...");
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "Secret Ending: Instincts");
 			//Game ends here, restart everything
 			break;
 		case 1:
@@ -1086,7 +1085,7 @@ void InteractionsManager::Start()
 void InteractionsManager::Start(bool isGameStarted)
 {
 	ObjectivesManager* objManager = &(GameManager::getGM()->objManager);
-	//Start();
+	Start();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	switch (timeSystem->TimeLoop)
 	{
@@ -1107,7 +1106,6 @@ void InteractionsManager::Start(bool isGameStarted)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You appear at the door again");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: WHAT WAS THAT!? I JUST GOT KILLED IN MY HOUSE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You quickly calm down and decide to check the TV.");
-
 		break;
 	default:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Im back again...");
