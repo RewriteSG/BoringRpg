@@ -16,6 +16,8 @@ public:
 	bool isBarricadeSetup;
 	bool isPlayerSleeping;
 	bool isStoreRoomUnlocked;
+	bool isClosetUnlocked;
+	bool isPlayerSucide;
 
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;

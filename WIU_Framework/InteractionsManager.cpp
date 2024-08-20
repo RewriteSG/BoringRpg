@@ -40,6 +40,7 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 	isBarricadeSetup = false;
 	isPlayerSleeping = false;
 
+	isClosetUnlocked = false;
 	isStoreRoomUnlocked = false;
 	hasCabinetKeyCollected = false;
 	hasCalledTheCops = false;
@@ -291,7 +292,7 @@ void InteractionsManager::KitchenCabinetInteracted(GameObject* kitchenCabinet, G
 		case 0:
 			timeSystem->increaseTimeTaken(5);
 			hasKnife = true;
-			GameManager::getGM()->inventory.PickupItem("Kitchen knife");
+			GameManager::getGM()->inventory.PickupItem("knife");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up knife!");
 			break;
 		case 1:
@@ -576,7 +577,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 		{
 			case 0:
 				hasClosetKeyCollected = true;
-				GameManager::getGM()->inventory.PickupItem("Unknown Key");
+				GameManager::getGM()->inventory.PickupItem("UnknownKey");
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up a key But you don't know what is it for...");
 				break;
 			case 1:
@@ -763,6 +764,7 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 {
 	// show the current time
 	Start();
+	timeSystem->increaseTimeTaken(2);
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
 		GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
 }
@@ -900,6 +902,26 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			}
 			return true;
 		}
+
+		if (furnituresRight->GetFurnitureType() == Furniture::Closet && (input == "on closet"))
+		{
+			bool usingUnknownKey = useItem1 == "unknownkey";
+
+			if (usingUnknownKey)
+			{
+				GameManager::getGM()->ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 2), "Using Unknown Key to unlock Closet.");
+				isClosetUnlocked = true;
+				ui.PrintDialogue(Vector2(3, 2), "Successfully unlocked the closet!");
+				GameManager::getGM()->inventory.UseItem(useItem1);
+			}
+			else
+			{
+				GameManager::getGM()->ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 2), "You: I dont have a key to unlock this.");
+			}
+			return true;
+		}
 	}
 	if (furnituresLeft)
 	{
@@ -913,6 +935,28 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 				ui.PrintDialogue(Vector2(3, 2), "Using Storeroom Key to unlock Storeroom.");
 				isStoreRoomUnlocked = true;
 				ui.PrintDialogue(Vector2(3, 2), "Successfully unlocked the door!");
+				GameManager::getGM()->inventory.UseItem(useItem1);
+			}
+			else
+			{
+				GameManager::getGM()->ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 2), "You: I dont have a key to unlock this.");
+			}
+			return true;
+		}
+	}
+	if (furnituresUp)
+	{
+		if (furnituresUp->GetFurnitureType() == Furniture::Closet && (input == "on closet"))
+		{
+			bool usingUnknownKey = useItem1 == "unknownkey";
+
+			if (usingUnknownKey)
+			{
+				GameManager::getGM()->ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 2), "Using Unknown Key to unlock Closet.");
+				isClosetUnlocked = true;
+				ui.PrintDialogue(Vector2(3, 2), "Successfully unlocked the closet!");
 				GameManager::getGM()->inventory.UseItem(useItem1);
 			}
 			else
@@ -946,7 +990,24 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 		return true;
 	}
 
+	if (input == "on you")
+	{
+		bool usingKnife = useItem1 == "knife";
 
+		if (usingKnife)
+		{
+			GameManager::getGM()->ClearDialogue();
+			ui.PrintDialogue(Vector2(3, 2), "This better work...");
+			isPlayerSucide = true;
+			GameManager::getGM()->inventory.UseItem(useItem1);
+		}
+		else
+		{
+			GameManager::getGM()->ClearDialogue();
+			ui.PrintDialogue(Vector2(3, 2), "I dont have anything to use on myself!");
+		}
+		return true;
+	}
 	return false;
 }
 
@@ -955,28 +1016,21 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 {
 	Start();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	if (hasCabinetKeyCollected)
-	{
 		timeSystem->increaseTimeTaken(5);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You unlocked the cabinet door!");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I got some beta blockers inside that can calm me down");
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Eat beta blockers?");
+		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Search the cabinet?");
 		switch (choosenItem)
 		{
 		case 0:
 			timeSystem->increaseTimeTaken(5);
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You took some beta blockers, you feel calm as ever!");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You look through the cabinet!");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "But you found nothing useful.");
 			break;
 		case 1:
 			break;
 		}
-	}
-	else
-	{
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I need a key to unlock the cabinet door.");
-	}
+	
 }
 
 void InteractionsManager::Start()

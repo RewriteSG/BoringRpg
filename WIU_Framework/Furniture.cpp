@@ -94,9 +94,9 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		name = "Cabinet";
 		SetSprite(new BedroomCabinetSprite());
 		break;
-	case Furniture::BedroomCabinet2:
+	case Furniture::Closet:
 		name = "Closet";
-		SetSprite(new BedroomCabinet2Sprite());
+		SetSprite(new ClosetSprite());
 		break;
 	case Furniture::LivingRoomCabinet:
 		name = "Cabinet";
@@ -218,8 +218,8 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos, std::string toName)
 	case Furniture::BedroomCabinet1:
 		SetSprite(new BedroomCabinetSprite());
 		break;
-	case Furniture::BedroomCabinet2:
-		SetSprite(new BedroomCabinet2Sprite());
+	case Furniture::Closet:
+		SetSprite(new ClosetSprite());
 		break;
 	case Furniture::LivingRoomCabinet:
 		SetSprite(new LivingRoomCabinetSprite());
@@ -334,8 +334,8 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos, bool isInvisible)
 		name = "Cabinet";
 		//SetSprite(new BedroomCabinetSprite());
 		break;
-	case Furniture::BedroomCabinet2:
-		name = "Cabinet";
+	case Furniture::Closet:
+		name = "Closet";
 		//SetSprite(new BedroomCabinet2Sprite());
 		break;
 	case Furniture::LivingRoomCabinet:
@@ -423,7 +423,7 @@ void Furniture::Collided(GameObject* obj)
 	case Furniture::BedroomCabinet1:
 		GameManager::getGM()->InteractionsMgr.BedRoomDrawerInteracted(this, obj);
 		break;
-	case Furniture::BedroomCabinet2:
+	case Furniture::Closet:
 
 		GameManager::getGM()->InteractionsMgr.ClosetDoorInteracted(this, obj);
 		break;
@@ -517,7 +517,7 @@ void Furniture::InteractFurniture(GameObject* obj)
 	case Furniture::BedroomCabinet1:
 		GameManager::getGM()->InteractionsMgr.BedRoomDrawerInteracted(this, obj);
 		break;
-	case Furniture::BedroomCabinet2:
+	case Furniture::Closet:
 
 		GameManager::getGM()->InteractionsMgr.ClosetDoorInteracted(this, obj);
 		break;

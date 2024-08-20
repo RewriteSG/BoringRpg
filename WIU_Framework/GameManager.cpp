@@ -59,7 +59,7 @@ void GameManager::Update()
 	}
 	inventory.DisplayItems();
 
-	if (TimeSys.TimeTaken >= TimeSys.RobberTime)
+	if (TimeSys.TimeTaken >= TimeSys.RobberTime or InteractionsMgr.isPlayerSucide)
 	{
 		whatScenePlayerIn = SceneManager::currentScene->getName();
 		ending.Start();
