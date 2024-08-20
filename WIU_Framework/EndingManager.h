@@ -15,7 +15,7 @@ private:
 	std::vector<std::string> dialogues;
 	
 	bool playerGotBothWeapon;
-
+	int endingNum;
 	int dialogueIndex;
 	int* time;
 
@@ -35,4 +35,7 @@ public:
 	void Start(void);
 	void Update(void);
 	void Exit(void);
+	void Exit(void);
+
+	int EndingUnlock(void) const;
 };

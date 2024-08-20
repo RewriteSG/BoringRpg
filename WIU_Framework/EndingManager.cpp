@@ -219,6 +219,7 @@ void EndingManager::KnifeEnding(void)
 
 EndingManager::EndingManager(void)
 {
+	endingNum = 0;
 	ui = nullptr;
 	killerCurrentScene = "";
 	isPlayerFound = false;
@@ -251,6 +252,7 @@ void EndingManager::Start(void)
 	isPlayerWithKiller = false;
 	isWeaponUse = false;
 	dialogueIndex = 0;
+	endingNum = 0;
 
 	hasWeapon = GameManager::getGM()->InteractionsMgr.hasKnife || GameManager::getGM()->InteractionsMgr.hasMetalPan;
 	playerGotBothWeapon = GameManager::getGM()->InteractionsMgr.hasKnife && GameManager::getGM()->InteractionsMgr.hasMetalPan;
@@ -318,13 +320,25 @@ void EndingManager::Update(void)
 
 	if ((isPlayerFound && !GameManager::getGM()->InteractionsMgr.hasCalledTheCops)
 		|| (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken < GameManager::getGM()->TimeSys.TimeLimitForCops))
+	{
 		dialogues.push_back("[BREAKING NEWS]: A 25-years-old man was tragically found dead in the " + killerCurrentScene + " at BLK 243 Kranji Street yesterday around 12:" + to_string(*time / 60) + " AM, prompting police to launch a homicide investigation. If you find any suspicious, please contact us at 999. ");
+		endingNum = 1;
+	}
 	else if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops)
+	{
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-years-old man successfully defended himself by attempting with well-preapred measures until police arrived. ");
-	else if(!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasMetalPan && GameManager::getGM()->InteractionsMgr.hasDuctTape)
+		endingNum = 2;
+	}
+	else if (!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasMetalPan && GameManager::getGM()->InteractionsMgr.hasDuctTape)
+	{
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was captured by a 25-years-old man. The police immediately arrived to the crime scene to arrest that serial killer. ");
+		endingNum = 3;
+	}
 	else if (!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasKnife)
+	{
 		dialogues.push_back("[BREAKING NEWS]: The serial killer had been killed at BLK 243 Kranji Street in the " + killerCurrentScene + ". Suspect claimed that it was just self defence, but police still caught him for further investigation. ");
+		endingNum = 4;
+	}
 
 	int index = dialogueIndex;
 	for (int i = dialogueIndex; i < dialogues.size(); ++i)
@@ -353,4 +367,9 @@ void EndingManager::Exit()
 	dialogues.clear();
 	GameManager::getGM()->TimeSys.CountLoop(0);
 	SceneManager::LoadScene("LivingRoomScene");
+}
+
+int EndingManager::EndingUnlock(void) const
+{
+	return endingNum;
 }
