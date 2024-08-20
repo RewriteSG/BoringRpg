@@ -228,6 +228,9 @@ EndingManager::EndingManager(void)
 	dialogueIndex = 0;
 	time = nullptr;
 	ui = nullptr;
+	hasWeapon = false;
+	isPoliceCame = false;
+	playerGotBothWeapon = false;
 }
 
 void EndingManager::Start(void)
