@@ -125,7 +125,7 @@ void GameManager::HandleInput(void)
 		ToPrint = "There is nothing around the player.";
 
 	ClearDialogue();
-	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
+	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
 	ui.CreateText(ToPrint, Vector2(3, 2));
 
 	ui.CreateText("[ (W)(A)(S)(D): Move                         ]", Vector2(10, 0));
@@ -243,7 +243,7 @@ void GameManager::HandleInput(void)
 				//+ ToPrint
 				ClearDialogue();
 				ui.PrintDialogue(Vector2(3,2), "Interact with what? Enter 'interact <object name>'");
-				ui.CreateText( "Interact with what? Enter 'interact <object name>'", Vector2(3, 2));
+				ui.CreateText( "Interact with what? Enter 'interact <object name>'", Vector2(4, 2));
 				EmptyDialogue = false;
 				DisplayFurnituresAroundPlayer(Vector2(3, 3));
 			}
@@ -329,7 +329,7 @@ void GameManager::HandleInput(void)
 			{
 				ClearDialogue(); 
 				ui.PrintDialogue(Vector2(3, 2), "for use, Enter 'use <item name>' or you can enter 'use <item name> with <item name>'. ");
-				ui.CreateText("for use, Enter 'use <item name>' or you can enter 'use <item name> with <item name>'. ", Vector2(2, 2));
+				ui.CreateText("for use, Enter 'use <item name>' or you can enter 'use <item name> with <item name>'. ", Vector2(3, 2));
 				EmptyDialogue = false; 
 
 
