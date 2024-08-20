@@ -118,9 +118,9 @@ void EndingManager::PickWeaponOption(void)
 
 		int choosenItem = 0;
 		if (!isPlayerFound)
-			choosenItem = ui->PickDialogue(Vector2(0, 10), "THOUGHT: I think the killer unable to find me. What should I do next? (use knife to kill him? or use metal pan to knock him down?)");
+			choosenItem = ui->PickDialogue(Vector2(0, 10), "THOUGHT: I guess the killer unable to see me. What should I do next? (use knife to kill him? or use metal pan to knock him down?)");
 		else
-			choosenItem = ui->PickDialogue(Vector2(0, 10), "THOUGHT: Shit! The killer found me in the " + killerCurrentScene + ". What should I do next ? (use knife to kill him ? or use metal pan to knock him down ? )");
+			choosenItem = ui->PickDialogue(Vector2(0, 10), "THOUGHT: Shit! The killer found me in the " + killerCurrentScene + ". What should I do next ? (use knife to kill him? or use metal pan to knock him down?)");
 
 		switch (choosenItem)
 		{
@@ -167,16 +167,15 @@ void EndingManager::MentalPanEnding(void)
 			ui->GetOptionUI()->AddOption(new std::string("Run"));
 			ui->GetOptionUI()->AddOption(new std::string("Hide"));
 			int choosenItem = ui->PickDialogue(Vector2(0, 10), "I had successfully knocked down this killer. What should I do next?");
-			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " But the blow from the metal pan is weak, the killer has recovered and stood up. ");
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As the blow from the metal pan was weak, the killer had recovered and stood up. ");
 			switch (choosenItem)
 			{
 			case 0:
-				dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Seeing this, you are afraid and ran for your life.");
+				dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After witnessed that, you were so afraid and quickly ran for your life.");
 				dialogues.push_back(TimeSystem::GetTimeinString(*time) + " However, the serial killer was still able to catch up to you.");
 				break;
-
 			case 1:
-				dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Seeing this, you are afraid and hide away from the killer.");
+				dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After witnessed that, you were so afraid and hid away from the killer.");
 				dialogues.push_back(TimeSystem::GetTimeinString(*time) + " However, the serial killer was still able to find to you.");
 				break;
 			}
@@ -205,12 +204,16 @@ void EndingManager::KnifeEnding(void)
 	}
 	else
 	{
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You were slowly moving behind the killer, and gave him a critical stab on his back. ");
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " In that moment, you was standing over your target, your blade stained with deep crimson of freshly spilled blood. ");
+		isPoliceCame = GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops;
+		if (!isPoliceCame)
+		{
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You were slowly moving behind the killer, and gave him a critical stab on his back. ");
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " In that moment, you was standing over your target, your blade stained with deep crimson of freshly spilled blood. ");
 
-		*time += 60;
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a minute to calm youself down, you decided to the police for asssistance. ");
-		isWeaponUse = true;
+			*time += 60;
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a minute to calm youself down, you decided to the police for asssistance. ");
+			isWeaponUse = true;
+		}
 	}
 }
 
@@ -273,11 +276,11 @@ void EndingManager::Update(void)
 			break;
 		}
 
-
 		if (isPlayerWithKiller)
 		{
 			if (!playerGotBothWeapon)
 			{
+
 				if (GameManager::getGM()->InteractionsMgr.hasMetalPan)
 					MentalPanEnding();
 
@@ -299,9 +302,9 @@ void EndingManager::Update(void)
 
 	if ((isPlayerFound && !GameManager::getGM()->InteractionsMgr.hasCalledTheCops)
 		|| (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken < GameManager::getGM()->TimeSys.TimeLimitForCops))
-		dialogues.push_back("[BREAKING NEWS]: A 25-years-old man was tragically found dead in the " + killerCurrentScene + "at BLK 243 Kranji Street yesterday around 12:" + to_string(*time / 60) + " AM, prompting police to launch a homicide investigation. If you find any suspicious, please contact us at 999. ");
+		dialogues.push_back("[BREAKING NEWS]: A 25-years-old man was tragically found dead in the " + killerCurrentScene + " at BLK 243 Kranji Street yesterday around 12:" + to_string(*time / 60) + " AM, prompting police to launch a homicide investigation. If you find any suspicious, please contact us at 999. ");
 	else if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops)
-		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-years-old man successfully defended himself by attempting with well-preapred measures until police arrived");
+		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-years-old man successfully defended himself by attempting with well-preapred measures until police arrived. ");
 	else if(!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasMetalPan && GameManager::getGM()->InteractionsMgr.hasDuctTape)
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was captured by a 25-years-old man. The police immediately arrived to the crime scene to arrest that serial killer. ");
 	else if (!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasKnife)
@@ -311,6 +314,7 @@ void EndingManager::Update(void)
 	for (int i = dialogueIndex; i < dialogues.size(); ++i)
 	{
 		ui->PrintDialogue(Vector2(), dialogues[i]);
+
 		index++;
 
 		int yPos = -index;
@@ -331,7 +335,6 @@ void EndingManager::Update(void)
 void EndingManager::Exit()
 {
 	dialogues.clear();
-	GameManager::getGM()->TimeSys.TimeLoop++;
-	GameManager::getGM()->TimeSys.TimeTaken = 0;
+	GameManager::getGM()->TimeSys.CountLoop(0);
 	SceneManager::LoadScene("LivingRoomScene");
 }

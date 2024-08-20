@@ -57,7 +57,7 @@ void GameManager::Update()
 		LoopStarted = true;
 	}
 	inventory.DisplayItems();
-
+	//TimeSys.TimeTaken = TimeSys.RobberTime;
 	if (TimeSys.TimeTaken >= TimeSys.RobberTime)
 	{
 		whatScenePlayerIn = SceneManager::currentScene->getName();
@@ -125,7 +125,7 @@ void GameManager::HandleInput(void)
 		ToPrint = "There is nothing around the player.";
 
 	ClearDialogue();
-	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
+	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 169);
 	ui.CreateText(ToPrint, Vector2(3, 2));
 
 	ui.CreateText("[ (W)(A)(S)(D): Move                         ]", Vector2(10, 0));
@@ -329,7 +329,7 @@ void GameManager::HandleInput(void)
 			{
 				ClearDialogue(); 
 				ui.PrintDialogue(Vector2(3, 2), "for use, Enter 'use <item name>' or you can enter 'use <item name> with <item name>'. ");
-				ui.CreateText("for use, Enter 'use <item name>' or you can enter 'use <item name> with <item name>'. ", Vector2(2, 2));
+				ui.CreateText("for use, Enter 'use <item name>' or you can enter 'use <item name> with <item name>'. ", Vector2(3, 2));
 				EmptyDialogue = false; 
 
 
@@ -470,9 +470,9 @@ void GameManager::CreatePlayer(Vector2 toPos)
 void GameManager::ClearDialogue()
 {
 	EmptyDialogue = true;
-	UI ui(Vector2(Application::numberOfColumns / 2 - 167 / 2, 35), 0, 169);
+	UI ui(Vector2(Application::numberOfColumns / 2 - 167 / 2, 35), 0, 165);
 	std::string clearDialogue;
-	for (int i = 0; i < 166; i++)
+	for (int i = 0; i < 165; i++)
 	{
 		clearDialogue += ' ';
 	}
