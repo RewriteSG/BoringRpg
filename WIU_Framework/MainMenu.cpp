@@ -6,6 +6,7 @@
 #include "ToiletScene.h"
 #include "StoreRoomScene.h"
 #include "Application.h"
+#include "Endings.h"
 #include "SpatialInteractionManagerInterop.h"
 #include "UI.h"
 void MainMenu::DrawClock(const int size) const
@@ -129,7 +130,12 @@ void MainMenu::Update(void)
 				
 			else if (counter == 2)
 			{
-
+				Scene::ChangeColor(Scene::Default);
+				system("cls");
+				UI ui = UI(Vector2(130, 12), 7);
+				UI gameUI2(Vector2(Application::numberOfColumns / 2 - 171 / 2, 8), 0, 171);
+				ui.PrintDialogue(Vector2(-105, 10), "Heres the place where will show all the unlocked endings. Press 'Enter'for the next ending");
+				SceneManager::LoadScene(new Endings());
 			}
 			else
 				exit(0);
