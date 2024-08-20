@@ -323,21 +323,16 @@ void EndingManager::Update(void)
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-year-old man successfully defended himself by attempting with well-preapred measures until police arrived. ");
 		endingNum = 2;
 	}
-	else if (!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasMetalPan && GameManager::getGM()->InteractionsMgr.hasDuctTape)
-	{
-		dialogues.push_back("[BREAKING NEWS]: The serial killer was captured by a 25-year-old man. The police immediately arrived to the crime scene to arrest that serial killer. ");
-		endingNum = 3;
-	}
 	else if (!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasKnife)
 	{
 		dialogues.push_back("[BREAKING NEWS]: The serial killer had been killed at BLK 243 Chicken Street in the " + killerCurrentScene + ". Suspect claimed that it was just self defence, but police still caught him for further investigation. ");
-		endingNum = 4;
+		endingNum = 3;
 	}
 	else if (GameManager::getGM()->InteractionsMgr.isPlayerSucide)
 	{
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You raised your blade, and stabbed yourself without any hesitation. ");
 		dialogues.push_back("[BREAKING NEWS]: A 25-year-old man was found dead in " + GameManager::getGM()->whatScenePlayerIn + " at at BLK 243 Chicken Street. It was suspected to be a suicide case, but police was still on working for further investigation. ");
-		endingNum = 5;
+		endingNum = 4;
 	}
 	else if (GameManager::getGM()->InteractionsMgr.isPlayerSleeping)
 	{
