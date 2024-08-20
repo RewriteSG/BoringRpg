@@ -59,11 +59,14 @@ public:
 	void ClosetDoorInteracted(GameObject* closetDoor, GameObject* player);
 	void KitchenDoorInteracted(GameObject* KitchenDoor, GameObject* player);
 	void ToiletDoorInteracted(GameObject* BathroomDoor, GameObject* player);
+	void ToiletBowlInteracted(GameObject* ToiletBowl, GameObject* player);
 	void LivingRoomDoorInteracted(GameObject* BathroomDoor, GameObject* player);
 	void StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player);
 	void ClockInteracted(GameObject* clock, GameObject* player);
 	bool UseItem(std::string useItem, GameObject* player);
 	void BarricadeDoor(GameObject* door, GameObject* player);
+	void FridgeInteracted(GameObject* fridge, GameObject* player);
+	void KitchenTableInteracted(GameObject* table, GameObject* player);
 	void Start();
 	void Start(bool isGameStarted);
 	

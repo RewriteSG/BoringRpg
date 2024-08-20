@@ -470,6 +470,7 @@ void Furniture::Collided(GameObject* obj)
 	GameManager::getGM()->InteractionsMgr.BedroomDoorInteracted(this, obj);
 		break;
 	case Furniture::ToiletBowl:
+		GameManager::getGM()->InteractionsMgr.ToiletBowlInteracted(this, obj);
 		break;
 	case Furniture::ShowerArea:
 		GameManager::getGM()->InteractionsMgr.ShowerInteracted(this, obj);
@@ -494,6 +495,9 @@ void Furniture::Collided(GameObject* obj)
 		GameManager::getGM()->InteractionsMgr.KitchenDoorInteracted(this, obj);
 		break;
 	case Furniture::Fridge:
+GameManager::getGM()->InteractionsMgr.FridgeInteracted(this, obj);
+	case Furniture::KitchenTable:
+		GameManager::getGM()->InteractionsMgr.KitchenTableInteracted(this, obj);
 		break;
 	default:
 		break;

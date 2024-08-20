@@ -87,6 +87,8 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 
 void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player, bool isNothing)
 {
+	Start();
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing on the sofa.");
 }
 
 void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* player)
@@ -726,6 +728,11 @@ void InteractionsManager::ToiletDoorInteracted(GameObject* ToiletDoor, GameObjec
 
 }
 
+void InteractionsManager::ToiletBowlInteracted(GameObject* ToiletBowl, GameObject* player)
+{
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "Just a toilet bowl, nothing else.");
+}
+
 void InteractionsManager::LivingRoomDoorInteracted(GameObject* BathroomDoor, GameObject* player)
 {
 		SceneManager::LoadScene("LivingRoomScene");
@@ -1031,6 +1038,16 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 			break;
 		}
 	
+}
+
+void InteractionsManager::FridgeInteracted(GameObject* fridge, GameObject* player)
+{
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing in the fridge.");
+}
+
+void InteractionsManager::KitchenTableInteracted(GameObject* table, GameObject* player)
+{
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing on the table.");
 }
 
 void InteractionsManager::Start()
