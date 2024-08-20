@@ -10,10 +10,12 @@ private:
 	bool isPlayerGetKilled;
 	bool isPlayerFound;
 	bool isWeaponUse;
+	bool hasWeapon;
+	bool isPoliceCame;
 	std::vector<std::string> dialogues;
 	
 	bool playerGotBothWeapon;
-
+	int endingNum;
 	int dialogueIndex;
 	int* time;
 
@@ -26,9 +28,13 @@ private:
 
 	void PickWeaponOption(void);
 	void MentalPanEnding(void);
+	void KnifeEnding(void);
 
 public:
+	EndingManager(void);
 	void Start(void);
 	void Update(void);
 	void Exit(void);
+
+	int EndingUnlock(void) const;
 };

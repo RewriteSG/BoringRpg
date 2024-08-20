@@ -23,9 +23,11 @@ class GameManager
 private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
-	bool LoopStarted;
+	bool EmptyDialogue = true;
 
 public:
+	bool LoopStarted;
+	bool firstLoop;
 	UI* gameUI;
 	Player* player;
 
@@ -50,6 +52,7 @@ public:
 	bool GetGameEnded() const;
 	bool GetGameWon() const;
 
+	void DisplayFurnituresAroundPlayer(Vector2);
 	void CreatePlayer(Vector2 toPos);
 	void ClearDialogue();
 	static char _getch(void);

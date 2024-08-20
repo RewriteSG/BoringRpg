@@ -1,28 +1,29 @@
 #include "TimeSystem.h"
 #include "string"
+#include "GameManager.h"
+#include "InventoryManager.h"
+#include "InteractionsManager.h"
 TimeSystem::TimeSystem()
 {
-	TimeLoop = 3;
+	TimeLoop = 0;
 	TimeTaken = 0;
 	// 720 = 12 minutes
-	RobberTime = 120;
-	TimeLimitForCops = 900;
+	RobberTime = 200;
+	TimeLimitForCops = 300;
 }
 
 void TimeSystem::CountLoop(int time)
-{
-	TimeLoop++;
+{	TimeLoop++;
 	TimeTaken = 0;
+	GameManager::getGM()->LoopStarted = false;
+	GameManager::getGM()->inventory = InventoryManager();
+	GameManager::getGM()->InteractionsMgr = InteractionsManager();
+
 }
 
 void TimeSystem::increaseTimeTaken(int time)
 {
 	TimeTaken += time;
-}
-
-bool TimeSystem::isTimeRunOut(void) const
-{
-	return TimeTaken >= RobberTime;
 }
 
 void TimeSystem::decreaseTimeTaken(int time)

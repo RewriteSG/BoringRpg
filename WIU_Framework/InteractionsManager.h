@@ -1,6 +1,4 @@
 #pragma once
-#define POINTX -2
-#define POINTY 13
 #include "GameObject.h"
 #include "TimeSystem.h"
 #include "UI.h"
@@ -11,9 +9,15 @@ public:
 	//timer
 	TimeSystem* timeSystem;
 	UI* ui;
+	bool isNailSetup;
+	bool isPlankSetup;
+	bool isPlayerHidden;
 	bool isSoapSetup;
 	bool isBarricadeSetup;
-	bool isPlayerHidden;
+	bool isPlayerSleeping;
+	bool isStoreRoomUnlocked;
+	bool isClosetUnlocked;
+	bool isPlayerSucide;
 
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;
@@ -22,7 +26,7 @@ public:
 	bool hasHammer;
 	bool hasNails;
 	bool hasPlanks;
-	bool hasShampoo;
+	bool hasSoap;
 	bool hasKnife;
 	bool hasDuctTape;
 	bool hasMetalPan;
@@ -55,11 +59,14 @@ public:
 	void ClosetDoorInteracted(GameObject* closetDoor, GameObject* player);
 	void KitchenDoorInteracted(GameObject* KitchenDoor, GameObject* player);
 	void ToiletDoorInteracted(GameObject* BathroomDoor, GameObject* player);
+	void ToiletBowlInteracted(GameObject* ToiletBowl, GameObject* player);
 	void LivingRoomDoorInteracted(GameObject* BathroomDoor, GameObject* player);
 	void StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player);
 	void ClockInteracted(GameObject* clock, GameObject* player);
-	void UseItem(std::string useItem, GameObject* player);
+	bool UseItem(std::string useItem, GameObject* player);
 	void BarricadeDoor(GameObject* door, GameObject* player);
+	void FridgeInteracted(GameObject* fridge, GameObject* player);
+	void KitchenTableInteracted(GameObject* table, GameObject* player);
 	void Start();
 	void Start(bool isGameStarted);
 	

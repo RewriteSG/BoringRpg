@@ -43,24 +43,27 @@ void GameManager::Start()
 	GM_Instance = this;
 	GameEnded = false;
 	GameWon = true;
-	gameUI = new UI(Vector2(130, 12), 7);
+	gameUI = new UI(Vector2(130, 12), 0, 150);
 	InteractionsMgr.Start();
+	firstLoop = TimeSys.TimeLoop == 0;
 }
 void GameManager::Update()
 {
 	if (!LoopStarted) {
 		ClearDialogue();
 		InteractionsMgr.Start(LoopStarted);
-		//inventory.PickupItem("planks");
-		//inventory.PickupItem("hammer");
-		//inventory.PickupItem("nails");
+		/*inventory.PickupItem("planks");
+		inventory.PickupItem("hammer");
+		inventory.PickupItem("nails");
+		inventory.PickupItem("soap");*/
 		LoopStarted = true;
 	}
 	inventory.DisplayItems();
 
-	TimeSys.TimeTaken = TimeSys.RobberTime;
-	if (TimeSys.TimeTaken >= TimeSys.RobberTime)
+	if (TimeSys.TimeTaken >= TimeSys.RobberTime or InteractionsMgr.isPlayerSucide or InteractionsMgr.isPlayerHidden)
 	{
+		if (firstLoop)
+			return;
 		whatScenePlayerIn = SceneManager::currentScene->getName();
 		ending.Start();
 	}
@@ -92,6 +95,32 @@ void GameManager::HandleInput(void)
 	furnituresRight = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() + 1, player->GetPosition()->GetY())));
 	furnituresUp = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() - 1)));
 	furnituresDown = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() + 1)));
+	
+	Furniture*** lists = new Furniture**[4];
+	lists[0] = &furnituresLeft; 
+	lists[1] = &furnituresRight; 
+	lists[2] = &furnituresUp; 
+	lists[3] = &furnituresDown; 
+	int loopCount;
+	for (int i = 0; i < 4; i++)
+	{
+		loopCount = 0;
+
+		for (int x = i+1; loopCount < 3; loopCount++)
+		{
+			if (x >= 4)
+				x = 0;
+			if (*lists[i] && *lists[x]) {
+				if ((*lists[i])->GetName() == (*lists[x])->GetName()) {
+					*lists[x] = nullptr;
+				}
+			}
+			x++;
+		}
+
+
+	}
+	delete[] lists;
 	Furniture::TypeOfFurniture typeofFurniture;
 	std::string ToPrint = "blank";
 	if (furnituresLeft || furnituresRight || furnituresUp || furnituresDown)
@@ -124,12 +153,15 @@ void GameManager::HandleInput(void)
 	if (ToPrint != "blank")
 		ToPrint += " next to you.";
 	else
-		ToPrint = "There is nothing around the player.";
+		ToPrint = "There is nothing around you.";
 
 	ClearDialogue();
-	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
-	ui.CreateText(ToPrint, Vector2(2, 2));
+	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
+	ui.CreateText(ToPrint, Vector2(3, 2));
+
+	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0));
 	char input = _getch();
+
 
 	switch (input)
 	{
@@ -156,19 +188,20 @@ void GameManager::HandleInput(void)
 	case '/':
 		
 
-		while (true) {
-
-			ui.CreateText(" Options: Enter, Exit, Interact, Move, Use  ", Vector2(10, 0));
-			ClearDialogue(); 
-		InvalidInput:
-
-			ui.CreateText(ToPrint, Vector2(2, 2));
+		while (true) 
+		{
+			//					[ (W)(A)(S)(D): Move  (/): To enable input field ]
+			ui.CreateText("[ Options: Enter, Exit, Interact, Move, Use      ]", Vector2(10, 0));
+			//ClearDialogue();
+			if(EmptyDialogue)
+				ui.CreateText(ToPrint, Vector2(3, 2));
 			string stringInput = InputField();
 			string ItemFromInput = "";
 			string KeywordFromInput = "";
 			//move for doors only
-			
-			bool showHelp = false;
+			if (stringInput.empty())
+				break;
+
 			int chCount = 0;
 			for (char ch : stringInput)
 			{
@@ -188,10 +221,11 @@ void GameManager::HandleInput(void)
 			{
 				ItemFromInput += stringInput[i];
 			}
-			if (KeywordFromInput == "interact" && ItemFromInput != "") 
+			if ((KeywordFromInput == "interact" || KeywordFromInput == "i") && ItemFromInput != "")
 			{
 				bool checkValidInput = false; 
-				if (furnituresUp) {
+				if (furnituresUp) 
+				{
 
 					std::string strName = furnituresUp->GetName();
 					strName = Scene::tolowerString(strName);
@@ -201,7 +235,8 @@ void GameManager::HandleInput(void)
 					if (!checkValidInput)
 						checkValidInput = (ItemFromInput == strName);
 				}
-				if (furnituresLeft) {
+				if (furnituresLeft) 
+				{
 
 					std::string strName = furnituresLeft->GetName();
 					strName = Scene::tolowerString(strName);
@@ -211,7 +246,8 @@ void GameManager::HandleInput(void)
 					if (!checkValidInput)
 						checkValidInput = (ItemFromInput == strName);
 				}
-				if (furnituresDown) {
+				if (furnituresDown)
+				{
 
 					std::string strName = furnituresDown->GetName();
 					strName = Scene::tolowerString(strName);
@@ -221,7 +257,8 @@ void GameManager::HandleInput(void)
 					if (!checkValidInput)
 						checkValidInput = (ItemFromInput == strName);
 				}
-				if (furnituresRight) {
+				if (furnituresRight) 
+				{
 
 					std::string strName = furnituresRight->GetName();
 					strName = Scene::tolowerString(strName);
@@ -233,87 +270,150 @@ void GameManager::HandleInput(void)
 				}
 				if (!checkValidInput)
 				{
-					ui.CreateText("Unknown Object, Enter Valid Object name. ", Vector2(2, 3));
-					goto InvalidInput;
+					ui.PrintDialogue(Vector2(3, 3), "Unknown Object, Enter Valid Object name. ");
+					EmptyDialogue = false;
 				}
+				else
+					break;
 			}else
-		    if (stringInput == "interact") {
+		    if (stringInput == "interact" || stringInput == "i") {
 				//+ ToPrint
-
-				ui.CreateText("Interact with what? Enter 'interact <object name>'" , Vector2(2,3));
-				goto InvalidInput;
+				ClearDialogue();
+				ui.PrintDialogue(Vector2(3,2), "Interact with what? Enter 'interact <object name>'");
+				ui.CreateText( "Interact with what? Enter 'interact <object name>'", Vector2(4, 2));
+				EmptyDialogue = false;
+				DisplayFurnituresAroundPlayer(Vector2(3, 3));
 			}
 			else if (stringInput == "enter") 
 			{
-				if (furnituresUp) {
+				if (furnituresUp) 
+				{
 
 					if (furnituresUp->GetFurnitureType() == Furniture::BedRoomDoor || furnituresUp->GetFurnitureType() == Furniture::KitchenDoor
 						|| furnituresUp->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresUp->GetFurnitureType() == Furniture::ToiletDoor) {
 
 						furnituresUp->InteractFurniture(player);
+						break;
+
 					}
 				}
 
-				if (furnituresRight) {
+				if (furnituresRight)
+				{
 
 					if (furnituresRight->GetFurnitureType() == Furniture::BedRoomDoor || furnituresRight->GetFurnitureType() == Furniture::KitchenDoor
-						|| furnituresRight->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresRight->GetFurnitureType() == Furniture::ToiletDoor)
+						|| furnituresRight->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresRight->GetFurnitureType() == Furniture::ToiletDoor) {
 						furnituresRight->InteractFurniture(player);
+						break;
+					}
 				}
 
-				if (furnituresLeft) {
+				if (furnituresLeft) 
+				{
 
 					if (furnituresLeft->GetFurnitureType() == Furniture::BedRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::KitchenDoor
-						|| furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::ToiletDoor)
+						|| furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::ToiletDoor) {
 						furnituresLeft->InteractFurniture(player);
+						break;
+					}
 				}
 
-				if (furnituresDown) {
+				if (furnituresDown) 
+				{
 
 					if (furnituresDown->GetFurnitureType() == Furniture::BedRoomDoor || furnituresDown->GetFurnitureType() == Furniture::KitchenDoor
-						|| furnituresDown->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresDown->GetFurnitureType() == Furniture::ToiletDoor)
+						|| furnituresDown->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresDown->GetFurnitureType() == Furniture::ToiletDoor) {
 						furnituresDown->InteractFurniture(player);
+						break;
+					}
 				}
 
 			}
 			else if (stringInput == "exit") {
 
 				if (furnituresUp)
-					if (furnituresUp->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresUp->GetFurnitureType() == Furniture::MainDoor)
+					if (furnituresUp->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresUp->GetFurnitureType() == Furniture::MainDoor) {
 						furnituresUp->InteractFurniture(player);
-
+						break;
+					}
 				if (furnituresDown)
-					if (furnituresDown->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresDown->GetFurnitureType() == Furniture::MainDoor)
+					if (furnituresDown->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresDown->GetFurnitureType() == Furniture::MainDoor) {
 						furnituresDown->InteractFurniture(player);
+						break;
+					}
 
 				if (furnituresLeft)
-					if (furnituresLeft->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::MainDoor)
+					if (furnituresLeft->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::MainDoor) {
 						furnituresLeft->InteractFurniture(player);
+						break;
+					}
 
 				if (furnituresRight)
 					if (furnituresRight->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresRight->GetFurnitureType() == Furniture::MainDoor)
+					{
 						furnituresRight->InteractFurniture(player);
+						break;
+					}
 
 			}
-			else if (KeywordFromInput == "use") {
-				InteractionsMgr.UseItem(ItemFromInput,player);
+			else if (KeywordFromInput == "use" && ItemFromInput != "") 
+			{
+				if(InteractionsMgr.UseItem(ItemFromInput,player))
+					break;
+				else {
+
+					ClearDialogue();
+					//ui.PrintDialogue(Vector2(3, 2), "'Use': use any item by entering 'use' <item name> 'on' <object name>.");
+					ui.CreateText("'Use': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(3, 2));
+					//ui.PrintDialogue(Vector2(3, 3), " - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>");
+					ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(2, 3));
+					EmptyDialogue = false;
+				}
+
+			}
+			else if (stringInput == "use")
+			{
+				ClearDialogue(); 
+				ui.PrintDialogue(Vector2(3, 2), "'Use': use any item by entering 'use' <item name> 'on' <object name>.");
+				ui.CreateText("'Use': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(	3, 2));
+				ui.PrintDialogue( Vector2(3, 3), " - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>");
+				ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(2, 3));
+				EmptyDialogue = false;
+
 			}
 			else if (stringInput == "show endings") {
 				//Endings
 				SceneManager::LoadScene("EndingScene");
 			}
+			else if (stringInput == "help") {
+
+				ClearDialogue();
+				
+				ui.CreateText("'Enter' / 'exit': transition through rooms by doors", Vector2(4, 2));
+				ui.CreateText("'Interact': To trigger item interaction, use to figure out what object does by entering 'interact' or 'i' <Object name>", Vector2(4, 3));
+				ui.CreateText("'Move': Allow your character to move after entering '/'.", Vector2(4, 4));
+				ui.CreateText("'Use': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(4, 5));
+				ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(4, 6));
+				ui.CreateText("Press 'Enter' again to move. ", Vector2(4, 7));
+
+				EmptyDialogue = false;
+			}
 			else if (stringInput == "move")
 			{
 				break;
 			}
-			
 			else {
-				ui.CreateText("Invalid input", Vector2(2, 3));
-				goto InvalidInput;
+				ClearDialogue(); 
+				ui.CreateText("Invalid input, Enter 'help' for commands. ", Vector2(3, 2));
+				EmptyDialogue = false; 
 			}
 
-			break;
 		}
+		ClearDialogue();
+
+		ui.CreateText("[ (W)(A)(S)(D): Move                         ]", Vector2(10, 0));
+		break;
+
 	}
 	//LivingRoomScene* livingRoom = dynamic_cast<LivingRoomScene*>(SceneManager::currentScene);
 	//if (livingRoom)
@@ -379,6 +479,63 @@ bool GameManager::GetGameWon() const
 	return GameWon;
 }
 
+void GameManager::DisplayFurnituresAroundPlayer(Vector2 printAtPos)
+{
+
+	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171); 
+
+	Furniture* furnituresLeft, * furnituresRight, * furnituresUp, * furnituresDown;
+	furnituresLeft = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() - 1, player->GetPosition()->GetY())));
+	furnituresRight = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() + 1, player->GetPosition()->GetY())));
+	furnituresUp = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() - 1)));
+	furnituresDown = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() + 1)));
+
+	Furniture*** lists = new Furniture * *[4];
+	lists[0] = &furnituresLeft;
+	lists[1] = &furnituresRight;
+	lists[2] = &furnituresUp;
+	lists[3] = &furnituresDown;
+	int loopCount;
+	for (int i = 0; i < 4; i++)
+	{
+		loopCount = 0;
+
+		for (int x = i + 1; loopCount < 3; loopCount++)
+		{
+			if (x >= 4)
+				x = 0;
+			if (*lists[i] && *lists[x]) {
+				if ((*lists[i])->GetName() == (*lists[x])->GetName()) {
+					*lists[x] = nullptr;
+				}
+			}
+			x++;
+		}
+
+
+	}
+	delete[] lists; ui.CreateText("Objects around you.", (Vector2(printAtPos.GetX(), printAtPos.GetY())));
+	int count = 0;
+	if (furnituresLeft) {
+		count++; 
+		//ui.PrintDialogue(Vector2(printAtPos.GetX(), printAtPos.GetY() + count), furnituresLeft->GetName());
+		ui.CreateText("  - " + furnituresLeft->GetName(), (Vector2(printAtPos.GetX(), printAtPos.GetY() + count)));
+	}
+	if (furnituresUp) {
+		count++;
+		ui.CreateText("  - " + furnituresUp->GetName(), (Vector2(printAtPos.GetX(), printAtPos.GetY() + count)));
+	}
+	if (furnituresRight) {
+		count++;
+		ui.CreateText("  - " + furnituresRight->GetName(), (Vector2(printAtPos.GetX(), printAtPos.GetY() + count)));
+
+	}
+	if (furnituresDown) { 
+		count++;
+		ui.CreateText("  - " + furnituresDown->GetName(), (Vector2(printAtPos.GetX(), printAtPos.GetY() + count)));
+	}
+}
+
 void GameManager::CreatePlayer(Vector2 toPos)
 {
 	if (player)
@@ -398,15 +555,16 @@ void GameManager::CreatePlayer(Vector2 toPos)
 
 void GameManager::ClearDialogue()
 {
-	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 171);
+	EmptyDialogue = true;
+	UI ui(Vector2(Application::numberOfColumns / 2 - 167 / 2, 35), 0, 169);
 	std::string clearDialogue;
-	for (int i = 0; i < 169; i++)
+	for (int i = 0; i < 166; i++)
 	{
 		clearDialogue += ' ';
 	}
 	for (int h = 1; h < 12; h++)
 	{
-		ui.CreateText(clearDialogue, Vector2(1, h));
+		ui.CreateText(clearDialogue, Vector2(0, h));
 
 	}
 }

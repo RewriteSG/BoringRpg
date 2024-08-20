@@ -10,7 +10,7 @@ public:
 		Clock,
 		EmptySofa,
 		BedroomCabinet1,
-		BedroomCabinet2,
+		Closet,
 		LivingRoomCabinet,
 		Television,
 		KitchenCabinet,

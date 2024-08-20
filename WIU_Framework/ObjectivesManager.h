@@ -1,5 +1,6 @@
 #pragma once
-#include "string";
+#include "string"
+
 using namespace std;
 class ObjectivesManager
 {
@@ -8,6 +9,6 @@ public:
 	bool hasWatchedTV;
 	bool hasSlept;
 	ObjectivesManager();
-	void displayObjectives();
+	void displayObjectives() const;
 };
 

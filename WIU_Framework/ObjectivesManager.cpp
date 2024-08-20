@@ -13,7 +13,7 @@ ObjectivesManager::ObjectivesManager()
 	hasSlept = false;
 }
 
-void ObjectivesManager::displayObjectives()
+void ObjectivesManager::displayObjectives() const
 {
 
 	UI* ui = GameManager::getGM()->gameUI;

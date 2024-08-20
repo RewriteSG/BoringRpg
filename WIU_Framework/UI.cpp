@@ -60,6 +60,7 @@ void UI::CreateText(const std::string text, const Vector2 position, int color) c
 	Scene::GotoXY(position.GetX(), position.GetY(), this->position);
 	Scene::ChangeColor((color + 7 != this->color) ? color + 7 : this->color);
 	std::cout << text << std::endl;
+	Scene::ChangeColor(Scene::Default); 
 }
 
 void UI::CreateOptionUI(const Vector2 optionPosition, const bool isCenter)
@@ -96,23 +97,23 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 		if (ch == ' ') {
 			if (numCh - numOfCharsInLine >= rows - 6)
 			{
-				position.GetY()++; 
+				position.GetY()++;
 				Scene::GotoXY(position.GetX(), position.GetY(), this->position);
 				numOfCharsInLine += numCh;
 				numberOfLine++;
-				numCh = 0; 
+				numCh = 0;
 			}
 		}
 		else {
 			for (int i = numCh + numOfCharsInLine; i < textToPrint.length(); i++)
 			{
 				char whatisThat = textToPrint[i];
-				if (textToPrint[i] == ' ') 
+				if (textToPrint[i] == ' ')
 				{
-					if (i - 1 - numOfCharsInLine >= rows - 6) 
+					if (i - 1 - numOfCharsInLine >= rows - 6)
 					{
 						position.GetY()++;
-						Scene::GotoXY(position.GetX() , position.GetY(), this->position);
+						Scene::GotoXY(position.GetX(), position.GetY(), this->position);
 						numOfCharsInLine += numCh;
 						numberOfLine++;
 						numCh = 0;
@@ -124,9 +125,8 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 		}
 		if (!(ch == ' ' && numCh == 0))
 			std::cout << ch;
-
-		numCh++;
 		Sleep(duration);
+		numCh++;
 	}
 
 	while (true)
@@ -144,6 +144,7 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 		for (int j = 0; j < rows; ++j)
 			std::cout << ' ';
 	}
+	Scene::ChangeColor(Scene::Default);
 }
 
 int UI::PickDialogue(Vector2 position, const std::string text) const
@@ -221,6 +222,7 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 			std::cout << ' ';
 		}
 	}
+	Scene::ChangeColor(Scene::Default);
 
 	delete optionUI;
 	return choosenOption;
