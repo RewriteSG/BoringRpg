@@ -646,6 +646,14 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, I should just find some other things to do now.");
 		*hasWatchedTV = true;
 		break;
+
+	case 2:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: It's the same news...again...");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you are stuck in a time loop of getting killed over and over.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
+		break;
 	default:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
@@ -1099,10 +1107,6 @@ void InteractionsManager::Start(bool isGameStarted)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You appear at the door again");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: WHAT WAS THAT!? I JUST GOT KILLED IN MY HOUSE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You quickly calm down and decide to check the TV.");
-
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV, and it is showing the same news.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you are stuck in a time loop of getting killed over and over.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
 
 		break;
 	default:
