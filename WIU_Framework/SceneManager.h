@@ -5,6 +5,8 @@ class SceneManager
 {
 private:
 	static std::string sceneName[];
+
+	void DeleteScene(void);
 public:
 	enum SCENENAME
 	{
@@ -16,13 +18,17 @@ public:
 		ENDINGS
 	};
 
+	static Scene* mainMenu;
+	static Scene* endingsPage;
+
 	static Scene* nextScene;
 	static Scene* currentScene;
 	static string prevScene; 
 	SceneManager(void) = default;
-	static void Start(void);
-	static void Update(void);
-	static void Exit(void);
+	~SceneManager(void);
+	void Start(void);
+	void Update(void);
+	void Exit(void);
 
 	static void LoadScene(Scene* toScene);
 	static void LoadScene(std::string toScene);

@@ -11,6 +11,9 @@
 #include "Endings.h"
 #include "UI.h"
 #include "KitchenScene.h"
+
+bool MainMenu::isExit = false;
+
 void MainMenu::DrawClock(const int size) const
 {
 	const int width = size * 2;
@@ -82,7 +85,11 @@ void MainMenu::Start(void)
 
 void MainMenu::Update(void)
 {
-	std::string choices[3] = { "Play", "Endings", "Exit" };
+	std::string choices[3] = { "Start New Game", "Endings", "Exit" };
+
+	if (GameManager::getGM()->TimeSys.TimeLoop > 0)
+		choices[0] = "Continue";
+
 	int counter = 1;
 	char key;
 	int set[] = { 112, 112, 112 };
@@ -139,10 +146,10 @@ void MainMenu::Update(void)
 				UI ui = UI(Vector2(130, 12), 0, 200);
 				UI gameUI2(Vector2(Application::numberOfColumns / 2 - 171 / 2, 8), 0, 171);
 				ui.PrintDialogue(Vector2(-105, 10), "Heres the place where will show all the unlocked endings. Press 'Enter'for the next ending");
-				SceneManager::LoadScene(new Endings());
+				SceneManager::LoadScene(SceneManager::endingsPage);
 			}
 			else
-				exit(0);
+				isExit = true;
 
 			break;
 		}

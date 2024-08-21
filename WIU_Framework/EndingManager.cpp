@@ -402,7 +402,7 @@ void EndingManager::Exit()
 
 		ui->CreateText("Returning to main menu...");
 		Sleep(1500);
-		SceneManager::LoadScene(new MainMenu());
+		SceneManager::LoadScene(SceneManager::mainMenu);
 	}
 	else
 		SceneManager::LoadScene("LivingRoomScene");

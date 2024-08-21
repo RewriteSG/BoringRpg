@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "Windows.h"
 #include "Application.h"
-
+#include "SceneManager.h"
 
 GameManager Scene::gm = GameManager();
 bool Scene::GetContinuePgrm() const
@@ -48,6 +48,7 @@ void Scene::Update()
 	UpdateGameObjectsPos();
 
 	gm.Update();
+	if(!SceneManager::nextScene)
 	Render();
 }
 
