@@ -1,5 +1,5 @@
 #pragma once
-#define POINTX -105
+#define POINTX -106
 #define POINTY 25
 #include "GameObject.h"
 #include "Entity.h"
@@ -48,7 +48,6 @@ public:
 	void Update();
 	void Exit();
 
-	void PromptInput();
 	void HandleInput(void);
 	static std::string InputField(void);
 

@@ -83,18 +83,10 @@ void GameManager::Exit()
 
 }
 
-void GameManager::PromptInput()
-{
-	Scene::GotoXY(110, 36);
-	cout << "Input:";
-	Scene::GotoXY(117, 36);
-}
-
 void GameManager::HandleInput(void)
 {
 	if (player == nullptr || TimeSys.TimeTaken >= TimeSys.RobberTime)
 		return;
-	Application::ShowCursor();
 
 	Furniture* furnituresLeft, * furnituresRight, * furnituresUp, * furnituresDown;
 	furnituresLeft = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() - 1, player->GetPosition()->GetY())));
@@ -171,16 +163,11 @@ void GameManager::HandleInput(void)
 	Scene::ChangeColor(Scene::Green, true);
 	cout<< "Input: ";
 	Scene::ChangeColor(Scene::Default, true);
-	char input;
+	char input = ' ';
 	if (LoopStarted)
 		input = _getch();
 	else 
-	{
-		input = '/';
 		LoopStarted = true;
-	}
-
-
 
 	switch (input)
 	{
@@ -324,14 +311,14 @@ void GameManager::HandleInput(void)
 					if (doorStr != "blank") {
 						string doortext = "To open: Enter 'e' to open " + doorStr + " and enter.    ";
 						ui.CreateText(doortext, Vector2(xOffset, 4));
-						xOffset += doortext.length();
+						xOffset += (int)doortext.length();
 					}
 					if (InteractablesText != "") {
 						if(xOffset > 5) 
 						ui.CreateText("|  " + InteractablesText, Vector2(xOffset, 4));
 						else
 							ui.CreateText(InteractablesText, Vector2(xOffset, 4));
-						xOffset += InteractablesText.length();
+						xOffset += (int)InteractablesText.length();
 					}
 					//if (notDoorCount > 0) {
 					//	ui.CreateText("   Objects around you:", Vector2(2, 4 + yOffset - 1));
@@ -656,8 +643,6 @@ void GameManager::HandleInput(void)
 		break;
 
 	}
-	Application::HideCursor();
-
 }
 
 std::string GameManager::InputField(void)
@@ -675,10 +660,9 @@ std::string GameManager::InputField(void)
 		ch = GameManager::_getch(); // Get a single character input without echoing to the console
 
 		// Check if the Enter key is pressed
-		if (ch == '\r') {
-			
+		if (ch == '\r')
 			break; // Stop input on Enter key
-		}
+
 		if ((ch == ' ' && input.length() == 0))
 			continue;
 		if (input.length() > 0)

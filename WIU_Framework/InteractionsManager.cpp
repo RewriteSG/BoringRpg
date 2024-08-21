@@ -42,7 +42,7 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 	isBarricadeSetup = false;
 	isPlayerSleeping = false;
 	isPlayerSucide = false;
-
+	isHidInCloset = false;
 
 	isClosetUnlocked = false;
 	isStoreRoomUnlocked = false;
@@ -759,6 +759,7 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 				{
 				case 0:
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid inside.");		
+					isHidInCloset = true;
 					isPlayerHidden = true;
 					break;
 				case 1:
