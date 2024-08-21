@@ -101,6 +101,7 @@ public:
 	void BedImage();
 	void TelevisionImage();
 	void TelevisionImage(bool);
+	void TelevisionOtherChannelImage();
 	void ToiletCabinetImage();
 	void ToiletCabinetImage(bool);
 	void BedroomDoorImage();

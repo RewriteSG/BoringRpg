@@ -881,8 +881,9 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Are they just that lazy?");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Someone is gonna get fired.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, I should just go watch some movies since I can't sleep.");
+		TelevisionOtherChannelImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You switched to some entertainment channels.");
-		TelevisionImage();
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "Show: There is nothing stronger than family.");
 		*hasWatchedTV = true;
 		}
 		break;
@@ -2320,6 +2321,45 @@ void InteractionsManager::TelevisionImage(bool)
 @@#&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&####&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::TelevisionOtherChannelImage()
+{
+	const char* image = R"(@@&##&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&##&@@
+@G. :J&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&!  :G@
+@B7J@@@@@@@#BBBBBBBBBBBBBBBBBBBB&@@@@@@&G5P#@@@@@@@BGBBBBB#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Y~ :G@
+@@@@@@@@@@@5!!!!!!!!!!!!!!!!!!~!G@@@PY57   ^Y5YYY#@BY7~~~~Y&#5Y55555555555555555555555555555555YG@@@@@@@@@~.G@
+@@@@@@@@@@@5!!77777777777777!7YG@@5!             ~??JPGG57Y@P. ...............................  7&@@@@@@@&~.G@
+@@@@@@@@@@@5!!77777777777777!7B@5~                  :B@@#?Y@P:.:::::::::::::::::::::::::::::::..?@@@@@@@@#^.G@
+@@@@@@@@@GJ777777777777777!7P#J:           7B#B#G!   .7##?Y@P:.::::::::::::::::::::::::::::::::.:~5@@@@@@@#B&@
+@@@@@@@@@P!!7777777!J#@&&&&&@@7            .:.:5@@B~  ^B#?Y@P^.:::::::::::::::::::::::::::::::::..?@@@@@@@@@@@
+@@@@@@@@@P7!77?7JB@&&@BYJYG&@@7                         ~##75@5:.:::::::::::::::::::::::::::::::..J@@@@@@@@@@@
+@@@@@@@@@P77J#@@#5JJJJJYYYJJG#J:.                       ~##75@5:.:::::::::::::::::::::::::::::::..J@@@@@@@@@@@
+@@@@@@@@@57G@@B5JJYYYYYYYYYYJY&@7                       ~##75@5:.:::::::::::::::::::::::::::::::..7P#@@@@@@@@@
+@@@@@@@@@P7G@P?JYYYYYYYYYYYYJY#&!              ~JY?:   !5@#75@5:.:::::::::::::::::::::::::::::::::  J@@@@@@@@@
+@@@@@@@#5?7G@&G5JJYYYYYYYYYYJY#@BJ:            ~JJJ55YP@@GJ75@5:.:::::::::::::::::::::::::::::::::..Y@@@@@@@@@
+@@@@@@@P!!7?5#@PJJYYYYYYYYYYJY5P@&~                ^J#@@#?~!5@5:.:::::::::::::::::::::::::::::::::..Y@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYYYYYYYYYYYJY#@&P:               .G@577!!5@5:.:::::::::::::::::::::::::::::::::..Y@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYYYYYYYYYJYJ5#@@@@P^         .Y&&#&@&&&G75@P:.:::::::::::::::::::::::::..........Y@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYYYYYJJYYY5B&@B^:P@###########@B!      !&@@@&&&&&&&&&&&&&&&&&&&&&&&&@#7:^^^^^^^:^Y@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYYYJJY5#@@B!                           ~G@@BYJYYYYYYYYYYYYYYYYYYYYYYJYB@&&&&&&&@@@@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYYJY5#@@P~                               ~PBG5YYYYYYYYYY5PGGGGGGGGGGGPYJYYYYYJJG@@@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYJJG@&5~                                   ^YGBBG5YPGGGGB###########@@#PYYYYYYYG@@@@@@@@@@@
+@@@@@@@P!!7!7B@PJJYYJJG@5                                       ^J#@&B@@#BBG55555555555PB@@&GYJYYYG@@@@@@@@@@@
+@@@@@@@&BY7!7B@PJJYYJJG@5.                            :5BG?       .!G@@&G55555555G#&&&&##GGGB#B5JYG@@@@@@@@@@@
+@@@@@@@@@P7~7B@PJJYYJJG@5.                             :?@@#J.    ?BGPGPP55G&#P55B@#GPG&@@#PP@&5JYG@@@@@@@@@@@
+@@@@@@@@@P!!77JB&5JJP&P^                                  ?@P.   .5@B5555P&@@#P55B@B5555G&@@#5P&@&@@@@@@@@@@@@
+@@@@@@@@@P?77!?#@PJJP@P.         :PB!                     !&@@J 7#BPP5555G@&PG&#PB&@&G5PPPG&@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@5!!?#@PJJP@P.           ^##^                   ~G@@P~  5@B5555G@&P55G&#PPPPG#@@@@&BGB#@@@@@@@@@@@@@
+@@@@@@@@@@@5!~7B@5?JP@P            :#B:                     !&@P~ !PGGP55P&&BGGGG#&@&@&#GBBBBBGG#@@@@@@@@@GG&@
+@@@@@@@@@@@B55P&@BPPB@BJ7?????????7Y&&J7????????????????????P@G77?77B@#BBB@@@@&&&#GGGGGBBBBGB###&@@@@@@@@&^ G@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&###&&&&&&&&&#&@@@@@@@@@@@P7.:G@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@7  :G@
+@B~7&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Y:   :G@
+@@#&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&####&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+
 }
 
 void InteractionsManager::ToiletCabinetImage()
