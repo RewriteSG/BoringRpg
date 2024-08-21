@@ -2,10 +2,28 @@
 #include "Application.h"
 #include "GameManager.h"
 #include "string"
+#include "MainMenu.h"
+#include "Windows.h"
 
 void EndingManager::PlayLivingRoom(void)
 {
-	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was trying to open the MAIN DOOR. ");
+	if (GameManager::getGM()->TimeSys.TimeLoop == 1)
+	{
+		dialogues.push_back("TIME:??? You heard the sound of the footstep outside of your main door. ");
+		dialogues.push_back("TIME:??? There was a stranger tried to open the MAIN DOOR, then you looked at the clock. ");
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " THOUGHT: who is that at this godly hour? ");
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " BANG! ");
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Surprised, you swiftly turned to the main door and saw a familiar face. ");
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Before you could utter a word, the stranger quickly ran forwards you. ");
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Raising his cruel blade, and straight to your chest. ");
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You fell on the ground. Your breath and heartbeat was racing with the time. ");
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Everything went silience but the sound of tickling clock. ");
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Finally your vision gradually faded off... ");
+		return;
+	}
+	else
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was trying to open the MAIN DOOR. ");
+
 	if (GameManager::getGM()->InteractionsMgr.isBarricadeSetup) {
 		*time += 120;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As the door barricaded. This would take some time for the killer to break into the house. ");
@@ -259,7 +277,8 @@ void EndingManager::Update(void)
 	Vector2 uiPos = Vector2(Application::numberOfColumns / 2 - 100, Application::numberOfRows / 2);
 	ui = new UI(uiPos, 0, 150);
 
-	for (int i = 0; i < 5 && !GameManager::getGM()->InteractionsMgr.isPlayerSucide; ++i)
+	if(!GameManager::getGM()->InteractionsMgr.isPlayerSucide && GameManager::getGM()->TimeSys.TimeLoop > 0)
+	for (int i = 0; i < 5; ++i)
 	{
 
 		killerCurrentScene = SceneManager::GetSceneName(i);
@@ -310,6 +329,14 @@ void EndingManager::Update(void)
 			break;
 	}
 
+	if (GameManager::getGM()->TimeSys.TimeLoop == 0)
+	{
+		dialogues.push_back("TIME:??? You heard a noise outside of your house but you were too tired to bother it.   ");
+		dialogues.push_back("TIME:??? So you chose to continue to sleep. ");
+		dialogues.push_back("TIME:??? While you were enjoying your dream, you felt a sudden pain behind your back. ");
+		dialogues.push_back("TIME:??? The pain was not only once but continuously, and until you fell into eternal dream... ");
+	}
+
 	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops && !hasWeapon)
 	{
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-year-old man successfully defended himself by attempting with well-preapred measures until police arrived. ");
@@ -328,9 +355,8 @@ void EndingManager::Update(void)
 	}
 	else if (GameManager::getGM()->InteractionsMgr.isPlayerSleeping)
 	{
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer slowly moved towards you without making any sound, raising his sharp blade and stabing you vigorously. ");
 		dialogues.push_back("[BREAKING NEWS]: A 25-year-old man was found dead in " + GameManager::getGM()->whatScenePlayerIn + " at at BLK 243 Chicken Street. The dead body was discovered on his bed with multiple stab wounds on his back. ");
-		endingNum = 6;
+		endingNum = 5;
 	}
 	else
 	{
@@ -362,10 +388,26 @@ void EndingManager::Update(void)
 
 void EndingManager::Exit()
 {
+	system("CLS");
 	dialogues.clear();
 	GameManager::getGM()->TimeSys.CountLoop(0);
-	SceneManager::LoadScene("LivingRoomScene");
+	
+	if (endingNum == 2 || endingNum == 3)
+	{
+		if(endingNum == 2)
+			ui->PrintDialogue(Vector2(), "Congratulation, you got a best ending!");
+
+		if (endingNum == 3)
+			ui->PrintDialogue(Vector2(), "Unfortunately not a best ending, but at least you're survied!");
+
+		ui->CreateText("Returning to main menu...");
+		Sleep(1500);
+		SceneManager::LoadScene(new MainMenu());
+	}
+	else
+		SceneManager::LoadScene("LivingRoomScene");
 	SceneManager::prevScene = "";
+	delete ui;
 }
 
 int EndingManager::EndingUnlock(void) const

@@ -118,16 +118,17 @@ void MainMenu::Update(void)
 			if (counter == 1) {
 				Scene::ChangeColor(Scene::Default);
 				system("cls");
-				UI ui = UI(Vector2(130, 12), 7, 100);
-				UI gameUI2(Vector2(Application::numberOfColumns / 2 - 171 / 2, 8), 0, 171);
-				//gameUI2.CreateBox(Vector2(), "", 40);
-				ui.PrintDialogue(Vector2(-105, 10), "You came home from work, tired and exhausted.");
-				ui.PrintDialogue(Vector2(-105, 10), "You: Damn... so many customers today...");
-				ui.PrintDialogue(Vector2(-105, 10), "You: I really need to get some rest...");
-				ui.PrintDialogue(Vector2(-105, 10), "As you arrived at the door, you reached for your keys in your pocket.");
-				ui.PrintDialogue(Vector2(-105, 10), "When you insert the key and turned, you walked into the living room.");
-				ui.PrintDialogue(Vector2(-105, 10), "You decide to take a shower and watch the news before going to bed.");
 
+				if (GameManager::getGM()->TimeSys.TimeLoop < 1)
+				{
+					UI ui = UI(Vector2(130, 12), 0, 100);
+					ui.PrintDialogue(Vector2(-105, 10), "You came home from work, tired and exhausted.");
+					ui.PrintDialogue(Vector2(-105, 10), "You: Damn... so many customers today...");
+					ui.PrintDialogue(Vector2(-105, 10), "You: I really need to get some rest...");
+					ui.PrintDialogue(Vector2(-105, 10), "As you arrived at the door, you reached for your keys in your pocket.");
+					ui.PrintDialogue(Vector2(-105, 10), "When you inserted the key and turned, you walked into the living room.");
+					ui.PrintDialogue(Vector2(-105, 10), "You decided to take a shower and watch the news before going to bed.");
+				}
 				SceneManager::LoadScene(new LivingRoomScene());
 			}
 				
