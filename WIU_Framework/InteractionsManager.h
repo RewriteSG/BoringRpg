@@ -9,7 +9,8 @@ class InteractionsManager
 public:
 	//timer
 	TimeSystem* timeSystem;
-	
+	std::string soapLocation;
+
 	UI* ui;
 	bool isNailSetup;
 	bool isPlankSetup;

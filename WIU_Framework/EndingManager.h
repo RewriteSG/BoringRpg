@@ -16,6 +16,7 @@ private:
 	
 	bool playerGotBothWeapon;
 	int dialogueIndex;
+	int endingNum;
 	int* time;
 
 private:
