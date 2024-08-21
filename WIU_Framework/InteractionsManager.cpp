@@ -112,6 +112,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 		{
 		case 0:
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You took a shower.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Let me catch up on the news before going to bed.");
 			*hasTakenShower = true;
 			break;
 		case 1:
@@ -266,29 +267,41 @@ void InteractionsManager::StoveInteracted(GameObject* stove, GameObject* player)
 {
 	Start();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	if (hasMetalPan)
+
+	switch (timeSystem->TimeLoop)
 	{
-		StoveImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else I can do here.");
-	}
-	else
-	{
-		StoveImage();
+	case 0:
+	case 1:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's a pan at the top of the stove.");
-		ui->GetOptionUI()->AddOption(new std::string("Yes"));
-		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the pan?");
-		switch (choosenItem)
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Cooking wasn't so easy for me, because I have weak arms.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should really hit the gym sometimes.");
+		break;
+	default:
+		if (hasMetalPan)
 		{
-		case 0:
-			timeSystem->increaseTimeTaken(5);
-			hasMetalPan = true;
-			GameManager::getGM()->inventory.PickupItem("Metal Pan");
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up metal pan!");
-			break;
-		case 1:
-			break;
+			StoveImage(true);
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else I can do here.");
 		}
+		else
+		{
+			StoveImage();
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "There's a pan at the top of the stove.");
+			ui->GetOptionUI()->AddOption(new std::string("Yes"));
+			ui->GetOptionUI()->AddOption(new std::string("No"));
+			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the pan?");
+			switch (choosenItem)
+			{
+			case 0:
+				timeSystem->increaseTimeTaken(5);
+				hasMetalPan = true;
+				GameManager::getGM()->inventory.PickupItem("Metal Pan");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up metal pan!");
+				break;
+			case 1:
+				break;
+			}
+		}
+		break;
 	}
 }
 
@@ -296,30 +309,44 @@ void InteractionsManager::KitchenCabinetInteracted(GameObject* kitchenCabinet, G
 {
 	Start();
 	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	if (hasKnife)
+
+	switch (timeSystem->TimeLoop)
 	{
-		KitchenCabinetImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else I can do here.");
-	}
-	else
-	{
+	case 0:
+	case 1:
 		KitchenCabinetImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's some knives in the cabinet.");
-		ui->GetOptionUI()->AddOption(new std::string("Yes"));
-		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the knife?");
-		switch (choosenItem)
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I cut myself yesterday when I was cooking...");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I am always clumsy with knives.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should practice more, honestly.");
+		break;
+	default:
+		if (hasKnife)
 		{
-		case 0:
-			timeSystem->increaseTimeTaken(5);
-			hasKnife = true;
-			KnifeImage();
-			GameManager::getGM()->inventory.PickupItem("knife");
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up knife!");
-			break;
-		case 1:
-			break;
+			KitchenCabinetImage(true);
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There is nothing left in the cabinet.");
 		}
+		else
+		{
+			KitchenCabinetImage();
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "There's some knives in the cabinet.");
+			ui->GetOptionUI()->AddOption(new std::string("Yes"));
+			ui->GetOptionUI()->AddOption(new std::string("No"));
+			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the knife?");
+			switch (choosenItem)
+			{
+			case 0:
+				timeSystem->increaseTimeTaken(5);
+				hasKnife = true;
+				KnifeImage();
+				GameManager::getGM()->inventory.PickupItem("knife");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up knife!");
+				break;
+			case 1:
+				break;
+			}
+		}
+		break;
 	}
 }
 
@@ -407,7 +434,7 @@ void InteractionsManager::TableInteracted(GameObject* table, GameObject* player)
 {
 	Start();
 	TableImage();
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "You tried to search the table.");
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "You scanned through the whole surface, and below the table.");
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "But there was nothing on it.");
 	timeSystem->increaseTimeTaken(5);
 }
@@ -510,7 +537,8 @@ void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabi
 		{
 		case 0:
 		case 1:
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Why did I put this here...");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't know why I bought this big cabinet.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't even have much stuff to begin with.");
 			break;
 		default:
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can use this to tie the killer up.");
@@ -564,7 +592,6 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 				case 0:
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid inside.");		
 					isPlayerHidden = true;
-					//closet endings, differ if player has knife/pan and duct tape
 					break;
 				case 1:
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Seems like a bad idea...");
@@ -628,7 +655,8 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 	{
 		BedRoomDrawerImage(true);
 
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "Seems like the drawer is organized already.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "I have already organised the drawer.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing else useful inside.");
 
 	}
 }
