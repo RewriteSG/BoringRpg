@@ -223,7 +223,10 @@ void EndingManager::MentalPanEnding(void)
 		else
 		{
 			*time += 30;
-			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As he was being knock out, you used your duct tape to tie him up. Then you was calmly waiting for police on the sofa. ");
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As he was being knock out, you used your duct tape to tie him up. ");
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Then, you took out your phone to call the police. ");
+			GameManager::getGM()->InteractionsMgr.hasCalledTheCops = true;
+			*time = GameManager::getGM()->TimeSys.TimeLimitForCops;
 			isWeaponUse = true;
 		}
 	}
@@ -343,7 +346,7 @@ void EndingManager::Update(void)
 		isPoliceCame = GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops;
 
 		if (isPoliceCame)
-			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Fortunately, the police arrived on time and provided you assistance. ");
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Finally, the police arrived on time and provided you assistance. ");
 
 		if (isPlayerFound || isWeaponUse || isPoliceCame)
 			break;
@@ -357,7 +360,7 @@ void EndingManager::Update(void)
 		dialogues.push_back("TIME:??? The pain was not only once but continuously, and until you fell into eternal dream... ");
 	}
 
-	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops && !hasWeapon)
+	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops || (GameManager::getGM()->InteractionsMgr.hasDuctTape && GameManager::getGM()->InteractionsMgr.hasMetalPan))
 	{
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-year-old man successfully defended himself by attempting with well-preapred measures until police arrived. ");
 		Endings::isunlocked[Endings::ARRESTED];

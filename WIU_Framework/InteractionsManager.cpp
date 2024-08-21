@@ -655,7 +655,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "Cops: Hi, this is [REDACTED] police department, how may I help?");
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: YOU GOTTA SEND SOMEONE HERE!");
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: THERE IS A SERIAL KILLER ON THE LOOSE AND HE IS COMING FOR ME!");
-					ui->PrintDialogue(Vector2(POINTX, POINTY), "Cops: Okay stay calm, help is on their way and will be there at 12:15.");
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "Cops: Okay stay calm, help is on their way and will be there at 00:08.");
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: BUT I DON'T HAVE MUCH-");
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "They hung up.");
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Son of a-");
@@ -1050,13 +1050,16 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "I should really go to bed now.");
 		break;
 
+	case 1:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
+			GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
+		break;
 	default:
 		timeSystem->increaseTimeTaken(2);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I remember that he comes at 00:05, I still have time.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
 			GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
 		break;
-
 	}
 	
 }
