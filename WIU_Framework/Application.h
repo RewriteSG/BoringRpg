@@ -22,5 +22,6 @@ public:
 
 	static void HideCursor(void);
 	static void ShowCursor(void);
+	static void ClearInputBuffer(void);
 };
 
