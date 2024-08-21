@@ -49,7 +49,7 @@ void Endings::Start()
             cout << "Please Input '1,2,3,4,5' To Check The Unlocked Endings, Enter 0 to exit";
             break;
         case '0':
-            SceneManager::LoadScene(new MainMenu());
+            SceneManager::LoadScene(SceneManager::mainMenu);
             isExit = true;
             break;
         }

@@ -4,6 +4,7 @@
 //#include <crtdbg.h>
 #include <iostream>
 #include "Windows.h"
+#include "MainMenu.h"
 
 int Application::numberOfColumns = 0;
 int Application::numberOfRows = 0;
@@ -66,7 +67,7 @@ void Application::Update(void)
 	do
 	{
 		sceneMgr->Update();
-	} while (SceneManager::currentScene);
+	} while (!MainMenu::isExit);
 }
 
 void Application::Exit(void) { delete sceneMgr; }

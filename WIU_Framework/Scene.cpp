@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "Windows.h"
 #include "Application.h"
-
+#include "SceneManager.h"
 
 GameManager Scene::gm = GameManager();
 bool Scene::GetContinuePgrm() const
@@ -48,6 +48,7 @@ void Scene::Update()
 	UpdateGameObjectsPos();
 
 	gm.Update();
+	if(!SceneManager::nextScene)
 	Render();
 }
 
@@ -218,9 +219,9 @@ void Scene::DrawASCII_Art(string ascii_art, int x, int y, int color)
 			{
 				cout<<ascii_art[x]; 
 			}
-			if ((x + 1 == ascii_art.length()))
+			if ((static_cast<unsigned long long>(x) + 1 == ascii_art.length()))
 			{
-				i = ascii_art.length();
+				i = (int)ascii_art.length();
 			}
 
 		}
@@ -281,9 +282,9 @@ void Scene::ClearASCII_Art(int x, int y, int color)
 			{
 				cout << ascii_art[x];
 			}
-			if ((x + 1 == ascii_art.length()))
+			if ((static_cast<unsigned long long>(x) + 1 == ascii_art.length()))
 			{
-				i = ascii_art.length();
+				i = (int)ascii_art.length();
 			}
 
 		}
