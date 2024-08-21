@@ -176,8 +176,8 @@ void EndingManager::MetalPanEnding(void)
 				HideAction();
 		}
 		else
-			MetalPanAction();
 
+			MetalPanAction();
 	}
 	else
 	{
@@ -406,7 +406,7 @@ void EndingManager::Update(void)
 		dialogues.push_back("TIME:??? The pain was not only once but continuously, and until you fell into eternal dream... ");
 	}
 
-	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops && !hasWeapon)
+	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops || (GameManager::getGM()->InteractionsMgr.hasDuctTape && GameManager::getGM()->InteractionsMgr.hasMetalPan))
 	{
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-year-old man successfully defended himself by attempting with well-preapred measures until police arrived. ");
 		Endings::isunlocked[Endings::ARRESTED] = true;
