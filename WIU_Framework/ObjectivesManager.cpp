@@ -57,8 +57,10 @@ void ObjectivesManager::displayObjectives() const
 			} 
 			else if (!hasCalledMom && hasWatchedTV && hasTakenShower)
 			{
+				GameManager::getGM()->DontCountTime = false;
 				ui->CreateText("              ", Vector2(29, -5));
 				ui->CreateText("Stay Awake.", Vector2(29, -5));
+				GameManager::getGM()->InteractionsMgr.TelevisionOtherChannelImage();
 				Sleep(3000);
 				GameManager::getGM()->TimeSys.TimeTaken = GameManager::getGM()->TimeSys.RobberTime;
 			}
