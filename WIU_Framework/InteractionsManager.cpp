@@ -883,7 +883,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, I should just go watch some movies since I can't sleep.");
 		TelevisionOtherChannelImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You switched to some entertainment channels.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "Show: There is nothing stronger than family.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "Movie: There is nothing stronger than family.");
 		*hasWatchedTV = true;
 		}
 		break;
