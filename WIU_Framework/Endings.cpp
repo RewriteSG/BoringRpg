@@ -9,11 +9,11 @@
 Endings::Endings()
 {
 	name = SceneManager::GetSceneName(SceneManager::ENDINGS); 
-    isunlocked[0] = true;
-    isunlocked[1] = true;
-    isunlocked[2] = true;
-    isunlocked[3] = true;
-    isunlocked[4] = true;
+    isunlocked[0] = false;
+    isunlocked[1] = false;
+    isunlocked[2] = false;
+    isunlocked[3] = false;
+    isunlocked[4] = false;
 }
 void Endings::Start()
 {
