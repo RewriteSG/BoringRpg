@@ -85,7 +85,7 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 	{
 		if (_kbhit())
 		{
-			input = _getch();
+			input = GameManager::_getch();
 
 			if (input == '\r')
 			{
@@ -130,7 +130,7 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 	CreateText("[Enter to continue]", Vector2(position.GetX(), position.GetY() + numberOfLine));
 	while (true)
 	{
-		input = _getch();
+		input = GameManager::_getch();
 		if (input == '\r')
 			break;
 	}
@@ -164,7 +164,7 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 	{
 		if (_kbhit())
 		{
-			input =  _getch();
+			input = GameManager::_getch();
 
 			if (input == '\r')
 			{

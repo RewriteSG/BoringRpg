@@ -26,12 +26,11 @@ private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
 	bool EmptyDialogue = true;
-	char PlayerInput;
 
 	EndingManager* endingMgr;
 public:
 	bool LoopStarted;
-	bool DontCountTime;
+	bool firstLoop;
 	UI* gameUI;
 	Player* player;
 
@@ -59,5 +58,6 @@ public:
 	void DisplayFurnituresAroundPlayer(Vector2);
 	void CreatePlayer(Vector2 toPos);
 	void ClearDialogue();
+	static char _getch(void);
 };
 

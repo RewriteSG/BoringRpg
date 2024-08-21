@@ -1,7 +1,6 @@
 #include "Application.h"
 #include <iostream>
 #include "Windows.h"
-#include "conio.h"
 
 int Application::numberOfColumns = 0;
 int Application::numberOfRows = 0;
@@ -47,12 +46,6 @@ void Application::ShowCursor(void)
 	cursorInfo.bVisible = TRUE; // Set the cursor visibility to false
 	SetConsoleCursorInfo(consoleHandle, &cursorInfo);
 }
-void Application::ClearInputBuffer(void)
-{
-	while (_kbhit()) {  // While there are characters in the input buffer
-		_getch();       // Read and discard each character
-	}
-}
 void Application::Init(void)
 {
 	FontSize(Vector2(7, 16));
@@ -66,7 +59,7 @@ void Application::Update(void)
 	sceneMgr->Start();
 	do
 	{
-		sceneMgr->Update(); ClearInputBuffer();
+		sceneMgr->Update();
 	} while (!SceneManager::isExit);
 }
 
