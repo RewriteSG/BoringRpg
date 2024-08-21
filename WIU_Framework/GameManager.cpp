@@ -610,11 +610,11 @@ void GameManager::HandleInput(void)
 			{
 				ClearDialogue();
 				if (TimeSys.TimeLoop > 1) {
-					ui.CreateOptionUI(Vector2(POINTX, POINTY), false);
+					ui.CreateOptionUI(Vector2(3, 3), false);
 					ui.GetOptionUI()->AddOption(new string("Yes"));
 					ui.GetOptionUI()->AddOption(new string("No"));
-					int choice = ui.PickDialogue(Vector2(POINTX, POINTY), "Are you sure you want to wait for the killer to arrive? (This will skip to the ending)");
-					if (choice == 1)
+					int choice = ui.PickDialogue(Vector2(3, 2), "Are you sure you want to wait for the killer to arrive? (This will skip to the ending)");
+					if (choice == 0)
 						TimeSys.TimeTaken = TimeSys.RobberTime;
 				}
 				else
