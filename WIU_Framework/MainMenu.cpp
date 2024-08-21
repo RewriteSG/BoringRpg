@@ -123,6 +123,8 @@ void MainMenu::Update(void)
 			if (counter == 1) {
 				Scene::ChangeColor(Scene::Default);
 				system("cls");
+				if (GameManager::getGM()->TimeSys.TimeLoop < 1)
+				{
 				UI ui = UI(Vector2(130, 12), 7, 100);
 				UI gameUI2(Vector2(Application::numberOfColumns / 2 - 171 / 2, 8), 0, 171);
 				//gameUI2.CreateBox(Vector2(), "", 40);
@@ -139,6 +141,7 @@ void MainMenu::Update(void)
 				ui.PrintDialogue(Vector2(-105, 10), "Just as you close your door, the figure appears from the dark.");
 				ui.PrintDialogue(Vector2(-105, 10), "With a knife in his hand.");
 
+				}
 				SceneManager::LoadScene(new LivingRoomScene());
 			}
 				
