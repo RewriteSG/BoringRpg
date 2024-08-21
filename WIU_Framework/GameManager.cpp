@@ -27,7 +27,7 @@ GameManager::GameManager(void) : TimeSys()
 	GameWon = true;
 	player = nullptr;
 	LoopStarted = false;
-	firstLoop = TimeSys.TimeLoop == 0;
+	DontCountTime = TimeSys.TimeLoop == 0;
 	gameUI = new UI(Vector2(130, 12), 0, 150);
 	gameUI->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	endingMgr = new EndingManager();
@@ -51,7 +51,7 @@ void GameManager::Start()
 	GameEnded = false;
 	GameWon = true;
 	InteractionsMgr.Start();
-	firstLoop = TimeSys.TimeLoop == 0;
+	DontCountTime = TimeSys.TimeLoop == 0;
 }
 void GameManager::Update()
 {
@@ -63,7 +63,7 @@ void GameManager::Update()
 
 	if (TimeSys.TimeTaken >= TimeSys.RobberTime or InteractionsMgr.isPlayerSucide or InteractionsMgr.isPlayerHidden or InteractionsMgr.isPlayerSleeping)
 	{
-		if (firstLoop)
+		if (DontCountTime)
 			return;
 		TimeSys.TimeTaken = TimeSys.RobberTime;
 		whatScenePlayerIn = SceneManager::currentScene->getName();
@@ -92,6 +92,7 @@ void GameManager::HandleInput(void)
 {
 	if (player == nullptr || TimeSys.TimeTaken >= TimeSys.RobberTime)
 		return;
+	Application::ShowCursor();
 
 	Furniture* furnituresLeft, * furnituresRight, * furnituresUp, * furnituresDown;
 	furnituresLeft = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() - 1, player->GetPosition()->GetY())));
@@ -160,9 +161,11 @@ void GameManager::HandleInput(void)
 
 	ClearDialogue();
 	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
-	//ui.CreateText(ToPrint, Vector2(3, 2));
+	ui.CreateText("Enter 'w' or 'a' or 's' or 'd' to move yourself. ", Vector2(3, 2));
 
 	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0));
+	Scene::GotoXY(Application::numberOfColumns / 2 - 81, 45);
+	cout<< "Input: ";
 	char input;
 	if (LoopStarted)
 		input = _getch();
@@ -197,8 +200,10 @@ void GameManager::HandleInput(void)
 		//Move left
 		break;
 	case '/':
-		
-
+		ClearDialogue();
+		string stringInput = "";
+		string ItemFromInput = "";
+		string KeywordFromInput = "";
 		while (true) 
 		{
 			//					[ (W)(A)(S)(D): Move  (/): To enable input field ]
@@ -207,43 +212,45 @@ void GameManager::HandleInput(void)
 			std::string Print = "blank", doorStr = "blank";
 			if (furnituresLeft || furnituresRight || furnituresUp || furnituresDown)
 				Print = "What do you want to do with ";
+			else
+				Print = "What do you want to do?";
 			if (furnituresLeft)
 			{
 				Print += furnituresLeft->GetName();
 				if (furnituresLeft->GetFurnitureType() == Furniture::BedRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresLeft->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::MainDoor
-					|| furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor)
+					|| furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::ToiletDoor)
 					doorStr = furnituresLeft->GetName();
 			}
 			if (furnituresRight)
 			{
 				if (furnituresLeft)
-					Print += " and ";
+					Print += " or ";
 				Print += furnituresRight->GetName();
 				if (furnituresRight->GetFurnitureType() == Furniture::BedRoomDoor || furnituresRight->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresRight->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresRight->GetFurnitureType() == Furniture::MainDoor
-					|| furnituresRight->GetFurnitureType() == Furniture::StoreRoomDoor)
+					|| furnituresRight->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresRight->GetFurnitureType() == Furniture::ToiletDoor)
 					doorStr = furnituresRight->GetName();
 			}
 			if (furnituresUp)
 			{
 				if (furnituresLeft || furnituresRight)
-					Print += " and ";
+					Print += " or ";
 				Print += furnituresUp->GetName();			
 				if (furnituresUp->GetFurnitureType() == Furniture::BedRoomDoor || furnituresUp->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresUp->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresUp->GetFurnitureType() == Furniture::MainDoor
-					|| furnituresUp->GetFurnitureType() == Furniture::StoreRoomDoor)
+					|| furnituresUp->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresUp->GetFurnitureType() == Furniture::ToiletDoor)
 					doorStr = furnituresUp->GetName();
 			}
 			if (furnituresDown)
 			{
 
 				if (furnituresLeft || furnituresRight || furnituresUp)
-					Print += " and ";
+					Print += " or ";
 				Print += furnituresDown->GetName();
 				if (furnituresDown->GetFurnitureType() == Furniture::BedRoomDoor || furnituresDown->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresDown->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresDown->GetFurnitureType() == Furniture::MainDoor
-					|| furnituresDown->GetFurnitureType() == Furniture::StoreRoomDoor)
+					|| furnituresDown->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresDown->GetFurnitureType() == Furniture::ToiletDoor)
 					doorStr = furnituresDown->GetName();
 
 			}
@@ -251,31 +258,119 @@ void GameManager::HandleInput(void)
 			if (EmptyDialogue) {
 
 				ui.CreateText(Print, Vector2(3, 2));
-				int yOffset = 0;
-				ui.CreateText("Enter 'interact' or 'i' (space) <Object name>   |", Vector2(3, 3));
-				ui.CreateText("Enter 'e' ", Vector2(3, 3));
-				
-				//if (inventory.GetItemsCount() > 0) 
-				//{
-				//	ui.CreateText("Enter 'use' (space) <item name> ", Vector2(55, 3));
-				//}
-				if (furnituresUp) 
-				{
-					ui.CreateText("|", Vector2(50, 4 + yOffset));
-					if (furnituresUp->GetName() != doorStr) {
-
-						ui.CreateText(furnituresUp->GetName(), Vector2(3, 4 + yOffset));
+				int yOffset = 1;
+				int xOffset = 0;
+				if (furnituresLeft || furnituresRight || furnituresUp || furnituresDown) {
+					string text = "";
+#pragma region OMG
+					int doorCount = 0, furnitureCount = 0;
+					if (furnituresLeft)
+					{
+						if (furnituresLeft->GetFurnitureType() == Furniture::BedRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::KitchenDoor
+							|| furnituresLeft->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::MainDoor
+							|| furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::ToiletDoor) {
+							doorCount++;
+							text = "";
+						}
+						furnitureCount++;
 					}
-					else 
+					if (furnituresRight)
+					{
+						if (furnituresRight->GetFurnitureType() == Furniture::BedRoomDoor || furnituresRight->GetFurnitureType() == Furniture::KitchenDoor
+							|| furnituresRight->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresRight->GetFurnitureType() == Furniture::MainDoor
+							|| furnituresRight->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresRight->GetFurnitureType() == Furniture::ToiletDoor) {
+							doorCount++;
+							text = "";
+						}
+						furnitureCount++;
+
+					}
+					if (furnituresUp)
+					{
+						if (furnituresUp->GetFurnitureType() == Furniture::BedRoomDoor || furnituresUp->GetFurnitureType() == Furniture::KitchenDoor
+							|| furnituresUp->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresUp->GetFurnitureType() == Furniture::MainDoor
+							|| furnituresUp->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresUp->GetFurnitureType() == Furniture::ToiletDoor) {
+							doorCount++;
+							text = "";
+						}
+						furnitureCount++;
+
+					}
+					if (furnituresDown)
 					{
 
+						if (furnituresDown->GetFurnitureType() == Furniture::BedRoomDoor || furnituresDown->GetFurnitureType() == Furniture::KitchenDoor
+							|| furnituresDown->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresDown->GetFurnitureType() == Furniture::MainDoor
+							|| furnituresDown->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresDown->GetFurnitureType() == Furniture::ToiletDoor) {
+							doorCount++;
+							text = "";
+						}
+						furnitureCount++;
+
+					}
+#pragma endregion
+					if ((doorCount > 0 && doorCount < furnitureCount) || doorCount == 0)
+					{
+						text = "Enter 'interact' or 'i' (space) <Object name>   |";
+					}
+					if (text != "") {
+
+						ui.CreateText(text, Vector2(3, 3));
+						xOffset = 50 + 4;
+					}
+				}
+				else 
+				{
+					ui.CreateText("Enter 'move' or Press (Enter)  |", Vector2(3, 3));
+					xOffset = 33 + 4;
+				}
+				if (doorStr != "blank") {
+					string doortext = "Enter 'e' to open " + doorStr + " and enter.  |";
+					if (xOffset == 0)
+						xOffset = 3;
+					ui.CreateText(doortext, Vector2(xOffset, 3));
+					xOffset += doortext.length() + 3;
+				}
+				
+				if (inventory.GetItemsCount() > 0) 
+				{
+					ui.CreateText("Enter 'use' (space) <item name> 'on' <object name>", Vector2(xOffset, 3));
+				}
+				if (furnituresUp) 
+				{
+					//ui.CreateText("|", Vector2(50, 4 + yOffset));
+					if (furnituresUp->GetName() != doorStr) {
+
+						ui.CreateText("  - "+furnituresUp->GetName(), Vector2(3, 4 + yOffset));
 					}
 					yOffset++;
 				}
-				if (furnituresDown) 
+				if (furnituresDown)
 				{
-					ui.CreateText(Print, Vector2(3, 4 + yOffset));
+					//ui.CreateText("|", Vector2(50, 4 + yOffset));
+					if (furnituresDown->GetName() != doorStr) {
 
+						ui.CreateText("  - " + furnituresDown->GetName(), Vector2(3, 4 + yOffset));
+					}
+					yOffset++;
+				}
+				if (furnituresRight)
+				{
+					//ui.CreateText("|", Vector2(50, 4 + yOffset));
+					if (furnituresRight->GetName() != doorStr) {
+
+						ui.CreateText("  - " + furnituresRight->GetName(), Vector2(3, 4 + yOffset));
+					}
+					yOffset++;
+				}
+				if (furnituresLeft)
+				{
+					//ui.CreateText("|", Vector2(50, 4 + yOffset));
+					if (furnituresLeft->GetName() != doorStr) {
+
+						ui.CreateText("  - " + furnituresLeft->GetName(), Vector2(3, 4 + yOffset));
+					}
+					yOffset++;
 				}
 			}
 			stringInput = InputField();

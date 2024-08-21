@@ -30,7 +30,7 @@ private:
 	EndingManager* endingMgr;
 public:
 	bool LoopStarted;
-	bool firstLoop;
+	bool DontCountTime;
 	UI* gameUI;
 	Player* player;
 

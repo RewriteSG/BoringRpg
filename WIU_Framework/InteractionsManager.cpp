@@ -840,7 +840,7 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 			*hasSlept = true;
 			isPlayerSleeping
 				= true;
-			GameManager::getGM()->firstLoop = false;
+			GameManager::getGM()->DontCountTime = false;
 			// play first loop ending
 			break;
 		}
@@ -1007,11 +1007,26 @@ void InteractionsManager::StoreRoomDoorInteracted(GameObject* storeRoomDoor, Gam
 	Sleep(500);
 	Start();
 	//
+	if (hasStoreRoomKeyCollected) {
+		ui->GetOptionUI()->AddOption(new string("Use Key"));
+		ui->GetOptionUI()->AddOption(new string("Leave"));
+		int chooseItem = ui->PickDialogue(Vector2(POINTX, POINTY), "You have a key for store room door, What do you want to do?");
+		if (chooseItem == 0) {
 
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Using Storeroom Key to unlock Storeroom.");
+			isStoreRoomUnlocked = true;
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Successfully unlocked the door!");
+		}
+		if (chooseItem == 1) 
+		{
+			return;
+		}
+	}
 	if (isStoreRoomUnlocked)
 	{
 
 		DoorOpeningImage(); 
+		Sleep(500);
 		SceneManager::LoadScene("StoreRoomScene");
 	}
 	else
