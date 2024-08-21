@@ -11,7 +11,6 @@
 #include "Endings.h"
 #include "UI.h"
 #include "KitchenScene.h"
-#include "conio.h" 
 
 void MainMenu::DrawClock(const int size) const
 {
@@ -111,7 +110,7 @@ void MainMenu::Update(void)
 			std::cout << choices[i];
 		}
 
-		key = _getch();
+		key = GameManager::_getch();
 
 		if (key == 'w' && (counter > 1 && counter <= 3))
 			counter--;

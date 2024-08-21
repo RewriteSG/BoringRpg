@@ -27,7 +27,7 @@ GameManager::GameManager(void) : TimeSys()
 	GameWon = true;
 	player = nullptr;
 	LoopStarted = false;
-	DontCountTime = TimeSys.TimeLoop == 0 || TimeSys.TimeLoop == 1;
+	firstLoop = TimeSys.TimeLoop == 0;
 	gameUI = new UI(Vector2(130, 12), 0, 150);
 	gameUI->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	endingMgr = new EndingManager();
@@ -51,8 +51,7 @@ void GameManager::Start()
 	GameEnded = false;
 	GameWon = true;
 	InteractionsMgr.Start();
-	DontCountTime = TimeSys.TimeLoop == 0 || TimeSys.TimeLoop == 1;
-	//isHoldingInput = false;
+	firstLoop = TimeSys.TimeLoop == 0;
 }
 void GameManager::Update()
 {
@@ -64,7 +63,7 @@ void GameManager::Update()
 
 	if (TimeSys.TimeTaken >= TimeSys.RobberTime or InteractionsMgr.isPlayerSucide or InteractionsMgr.isPlayerHidden or InteractionsMgr.isPlayerSleeping)
 	{
-		if (DontCountTime)
+		if (firstLoop)
 			return;
 		TimeSys.TimeTaken = TimeSys.RobberTime;
 		whatScenePlayerIn = SceneManager::currentScene->getName();
@@ -125,6 +124,7 @@ void GameManager::HandleInput(void)
 
 	}
 	delete[] lists;
+	Furniture::TypeOfFurniture typeofFurniture;
 	std::string ToPrint = "blank";
 	if (furnituresLeft || furnituresRight || furnituresUp || furnituresDown)
 		ToPrint = "There is a ";
@@ -149,6 +149,7 @@ void GameManager::HandleInput(void)
 
 		if (furnituresLeft || furnituresRight || furnituresUp)
 			ToPrint += " and a ";
+		typeofFurniture = furnituresDown->GetFurnitureType();
 		ToPrint += furnituresDown->GetName();
 		
 	}
@@ -160,52 +161,43 @@ void GameManager::HandleInput(void)
 	ClearDialogue();
 	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
 	//ui.CreateText(ToPrint, Vector2(3, 2));
-	PlayerInput = ' ';
+
 	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0));
-	if (LoopStarted) {
-
-		if (_kbhit())
-			PlayerInput = _getch();
-		else
-			PlayerInput = _getch();
-
-	}
+	char input;
+	if (LoopStarted)
+		input = _getch();
 	else 
 	{
-		PlayerInput = '/';
+		input = '/';
 		LoopStarted = true;
 	}
 
-	//Application::ClearInputBuffer(); 
 
-	switch (PlayerInput)
+
+	switch (input)
 	{
 	case 'w':
 		//Move up
-		//prevPlayerPos = *player->GetPosition();
 		*player->GetPosition() += Vector2(0, -1);
 		TimeSys.increaseTimeTaken(1);
 		break;
 	case 's':
-		//prevPlayerPos = *player->GetPosition();
 		*player->GetPosition() += Vector2(0, 1);
 		TimeSys.increaseTimeTaken(1);
 		//Move down
 		break;
 	case 'd':
-		//prevPlayerPos = *player->GetPosition();
 		*player->GetPosition() += Vector2(1, 0);
 		TimeSys.increaseTimeTaken(1);
 		//Move right
 		break;
 	case 'a':
-		//prevPlayerPos = *player->GetPosition();
 		*player->GetPosition() += Vector2(-1, 0);
 		TimeSys.increaseTimeTaken(1);
 		//Move left
 		break;
 	case '/':
-		string stringInput, ItemFromInput, KeywordFromInput;
+		
 
 		while (true) 
 		{
@@ -503,9 +495,6 @@ void GameManager::HandleInput(void)
 		break;
 
 	}
-	//prevInput = PlayerInput;
-	Sleep(10);
-
 }
 
 std::string GameManager::InputField(void)
@@ -519,7 +508,7 @@ std::string GameManager::InputField(void)
 	std::string text = "Input: ";
 	std::cout << text;
 	while (true) {
-		ch = _getch(); // Get a single character input without echoing to the console
+		ch = GameManager::_getch(); // Get a single character input without echoing to the console
 
 		// Check if the Enter key is pressed
 		if (ch == '\r') {
@@ -650,20 +639,20 @@ void GameManager::ClearDialogue()
 	}
 }
 
-//char GameManager::_getch(void)
-//{
-//	char ch = 0;
-//	DWORD mode, count;
-//	HANDLE h = GetStdHandle(STD_INPUT_HANDLE);
-//
-//	GetConsoleMode(h, &mode);
-//	SetConsoleMode(h, mode & ~(ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT));
-//
-//	ReadConsoleA(h, &ch, 1, &count, NULL);
-//
-//	SetConsoleMode(h, mode);
-//	return tolower(ch);
-//}
+char GameManager::_getch(void)
+{
+	char ch = 0;
+	DWORD mode, count;
+	HANDLE h = GetStdHandle(STD_INPUT_HANDLE);
+
+	GetConsoleMode(h, &mode);
+	SetConsoleMode(h, mode & ~(ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT));
+
+	ReadConsoleA(h, &ch, 1, &count, NULL);
+
+	SetConsoleMode(h, mode);
+	return tolower(ch);
+}
 
 
 

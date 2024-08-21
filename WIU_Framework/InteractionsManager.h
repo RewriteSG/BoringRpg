@@ -3,7 +3,6 @@
 #include "TimeSystem.h"
 #include "UI.h"
 
-
 class InteractionsManager
 {
 	void SeperateInput(std::string input, std::string& input1, std::string& input2);
@@ -28,7 +27,6 @@ public:
 	bool hasStoreRoomKeyCollected;
 	bool hasClosetKeyCollected;
 	bool hasCalledTheCops;
-	bool hasOrganizedBedroomDrawer;
 	bool hasHammer;
 	bool hasNails;
 	bool hasPlanks;
@@ -108,7 +106,6 @@ public:
 	void ToiletCabinetImage(bool);
 	void BedroomDoorImage();
 	void ClosetDoorImage();
-	void ClosetDoorImage(bool);
 	void KitchenDoorImage();
 	void ToiletDoorImage();
 	void ToiletBowlImage();
