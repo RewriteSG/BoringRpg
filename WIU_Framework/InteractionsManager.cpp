@@ -1156,14 +1156,18 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 	furnituresRight = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() + 1, player->GetPosition()->GetY())));
 	furnituresUp = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() - 1)));
 	furnituresDown = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX(), player->GetPosition()->GetY() + 1)));
-	GameManager::getGM()->ClearDialogue();
-	ui.CreateText("Use item(s) on what? Enter 'on <Object Name>'", Vector2(3, 2)); 
-	GameManager::getGM()->DisplayFurnituresAroundPlayer(Vector2(2, 3)); //print at (2,3);
+	//GameManager::getGM()->DisplayFurnituresAroundPlayer(Vector2(2, 3)); //print at (2,3);
 	std::string input = "";
 	if (keyword2.length() > 0)
 		input = keyword2 + " " + onObject;
 	else
+	{
+		GameManager::getGM()->ClearDialogue();
+
+		ui.CreateText("Use item(s) on what? Enter 'on <Object Name>'", Vector2(3, 3));
 		input = GameManager::getGM()->InputField();
+		//GameManager::getGM()->SetDialogueEmpty(false);
+	}
 	//int itemsUsing = 0;
 	if (furnituresRight) 
 	{
@@ -1190,8 +1194,14 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			else 
 			{
 				GameManager::getGM()->ClearDialogue();
+				if (usingHammer || usingNails || usingPlanks) {
+
 				ui.PrintDialogue(Vector2(3, 2), "I dont have enough items to use on the main door! Maybe i need nails, planks or hammer?");
-				ui.PrintDialogue(Vector2(3,2), "Enter 'use' <item name> and <item name> and <item name> on main door");
+				ui.PrintDialogue(Vector2(3, 2), "Enter 'use' <item name> and <item name> and <item name> on main door");
+				}
+				else
+				ui.PrintDialogue(Vector2(3, 2), "I dont think i can use that on the main door!");
+					
 			}
 			return true;
 		}
@@ -1211,7 +1221,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			else
 			{
 				GameManager::getGM()->ClearDialogue();
-				ui.PrintDialogue(Vector2(3, 2), "You: I dont have a key to unlock this.");
+				ui.PrintDialogue(Vector2(3, 2), "You: I dont think i can use that to unlock this.");
 			}
 			return true;
 		}
@@ -1233,7 +1243,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			else
 			{
 				GameManager::getGM()->ClearDialogue();
-				ui.PrintDialogue(Vector2(3, 2), "You: I dont have a key to unlock this.");
+				ui.PrintDialogue(Vector2(3, 2), "You: I dont think i can use that to unlock this.");
 			}
 			return true;
 		}
@@ -1255,7 +1265,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			else
 			{
 				GameManager::getGM()->ClearDialogue();
-				ui.PrintDialogue(Vector2(3, 2), "You: I dont have a key to unlock this.");
+				ui.PrintDialogue(Vector2(3, 2), "You: I dont think i can use that to unlock this.");
 			}
 			return true;
 		}
@@ -1282,7 +1292,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 		else
 		{
 			GameManager::getGM()->ClearDialogue();
-			ui.PrintDialogue(Vector2(3, 2), "I dont have enough items to use on the floor!");
+			ui.PrintDialogue(Vector2(3, 2), "I dont think i can use that on the floor!");
 		}
 		return true;
 	}

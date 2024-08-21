@@ -804,6 +804,11 @@ void GameManager::ClearDialogue()
 	}
 }
 
+void GameManager::SetDialogueEmpty(bool value)
+{
+	EmptyDialogue = value;
+}
+
 char GameManager::_getch(void)
 {
 	char ch = 0;
