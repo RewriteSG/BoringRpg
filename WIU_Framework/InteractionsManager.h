@@ -2,12 +2,14 @@
 #include "GameObject.h"
 #include "TimeSystem.h"
 #include "UI.h"
+
 class InteractionsManager
 {
 	void SeperateInput(std::string input, std::string& input1, std::string& input2);
 public:
 	//timer
 	TimeSystem* timeSystem;
+	
 	UI* ui;
 	bool isNailSetup;
 	bool isPlankSetup;
