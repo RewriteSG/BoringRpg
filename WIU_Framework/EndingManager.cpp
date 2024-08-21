@@ -25,7 +25,8 @@ void EndingManager::PlayLivingRoom(void)
 	else
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was trying to open the MAIN DOOR. ");
 
-	if (GameManager::getGM()->InteractionsMgr.isBarricadeSetup) {
+	if (GameManager::getGM()->InteractionsMgr.isBarricadeSetup) 
+	{
 		*time += 120;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As the door barricaded. This would take some time for the killer to break into the house. ");
 	}
@@ -43,7 +44,7 @@ void EndingManager::PlayLivingRoom(void)
 	else
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering living room, and found nothing. ");
 
-	if (GameManager::getGM()->InteractionsMgr.isSoapSetup)
+	if (GameManager::getGM()->InteractionsMgr.isSoapSetup && GameManager::getGM()->InteractionsMgr.soapLocation == killerCurrentScene)
 	{
 		*time += 60;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The serial killer had stepped on the soap and fell down. This would take some time for the killer to recover. ");
@@ -61,6 +62,12 @@ void EndingManager::PlayStoreroom(void)
 	}
 	else
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering storeroom, and found nothing. ");
+
+	if (GameManager::getGM()->InteractionsMgr.isSoapSetup && GameManager::getGM()->InteractionsMgr.soapLocation == killerCurrentScene)
+	{
+		*time += 60;
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Ah yes! The serial killer had stepped on your soap and fell down. This would take some time for the killer to recover. ");
+	}
 }
 
 void EndingManager::PlayToilet(void)
@@ -71,6 +78,12 @@ void EndingManager::PlayToilet(void)
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering toilet, and finally found you in toilet. ");
 	else
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering toilet, and found nothing. ");
+
+	if (GameManager::getGM()->InteractionsMgr.isSoapSetup && GameManager::getGM()->InteractionsMgr.soapLocation == killerCurrentScene)
+	{
+		*time += 60;
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Ah yes! The serial killer had stepped on your soap and fell down. This would take some time for the killer to recover. ");
+	}
 
 	if ((GameManager::getGM()->InteractionsMgr.isPlayerHidden && isPlayerWithKiller) && !hasWeapon)
 	{
@@ -88,6 +101,12 @@ void EndingManager::PlayBedroom(void)
 	else
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering bedroom, and found nothing. ");
 
+	if (GameManager::getGM()->InteractionsMgr.isSoapSetup && GameManager::getGM()->InteractionsMgr.soapLocation == killerCurrentScene)
+	{
+		*time += 60;
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Ah yes! The serial killer had stepped on your soap and fell down. This would take some time for the killer to recover. ");
+	}
+
 	if ((GameManager::getGM()->InteractionsMgr.isPlayerHidden && isPlayerWithKiller) && !hasWeapon)
 	{
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " However, he went back to check again, and finally found you. ");
@@ -100,12 +119,15 @@ void EndingManager::PlayKitChen(void)
 	*time += 10;
 
 	if (isPlayerFound)
-	{
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering kitchen, and finally found you in kitchen. ");
-		return;
-	}
 	else
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering kitchen, and found nothing. ");
+
+	if (GameManager::getGM()->InteractionsMgr.isSoapSetup && GameManager::getGM()->InteractionsMgr.soapLocation == killerCurrentScene)
+	{
+		*time += 60;
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Ah yes! The serial killer had stepped on your soap and fell down. This would take some time for the killer to recover. ");
+	}
 }
 
 void EndingManager::PickWeaponOption(void)
