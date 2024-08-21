@@ -112,7 +112,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 		{
 		case 0:
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You took a shower.");
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Let me catch up on the news before going to bed.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Let me catch up on the news before doing anything else.");
 			*hasTakenShower = true;
 			break;
 		case 1:
@@ -727,6 +727,13 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 			}
 		break;
 	case 1:
+		if (!*hasTakenShower)
+		{
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "There's something else I need to do first.");
+			break;
+		}
+		else
+		{
 		TelevisionImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
 		TelevisionImage(true);
@@ -734,10 +741,11 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Did they run out of news? This is literally the same as yesterday!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Are they just that lazy?");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Someone is gonna get fired.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, I should just find some other things to do now.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, I should just go watch some movies since I can't sleep.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You switched to some entertainment channels.");
 		TelevisionImage();
 		*hasWatchedTV = true;
+		}
 		break;
 
 	case 2:
