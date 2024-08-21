@@ -31,8 +31,9 @@ void OptionUI::reallocOption(const int newCapacity)
 
 void OptionUI::PrintOption(const std::string option, const int color) const
 {
-	Scene::ChangeColor(color);
+	Scene::ChangeColor(Scene::Yellow,true);
 	std::cout << option;
+	Scene::ChangeColor(Scene::Default, true);
 }
 
 void OptionUI::AddOption(std::string* text)
@@ -76,12 +77,14 @@ void OptionUI::Clear(void)
 int OptionUI::PickOption(const Vector2 position) const
 {
 	int choosenOption = 0;
+	Scene::ChangeColor(Scene::Yellow, true);
 	for (int i = 0; i < optionsSize; ++i)
 	{
 		Scene::GotoXY(position.GetX(), position.GetY() + i, this->position);
-		Scene::ChangeColor(textColor);
+		//Scene::ChangeColor(textColor);
 		std::cout << *options[i];
 	}
+	Scene::ChangeColor(Scene::Default, true);
 
 	std::string input{};
 

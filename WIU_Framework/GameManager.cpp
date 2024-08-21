@@ -224,6 +224,10 @@ void GameManager::HandleInput(void)
 			else
 				Print = "What do you want to do?";
 			cout << Print;
+
+			string InteractablesText = "";
+			int doorCount = 0, furnitureCount = 0, notDoorCount = 0;
+
 			if (furnituresLeft)
 			{
 				Print += furnituresLeft->GetName();
@@ -233,8 +237,15 @@ void GameManager::HandleInput(void)
 
 				if (furnituresLeft->GetFurnitureType() == Furniture::BedRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresLeft->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::MainDoor
-					|| furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::ToiletDoor)
+					|| furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::ToiletDoor) {
+					doorCount++;
+					InteractablesText = "";
 					doorStr = furnituresLeft->GetName();
+				}
+				else
+					notDoorCount++;
+
+				furnitureCount++;
 			}
 			if (furnituresRight)
 			{
@@ -247,8 +258,14 @@ void GameManager::HandleInput(void)
 				Print += furnituresRight->GetName();
 				if (furnituresRight->GetFurnitureType() == Furniture::BedRoomDoor || furnituresRight->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresRight->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresRight->GetFurnitureType() == Furniture::MainDoor
-					|| furnituresRight->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresRight->GetFurnitureType() == Furniture::ToiletDoor)
+					|| furnituresRight->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresRight->GetFurnitureType() == Furniture::ToiletDoor) {
+					doorCount++;
+					InteractablesText = "";
 					doorStr = furnituresRight->GetName();
+				}
+				else
+					notDoorCount++;
+				furnitureCount++;
 			}
 			if (furnituresUp)
 			{
@@ -260,8 +277,15 @@ void GameManager::HandleInput(void)
 				Print += furnituresUp->GetName();			
 				if (furnituresUp->GetFurnitureType() == Furniture::BedRoomDoor || furnituresUp->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresUp->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresUp->GetFurnitureType() == Furniture::MainDoor
-					|| furnituresUp->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresUp->GetFurnitureType() == Furniture::ToiletDoor)
+					|| furnituresUp->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresUp->GetFurnitureType() == Furniture::ToiletDoor) {
+					doorCount++;
+					InteractablesText = "";
 					doorStr = furnituresUp->GetName();
+				}
+				else
+					notDoorCount++;
+				furnitureCount++;
+
 			}
 			if (furnituresDown)
 			{
@@ -274,9 +298,14 @@ void GameManager::HandleInput(void)
 				Print += furnituresDown->GetName();
 				if (furnituresDown->GetFurnitureType() == Furniture::BedRoomDoor || furnituresDown->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresDown->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresDown->GetFurnitureType() == Furniture::MainDoor
-					|| furnituresDown->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresDown->GetFurnitureType() == Furniture::ToiletDoor)
+					|| furnituresDown->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresDown->GetFurnitureType() == Furniture::ToiletDoor) {
+					doorCount++;
+					InteractablesText = "";
 					doorStr = furnituresDown->GetName();
-
+				}
+				else
+					notDoorCount++;
+				furnitureCount++;
 			}
 			
 			if (EmptyDialogue) {
@@ -286,65 +315,10 @@ void GameManager::HandleInput(void)
 				int yOffset = 2;
 				int xOffset = 3;
 				if (furnituresLeft || furnituresRight || furnituresUp || furnituresDown) {
-					string text = "";
-#pragma region OMG
-					int doorCount = 0, furnitureCount = 0, notDoorCount = 0;
-					if (furnituresLeft)
-					{
-						if (furnituresLeft->GetFurnitureType() == Furniture::BedRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::KitchenDoor
-							|| furnituresLeft->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::MainDoor
-							|| furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::ToiletDoor) {
-							doorCount++;
-							text = "";
-						}
-						else
-							notDoorCount++;
-						furnitureCount++;
-					}
-					if (furnituresRight)
-					{
-						if (furnituresRight->GetFurnitureType() == Furniture::BedRoomDoor || furnituresRight->GetFurnitureType() == Furniture::KitchenDoor
-							|| furnituresRight->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresRight->GetFurnitureType() == Furniture::MainDoor
-							|| furnituresRight->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresRight->GetFurnitureType() == Furniture::ToiletDoor) {
-							doorCount++;
-							text = "";
-						}
-						else
-							notDoorCount++;
-						furnitureCount++;
 
-					}
-					if (furnituresUp)
-					{
-						if (furnituresUp->GetFurnitureType() == Furniture::BedRoomDoor || furnituresUp->GetFurnitureType() == Furniture::KitchenDoor
-							|| furnituresUp->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresUp->GetFurnitureType() == Furniture::MainDoor
-							|| furnituresUp->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresUp->GetFurnitureType() == Furniture::ToiletDoor) {
-							doorCount++;
-							text = "";
-						}
-						else
-							notDoorCount++;
-						furnitureCount++;
-
-					}
-					if (furnituresDown)
-					{
-
-						if (furnituresDown->GetFurnitureType() == Furniture::BedRoomDoor || furnituresDown->GetFurnitureType() == Furniture::KitchenDoor
-							|| furnituresDown->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresDown->GetFurnitureType() == Furniture::MainDoor
-							|| furnituresDown->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresDown->GetFurnitureType() == Furniture::ToiletDoor) {
-							doorCount++;
-							text = "";
-						}
-						else
-							notDoorCount++;
-						furnitureCount++;
-
-					}
-#pragma endregion
 					if ((doorCount > 0 && doorCount < furnitureCount) || doorCount == 0)
 					{
-						text = "To Interact: Enter 'interact' or 'i' (space) <Object name>   ";
+						InteractablesText = "To Interact: Enter 'interact' or 'i' (space) <Object name>   ";
 					}
 
 					if (doorStr != "blank") {
@@ -352,12 +326,12 @@ void GameManager::HandleInput(void)
 						ui.CreateText(doortext, Vector2(xOffset, 4));
 						xOffset += doortext.length();
 					}
-					if (text != "") {
+					if (InteractablesText != "") {
 						if(xOffset > 5) 
-						ui.CreateText("|  " + text, Vector2(xOffset, 4));
+						ui.CreateText("|  " + InteractablesText, Vector2(xOffset, 4));
 						else
-							ui.CreateText(text, Vector2(xOffset, 4));
-						xOffset += text.length();
+							ui.CreateText(InteractablesText, Vector2(xOffset, 4));
+						xOffset += InteractablesText.length();
 					}
 					//if (notDoorCount > 0) {
 					//	ui.CreateText("   Objects around you:", Vector2(2, 4 + yOffset - 1));
@@ -418,23 +392,59 @@ void GameManager::HandleInput(void)
 				break;
 
 			int chCount = 0;
+			bool space = false;
 			for (char ch : stringInput)
 			{
 				if (ch == ' ')
 				{
-					chCount++; 
+					space = true;
+					//chCount++;
 					break;
 				}
 				else
 					chCount++;
 			}
-			for (int i = 0; i < chCount-1; i++)
+
+			KeywordFromInput = stringInput.substr(0, chCount);
+			if (space)
+				ItemFromInput = stringInput.substr(static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(chCount) + 1);
+			else
+				ItemFromInput = "";
+			string furnStr = "";
+			if (furnituresLeft)
 			{
-				KeywordFromInput += stringInput[i];
+				furnStr = furnituresLeft->GetName();
+				if (stringInput == Scene::tolowerString(furnStr)) {
+					KeywordFromInput = "interact";
+					ItemFromInput = Scene::tolowerString(furnStr);
+				}
 			}
-			for (int i = chCount; i < stringInput.length(); i++)
+			if (furnituresRight)
 			{
-				ItemFromInput += stringInput[i];
+				furnStr = furnituresRight->GetName();
+				if (stringInput == Scene::tolowerString(furnStr)) {
+
+					KeywordFromInput = "interact";
+					ItemFromInput = Scene::tolowerString(furnStr);
+				}
+			}
+			if (furnituresUp)
+			{
+				furnStr = furnituresUp->GetName();
+				if (stringInput == Scene::tolowerString(furnStr)) {
+					KeywordFromInput = "interact";
+					ItemFromInput = Scene::tolowerString(furnStr);
+
+				}
+			}
+			if (furnituresDown)
+			{
+				furnStr = furnituresDown->GetName();
+				if (stringInput == Scene::tolowerString(furnStr)) {
+
+					KeywordFromInput = "interact";
+					ItemFromInput = Scene::tolowerString(furnStr);
+				}
 			}
 			if ((KeywordFromInput == "interact" || KeywordFromInput == "i") && ItemFromInput != "")
 			{
@@ -485,8 +495,8 @@ void GameManager::HandleInput(void)
 				}
 				if (!checkValidInput)
 				{
+					ClearDialogue(); 
 					ui.PrintDialogue(Vector2(3, 3), "Unknown Object, Enter Valid Object name. ");
-					EmptyDialogue = false;
 				}
 				else
 					break;
