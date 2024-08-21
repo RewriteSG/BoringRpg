@@ -558,6 +558,8 @@ void Furniture::InteractFurniture(GameObject* obj)
 		GameManager::getGM()->InteractionsMgr.BedroomDoorInteracted(this, obj);
 		break;
 	case Furniture::ToiletBowl:
+		GameManager::getGM()->InteractionsMgr.ToiletBowlInteracted(this, obj);
+
 		break;
 	case Furniture::ShowerArea:
 		GameManager::getGM()->InteractionsMgr.ShowerInteracted(this, obj);

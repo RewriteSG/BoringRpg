@@ -64,7 +64,7 @@ public:
 	void StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player);
 	void ClockInteracted(GameObject* clock, GameObject* player);
 	bool UseItem(std::string useItem, GameObject* player);
-	void BarricadeDoor(GameObject* door, GameObject* player);
+	//void BarricadeDoor(GameObject* door, GameObject* player);
 	void FridgeInteracted(GameObject* fridge, GameObject* player);
 	void KitchenTableInteracted(GameObject* table, GameObject* player);
 	void Start();
@@ -114,6 +114,7 @@ public:
 	void SoapImage();
 	void DuctTapeImage();
 	void MetalPanImage();
+	void EmptyBoxImage();
 
 };
 
