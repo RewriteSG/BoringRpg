@@ -1,5 +1,3 @@
-#define POINTX -105
-#define POINTY 25
 #include "InteractionsManager.h"
 #include "GameManager.h"
 #include "ObjectManager.h"
@@ -61,7 +59,6 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 {
 	SofaImage();  
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (hasStoreRoomKeyCollected) 
 	{
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else I can do here.");
@@ -103,8 +100,6 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 	{
 	case 0:
 	case 1:
-
-		ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
 		choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take a shower?");
@@ -119,9 +114,6 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 		}
 		break;
 	default:
-
-		ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Lets see what can I do here.");
 		ui->GetOptionUI()->AddOption(new std::string("Hide"));
 		ui->GetOptionUI()->AddOption(new std::string("Search"));
@@ -135,7 +127,6 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 			isPlayerHidden = true;
 			break;
 		case 1:
-			ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You found a bar of soap.");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Maybe there's a use to this?");
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
@@ -171,7 +162,6 @@ void InteractionsManager::SinkInteracted(GameObject* sink, GameObject* player, b
 void InteractionsManager::PlanksInteracted(GameObject* planks, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (hasPlanks)
 	{
 		PlanksImage(true);
@@ -212,7 +202,6 @@ void InteractionsManager::PlanksInteracted(GameObject* planks, GameObject* playe
 void InteractionsManager::ToolboxInteracted(GameObject* box, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (hasNails and hasHammer)
 	{
 		ToolboxImage(true);
@@ -265,7 +254,6 @@ void InteractionsManager::BoxInteracted(GameObject* box, GameObject* player, int
 void InteractionsManager::StoveInteracted(GameObject* stove, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (hasMetalPan)
 	{
 		StoveImage(true);
@@ -295,7 +283,6 @@ void InteractionsManager::StoveInteracted(GameObject* stove, GameObject* player)
 void InteractionsManager::KitchenCabinetInteracted(GameObject* kitchenCabinet, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (hasKnife)
 	{
 		KitchenCabinetImage(true);
@@ -326,7 +313,6 @@ void InteractionsManager::KitchenCabinetInteracted(GameObject* kitchenCabinet, G
 void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* player, int random)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	int choosenItem;
 	TrashCanImage();
 	switch (trashCanInteractions)
@@ -416,7 +402,6 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 {
 	Start();
 	BedroomTableImage();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "There is a bunch of stuff on the table.");
 	ui->GetOptionUI()->AddOption(new std::string("Photograph"));
 	ui->GetOptionUI()->AddOption(new std::string("Phone"));
@@ -441,9 +426,6 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should remember that next time.");
 			break;
 		default:
-
-			ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should probably call the cops.");
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
@@ -453,7 +435,6 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 			case 0:
 				if (!hasCalledTheCops)
 				{
-					ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 					hasCalledTheCops = true;
 					timeSystem->increaseTimeTaken(5);
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You called the cops.");
@@ -496,7 +477,6 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabinet, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (hasDuctTape)
 	{
 		LivingRoomCabinetImage(true);
@@ -538,7 +518,6 @@ void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabi
 void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	ClosetDoorImage();
 	timeSystem->increaseTimeTaken(5);
 	switch (timeSystem->TimeLoop) 
@@ -551,8 +530,6 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 
 		break;
 		default:
-			ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-
 			if (hasClosetKeyCollected)
 			{
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "The closet seems big enough for a person to hide inside.");
@@ -583,7 +560,6 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	if (!hasClosetKeyCollected) {
 
 		BedRoomDrawerImage();
@@ -597,7 +573,6 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 		switch (choosenItem)
 		{
 		case 0:
-			ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You cleaned up the drawer.");
 			BedRoomDrawerImage(true);
@@ -636,7 +611,6 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, 13), false);
 
 	bool* hasSlept = &(GameManager::getGM()->objManager).hasSlept;
 	switch (timeSystem->TimeLoop)
@@ -660,7 +634,7 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	
 
 	TelevisionImage();
 	bool* hasWatchedTV = &(GameManager::getGM()->objManager).hasWatchedTV;
@@ -719,7 +693,6 @@ void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* p
 {
 	Start();
 	MainDoorImage();
-	ui->CreateOptionUI(Vector2(POINTX, 13), false);
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
@@ -743,55 +716,18 @@ void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* p
 void InteractionsManager::BedroomDoorInteracted(GameObject* BedroomDoor, GameObject* player)
 {
 		SceneManager::LoadScene("BedroomScene");
-	//Start();
-	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	//ui->GetOptionUI()->AddOption(new std::string("Yes"));
-	//ui->GetOptionUI()->AddOption(new std::string("No"));
-	//int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the BEDROOM?");
-	//switch (choosenItem)
-	//{
-	//case 0:
-	//	timeSystem->increaseTimeTaken(5);
-	//	break;
-	//case 1:
-	//	break;
-	//}
+
 }
 
 void InteractionsManager::KitchenDoorInteracted(GameObject* KitchenDoor, GameObject* player)
 {
 		SceneManager::LoadScene("KitchenScene");
-	//Start();
-	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	//ui->GetOptionUI()->AddOption(new std::string("Yes"));
-	//ui->GetOptionUI()->AddOption(new std::string("No"));
-	//int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the KITCHEN?");
-	//switch (choosenItem)
-	//{
-	//case 0:
-	//	timeSystem->increaseTimeTaken(5);
-	//	break;
-	//case 1:
-	//	break;
-	//}
+
 }
 
 void InteractionsManager::ToiletDoorInteracted(GameObject* ToiletDoor, GameObject* player)
 {
 		SceneManager::LoadScene("ToiletScene");
-	//Start();
-	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
-	//ui->GetOptionUI()->AddOption(new std::string("Yes"));
-	//ui->GetOptionUI()->AddOption(new std::string("No"));
-	//int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the TOILET?");
-	//switch (choosenItem)
-	//{
-	//case 0:
-	//	timeSystem->increaseTimeTaken(5);
-	//	break;
-	//case 1:
-	//		break;
-	//}
 
 }
 
@@ -805,7 +741,7 @@ void InteractionsManager::LivingRoomDoorInteracted(GameObject* BathroomDoor, Gam
 {
 		SceneManager::LoadScene("LivingRoomScene");
 	//Start();
-	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	//
 	//ui->GetOptionUI()->AddOption(new std::string("Yes"));
 	//ui->GetOptionUI()->AddOption(new std::string("No"));
 	//int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the LIVING ROOM?");
@@ -822,7 +758,7 @@ void InteractionsManager::LivingRoomDoorInteracted(GameObject* BathroomDoor, Gam
 void InteractionsManager::StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player)
 {
 	Start();
-	//ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	//
 
 	if (isStoreRoomUnlocked)
 	{
@@ -1106,7 +1042,6 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, GameObject* player)
 {
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 		timeSystem->increaseTimeTaken(5);
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
@@ -1141,14 +1076,12 @@ void InteractionsManager::Start()
 {
 	ui = GameManager::getGM()->gameUI;
 	timeSystem = &GameManager::getGM()->TimeSys;
-	
 }
 
 void InteractionsManager::Start(bool isGameStarted)
 {
 	ObjectivesManager* objManager = &(GameManager::getGM()->objManager);
 	Start();
-	ui->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
@@ -2718,12 +2651,4 @@ void InteractionsManager::EmptyBoxImage()
 @@&&&&&&&&&&&@@@@@&&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&&&&&&@@@&&&&&&&&&&&&&&&&&@@
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
-
 }
-
-//robber interaction
-
-//void InteractionsManager::robBedroomDoorInteracted(GameObject* BedroomDoor, GameObject* robber)
-//{
-	//timer.increaseTimeTaken(5);
-//}

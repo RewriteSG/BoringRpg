@@ -12,8 +12,6 @@
 #include "UI.h"
 #include "KitchenScene.h"
 
-bool MainMenu::isExit = false;
-
 void MainMenu::DrawClock(const int size) const
 {
 	const int width = size * 2;
@@ -149,7 +147,7 @@ void MainMenu::Update(void)
 				SceneManager::LoadScene(SceneManager::endingsPage);
 			}
 			else
-				isExit = true;
+				SceneManager::isExit = true;
 
 			break;
 		}

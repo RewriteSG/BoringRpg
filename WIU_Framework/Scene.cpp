@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 
 GameManager Scene::gm = GameManager();
+
 bool Scene::GetContinuePgrm() const
 {
 	return ContinuePgrm;

@@ -20,6 +20,7 @@ public:
 
 	static Scene* mainMenu;
 	static Scene* endingsPage;
+	static bool isExit;
 
 	static Scene* nextScene;
 	static Scene* currentScene;

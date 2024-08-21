@@ -23,7 +23,7 @@ public:
 
 	int size() const;
 
-	void Clear(const Vector2 position) const;
+	void Clear(void);
 	int PickOption(const Vector2 position) const;
 };
 

@@ -1,10 +1,6 @@
 #include "Application.h"
-//#define _CRTDBG_MAP_ALLOC
-//#include <stdlib.h>
-//#include <crtdbg.h>
 #include <iostream>
 #include "Windows.h"
-#include "MainMenu.h"
 
 int Application::numberOfColumns = 0;
 int Application::numberOfRows = 0;
@@ -50,15 +46,12 @@ void Application::ShowCursor(void)
 	cursorInfo.bVisible = TRUE; // Set the cursor visibility to false
 	SetConsoleCursorInfo(consoleHandle, &cursorInfo);
 }
-Application::Application(void) { 
-	sceneMgr = new SceneManager(); 
-}
-
 void Application::Init(void)
 {
 	FontSize(Vector2(7, 16));
 	ScreenMaximised();
 	HideCursor();
+	sceneMgr = new SceneManager(); 
 }
 
 void Application::Update(void)
@@ -67,7 +60,7 @@ void Application::Update(void)
 	do
 	{
 		sceneMgr->Update();
-	} while (!MainMenu::isExit);
+	} while (!SceneManager::isExit);
 }
 
 void Application::Exit(void) { delete sceneMgr; }

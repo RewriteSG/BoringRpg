@@ -19,7 +19,7 @@ using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
 
-GameManager::GameManager() : gameUI(nullptr), TimeSys()
+GameManager::GameManager(void) : TimeSys()
 {
 	whatScenePlayerIn = "";
 	GM_Instance = this;
@@ -28,6 +28,15 @@ GameManager::GameManager() : gameUI(nullptr), TimeSys()
 	player = nullptr;
 	LoopStarted = false;
 	firstLoop = TimeSys.TimeLoop == 0;
+	gameUI = new UI(Vector2(130, 12), 0, 150);
+	gameUI->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	endingMgr = new EndingManager();
+}
+
+GameManager::~GameManager(void)
+{
+	delete gameUI;
+	delete endingMgr;
 }
 
 GameManager* GameManager::getGM()
@@ -41,7 +50,6 @@ void GameManager::Start()
 	GM_Instance = this;
 	GameEnded = false;
 	GameWon = true;
-	gameUI = new UI(Vector2(130, 12), 0, 150);
 	InteractionsMgr.Start();
 	firstLoop = TimeSys.TimeLoop == 0;
 }
@@ -60,7 +68,7 @@ void GameManager::Update()
 			return;
 		TimeSys.TimeTaken = TimeSys.RobberTime;
 		whatScenePlayerIn = SceneManager::currentScene->getName();
-		ending.Start();
+		endingMgr->Start();
 	}
 	else 
 	{

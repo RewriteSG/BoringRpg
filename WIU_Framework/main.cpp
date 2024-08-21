@@ -6,5 +6,6 @@ int main(void) {
 	app.Update();
 	app.Exit();
 	exit(0);
+
 	return 0;
 }

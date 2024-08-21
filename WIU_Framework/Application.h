@@ -14,7 +14,7 @@ private:
 public:
 	static int numberOfColumns;
 	static int numberOfRows;
-	Application(void);
+	Application(void) = default;
 
 	void Init(void);
 	void Update(void);

@@ -15,7 +15,7 @@ Scene* SceneManager::currentScene = nullptr;
 Scene* SceneManager::nextScene = nullptr;
 Scene* SceneManager::mainMenu = new MainMenu();
 Scene* SceneManager::endingsPage = new Endings();
-
+bool SceneManager::isExit = false;
 std::string SceneManager::sceneName[6] = { "LIVING ROOM", "STOREROOM", "TOILET", "BEDROOM", "KITCHEN", "ENDINGS"};
 
 void SceneManager::DeleteScene(void)
@@ -30,6 +30,7 @@ SceneManager::~SceneManager(void)
 {
 	delete mainMenu;
 	delete endingsPage;
+	delete GameManager::getGM();
 }
 
 void SceneManager::Start(void)
