@@ -58,7 +58,6 @@ void GameManager::Update()
 	if (!LoopStarted) {
 		ClearDialogue();
 		InteractionsMgr.Start(LoopStarted);
-		LoopStarted = true;
 	}
 	inventory.DisplayItems();
 
@@ -93,6 +92,7 @@ void GameManager::HandleInput(void)
 {
 	if (player == nullptr || TimeSys.TimeTaken >= TimeSys.RobberTime)
 		return;
+
 	Furniture* furnituresLeft, * furnituresRight, * furnituresUp, * furnituresDown;
 	furnituresLeft = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() - 1, player->GetPosition()->GetY())));
 	furnituresRight = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() + 1, player->GetPosition()->GetY())));
@@ -163,7 +163,15 @@ void GameManager::HandleInput(void)
 	//ui.CreateText(ToPrint, Vector2(3, 2));
 
 	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0));
-	char input = _getch();
+	char input;
+	if (LoopStarted)
+		input = _getch();
+	else 
+	{
+		input = '/';
+		LoopStarted = true;
+	}
+
 
 
 	switch (input)
@@ -410,7 +418,7 @@ void GameManager::HandleInput(void)
 		}
 		ClearDialogue();
 
-		ui.CreateText("[ (W)(A)(S)(D): Move                         ]", Vector2(10, 0));
+		ui.CreateText("[ (W)(A)(S)(D): Move                                  ]", Vector2(10, 0));
 		break;
 
 	}
