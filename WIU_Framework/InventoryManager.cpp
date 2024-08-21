@@ -38,6 +38,11 @@ std::string ** InventoryManager::GetItems()
 	return Items;
 }
 
+int InventoryManager::GetItemsCount()
+{
+	return inventoryCurrentCapacity;
+}
+
 void InventoryManager::DisplayItems() const
 {
 

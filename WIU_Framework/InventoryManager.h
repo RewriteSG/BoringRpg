@@ -12,6 +12,7 @@ public:
 	InventoryManager();
 	bool PickupItem(std::string typeofPickup);
 	std::string** GetItems();
+	int GetItemsCount();
 
 	void DisplayItems() const;
 	bool InventoryHasItems(std::string item1) const;
