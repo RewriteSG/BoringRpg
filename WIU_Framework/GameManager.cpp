@@ -160,7 +160,7 @@ void GameManager::HandleInput(void)
 
 	ClearDialogue();
 	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
-	ui.CreateText(ToPrint, Vector2(3, 2));
+	//ui.CreateText(ToPrint, Vector2(3, 2));
 
 	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0));
 	char input = _getch();
@@ -194,7 +194,7 @@ void GameManager::HandleInput(void)
 		while (true) 
 		{
 			//					[ (W)(A)(S)(D): Move  (/): To enable input field ]
-			ui.CreateText("[ Options: Enter, Exit, Interact, Move, Use      ]", Vector2(10, 0));
+			ui.CreateText("[ Options: Enter, Exit, Interact, Move, Use, Help     ]", Vector2(10, 0));
 			//ClearDialogue();
 			if(EmptyDialogue)
 				ui.CreateText(ToPrint, Vector2(3, 2));
@@ -278,16 +278,16 @@ void GameManager::HandleInput(void)
 				}
 				else
 					break;
-			}else
-		    if (stringInput == "interact" || stringInput == "i") {
+			}
+			else if (stringInput == "interact" || stringInput == "i") {
 				//+ ToPrint
 				ClearDialogue();
-				ui.PrintDialogue(Vector2(3,2), "Interact with what? Enter 'interact <object name>'");
-				ui.CreateText( "Interact with what? Enter 'interact <object name>'", Vector2(4, 2));
+				ui.PrintDialogue(Vector2(3,2), "What do you want to interact with? Please Enter 'i / interact (space) ' <object name>");
+				//ui.CreateText( "Interact with what? Enter 'interact <object name>'", Vector2(4, 2));
 				EmptyDialogue = false;
 				DisplayFurnituresAroundPlayer(Vector2(4, 3));
 			}
-			else if (stringInput == "enter") 
+			else if (stringInput == "e")
 			{
 				if (furnituresUp) 
 				{
@@ -330,10 +330,6 @@ void GameManager::HandleInput(void)
 						break;
 					}
 				}
-
-			}
-			else if (stringInput == "exit") {
-
 				if (furnituresUp)
 					if (furnituresUp->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresUp->GetFurnitureType() == Furniture::MainDoor) {
 						furnituresUp->InteractFurniture(player);
@@ -357,8 +353,8 @@ void GameManager::HandleInput(void)
 						furnituresRight->InteractFurniture(player);
 						break;
 					}
-
 			}
+			
 			else if (KeywordFromInput == "use" && ItemFromInput != "") 
 			{
 				if(InteractionsMgr.UseItem(ItemFromInput,player))
@@ -374,7 +370,7 @@ void GameManager::HandleInput(void)
 				}
 
 			}
-			else if (stringInput == "use")
+			else if (stringInput == "use"|| stringInput == "u")
 			{
 				ClearDialogue(); 
 				ui.PrintDialogue(Vector2(3, 2), "'Use': use any item by entering 'use' <item name> 'on' <object name>.");
@@ -392,16 +388,16 @@ void GameManager::HandleInput(void)
 
 				ClearDialogue();
 				
-				ui.CreateText("'Enter' / 'exit': transition through rooms by doors", Vector2(4, 2));
-				ui.CreateText("'Interact': To trigger item interaction, use to figure out what object does by entering 'interact' or 'i' <Object name>", Vector2(4, 3));
-				ui.CreateText("'Move': Allow your character to move after entering '/'.", Vector2(4, 4));
-				ui.CreateText("'Use': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(4, 5));
+				ui.CreateText("'e': transition through rooms by doors", Vector2(4, 2));
+				ui.CreateText("'Interact / i ': To trigger item interaction, use to figure out what object does by entering 'interact' or 'i' <Object name>", Vector2(4, 3));
+				ui.CreateText("'Move / m ': Allow your character to move after entering '/'.", Vector2(4, 4));
+				ui.CreateText("'Use / u': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(4, 5));
 				ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(4, 6));
 				ui.CreateText("Press 'Enter' again to move. ", Vector2(4, 7));
 
 				EmptyDialogue = false;
 			}
-			else if (stringInput == "move")
+			else if (stringInput == "move"|| stringInput == "m")
 			{
 				break;
 			}

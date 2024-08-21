@@ -7,7 +7,7 @@
 #include "Windows.h"
 ObjectivesManager::ObjectivesManager()
 {
-
+	hasCalledMom = false;
 	hasTakenShower = false;
 	hasWatchedTV = false;
 	hasSlept = false;
@@ -20,6 +20,7 @@ void ObjectivesManager::displayObjectives() const
 	switch (GameManager::getGM()->TimeSys.TimeLoop)
 	{
 		case 0:
+				//if (!hasCalledMom)
 			if (!hasTakenShower)
 			{
 				ui->CreateText("              ", Vector2(29, -5));
@@ -30,7 +31,12 @@ void ObjectivesManager::displayObjectives() const
 				ui->CreateText("              ", Vector2(29, -5));
 				ui->CreateText("Watch TV", Vector2(29, -5));
 			}
-			else if (!hasSlept && hasWatchedTV && hasTakenShower)
+			else if (!hasCalledMom && hasWatchedTV && hasTakenShower)
+				{
+					ui->CreateText("              ", Vector2(29, -5));
+					ui->CreateText("Call Mom", Vector2(29, -5));
+				}
+			else if (!hasSlept && hasCalledMom && hasWatchedTV && hasTakenShower)
 			{
 				ui->CreateText("              ", Vector2(29, -5));
 				ui->CreateText("Go to bed", Vector2(29, -5));
@@ -38,6 +44,7 @@ void ObjectivesManager::displayObjectives() const
 			
 			break;
 		case 1:
+			//	if (!hasCalledMom)
 			if (!hasTakenShower)
 			{
 				ui->CreateText("              ", Vector2(29, -5));
@@ -48,7 +55,7 @@ void ObjectivesManager::displayObjectives() const
 				ui->CreateText("              ", Vector2(29, -5));
 				ui->CreateText("Watch TV", Vector2(29, -5));
 			} 
-			else if (hasWatchedTV && hasTakenShower)
+			else if (!hasCalledMom && hasWatchedTV && hasTakenShower)
 			{
 				ui->CreateText("              ", Vector2(29, -5));
 				ui->CreateText("Stay Awake.", Vector2(29, -5));

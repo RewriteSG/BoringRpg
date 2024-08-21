@@ -6,6 +6,7 @@
 #include "ObjectivesManager.h"
 #include "Application.h"
 #include "Windows.h"
+
 void InteractionsManager::SeperateInput(std::string input, std::string& input1, std::string& input2)
 {
 	int chCount = 0;
@@ -588,7 +589,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 	ui->GetOptionUI()->AddOption(new std::string("Music Box"));
 	ui->GetOptionUI()->AddOption(new std::string("Nothing"));
 	int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Which one should you check out?");
-
+	bool* hasCalledMom = &(GameManager::getGM()->objManager).hasCalledMom;
 	switch (choosenItem)
 	{
 	case 0:
@@ -601,9 +602,25 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 		switch (timeSystem->TimeLoop)
 		{ 
 		case 0:
+			//bool for hascalledmom must set
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Hello mom, hows your day going?");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: great! have you found a suitable apartment to rent out yet?");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: yup, its at block 243 Chicken street");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: But I recently saw on the news that there was a serial killer going around my area, I'm a little worried...");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: But even so, I don't think I'll be targetted, everyone loves me:)");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: Just be careful, remember to always lock your doors okay? goodnight");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You hung up the phone.");
+			*hasCalledMom = true;
+			break;
 		case 1:
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I left my phone on the table today.");
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should remember that next time.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Hello mom, hows your day going?");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: great! have you found a suitable apartment to rent out yet?");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: yup, its at block 243 Chicken street");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: But I recently saw on the news that there was a serial killer going around my area, I'm a little worried...");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: But even so, I don't think I'll be targetted, everyone loves me:)");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: Just be careful, remember to always lock your doors okay? goodnight");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You hung up the phone.");
+			*hasCalledMom = true;
 			break;
 		default:
 
@@ -850,7 +867,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 				TelevisionImage();
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
 				TelevisionImage(true);
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND CHICKEN STREET, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Serial killer? Not really my problem, it's not like he would target me anyways.");
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: It's quite near my house though...");
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, surely the police are already on their way to catch him.");
@@ -873,14 +890,14 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		TelevisionImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
 		TelevisionImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND CHICKEN STREET, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Did they run out of news? This is literally the same as yesterday!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Are they just that lazy?");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Someone is gonna get fired.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, I should just go watch some movies since I can't sleep.");
 		TelevisionOtherChannelImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You switched to some entertainment channels.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "Movie: There is nothing stronger than family.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: There is nothing stronger than family.");
 		*hasWatchedTV = true;
 		}
 		break;
@@ -889,7 +906,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		TelevisionImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
 		TelevisionImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND CHICKEN STREET, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: It's the same news...again...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you are stuck in a time loop of getting killed over and over.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
@@ -900,7 +917,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		TelevisionImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
 		TelevisionImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND CHICKEN STREET, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
 		TelevisionImage();
 		*hasWatchedTV = true;
@@ -1337,9 +1354,10 @@ void InteractionsManager::Start(bool isGameStarted)
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "I should take a shower first.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "I should take a shower.");
 		break;
 	case 1:
+		objManager->hasCalledMom = false;
 		objManager->hasTakenShower = false;
 		objManager->hasWatchedTV = false;
 		objManager->hasSlept = false;
