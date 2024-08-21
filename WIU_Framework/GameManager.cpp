@@ -55,6 +55,8 @@ void GameManager::Start()
 }
 void GameManager::Update()
 {
+	whatScenePlayerIn = SceneManager::currentScene->getName();
+
 	if (!LoopStarted) {
 		ClearDialogue();
 		InteractionsMgr.Start(LoopStarted);
@@ -66,7 +68,6 @@ void GameManager::Update()
 		if (DontCountTime)
 			return;
 		TimeSys.TimeTaken = TimeSys.RobberTime;
-		whatScenePlayerIn = SceneManager::currentScene->getName();
 		endingMgr->Start();
 	}
 	else 

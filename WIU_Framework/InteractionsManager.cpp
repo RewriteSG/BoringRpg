@@ -32,6 +32,8 @@ void InteractionsManager::SeperateInput(std::string input, std::string& input1, 
 
 InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 {
+	soapLocation = "";
+
 	isPlayerHidden = false;
 	isNailSetup = false;
 	isPlankSetup = false;
@@ -67,7 +69,7 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 	int choosenItem;
 	if (hasStoreRoomKeyCollected) 
 	{ 
-		SofaKeyUnderImage(true); 
+		SofaKeyUnderImage(true);
 
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else underneath.");
 	}
@@ -987,19 +989,7 @@ void InteractionsManager::LivingRoomDoorInteracted(GameObject* BathroomDoor, Gam
 	DoorOpeningImage();
 	Sleep(500);
 		SceneManager::LoadScene("LivingRoomScene");
-	//Start();
-	//
-	//ui->GetOptionUI()->AddOption(new std::string("Yes"));
-	//ui->GetOptionUI()->AddOption(new std::string("No"));
-	//int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Enter the LIVING ROOM?");
-	//switch (choosenItem)
-	//{
-	//case 0:
-	//	timeSystem->increaseTimeTaken(5);
-	//	break;
-	//case 1:
-	//	break;
-	//}
+
 }
 
 void InteractionsManager::StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player)
@@ -1273,6 +1263,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			ui.PrintDialogue(Vector2(3, 2), "You: There, all good.");
 			ui.PrintDialogue(Vector2(3, 2), "Successfully used soap on floor!");
 			GameManager::getGM()->inventory.UseItem(useItem1);
+			soapLocation = GameManager::getGM()->whatScenePlayerIn;
 		}
 		else
 		{
