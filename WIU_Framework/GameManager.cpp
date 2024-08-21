@@ -19,7 +19,7 @@ using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
 
-GameManager::GameManager() : gameUI(nullptr), TimeSys()
+GameManager::GameManager(void) : TimeSys()
 {
 	whatScenePlayerIn = "";
 	GM_Instance = this;
@@ -28,6 +28,15 @@ GameManager::GameManager() : gameUI(nullptr), TimeSys()
 	player = nullptr;
 	LoopStarted = false;
 	firstLoop = TimeSys.TimeLoop == 0;
+	gameUI = new UI(Vector2(130, 12), 0, 150);
+	gameUI->CreateOptionUI(Vector2(POINTX, POINTY), false);
+	endingMgr = new EndingManager();
+}
+
+GameManager::~GameManager(void)
+{
+	delete gameUI;
+	delete endingMgr;
 }
 
 GameManager* GameManager::getGM()
@@ -41,7 +50,6 @@ void GameManager::Start()
 	GM_Instance = this;
 	GameEnded = false;
 	GameWon = true;
-	gameUI = new UI(Vector2(130, 12), 0, 150);
 	InteractionsMgr.Start();
 	firstLoop = TimeSys.TimeLoop == 0;
 }
@@ -50,7 +58,6 @@ void GameManager::Update()
 	if (!LoopStarted) {
 		ClearDialogue();
 		InteractionsMgr.Start(LoopStarted);
-		LoopStarted = true;
 	}
 	inventory.DisplayItems();
 
@@ -60,7 +67,7 @@ void GameManager::Update()
 			return;
 		TimeSys.TimeTaken = TimeSys.RobberTime;
 		whatScenePlayerIn = SceneManager::currentScene->getName();
-		ending.Start();
+		endingMgr->Start();
 	}
 	else 
 	{
@@ -85,6 +92,7 @@ void GameManager::HandleInput(void)
 {
 	if (player == nullptr || TimeSys.TimeTaken >= TimeSys.RobberTime)
 		return;
+
 	Furniture* furnituresLeft, * furnituresRight, * furnituresUp, * furnituresDown;
 	furnituresLeft = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() - 1, player->GetPosition()->GetY())));
 	furnituresRight = dynamic_cast<Furniture*>(SceneManager::currentScene->GetObjectManager()->GetObjectAtPosition(Vector2(player->GetPosition()->GetX() + 1, player->GetPosition()->GetY())));
@@ -155,7 +163,15 @@ void GameManager::HandleInput(void)
 	//ui.CreateText(ToPrint, Vector2(3, 2));
 
 	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0));
-	char input = _getch();
+	char input;
+	if (LoopStarted)
+		input = _getch();
+	else 
+	{
+		input = '/';
+		LoopStarted = true;
+	}
+
 
 
 	switch (input)
@@ -402,7 +418,7 @@ void GameManager::HandleInput(void)
 		}
 		ClearDialogue();
 
-		ui.CreateText("[ (W)(A)(S)(D): Move                         ]", Vector2(10, 0));
+		ui.CreateText("[ (W)(A)(S)(D): Move                                  ]", Vector2(10, 0));
 		break;
 
 	}

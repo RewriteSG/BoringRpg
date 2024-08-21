@@ -65,16 +65,12 @@ int OptionUI::PeekIndex(const std::string item) const
 	return indexToRemove;
 }
 
-void OptionUI::Clear(const Vector2 position) const
+void OptionUI::Clear(void)
 {
-	for (int i = 0; i < optionsSize + 1; ++i)
-	{
-		Scene::GotoXY(position.GetX(), position.GetY() + i, this->position);
-		for (int i = 0; i < 100; ++i)
-		{
-			std::cout << " ";
-		}
-	}
+	for (int i = 0; i < optionsSize; ++i)
+		delete options[i];
+
+	optionsSize = 0;
 }
 
 int OptionUI::PickOption(const Vector2 position) const
@@ -105,6 +101,11 @@ int OptionUI::PickOption(const Vector2 position) const
 		}
 	}
 
-	Clear(position);
+	for (int i = 0; i < optionsSize + 1; ++i)
+	{
+		Scene::GotoXY(position.GetX(), position.GetY() + i, this->position);
+		for (int i = 0; i < 100; ++i)
+			std::cout << " ";
+	}
 	return choosenOption;
 }

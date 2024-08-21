@@ -15,8 +15,7 @@ UI::UI(const Vector2 _position, const int _color, const int rows) : optionUI(nul
 
 UI::~UI(void)
 {
-	if (optionUI != nullptr)
-		delete optionUI;
+	delete optionUI;
 }
 
 void UI::CreateBorder(const Vector2 position,  const int height) const
@@ -128,7 +127,7 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 		Sleep(duration);
 		numCh++;
 	}
-
+	CreateText("[Enter to continue]", Vector2(position.GetX(), position.GetY() + numberOfLine));
 	while (true)
 	{
 		input = GameManager::_getch();
@@ -138,7 +137,7 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 
 	numCh = 0;
 	Scene::ChangeColor(color);
-	for (int i = 0; i < numberOfLine; ++i)
+	for (int i = 0; i < numberOfLine + 1; ++i)
 	{
 		Scene::GotoXY(position.GetX(), originalPos.GetY() + i, this->position);
 		for (int j = 0; j < rows; ++j)
@@ -210,6 +209,7 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 
 	if (optionUI == nullptr || optionUI->size() < 1)
 		throw std::invalid_argument("No option UI instance object");
+
 	choosenOption =  optionUI->PickOption(Vector2(0, 2));
 
 	numCh = 0;
@@ -224,6 +224,6 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 	}
 	Scene::ChangeColor(Scene::Default);
 
-	delete optionUI;
+	optionUI->Clear();
 	return choosenOption;
 }

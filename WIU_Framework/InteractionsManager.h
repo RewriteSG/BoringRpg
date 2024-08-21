@@ -2,12 +2,14 @@
 #include "GameObject.h"
 #include "TimeSystem.h"
 #include "UI.h"
+
 class InteractionsManager
 {
 	void SeperateInput(std::string input, std::string& input1, std::string& input2);
 public:
 	//timer
 	TimeSystem* timeSystem;
+	
 	UI* ui;
 	bool isNailSetup;
 	bool isPlankSetup;
@@ -18,7 +20,9 @@ public:
 	bool isStoreRoomUnlocked;
 	bool isClosetUnlocked;
 	bool isPlayerSucide;
+	bool isCurtainOpen;
 
+	bool hasFoundKeyUnderSofa;
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;
 	bool hasClosetKeyCollected;
@@ -74,7 +78,10 @@ public:
 
 	// --------------- Interactions Images ---------------
 	void MainDoorImage();
+	void DoorOpeningImage();
 	void SofaImage();
+	void SofaKeyUnderImage();
+	void SofaKeyUnderImage(bool);
 	void TableImage();
 	void SinkImage();
 	void PlanksImage();
@@ -94,6 +101,7 @@ public:
 	void BedImage();
 	void TelevisionImage();
 	void TelevisionImage(bool);
+	void TelevisionOtherChannelImage();
 	void ToiletCabinetImage();
 	void ToiletCabinetImage(bool);
 	void BedroomDoorImage();
@@ -105,7 +113,6 @@ public:
 	void StoreRoomDoorImage();
 	void KeyImage();
 	void ClockImage();
-	void FridgeImage();
 	void KitchenTableImage();
 	void BarricadeDoorImage();
 	void KnifeImage();
@@ -115,6 +122,13 @@ public:
 	void DuctTapeImage();
 	void MetalPanImage();
 	void EmptyBoxImage();
+	void KitchenTable();
+	void FridgeImage();
+	void FridgeImage(bool);
+	void ShowerCurtainImage();
+	void ShowerImage();
+	void ShowerImage(bool);
+	void ShowerNoShampooImage();
 
 };
 

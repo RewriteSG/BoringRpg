@@ -130,7 +130,6 @@ void EndingManager::PickWeaponOption(void)
 
 			dialogueIndex++;
 		}
-		ui->CreateOptionUI(Vector2(0, 10), false);
 		ui->GetOptionUI()->AddOption(new std::string("Metal Pan"));
 		ui->GetOptionUI()->AddOption(new std::string("Knife"));
 
@@ -181,7 +180,6 @@ void EndingManager::MentalPanEnding(void)
 				dialogueIndex++;
 			}
 
-			ui->CreateOptionUI(Vector2(0, 10), false);
 			ui->GetOptionUI()->AddOption(new std::string("Run"));
 			ui->GetOptionUI()->AddOption(new std::string("Hide"));
 			int choosenItem = ui->PickDialogue(Vector2(0, 10), "I had successfully knocked down this killer. What should I do next?");
@@ -254,7 +252,10 @@ EndingManager::EndingManager(void)
 
 void EndingManager::Start(void)
 {
-	ui = nullptr;
+	Vector2 uiPos = Vector2(Application::numberOfColumns / 2 - 100, Application::numberOfRows / 2);
+	ui = new UI(uiPos, 0, 150);
+	ui->CreateOptionUI(Vector2(0, 10), false);
+
 	killerCurrentScene = "";
 	isPlayerFound = false;
 	isPlayerGetKilled = false;
@@ -265,17 +266,13 @@ void EndingManager::Start(void)
 
 	hasWeapon = GameManager::getGM()->InteractionsMgr.hasKnife || GameManager::getGM()->InteractionsMgr.hasMetalPan;
 	playerGotBothWeapon = GameManager::getGM()->InteractionsMgr.hasKnife && GameManager::getGM()->InteractionsMgr.hasMetalPan;
-
 	time = &GameManager::getGM()->TimeSys.TimeTaken;
-
 	Update();
 }
 
 void EndingManager::Update(void)
 {
 	system("CLS");
-	Vector2 uiPos = Vector2(Application::numberOfColumns / 2 - 100, Application::numberOfRows / 2);
-	ui = new UI(uiPos, 0, 150);
 
 	if(!GameManager::getGM()->InteractionsMgr.isPlayerSucide && GameManager::getGM()->TimeSys.TimeLoop > 0)
 	for (int i = 0; i < 5; ++i)
@@ -407,6 +404,7 @@ void EndingManager::Exit()
 	else
 		SceneManager::LoadScene("LivingRoomScene");
 	SceneManager::prevScene = "";
+
 	delete ui;
 }
 

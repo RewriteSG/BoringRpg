@@ -1,4 +1,6 @@
 #pragma once
+#define POINTX -105
+#define POINTY 25
 #include "GameObject.h"
 #include "Entity.h"
 #include "Items.h"
@@ -25,6 +27,7 @@ private:
 	bool GameEnded, GameWon;
 	bool EmptyDialogue = true;
 
+	EndingManager* endingMgr;
 public:
 	bool LoopStarted;
 	bool firstLoop;
@@ -35,11 +38,11 @@ public:
 	InteractionsManager InteractionsMgr;
 	InventoryManager inventory;
 	TimeSystem TimeSys;
-	EndingManager ending;
-	std::string whatScenePlayerIn;
 	ObjectivesManager objManager;
+	std::string whatScenePlayerIn;
 
-	GameManager();
+	GameManager(void);
+	~GameManager(void);
 
 	void Start();
 	void Update();
