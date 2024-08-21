@@ -12,6 +12,7 @@ class Endings :
         void ending3();
         void ending4();
         void ending5();
+        bool isunlocked[5];
       
   
 };
