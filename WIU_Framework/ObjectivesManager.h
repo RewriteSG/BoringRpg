@@ -5,6 +5,7 @@ using namespace std;
 class ObjectivesManager
 {
 public:
+	bool hasCalledMom;
 	bool hasTakenShower;
 	bool hasWatchedTV;
 	bool hasSlept;
