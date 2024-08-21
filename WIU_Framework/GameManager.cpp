@@ -202,13 +202,85 @@ void GameManager::HandleInput(void)
 		while (true) 
 		{
 			//					[ (W)(A)(S)(D): Move  (/): To enable input field ]
-			ui.CreateText("[ Options: Enter, Exit, Interact, Move, Use, Help     ]", Vector2(10, 0));
-			//ClearDialogue();
-			if(EmptyDialogue)
-				ui.CreateText(ToPrint, Vector2(3, 2));
-			string stringInput = InputField();
-			string ItemFromInput = "";
-			string KeywordFromInput = "";
+			ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use', 'Help'     ]", Vector2(10, 0));
+
+			std::string Print = "blank", doorStr = "blank";
+			if (furnituresLeft || furnituresRight || furnituresUp || furnituresDown)
+				Print = "What do you want to do with ";
+			if (furnituresLeft)
+			{
+				Print += furnituresLeft->GetName();
+				if (furnituresLeft->GetFurnitureType() == Furniture::BedRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::KitchenDoor
+					|| furnituresLeft->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::MainDoor
+					|| furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor)
+					doorStr = furnituresLeft->GetName();
+			}
+			if (furnituresRight)
+			{
+				if (furnituresLeft)
+					Print += " and ";
+				Print += furnituresRight->GetName();
+				if (furnituresRight->GetFurnitureType() == Furniture::BedRoomDoor || furnituresRight->GetFurnitureType() == Furniture::KitchenDoor
+					|| furnituresRight->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresRight->GetFurnitureType() == Furniture::MainDoor
+					|| furnituresRight->GetFurnitureType() == Furniture::StoreRoomDoor)
+					doorStr = furnituresRight->GetName();
+			}
+			if (furnituresUp)
+			{
+				if (furnituresLeft || furnituresRight)
+					Print += " and ";
+				Print += furnituresUp->GetName();			
+				if (furnituresUp->GetFurnitureType() == Furniture::BedRoomDoor || furnituresUp->GetFurnitureType() == Furniture::KitchenDoor
+					|| furnituresUp->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresUp->GetFurnitureType() == Furniture::MainDoor
+					|| furnituresUp->GetFurnitureType() == Furniture::StoreRoomDoor)
+					doorStr = furnituresUp->GetName();
+			}
+			if (furnituresDown)
+			{
+
+				if (furnituresLeft || furnituresRight || furnituresUp)
+					Print += " and ";
+				Print += furnituresDown->GetName();
+				if (furnituresDown->GetFurnitureType() == Furniture::BedRoomDoor || furnituresDown->GetFurnitureType() == Furniture::KitchenDoor
+					|| furnituresDown->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresDown->GetFurnitureType() == Furniture::MainDoor
+					|| furnituresDown->GetFurnitureType() == Furniture::StoreRoomDoor)
+					doorStr = furnituresDown->GetName();
+
+			}
+
+			if (EmptyDialogue) {
+
+				ui.CreateText(Print, Vector2(3, 2));
+				int yOffset = 0;
+				ui.CreateText("Enter 'interact' or 'i' (space) <Object name>   |", Vector2(3, 3));
+				ui.CreateText("Enter 'e' ", Vector2(3, 3));
+				
+				//if (inventory.GetItemsCount() > 0) 
+				//{
+				//	ui.CreateText("Enter 'use' (space) <item name> ", Vector2(55, 3));
+				//}
+				if (furnituresUp) 
+				{
+					ui.CreateText("|", Vector2(50, 4 + yOffset));
+					if (furnituresUp->GetName() != doorStr) {
+
+						ui.CreateText(furnituresUp->GetName(), Vector2(3, 4 + yOffset));
+					}
+					else 
+					{
+
+					}
+					yOffset++;
+				}
+				if (furnituresDown) 
+				{
+					ui.CreateText(Print, Vector2(3, 4 + yOffset));
+
+				}
+			}
+			stringInput = InputField();
+			ItemFromInput = "";
+			KeywordFromInput = "";
 			//move for doors only
 			if (stringInput.empty())
 				break;
@@ -367,7 +439,8 @@ void GameManager::HandleInput(void)
 			{
 				if(InteractionsMgr.UseItem(ItemFromInput,player))
 					break;
-				else {
+				else
+				{
 
 					ClearDialogue();
 					//ui.PrintDialogue(Vector2(3, 2), "'Use': use any item by entering 'use' <item name> 'on' <object name>.");
