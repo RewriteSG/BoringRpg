@@ -31,6 +31,7 @@ GameManager::GameManager(void) : TimeSys()
 	gameUI = new UI(Vector2(130, 12), 0, 150);
 	gameUI->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	endingMgr = new EndingManager();
+	InteractionsManager::hasSearchedForSoap = false;
 }
 
 GameManager::~GameManager(void)
@@ -163,10 +164,13 @@ void GameManager::HandleInput(void)
 	ClearDialogue();
 	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
 	ui.CreateText("Enter 'w' or 'a' or 's' or 'd' to move yourself. ", Vector2(3, 2));
+	ui.CreateText("Enter '/' to input more interactions. ", Vector2(3, 3));
 
 	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0));
 	Scene::GotoXY(Application::numberOfColumns / 2 - 81, 45);
+	Scene::ChangeColor(Scene::Green, true);
 	cout<< "Input: ";
+	Scene::ChangeColor(Scene::Default, true);
 	char input;
 	if (LoopStarted)
 		input = _getch();
@@ -208,16 +212,25 @@ void GameManager::HandleInput(void)
 		while (true) 
 		{
 			//					[ (W)(A)(S)(D): Move  (/): To enable input field ]
-			ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use', 'Help'     ]", Vector2(10, 0));
+			if(TimeSys.TimeLoop < 2)
+			ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use',       ]", Vector2(10, 0));
+			else
+				ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use', 'Wait']", Vector2(10, 0));
 
+			Scene::GotoXY(3, 2, ui.GetPosition());
 			std::string Print = "blank", doorStr = "blank";
 			if (furnituresLeft || furnituresRight || furnituresUp || furnituresDown)
 				Print = "What do you want to do with ";
 			else
 				Print = "What do you want to do?";
+			cout << Print;
 			if (furnituresLeft)
 			{
 				Print += furnituresLeft->GetName();
+				Scene::ChangeColor(Scene::Yellow, true);
+				cout << furnituresLeft->GetName();
+				Scene::ChangeColor(Scene::Default, true);
+
 				if (furnituresLeft->GetFurnitureType() == Furniture::BedRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresLeft->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::MainDoor
 					|| furnituresLeft->GetFurnitureType() == Furniture::StoreRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::ToiletDoor)
@@ -226,7 +239,11 @@ void GameManager::HandleInput(void)
 			if (furnituresRight)
 			{
 				if (furnituresLeft)
-					Print += " or ";
+					cout<< " or ";
+
+				Scene::ChangeColor(Scene::Yellow, true);
+				cout << furnituresRight->GetName();
+				Scene::ChangeColor(Scene::Default, true);
 				Print += furnituresRight->GetName();
 				if (furnituresRight->GetFurnitureType() == Furniture::BedRoomDoor || furnituresRight->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresRight->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresRight->GetFurnitureType() == Furniture::MainDoor
@@ -236,7 +253,10 @@ void GameManager::HandleInput(void)
 			if (furnituresUp)
 			{
 				if (furnituresLeft || furnituresRight)
-					Print += " or ";
+					cout << " or ";
+				Scene::ChangeColor(Scene::Yellow, true);
+				cout << furnituresUp->GetName();
+				Scene::ChangeColor(Scene::Default, true);
 				Print += furnituresUp->GetName();			
 				if (furnituresUp->GetFurnitureType() == Furniture::BedRoomDoor || furnituresUp->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresUp->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresUp->GetFurnitureType() == Furniture::MainDoor
@@ -247,7 +267,10 @@ void GameManager::HandleInput(void)
 			{
 
 				if (furnituresLeft || furnituresRight || furnituresUp)
-					Print += " or ";
+					cout << " or ";
+				Scene::ChangeColor(Scene::Yellow, true);
+				cout << furnituresDown->GetName();
+				Scene::ChangeColor(Scene::Default, true);
 				Print += furnituresDown->GetName();
 				if (furnituresDown->GetFurnitureType() == Furniture::BedRoomDoor || furnituresDown->GetFurnitureType() == Furniture::KitchenDoor
 					|| furnituresDown->GetFurnitureType() == Furniture::LivingRoomDoor || furnituresDown->GetFurnitureType() == Furniture::MainDoor
@@ -255,16 +278,17 @@ void GameManager::HandleInput(void)
 					doorStr = furnituresDown->GetName();
 
 			}
-
+			
 			if (EmptyDialogue) {
 
-				ui.CreateText(Print, Vector2(3, 2));
-				int yOffset = 1;
-				int xOffset = 0;
+				cout << ".";
+				//ui.CreateText(Print+'.', Vector2(3, 2));
+				int yOffset = 2;
+				int xOffset = 3;
 				if (furnituresLeft || furnituresRight || furnituresUp || furnituresDown) {
 					string text = "";
 #pragma region OMG
-					int doorCount = 0, furnitureCount = 0;
+					int doorCount = 0, furnitureCount = 0, notDoorCount = 0;
 					if (furnituresLeft)
 					{
 						if (furnituresLeft->GetFurnitureType() == Furniture::BedRoomDoor || furnituresLeft->GetFurnitureType() == Furniture::KitchenDoor
@@ -273,6 +297,8 @@ void GameManager::HandleInput(void)
 							doorCount++;
 							text = "";
 						}
+						else
+							notDoorCount++;
 						furnitureCount++;
 					}
 					if (furnituresRight)
@@ -283,6 +309,8 @@ void GameManager::HandleInput(void)
 							doorCount++;
 							text = "";
 						}
+						else
+							notDoorCount++;
 						furnitureCount++;
 
 					}
@@ -294,6 +322,8 @@ void GameManager::HandleInput(void)
 							doorCount++;
 							text = "";
 						}
+						else
+							notDoorCount++;
 						furnitureCount++;
 
 					}
@@ -306,73 +336,79 @@ void GameManager::HandleInput(void)
 							doorCount++;
 							text = "";
 						}
+						else
+							notDoorCount++;
 						furnitureCount++;
 
 					}
 #pragma endregion
 					if ((doorCount > 0 && doorCount < furnitureCount) || doorCount == 0)
 					{
-						text = "Enter 'interact' or 'i' (space) <Object name>   |";
+						text = "To Interact: Enter 'interact' or 'i' (space) <Object name>   ";
+					}
+
+					if (doorStr != "blank") {
+						string doortext = "To open: Enter 'e' to open " + doorStr + " and enter.    ";
+						ui.CreateText(doortext, Vector2(xOffset, 4));
+						xOffset += doortext.length();
 					}
 					if (text != "") {
-
-						ui.CreateText(text, Vector2(3, 3));
-						xOffset = 50 + 4;
+						if(xOffset > 5) 
+						ui.CreateText("|  " + text, Vector2(xOffset, 4));
+						else
+							ui.CreateText(text, Vector2(xOffset, 4));
+						xOffset += text.length();
 					}
+					//if (notDoorCount > 0) {
+					//	ui.CreateText("   Objects around you:", Vector2(2, 4 + yOffset - 1));
+					//}
 				}
-				else 
+
 				{
-					ui.CreateText("Enter 'move' or Press (Enter)  |", Vector2(3, 3));
-					xOffset = 33 + 4;
-				}
-				if (doorStr != "blank") {
-					string doortext = "Enter 'e' to open " + doorStr + " and enter.  |";
-					if (xOffset == 0)
-						xOffset = 3;
-					ui.CreateText(doortext, Vector2(xOffset, 3));
-					xOffset += doortext.length() + 3;
+					//ui.CreateText("To move: Enter 'move' or Press (Enter)  ", Vector2(3, 3));
+					//xOffset += 33 + 4;
 				}
 				
 				if (inventory.GetItemsCount() > 0) 
 				{
-					ui.CreateText("Enter 'use' (space) <item name> 'on' <object name>", Vector2(xOffset, 3));
+					ui.CreateText("Use Item: Enter 'use' (space) <item name> 'on' <object name>", Vector2(3, 5));
 				}
-				if (furnituresUp) 
-				{
-					//ui.CreateText("|", Vector2(50, 4 + yOffset));
-					if (furnituresUp->GetName() != doorStr) {
+				//if (furnituresUp) 
+				//{
+				//	//ui.CreateText("|", Vector2(50, 4 + yOffset));
+				//	if (furnituresUp->GetName() != doorStr) {
 
-						ui.CreateText("  - "+furnituresUp->GetName(), Vector2(3, 4 + yOffset));
-					}
-					yOffset++;
-				}
-				if (furnituresDown)
-				{
-					//ui.CreateText("|", Vector2(50, 4 + yOffset));
-					if (furnituresDown->GetName() != doorStr) {
+				//		ui.CreateText("  - "+furnituresUp->GetName(), Vector2(3, 4 + yOffset));
+				//	}
+				//	yOffset++;
+				//}
+				//if (furnituresDown)
+				//{
+				//	//ui.CreateText("|", Vector2(50, 4 + yOffset));
+				//	if (furnituresDown->GetName() != doorStr) {
 
-						ui.CreateText("  - " + furnituresDown->GetName(), Vector2(3, 4 + yOffset));
-					}
-					yOffset++;
-				}
-				if (furnituresRight)
-				{
-					//ui.CreateText("|", Vector2(50, 4 + yOffset));
-					if (furnituresRight->GetName() != doorStr) {
+				//		ui.CreateText("  - " + furnituresDown->GetName(), Vector2(3, 4 + yOffset));
+				//	}
+				//	yOffset++;
+				//}
+				//if (furnituresRight)
+				//{
+				//	//ui.CreateText("|", Vector2(50, 4 + yOffset));
+				//	if (furnituresRight->GetName() != doorStr) {
 
-						ui.CreateText("  - " + furnituresRight->GetName(), Vector2(3, 4 + yOffset));
-					}
-					yOffset++;
-				}
-				if (furnituresLeft)
-				{
-					//ui.CreateText("|", Vector2(50, 4 + yOffset));
-					if (furnituresLeft->GetName() != doorStr) {
+				//		ui.CreateText("  - " + furnituresRight->GetName(), Vector2(3, 4 + yOffset));
+				//	}
+				//	yOffset++;
+				//}
+				//if (furnituresLeft)
+				//{
+				//	//ui.CreateText("|", Vector2(50, 4 + yOffset));
+				//	if (furnituresLeft->GetName() != doorStr) {
 
-						ui.CreateText("  - " + furnituresLeft->GetName(), Vector2(3, 4 + yOffset));
-					}
-					yOffset++;
-				}
+				//		ui.CreateText("  - " + furnituresLeft->GetName(), Vector2(3, 4 + yOffset));
+				//	}
+				//	yOffset++;
+				//}
 			}
 			stringInput = InputField();
 			ItemFromInput = "";
@@ -460,8 +496,9 @@ void GameManager::HandleInput(void)
 				ClearDialogue();
 				ui.PrintDialogue(Vector2(3,2), "What do you want to interact with? Please Enter 'i / interact (space) ' <object name>");
 				//ui.CreateText( "Interact with what? Enter 'interact <object name>'", Vector2(4, 2));
-				EmptyDialogue = false;
-				DisplayFurnituresAroundPlayer(Vector2(4, 3));
+				ClearDialogue(); 
+
+				//DisplayFurnituresAroundPlayer(Vector2(4, 3));
 			}
 			else if (stringInput == "e")
 			{
@@ -531,19 +568,20 @@ void GameManager::HandleInput(void)
 					}
 			}
 			
-			else if (KeywordFromInput == "use" && ItemFromInput != "") 
+			else if ((KeywordFromInput == "use"|| KeywordFromInput == "u") && ItemFromInput != "")
 			{
 				if(InteractionsMgr.UseItem(ItemFromInput,player))
 					break;
 				else
 				{
 
-					ClearDialogue();
-					//ui.PrintDialogue(Vector2(3, 2), "'Use': use any item by entering 'use' <item name> 'on' <object name>.");
-					ui.CreateText("'Use': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(3, 2));
-					//ui.PrintDialogue(Vector2(3, 3), " - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>");
-					ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(2, 3));
-					EmptyDialogue = false;
+					//ClearDialogue();
+					////ui.PrintDialogue(Vector2(3, 2), "'Use': use any item by entering 'use' <item name> 'on' <object name>.");
+					//ui.CreateText("'Use': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(3, 2));
+					////ui.PrintDialogue(Vector2(3, 3), " - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>");
+					//ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(2, 3));
+					//ClearDialogue(); 
+
 				}
 
 			}
@@ -554,7 +592,24 @@ void GameManager::HandleInput(void)
 				ui.CreateText("'Use': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(	3, 2));
 				ui.PrintDialogue( Vector2(3, 3), " - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>");
 				ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(2, 3));
-				EmptyDialogue = false;
+				ClearDialogue();  
+
+
+			}
+			else if (stringInput == "wait")
+			{
+				ClearDialogue();
+				if (TimeSys.TimeLoop > 1) {
+					ui.CreateOptionUI(Vector2(POINTX, POINTY), false);
+					ui.GetOptionUI()->AddOption(new string("Yes"));
+					ui.GetOptionUI()->AddOption(new string("No"));
+					int choice = ui.PickDialogue(Vector2(POINTX, POINTY), "Are you sure you want to wait for the killer to arrive? (This will skip to the ending)");
+					if (choice == 1)
+						TimeSys.TimeTaken = TimeSys.RobberTime;
+				}
+				else
+				ui.PrintDialogue(Vector2(3, 2), "How did you know how to use this command? Play the game first. ");
+
 
 			}
 			else if (stringInput == "show endings") {
@@ -567,10 +622,10 @@ void GameManager::HandleInput(void)
 				
 				ui.CreateText("'e': transition through rooms by doors", Vector2(4, 2));
 				ui.CreateText("'Interact / i ': To trigger item interaction, use to figure out what object does by entering 'interact' or 'i' <Object name>", Vector2(4, 3));
-				ui.CreateText("'Move / m ': Allow your character to move after entering '/'.", Vector2(4, 4));
+				ui.CreateText("'move': Enter 'move' or Press (Enter) to control the movement", Vector2(4, 4));
 				ui.CreateText("'Use / u': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(4, 5));
 				ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(4, 6));
-				ui.CreateText("Press 'Enter' again to move. ", Vector2(4, 7));
+				ui.CreateText("'Wait': Enter 'wait' to Wait for the Killer to arrive. ", Vector2(4, 7));
 
 				EmptyDialogue = false;
 			}
@@ -578,10 +633,10 @@ void GameManager::HandleInput(void)
 			{
 				break;
 			}
-			else {
+			else 
+			{
 				ClearDialogue(); 
-				ui.CreateText("Invalid input, Enter 'help' for commands. ", Vector2(3, 2));
-				EmptyDialogue = false; 
+				ui.CreateText("Invalid input, Enter 'help' for commands. ", Vector2(3, 6));
 			}
 
 		}
@@ -591,6 +646,8 @@ void GameManager::HandleInput(void)
 		break;
 
 	}
+	Application::HideCursor();
+
 }
 
 std::string GameManager::InputField(void)
@@ -601,6 +658,7 @@ std::string GameManager::InputField(void)
 	char ch{};
 
 	Application::ShowCursor();
+	Scene::ChangeColor(Scene::Yellow,true);
 	std::string text = "Input: ";
 	std::cout << text;
 	while (true) {
@@ -629,6 +687,7 @@ std::string GameManager::InputField(void)
 	}
 	Application::HideCursor();
 
+	Scene::ChangeColor(Scene::Default,true);
 	Scene::GotoXY(Application::numberOfColumns / 2 - 81, 45);
 	for (char& chtr : input + text)
 		std::cout << ' ';

@@ -6,6 +6,7 @@
 #include "UI.h"
 #include "conio.h"
 #include "StoreRoomDoorSprite.h"
+#include "Soap.h"
 StoreRoomScene::StoreRoomScene(void)
 {
 	name = SceneManager::GetSceneName(SceneManager::STOREROOM);
@@ -14,6 +15,8 @@ StoreRoomScene::StoreRoomScene(void)
 void StoreRoomScene::Start()
 {
 	Scene::Start();
+	soap = new Soap(gm.InteractionsMgr.soapPosition);
+	soap->SetActive(gm.InteractionsMgr.isSoapSetup && gm.InteractionsMgr.soapLocation == name);
 	new Wall(Vector2(4, 2));
 	new Wall(Vector2(5, 2));
 	new Wall(Vector2(6, 2));
@@ -44,7 +47,6 @@ void StoreRoomScene::Start()
 	new Furniture(Furniture::Planks, Vector2(6, 3));
 	new Furniture(Furniture::Planks, Vector2(7, 3), true);
 	
-
 
 
 	gm.CreatePlayer(Vector2(7, 5));

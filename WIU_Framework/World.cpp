@@ -113,13 +113,17 @@ void World::Update(GameObject** objects, int objectsCount)
 		}
 		else 
 		{
+
 			Vector2 collidedPos = Vector2(pos->GetX(), pos->GetY());
-			*pos = objects[i]->GetPrevPosition();
 			GameObject* collidedObj = ObjectManager::getObjectManager()->GetObjectAtPosition(collidedPos);
-			if (collidedObj)
+			if(!collidedObj->GetTrigger())
 			{
-				collidedObj->Collided(objects[i]);
-				objects[i]->Collided(collidedObj);
+				*pos = objects[i]->GetPrevPosition();
+				if (collidedObj)
+				{
+					collidedObj->Collided(objects[i]);
+					objects[i]->Collided(collidedObj);
+				}
 			}
 		}
 
@@ -136,7 +140,7 @@ void World::Render(GameObject** objects, int objectsCount) const
 	for (int i = 0; i < objectsCount; i++)
 	{
 		pos = objects[i]->GetPosition();
-		if (!objects[i]->IsRenderingSprite())
+		if (!objects[i]->IsRenderingSprite() || !objects[i]->GetActive())
 			continue;
 		if (*pos != objects[i]->GetPrevPosition())
 		{

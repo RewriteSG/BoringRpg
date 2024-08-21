@@ -4,7 +4,7 @@
 #include "Application.h"
 #include "GameManager.h"
 #include "PlayerSprite.h"
-
+#include "Soap.h"
 Player* Player::playerInstance = nullptr;
 
 Player::Player()
@@ -23,6 +23,8 @@ void Player::Update()
 }
 void Player::Collided(GameObject* collision)
 {
+
+	//position = *collision->GetPosition();
 	//HealingGlobe* healGlobe = dynamic_cast<HealingGlobe*>(collision);
 	//if (healGlobe) 
 	//{

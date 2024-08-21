@@ -5,6 +5,7 @@
 #include "Furniture.h"
 #include "UI.h"
 #include "conio.h"
+#include "Soap.h"
 
 BedroomScene::BedroomScene()
 {
@@ -14,6 +15,8 @@ BedroomScene::BedroomScene()
 void BedroomScene::Start()
 {
 	Scene::Start();
+	soap = new Soap(gm.InteractionsMgr.soapPosition);
+	soap->SetActive(gm.InteractionsMgr.isSoapSetup && gm.InteractionsMgr.soapLocation == name);
 	new Wall(Vector2(0, 0));
 	new Wall(Vector2(0, 1));
 	new Wall(Vector2(0, 2));
@@ -61,11 +64,6 @@ void BedroomScene::Start()
 	new Furniture(Furniture::Closet, Vector2(10, 1));
 	new Furniture(Furniture::Closet, Vector2(10, 2), true);
 	new Furniture(Furniture::LivingRoomDoor, Vector2(5, 5));
-
-	//if (draw.IsRobberDead == false) {
-
-	////	gm.CreateRobber(Vector2(5, 8));
-	//}
 	gm.CreatePlayer(Vector2(5, 4));
 }
 

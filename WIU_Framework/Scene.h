@@ -10,6 +10,7 @@ protected:
 	std::string name;
 	World world;
 	ObjectManager objectManager;
+	GameObject* soap;
 	bool drawnASCII;
 public:
 	static GameManager gm; 
@@ -35,6 +36,7 @@ public:
 		Yellow,
 		Black,
 		White,
+		Cyan,
 		Default,
 		BG_COLOR
 	};
@@ -48,5 +50,6 @@ public:
 
 	static void ClearASCII_Art(int x, int y, int color); 
 	std::string getName(void) const;
+	GameObject* getSoap(void);
 };
 

@@ -6,6 +6,7 @@
 #include "UI.h"
 #include "conio.h"
 #include "StoreRoomDoorSprite.h"
+#include "Soap.h"
 KitchenScene::KitchenScene(void)
 {
 	name = SceneManager::GetSceneName(SceneManager::KITCHEN);
@@ -13,6 +14,8 @@ KitchenScene::KitchenScene(void)
 void KitchenScene::Start()
 {
 	Scene::Start();
+	soap = new Soap(gm.InteractionsMgr.soapPosition);
+	soap->SetActive(gm.InteractionsMgr.isSoapSetup && gm.InteractionsMgr.soapLocation == name);
 	new Wall(Vector2(2, 1));
 	new Wall(Vector2(2, 2));
 	new Wall(Vector2(2, 4));

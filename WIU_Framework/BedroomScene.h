@@ -9,7 +9,7 @@ public:
     void Start() override;
     void Update() override;
 
-    Robber draw;
+    //Robber draw;
 };
 
 

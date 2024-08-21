@@ -227,3 +227,8 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 	optionUI->Clear();
 	return choosenOption;
 }
+
+Vector2 UI::GetPosition(void) const
+{
+	return position;
+}

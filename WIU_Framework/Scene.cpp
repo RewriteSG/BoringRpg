@@ -164,10 +164,13 @@ void Scene::ChangeColor(TypeColor color, bool tochar)
 		break;
 	case Scene::Yellow:
 		SetConsoleTextAttribute(hConsole, 14);
+		break;
 	case Scene::Black:
 		SetConsoleTextAttribute(hConsole, 0);
 		break;
-	
+	case Scene::Cyan:
+		SetConsoleTextAttribute(hConsole, 11);
+		break;
 	case Scene::White:
 		SetConsoleTextAttribute(hConsole, 15);
 		break;
@@ -293,4 +296,9 @@ void Scene::ClearASCII_Art(int x, int y, int color)
 
 }
 std::string Scene::getName(void) const { return name; }
+
+GameObject* Scene::getSoap(void)
+{
+	return soap;
+}
 

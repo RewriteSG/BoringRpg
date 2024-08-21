@@ -6,6 +6,7 @@
 #include "UI.h"
 #include "conio.h"
 #include "ToiletDoorSprite.h"
+#include "Soap.h"
 ToiletScene::ToiletScene(void)
 {
 	name = SceneManager::GetSceneName(SceneManager::TOILET);
@@ -13,6 +14,8 @@ ToiletScene::ToiletScene(void)
 void ToiletScene::Start()
 {
 	Scene::Start();
+	soap = new Soap(gm.InteractionsMgr.soapPosition);
+	soap->SetActive(gm.InteractionsMgr.isSoapSetup && gm.InteractionsMgr.soapLocation == name);
 	new Wall(Vector2(4, 2));
 	new Wall(Vector2(5, 2));
 	new Wall(Vector2(6, 2));

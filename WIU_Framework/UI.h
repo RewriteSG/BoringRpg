@@ -25,4 +25,5 @@ public:
 
 	void PrintDialogue(Vector2 position, const std::string text) const;
 	int PickDialogue(Vector2 position, const std::string text) const;
+	Vector2 GetPosition(void) const;
 };

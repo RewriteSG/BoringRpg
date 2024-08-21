@@ -9,6 +9,7 @@ GameObject::GameObject(void)
 	IsActive = true;
 	isRenderSprite = true;
 	sprite = new Sprite();
+	isTrigger = false;
 	Start();
 }
 
@@ -105,6 +106,12 @@ void GameObject::SetActive(bool setActive)
 		World::GetWorldInstance()->SetCharFromXandY(prevPos.GetX(), prevPos.GetY(), '.');
 
 	}
+}
+
+bool GameObject::GetTrigger(void) const
+{
+	return isTrigger;
+
 }
 
 std::string GameObject::GetName(void) const

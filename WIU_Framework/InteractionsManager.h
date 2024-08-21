@@ -10,6 +10,7 @@ public:
 	//timer
 	TimeSystem* timeSystem;
 	std::string soapLocation;
+	Vector2 soapPosition; 
 
 	UI* ui;
 	bool isNailSetup;
@@ -36,7 +37,7 @@ public:
 	bool hasDuctTape;
 	bool hasMetalPan;
 	bool isDoorBarricaded;
-
+	static bool hasSearchedForSoap;
 	int trashCanInteractions = 0;
 	InteractionsManager();
 

@@ -11,6 +11,7 @@ protected:
 	Vector2 prevPosition;
 	Sprite* sprite;
 	bool IsActive;
+	bool isTrigger;
 	bool isRenderSprite;
 
 public:
@@ -38,6 +39,7 @@ public:
 	void SetRenderSprite(bool);
 	bool GetActive(void) const;
 	void SetActive(bool setActive);
+	bool GetTrigger(void) const;
 
 	std::string GetName(void) const;
 };

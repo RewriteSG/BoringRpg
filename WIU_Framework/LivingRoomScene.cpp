@@ -6,6 +6,7 @@
 #include "Robber.h"
 #include "UI.h"
 #include "conio.h"
+#include "Soap.h"
 LivingRoomScene::LivingRoomScene(void)
 {
 	name = SceneManager::GetSceneName(SceneManager::LIVING_ROOM);
@@ -13,6 +14,8 @@ LivingRoomScene::LivingRoomScene(void)
 void LivingRoomScene::Start()
 {
 	Scene::Start();
+	soap =	new Soap(gm.InteractionsMgr.soapPosition);
+	soap->SetActive(gm.InteractionsMgr.isSoapSetup && gm.InteractionsMgr.soapLocation == name);
 	new Furniture(Furniture::Clock, Vector2(9, 0));
 	new Wall(Vector2(0, 0));
 	new Wall(Vector2(0, 1));
@@ -71,7 +74,9 @@ void LivingRoomScene::Start()
 	new Furniture(Furniture::ToiletDoor, Vector2(9, 7));
 	new Furniture(Furniture::KitchenDoor, Vector2(12, 2));
 	new Furniture(Furniture::MainDoor, Vector2(12, 6));
+
 	gm.CreatePlayer(Vector2(11, 6));
+	
 	//gm.CreateRobber(Vector2(5, 3));
 }
 

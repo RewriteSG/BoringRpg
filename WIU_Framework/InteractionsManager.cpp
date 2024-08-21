@@ -6,7 +6,7 @@
 #include "ObjectivesManager.h"
 #include "Application.h"
 #include "Windows.h"
-
+#include "Soap.h"
 void InteractionsManager::SeperateInput(std::string input, std::string& input1, std::string& input2)
 {
 	int chCount = 0;
@@ -29,6 +29,7 @@ void InteractionsManager::SeperateInput(std::string input, std::string& input1, 
 	else
 		input2 = "";
 }
+bool InteractionsManager::hasSearchedForSoap = false;
 
 InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 {
@@ -206,9 +207,11 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 	}
 	else {
 
-
-		ShowerImage();
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "Just a normal shower area."); 
+		if (hasSoap)
+			ShowerNoShampooImage();
+		else
+			ShowerImage();
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "Just a normal shower area.");
 	}
 	int choosenItem =0;
 	bool* hasTakenShower = &(GameManager::getGM()->objManager).hasTakenShower;
@@ -225,7 +228,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 		switch (choosenItem)
 		{
 		case 0:
-			ShowerImage(true); 
+			ShowerCurtainImage(); 
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "TSSSSHHHHHHHHHH");
 			ShowerImage();
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You took a shower.");
@@ -245,7 +248,10 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 			ShowerImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Lets see what can I do here.");
 		ui->GetOptionUI()->AddOption(new std::string("Hide"));
-		ui->GetOptionUI()->AddOption(new std::string("Search"));
+		if (hasSearchedForSoap && !hasSoap)
+			ui->GetOptionUI()->AddOption(new std::string("Soap"));
+		else
+			ui->GetOptionUI()->AddOption(new std::string("Search"));
 		ui->GetOptionUI()->AddOption(new std::string("Leave"));
 		choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "What to do?");
 		switch (choosenItem)
@@ -263,12 +269,16 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 			if (hasSoap)
 			{
 
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "There is nothing of use.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "There is nothing of useful here.");
 				break;
 			}
-		
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You found a body Soap bottle.");
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Maybe there's a use to this?");
+			if (!hasSearchedForSoap && !hasSoap)
+			{
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You found a body Soap bottle.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Maybe there's a use to this?");
+			}
+			hasSearchedForSoap = true;
+
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
 			choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the soap");
@@ -1180,7 +1190,8 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			else 
 			{
 				GameManager::getGM()->ClearDialogue();
-				ui.PrintDialogue(Vector2(3,2), "I dont have enough items to use on the main door! Maybe i need nails, planks or hammer?");
+				ui.PrintDialogue(Vector2(3, 2), "I dont have enough items to use on the main door! Maybe i need nails, planks or hammer?");
+				ui.PrintDialogue(Vector2(3,2), "Enter 'use' <item name> and <item name> and <item name> on main door");
 			}
 			return true;
 		}
@@ -1264,6 +1275,9 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			ui.PrintDialogue(Vector2(3, 2), "Successfully used soap on floor!");
 			GameManager::getGM()->inventory.UseItem(useItem1);
 			soapLocation = GameManager::getGM()->whatScenePlayerIn;
+			soapPosition = *GameManager::getGM()->player->GetPosition();
+			SceneManager::currentScene->getSoap()->SetActive(true);
+			*SceneManager::currentScene->getSoap()->GetPosition() = *player->GetPosition();
 		}
 		else
 		{

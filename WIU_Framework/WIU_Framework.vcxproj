@@ -175,6 +175,8 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShowerAreaSprite.cpp" />
     <ClCompile Include="SinkSprite.cpp" />
+    <ClCompile Include="Soap.cpp" />
+    <ClCompile Include="SoapSprite.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StoreRoomDoorSprite.cpp" />
     <ClCompile Include="StoreRoomScene.cpp" />
@@ -240,6 +242,8 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShowerAreaSprite.h" />
     <ClInclude Include="SinkSprite.h" />
+    <ClInclude Include="Soap.h" />
+    <ClInclude Include="SoapSprite.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StoreRoomDoorSprite.h" />
     <ClInclude Include="StoreRoomScene.h" />
