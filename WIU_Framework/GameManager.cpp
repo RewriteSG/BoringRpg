@@ -277,7 +277,7 @@ void GameManager::HandleInput(void)
 				ui.PrintDialogue(Vector2(3,2), "Interact with what? Enter 'interact <object name>'");
 				ui.CreateText( "Interact with what? Enter 'interact <object name>'", Vector2(4, 2));
 				EmptyDialogue = false;
-				DisplayFurnituresAroundPlayer(Vector2(3, 3));
+				DisplayFurnituresAroundPlayer(Vector2(4, 3));
 			}
 			else if (stringInput == "enter") 
 			{

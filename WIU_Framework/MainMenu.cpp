@@ -133,6 +133,7 @@ void MainMenu::Update(void)
 				ui.PrintDialogue(Vector2(-105, 10), "You reached into your pockets for your key, and unlocked the door.");
 				ui.PrintDialogue(Vector2(-105, 10), "Just as you close your door, the figure appears from the dark.");
 				ui.PrintDialogue(Vector2(-105, 10), "With a knife in his hand.");
+
 				SceneManager::LoadScene(new LivingRoomScene());
 			}
 				
