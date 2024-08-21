@@ -76,7 +76,6 @@ void ObjectivesManager::displayObjectives() const
 			{
 				ui->CreateText("              ", Vector2(29, -5));
 				ui->CreateText("Survive until the cops arrive", Vector2(29, -5));
-				ui->CreateText("(12:08)", Vector2(29, -4));
 			}
 			break;
 	}
