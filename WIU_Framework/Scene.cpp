@@ -12,6 +12,7 @@ bool Scene::GetContinuePgrm() const
 
 Scene::Scene() : world(Vector2(33, 2), 16, 10), objectManager()
 {
+	soap = nullptr;
 	ContinuePgrm = true;
 	name = " ";
 	drawnASCII = false;

@@ -450,7 +450,7 @@ void GameManager::HandleInput(void)
 
 			KeywordFromInput = stringInput.substr(0, chCount);
 			if (space)
-				ItemFromInput = stringInput.substr(static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(chCount) + 1);
+				ItemFromInput = stringInput.substr(chCount+1, stringInput.length()-1);
 			else
 				ItemFromInput = "";
 			string furnStr = "";
@@ -690,7 +690,7 @@ void GameManager::HandleInput(void)
 			else 
 			{
 				ClearDialogue(); 
-				ui.CreateText("Invalid input, Enter 'help' for commands. ", Vector2(3, 6));
+				ui.CreateText("Invalid input, Enter 'help' for commands. ", Vector2(3, 7));
 			}
 
 		}

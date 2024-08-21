@@ -23,7 +23,6 @@ public:
 	bool isClosetUnlocked;
 	bool isPlayerSucide;
 	bool isCurtainOpen;
-
 	bool hasFoundKeyUnderSofa;
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;
@@ -38,6 +37,7 @@ public:
 	bool hasMetalPan;
 	bool isDoorBarricaded;
 	static bool hasSearchedForSoap;
+	static bool hasKnownKey;
 	int trashCanInteractions = 0;
 	InteractionsManager();
 
@@ -108,6 +108,7 @@ public:
 	void ToiletCabinetImage(bool);
 	void BedroomDoorImage();
 	void ClosetDoorImage();
+	void ClosetDoorImage(bool);
 	void KitchenDoorImage();
 	void ToiletDoorImage();
 	void ToiletBowlImage();
@@ -124,13 +125,13 @@ public:
 	void DuctTapeImage();
 	void MetalPanImage();
 	void EmptyBoxImage();
-	void KitchenTable();
 	void FridgeImage();
 	void FridgeImage(bool);
 	void ShowerCurtainImage();
 	void ShowerImage();
 	void ShowerImage(bool);
 	void ShowerNoShampooImage();
+	void PouringShampooImage();
 
 };
 
