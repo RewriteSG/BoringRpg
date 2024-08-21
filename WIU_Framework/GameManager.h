@@ -40,7 +40,7 @@ public:
 	ObjectivesManager objManager;
 
 	GameManager();
-
+	
 	void Start();
 	void Update();
 	void Exit();

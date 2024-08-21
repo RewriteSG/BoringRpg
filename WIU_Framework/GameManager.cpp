@@ -27,7 +27,9 @@ GameManager::GameManager() : gameUI(nullptr), TimeSys()
 	GameWon = true;
 	player = nullptr;
 	LoopStarted = false;
-	firstLoop = TimeSys.TimeLoop == 0;
+	firstLoop = TimeSys.TimeLoop == 0;	
+	gameUI = new UI(Vector2(130, 12), 0, 150);
+	gameUI.CreateOptionUI();
 }
 
 GameManager* GameManager::getGM()
@@ -41,7 +43,7 @@ void GameManager::Start()
 	GM_Instance = this;
 	GameEnded = false;
 	GameWon = true;
-	gameUI = new UI(Vector2(130, 12), 0, 150);
+
 	InteractionsMgr.Start();
 	firstLoop = TimeSys.TimeLoop == 0;
 }
