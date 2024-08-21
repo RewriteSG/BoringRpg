@@ -166,6 +166,22 @@ void GameManager::HandleInput(void)
 	ui.CreateText("Enter 'w' or 'a' or 's' or 'd' to move yourself. ", Vector2(3, 2));
 	ui.CreateText("Enter '/' to input more interactions. ", Vector2(3, 3));
 
+	Scene::ChangeColor(Scene::Yellow, true);
+	Scene::GotoXY(7 + 3, 2, ui.GetPosition());
+	cout << "w";
+	Scene::GotoXY(7 + 3, 3, ui.GetPosition());
+	cout << "/";
+	Scene::GotoXY(7 + 3 + 7, 2, ui.GetPosition());
+	cout << "a";
+	Scene::GotoXY(7 + 3 + 7 + 7, 2, ui.GetPosition());
+	cout << "s";
+	Scene::GotoXY(7 + 3 + 7 + 7 + 7, 2, ui.GetPosition());
+	cout << "d";
+	Scene::GotoXY(7 + 3, 2, ui.GetPosition());
+	cout << "w";
+	Scene::ChangeColor(Scene::Default, true);
+
+
 	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0));
 	Scene::GotoXY(Application::numberOfColumns / 2 - 81, 45);
 	Scene::ChangeColor(Scene::Green, true);
@@ -323,23 +339,50 @@ void GameManager::HandleInput(void)
 
 					if (doorStr != "blank") {
 						string doortext = "To open: Enter 'e' to open " + doorStr + " and enter.    ";
+						//"To open: Enter '";
+
 						ui.CreateText(doortext, Vector2(xOffset, 4));
+						Scene::GotoXY(16+xOffset, 4, ui.GetPosition());
+						Scene::ChangeColor(Scene::Yellow, true);
+						cout << "e";
+						Scene::ChangeColor(Scene::Default, true);
 						xOffset += doortext.length();
 					}
 					if (InteractablesText != "") {
-						if(xOffset > 5) 
-						ui.CreateText("|  " + InteractablesText, Vector2(xOffset, 4));
-						else
+						if (xOffset > 5) {
+
+							ui.CreateText("|  " + InteractablesText, Vector2(xOffset, 4));
+							//"To Interact: Enter '";
+							//"To Interact: Enter 'interact' or '";
+							Scene::GotoXY( 20+3 + xOffset, 4, ui.GetPosition());
+							Scene::ChangeColor(Scene::Yellow, true);
+							cout << "interact";
+							Scene::GotoXY(34 + 3 + xOffset, 4, ui.GetPosition());
+							cout << "i";
+							Scene::ChangeColor(Scene::Default, true);
+						}
+						else {
+
 							ui.CreateText(InteractablesText, Vector2(xOffset, 4));
+							"To Interact: Enter '";
+							Scene::GotoXY( 20 + xOffset, 4, ui.GetPosition());
+							Scene::ChangeColor(Scene::Yellow, true);
+							cout << "interact";
+							Scene::GotoXY(34 + xOffset, 4, ui.GetPosition());
+							cout << "i";
+							Scene::ChangeColor(Scene::Default, true);
+						}
+
 						xOffset += InteractablesText.length();
 					}
 					//if (notDoorCount > 0) {
 					//	ui.CreateText("   Objects around you:", Vector2(2, 4 + yOffset - 1));
 					//}
 				}
+				else
 
 				{
-					//ui.CreateText("To move: Enter 'move' or Press (Enter)  ", Vector2(3, 3));
+					ui.CreateText("To move: Enter 'move' or Press (Enter)  ", Vector2(3, 3));
 					//xOffset += 33 + 4;
 				}
 				
@@ -629,15 +672,16 @@ void GameManager::HandleInput(void)
 			else if (stringInput == "help") {
 
 				ClearDialogue();
-				
-				ui.CreateText("'e': transition through rooms by doors", Vector2(4, 2));
-				ui.CreateText("'Interact / i ': To trigger item interaction, use to figure out what object does by entering 'interact' or 'i' <Object name>", Vector2(4, 3));
-				ui.CreateText("'move': Enter 'move' or Press (Enter) to control the movement", Vector2(4, 4));
-				ui.CreateText("'Use / u': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(4, 5));
-				ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(4, 6));
-				ui.CreateText("'Wait': Enter 'wait' to Wait for the Killer to arrive. ", Vector2(4, 7));
+				ui.CreateText("                                             ", Vector2(4, 2));
 
-				EmptyDialogue = false;
+				ui.CreateText("'e': transition through rooms by doors", Vector2(4, 3));
+				ui.CreateText("'Interact / i ': To trigger item interaction, use to figure out what object does by entering 'interact' or 'i' <Object name>", Vector2(4, 4));
+				ui.CreateText("'move': Enter 'move' or Press (Enter) to control the movement", Vector2(4, 5));
+				ui.CreateText("'Use / u': use any item by entering 'use' <item name> 'on' <object name>.", Vector2(4,6));
+				ui.CreateText(" - if you want to use multiple items enter 'use' <item name> 'with'/'and' <item name> 'on' <object name>", Vector2(4, 7));
+				ui.CreateText("'Wait': Enter 'wait' to Wait for the Killer to arrive. ", Vector2(4, 8));
+				ui.PrintDialogue(Vector2(4, 9), "");
+				ClearDialogue();
 			}
 			else if (stringInput == "move"|| stringInput == "m")
 			{
