@@ -176,7 +176,6 @@ void EndingManager::MetalPanEnding(void)
 				HideAction();
 		}
 		else
-
 			MetalPanAction();
 	}
 	else
@@ -215,7 +214,11 @@ void EndingManager::KnifeEnding(void)
 
 void EndingManager::MetalPanAction(void)
 {
-	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You were carefully moving behind of the killer to try to gave him a swing on the head. ");
+	std::string locationYouHid = (GameManager::getGM()->InteractionsMgr.isHidInCloset) ? "closet" : " toilet";
+	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " At the moment the killer was about to leave, you was gently opening " + locationYouHid + " door. ");
+
+	*time += 5;
+	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " And slowly moving behind of the killer to give him a strike on his head. ");
 	ContinueDialogue();
 
 	ui->GetOptionUI()->AddOption(new std::string("Run"));
@@ -243,10 +246,11 @@ void EndingManager::MetalPanAction(void)
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As you were hiding, the killer was still able to find to you.");
 		isPlayerFound = true;
 		break;
-	case 3:
+	case 2:
 		*time += 10;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As he was being knock out, you used your duct tape to tie him up. Then you was calmly waiting for police on the sofa. ");
 		isWeaponUse = true;
+		break;
 	}
 }
 
