@@ -478,6 +478,7 @@ void InteractionsManager::KitchenCabinetInteracted(GameObject* kitchenCabinet, G
 			KnifeImage();
 			GameManager::getGM()->inventory.PickupItem("knife");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up knife!");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Hint: You can use the knife on yourself.");
 			KitchenCabinetImage(true);
 			Sleep(500);
 			break;
