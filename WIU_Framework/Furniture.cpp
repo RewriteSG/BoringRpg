@@ -62,7 +62,7 @@ Furniture::Furniture(TypeOfFurniture type, Vector2 toPos)
 		SetSprite(new EmptyBoxType2Sprite());
 		break;
 	case Furniture::ToiletCabinet:
-		name = "Toilet Cabinet";
+		name = "Cabinet";
 		SetSprite(new ToiletCabinetSprite());
 		break;
 	case Furniture::ToiletBowl:

@@ -18,7 +18,9 @@ public:
 	bool isStoreRoomUnlocked;
 	bool isClosetUnlocked;
 	bool isPlayerSucide;
+	bool isCurtainOpen;
 
+	bool hasFoundKeyUnderSofa;
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;
 	bool hasClosetKeyCollected;
@@ -74,7 +76,10 @@ public:
 
 	// --------------- Interactions Images ---------------
 	void MainDoorImage();
+	void DoorOpeningImage();
 	void SofaImage();
+	void SofaKeyUnderImage();
+	void SofaKeyUnderImage(bool);
 	void TableImage();
 	void SinkImage();
 	void PlanksImage();
@@ -105,7 +110,6 @@ public:
 	void StoreRoomDoorImage();
 	void KeyImage();
 	void ClockImage();
-	void FridgeImage();
 	void KitchenTableImage();
 	void BarricadeDoorImage();
 	void KnifeImage();
@@ -115,6 +119,13 @@ public:
 	void DuctTapeImage();
 	void MetalPanImage();
 	void EmptyBoxImage();
+	void KitchenTable();
+	void FridgeImage();
+	void FridgeImage(bool);
+	void ShowerCurtainImage();
+	void ShowerImage();
+	void ShowerImage(bool);
+	void ShowerNoShampooImage();
 
 };
 
