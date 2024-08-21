@@ -34,6 +34,8 @@ void EndingManager::PlayLivingRoom(void)
 	{
 		*time += 5;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer immediately broke into the house with ease. ");
+
+
 	}
 
 	if (isPlayerFound)
@@ -223,10 +225,7 @@ void EndingManager::MentalPanEnding(void)
 		else
 		{
 			*time += 30;
-			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As he was being knock out, you used your duct tape to tie him up. ");
-			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Then, you took out your phone to call the police. ");
-			GameManager::getGM()->InteractionsMgr.hasCalledTheCops = true;
-			*time = GameManager::getGM()->TimeSys.TimeLimitForCops;
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As he was being knock out, you used your duct tape to tie him up. Then you was calmly waiting for police on the sofa. ");
 			isWeaponUse = true;
 		}
 	}
@@ -253,7 +252,7 @@ void EndingManager::KnifeEnding(void)
 			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " In that moment, you was standing over your target, your blade stained with deep crimson of freshly spilled blood. ");
 
 			*time += 60;
-			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a minute to calm youself down, you decided to the police for asssistance. ");
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a minute to calm youself down, you decided to go to the police for asssistance. ");
 			isWeaponUse = true;
 		}
 	}
@@ -346,7 +345,7 @@ void EndingManager::Update(void)
 		isPoliceCame = GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops;
 
 		if (isPoliceCame)
-			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Finally, the police arrived on time and provided you assistance. ");
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Fortunately, the police arrived on time and provided you assistance. ");
 
 		if (isPlayerFound || isWeaponUse || isPoliceCame)
 			break;
@@ -360,7 +359,7 @@ void EndingManager::Update(void)
 		dialogues.push_back("TIME:??? The pain was not only once but continuously, and until you fell into eternal dream... ");
 	}
 
-	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops || (GameManager::getGM()->InteractionsMgr.hasDuctTape && GameManager::getGM()->InteractionsMgr.hasMetalPan))
+	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops && !hasWeapon)
 	{
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-year-old man successfully defended himself by attempting with well-preapred measures until police arrived. ");
 		Endings::isunlocked[Endings::ARRESTED];
@@ -385,7 +384,7 @@ void EndingManager::Update(void)
 	}
 	else
 	{
-		dialogues.push_back("[BREAKING NEWS]: A 25-year-old man was tragically found dead in the " + killerCurrentScene + " at BLK 243 Chicken Street yesterday around 12:" + to_string(*time / 60) + " AM, prompting police to launch a homicide investigation. If you find any suspicious, please contact us at 999. ");
+		dialogues.push_back("[BREAKING NEWS]: A 25-year-old man was tragically found dead in the " + killerCurrentScene + " at BLK 243 Chicken Street yesterday around 12:0" + to_string(*time / 60) + " AM, prompting police to launch a homicide investigation. If you find any suspicious, please contact us at 999. ");
 		Endings::isunlocked[Endings::GOT_KILLED];
 	}
 

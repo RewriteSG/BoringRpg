@@ -138,8 +138,9 @@ void MainMenu::Update(void)
 				ui.PrintDialogue(Vector2(-105, 10), "But there was only silence.");
 				ui.PrintDialogue(Vector2(-105, 10), "You: Maybe I'm just... hallucinating?");
 				ui.PrintDialogue(Vector2(-105, 10), "You reached into your pockets for your key, and unlocked the door.");
-				ui.PrintDialogue(Vector2(-105, 10), "Just as you close your door, the figure appears from the dark.");
-				ui.PrintDialogue(Vector2(-105, 10), "With a knife in his hand.");
+				ui.PrintDialogue(Vector2(-105, 10), "But I guess I could take a shower before bed...");
+				//ui.PrintDialogue(Vector2(-105, 10), "Just as you close your door, the figure appears from the dark.");
+				//ui.PrintDialogue(Vector2(-105, 10), "With a knife in his hand.");
 
 				}
 				SceneManager::LoadScene(new LivingRoomScene());
