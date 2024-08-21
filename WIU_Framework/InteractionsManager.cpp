@@ -39,8 +39,12 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 	isPlayerSleeping = false;
 	isPlayerSucide = false;
 
+
 	isClosetUnlocked = false;
 	isStoreRoomUnlocked = false;
+	hasFoundKeyUnderSofa = false;
+	isCurtainOpen = true;
+
 	hasCabinetKeyCollected = false;
 	hasCalledTheCops = false;
 	hasClosetKeyCollected = false;
@@ -59,16 +63,56 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 {
 	SofaImage();  
+	int choosenItem;
 	if (hasStoreRoomKeyCollected) 
-	{
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else I can do here.");
+	{ 
+		SofaKeyUnderImage(true); 
+
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else underneath.");
 	}
 	else 
 	{
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I remember hiding my storeroom key under the sofa so no one can find it.");
-		ui->GetOptionUI()->AddOption(new std::string("Yes"));
-		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the key?");
+
+		if (!hasFoundKeyUnderSofa) 
+		{
+			SofaImage();
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I often drop items under the sofa, Maybe i should check under the sofa.");
+		
+			ui->GetOptionUI()->AddOption(new std::string("Sit"));
+			ui->GetOptionUI()->AddOption(new std::string("Search"));
+			ui->GetOptionUI()->AddOption(new std::string("Leave"));
+			choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "What do you want to do with the sofa?.");
+			switch (choosenItem)
+			{
+			case 0:
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You sit on the sofa, You feel rested");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Maybe i should go do something else.");
+				return;
+				break;
+			case 1:
+				hasFoundKeyUnderSofa = true;
+
+				SofaKeyUnderImage();
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You found a key under the sofa and you realize that it is a key to the store room.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "Strange.. How did it get there? .");
+
+				break;
+			case 2:
+				return;
+				break;
+			}
+		}
+		else {
+			SofaKeyUnderImage();
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You found a key under the sofa and you realize that it is a key to the store room.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Strange.. How did it get there? .");
+		}
+		SofaKeyUnderImage();
+		timeSystem->increaseTimeTaken(2);
+	
+		ui->GetOptionUI()->AddOption(new std::string("Get key"));
+		ui->GetOptionUI()->AddOption(new std::string("Leave"));
+		choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "What do you want to do with the key underneath the sofa?.");
 		switch (choosenItem)
 		{
 		case 0:
@@ -77,6 +121,8 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 			GameManager::getGM()->inventory.PickupItem("StoreRoomKey");
 			KeyImage();
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up storeroom key!");
+			SofaKeyUnderImage(true);
+			Sleep(500);
 			break;
 		case 1:
 			break;
@@ -87,26 +133,100 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 
 void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player, bool isNothing)
 {
-	SofaImage();
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing on the sofa.");
+	if (!hasFoundKeyUnderSofa)
+	{
+		SofaImage();
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I often drop items under the sofa, Maybe i should check under the sofa.");
+	
+		ui->GetOptionUI()->AddOption(new std::string("Sit"));
+		ui->GetOptionUI()->AddOption(new std::string("Search"));
+		ui->GetOptionUI()->AddOption(new std::string("Leave"));
+		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "What do you want to do with the sofa?.");
+		switch (choosenItem)
+		{
+		case 0:
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You sit on the sofa, You feel rested");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Maybe i should go do something else.");
+			return;
+			break;
+		case 1:
+			hasFoundKeyUnderSofa = true; 
+
+			break;
+		case 2:
+			return;
+			break;
+		}
+	}
+	SofaKeyUnderImage(true);
+	if (!hasStoreRoomKeyCollected)
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing underneath the sofa, Maybe there is something on the other side.");
+	else
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else underneath.");
 }
 
 void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* player)
 {
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "Just a normal shower."); int choosenItem =0;
+	if (isCurtainOpen) 
+	{
+		ShowerCurtainImage();
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "There is curtain in the way."); int choosenItem = 0;
+
+	
+		ui->GetOptionUI()->AddOption(new std::string("Open"));
+		ui->GetOptionUI()->AddOption(new std::string("Punch"));
+		ui->GetOptionUI()->AddOption(new std::string("Leave"));
+		choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "What do you want to do with the curtain?");
+		switch (choosenItem)
+		{
+		case 0:
+			ShowerImage();
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You opened the curtains revealing the shower area.");
+			isCurtainOpen = false;
+			break;
+		case 1:
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You began to think there is a presence in the shower and starts to see a silhouette");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You squeezed your fist and starts throwing the best punch you ever had done.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "HUUAAAAGGGHH!! POW.");
+
+			ShowerImage(); 
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Your swift but weak punch opened the curtain revealing the shower area");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "There is no one there, You feel stupid but you felt safe as there is no threat.");
+
+			isCurtainOpen = false;
+			break;
+		case 2:
+
+			return;
+			break;
+		}
+	}
+	else {
+
+
+		ShowerImage();
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "Just a normal shower area."); 
+	}
+	int choosenItem =0;
 	bool* hasTakenShower = &(GameManager::getGM()->objManager).hasTakenShower;
 
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
 	case 1:
+
+	
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
 		choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take a shower?");
 		switch (choosenItem)
 		{
 		case 0:
+			ShowerImage(true); 
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "TSSSSHHHHHHHHHH");
+			ShowerImage();
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You took a shower.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Let me catch up on the news before doing anything else.");
 			*hasTakenShower = true;
 			break;
 		case 1:
@@ -114,6 +234,12 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 		}
 		break;
 	default:
+
+	
+		if (hasSoap)
+			ShowerNoShampooImage();
+		else
+			ShowerImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Lets see what can I do here.");
 		ui->GetOptionUI()->AddOption(new std::string("Hide"));
 		ui->GetOptionUI()->AddOption(new std::string("Search"));
@@ -123,11 +249,22 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 		{
 		case 0:
 			//trigger hiding in bathroom ending
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid in the shower."); //remove this later
+
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You entered in the shower."); //remove this later
+
+			ShowerCurtainImage();
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You closed the curtains."); //remove this later
 			isPlayerHidden = true;
 			break;
 		case 1:
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You found a bar of soap.");
+			if (hasSoap)
+			{
+
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "There is nothing of use.");
+				break;
+			}
+		
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You found a body Soap bottle.");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Maybe there's a use to this?");
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
@@ -138,7 +275,11 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 				timeSystem->increaseTimeTaken(5);
 				hasSoap = true;
 				GameManager::getGM()->inventory.PickupItem("Soap");
+				SoapImage();
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up soap!");
+
+				ShowerNoShampooImage();
+				Sleep(500);
 				break;
 			case 1:
 				break;
@@ -162,6 +303,7 @@ void InteractionsManager::SinkInteracted(GameObject* sink, GameObject* player, b
 void InteractionsManager::PlanksInteracted(GameObject* planks, GameObject* player)
 {
 	Start();
+
 	if (hasPlanks)
 	{
 		PlanksImage(true);
@@ -202,6 +344,7 @@ void InteractionsManager::PlanksInteracted(GameObject* planks, GameObject* playe
 void InteractionsManager::ToolboxInteracted(GameObject* box, GameObject* player)
 {
 	Start();
+
 	if (hasNails and hasHammer)
 	{
 		ToolboxImage(true);
@@ -254,65 +397,101 @@ void InteractionsManager::BoxInteracted(GameObject* box, GameObject* player, int
 void InteractionsManager::StoveInteracted(GameObject* stove, GameObject* player)
 {
 	Start();
-	if (hasMetalPan)
+
+
+	switch (timeSystem->TimeLoop)
 	{
-		StoveImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else I can do here.");
-	}
-	else
-	{
-		StoveImage();
+	case 0:
+	case 1:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's a pan at the top of the stove.");
-		ui->GetOptionUI()->AddOption(new std::string("Yes"));
-		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the pan?");
-		switch (choosenItem)
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Cooking wasn't so easy for me, because I have weak arms.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should really hit the gym sometimes.");
+		break;
+	default:
+		if (hasMetalPan)
 		{
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Theres nothing else on the stove.");
+ 
+		}
+		else
+		{
+			StoveImage();
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "There's a pan at the top of the stove.");
+			ui->GetOptionUI()->AddOption(new std::string("Yes"));
+			ui->GetOptionUI()->AddOption(new std::string("No"));
+			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the pan?");
+			switch (choosenItem)
+			{
 		case 0:
 			timeSystem->increaseTimeTaken(5);
 			hasMetalPan = true;
 			GameManager::getGM()->inventory.PickupItem("Metal Pan");
+			MetalPanImage();
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up metal pan!");
+			StoveImage(true);
+			Sleep(1000);
 			break;
 		case 1:
 			break;
+			}
 		}
+		break;
 	}
 }
 
 void InteractionsManager::KitchenCabinetInteracted(GameObject* kitchenCabinet, GameObject* player)
 {
 	Start();
-	if (hasKnife)
+
+
+	switch (timeSystem->TimeLoop)
 	{
-		KitchenCabinetImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think there is anything else I can do here.");
-	}
-	else
-	{
+	case 0:
+	case 1:
 		KitchenCabinetImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's some knives in the cabinet.");
-		ui->GetOptionUI()->AddOption(new std::string("Yes"));
-		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the knife?");
-		switch (choosenItem)
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I cut myself yesterday when I was cooking...");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I am always clumsy with knives.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should practice more, honestly.");
+		break;
+	default:
+		if (hasKnife)
 		{
-		case 0:
+
+			KitchenCabinetImage(true);
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There is nothing i can use in the cabinet.");
+
+		}
+		else
+		{
+			KitchenCabinetImage();
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "There's some knives in the cabinet.");
+			ui->GetOptionUI()->AddOption(new std::string("Yes"));
+			ui->GetOptionUI()->AddOption(new std::string("No"));
+			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the knife?");
+			switch (choosenItem)
+			{
+			case 0:
 			timeSystem->increaseTimeTaken(5);
 			hasKnife = true;
 			KnifeImage();
 			GameManager::getGM()->inventory.PickupItem("knife");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up knife!");
+			KitchenCabinetImage(true);
+			Sleep(500);
 			break;
 		case 1:
 			break;
+			}
 		}
+		break;
 	}
 }
 
 void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* player, int random)
 {
 	Start();
+
 	int choosenItem;
 	TrashCanImage();
 	switch (trashCanInteractions)
@@ -393,7 +572,7 @@ void InteractionsManager::TableInteracted(GameObject* table, GameObject* player)
 {
 	Start();
 	TableImage();
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "You tried to search the table.");
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "You scanned through the whole surface, and below the table.");
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "But there was nothing on it.");
 	timeSystem->increaseTimeTaken(5);
 }
@@ -402,6 +581,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 {
 	Start();
 	BedroomTableImage();
+
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "There is a bunch of stuff on the table.");
 	ui->GetOptionUI()->AddOption(new std::string("Photograph"));
 	ui->GetOptionUI()->AddOption(new std::string("Phone"));
@@ -426,6 +606,9 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should remember that next time.");
 			break;
 		default:
+
+		
+
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should probably call the cops.");
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
@@ -435,6 +618,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 			case 0:
 				if (!hasCalledTheCops)
 				{
+				
 					hasCalledTheCops = true;
 					timeSystem->increaseTimeTaken(5);
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You called the cops.");
@@ -477,6 +661,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabinet, GameObject* player)
 {
 	Start();
+
 	if (hasDuctTape)
 	{
 		LivingRoomCabinetImage(true);
@@ -490,7 +675,8 @@ void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabi
 		{
 		case 0:
 		case 1:
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Why did I put this here...");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't know why I bought this big cabinet.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't even have much stuff to begin with.");
 			break;
 		default:
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can use this to tie the killer up.");
@@ -518,6 +704,7 @@ void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabi
 void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameObject* player)
 {
 	Start();
+
 	ClosetDoorImage();
 	timeSystem->increaseTimeTaken(5);
 	switch (timeSystem->TimeLoop) 
@@ -530,6 +717,8 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 
 		break;
 		default:
+		
+
 			if (hasClosetKeyCollected)
 			{
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "The closet seems big enough for a person to hide inside.");
@@ -541,7 +730,6 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 				case 0:
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You hid inside.");		
 					isPlayerHidden = true;
-					//closet endings, differ if player has knife/pan and duct tape
 					break;
 				case 1:
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Seems like a bad idea...");
@@ -560,6 +748,7 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, GameObject* player)
 {
 	Start();
+
 	if (!hasClosetKeyCollected) {
 
 		BedRoomDrawerImage();
@@ -573,6 +762,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 		switch (choosenItem)
 		{
 		case 0:
+		
 			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You cleaned up the drawer.");
 			BedRoomDrawerImage(true);
@@ -603,7 +793,8 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 	{
 		BedRoomDrawerImage(true);
 
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "Seems like the drawer is organized already.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "I have already organised the drawer.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "There.");
 
 	}
 }
@@ -611,19 +802,30 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 {
 	Start();
+	
 
 	bool* hasSlept = &(GameManager::getGM()->objManager).hasSlept;
+	bool* hasWatchedTV = &(GameManager::getGM()->objManager).hasWatchedTV;
+	bool* hasTakenShower = &(GameManager::getGM()->objManager).hasTakenShower;
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
-		BedImage();
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You went to sleep.");
-		*hasSlept = true;
-		isPlayerSleeping
-		= true;
-		GameManager::getGM()->firstLoop = false;
-		// play first loop ending
-		break;
+		if (!*hasTakenShower || !*hasWatchedTV)
+		{
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "There's something else I need to do first.");
+			break;
+		}
+		else if (*hasTakenShower && *hasWatchedTV)
+		{
+			BedImage();
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You went to sleep.");
+			*hasSlept = true;
+			isPlayerSleeping
+				= true;
+			GameManager::getGM()->firstLoop = false;
+			// play first loop ending
+			break;
+		}
 		
 	default:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can't sleep...");
@@ -634,40 +836,57 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* player)
 {
 	Start();
-	
-
-	TelevisionImage();
 	bool* hasWatchedTV = &(GameManager::getGM()->objManager).hasWatchedTV;
+	bool *hasTakenShower = &(GameManager::getGM()->objManager).hasTakenShower;
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
-		TelevisionImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Serial killer? Not really my problem, it's not like he would target me anyways.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: It's quite near my house though...");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, surely the police are already on their way to catch him.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nothing bad will happen.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: By tomorrow morning he should be caught.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should go to bed now.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
-		TelevisionImage(); 
-		*hasWatchedTV = true;
+			if (!*hasTakenShower)
+			{
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "There's something else I need to do first.");
+				break;
+			}
+			else {
+				TelevisionImage();
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
+				TelevisionImage(true);
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Serial killer? Not really my problem, it's not like he would target me anyways.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: It's quite near my house though...");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, surely the police are already on their way to catch him.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nothing bad will happen.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: By tomorrow morning he should be caught.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should go to bed now.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
+				TelevisionImage();
+				*hasWatchedTV = true;
+			}
 		break;
 	case 1:
+		if (!*hasTakenShower)
+		{
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "There's something else I need to do first.");
+			break;
+		}
+		else
+		{
+		TelevisionImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
 		TelevisionImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Did they run out of news? This is literally the same as yesterday!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Are they just that lazy?");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Someone is gonna get fired.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, I should just find some other things to do now.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
-		TelevisionImage();
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Nevermind, I should just go watch some movies since I can't sleep.");
+		TelevisionOtherChannelImage();
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You switched to some entertainment channels.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "Movie: There is nothing stronger than family.");
 		*hasWatchedTV = true;
+		}
 		break;
 
 	case 2:
+		TelevisionImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
 		TelevisionImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
@@ -678,6 +897,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		TelevisionImage();
 		break;
 	default:
+		TelevisionImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
 		TelevisionImage(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND KRANJI ROAD, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
@@ -693,6 +913,7 @@ void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* p
 {
 	Start();
 	MainDoorImage();
+	
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
@@ -715,18 +936,24 @@ void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* p
 
 void InteractionsManager::BedroomDoorInteracted(GameObject* BedroomDoor, GameObject* player)
 {
+	DoorOpeningImage();
+	Sleep(500);
 		SceneManager::LoadScene("BedroomScene");
 
 }
 
 void InteractionsManager::KitchenDoorInteracted(GameObject* KitchenDoor, GameObject* player)
 {
+	DoorOpeningImage(); 
+	Sleep(500);
 		SceneManager::LoadScene("KitchenScene");
 
 }
 
 void InteractionsManager::ToiletDoorInteracted(GameObject* ToiletDoor, GameObject* player)
 {
+	DoorOpeningImage();
+	Sleep(500);
 		SceneManager::LoadScene("ToiletScene");
 
 }
@@ -739,6 +966,8 @@ void InteractionsManager::ToiletBowlInteracted(GameObject* ToiletBowl, GameObjec
 
 void InteractionsManager::LivingRoomDoorInteracted(GameObject* BathroomDoor, GameObject* player)
 {
+	DoorOpeningImage();
+	Sleep(500);
 		SceneManager::LoadScene("LivingRoomScene");
 	//Start();
 	//
@@ -757,17 +986,21 @@ void InteractionsManager::LivingRoomDoorInteracted(GameObject* BathroomDoor, Gam
 
 void InteractionsManager::StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player)
 {
+	Sleep(500);
 	Start();
 	//
 
 	if (isStoreRoomUnlocked)
 	{
 
+		DoorOpeningImage(); 
 		SceneManager::LoadScene("StoreRoomScene");
 	}
 	else
 	{
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I need a key to unlock the store room.");
+		MainDoorImage();
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I need a key to unlock the store room, Maybe i dropped a key somewhere near here.....");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should check under the sofa.");
 	}
 }
 
@@ -1042,6 +1275,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, GameObject* player)
 {
 	Start();
+
 		timeSystem->increaseTimeTaken(5);
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
@@ -1063,13 +1297,30 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 
 void InteractionsManager::FridgeInteracted(GameObject* fridge, GameObject* player)
 {
-	
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing in the fridge.");
+
+	ui->GetOptionUI()->AddOption(new std::string("Open"));
+	ui->GetOptionUI()->AddOption(new std::string("Leave"));
+
+	FridgeImage(); 
+	int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "What do you want to do with the fridge?"); 
+	switch (choosenItem)
+	{
+	case 0:
+		FridgeImage(true);
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You open the fridge.");
+		timeSystem->increaseTimeTaken(2);
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing but food in the fridge, and i am not hungry at the moment.");
+		break;
+	case 1:
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You leave the fridge.");
+		break;
+	}
 }
 
 void InteractionsManager::KitchenTableInteracted(GameObject* table, GameObject* player)
 {
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing on the table.");
+	KitchenTableImage(); 
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing on the table, aside from canned foods.");
 }
 
 void InteractionsManager::Start()
@@ -1082,6 +1333,7 @@ void InteractionsManager::Start(bool isGameStarted)
 {
 	ObjectivesManager* objManager = &(GameManager::getGM()->objManager);
 	Start();
+
 	switch (timeSystem->TimeLoop)
 	{
 	case 0:
@@ -1151,6 +1403,45 @@ void InteractionsManager::MainDoorImage()
 
 }
 
+void InteractionsManager::DoorOpeningImage() 
+{
+	const char* image = R"(@@&#####################&##########################################################&#######################&@@
+@G:                       .^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^.                         :G@
+@G:                       J@&GGGGGGGGGGGG#@@@@@@######&&&&&&&&&&&&&&&&&&&&&&&&&@@Y                         :G@
+@G:                       J@J            ^J5YYYPBBBBBGPYJYYYYYYYYYYYYYYYYYYYYYYB@Y                         :G@
+@G:                       J@J                  ~JJ??Y&@&#####BPYY555555555555YYB@Y                         :G@
+@G:                       J@J                        ^!!!!!!5@@#G5Y5555555555YYB@Y                         :G@
+@G:                       J@J                                ^5@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                           ^G5.  ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                         ^BG^!#Y 7@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                         ^BG^!#Y 7@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                           ^G5.  ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                                 ?@#YY5555555555YYB@Y                         :G@
+@G:                       J@J                             .7??5BG5Y5555555555YYB@Y                         :G@
+@G:                       J@J                           .?B@@#PYY555555555555YYB@Y                         :G@
+@G:                       J@J                       .JGPB@@G5YY55555555555555YYB@Y                         :G@
+@G:                       J@J                    J##BGPPPP5YYYYYYYYYYYYYYYYYYYYB@Y                         :G@
+@@&#######################&@&###################&@@@@@&&&&&&&&&&&&&&&&&&&&&&&&&@@&#########################&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+
+}
+
 void InteractionsManager::SofaImage()
 {
 	const char* image = R"(@@&############################################&@@@@@&####&@@@&##################&#####@@@@@@@@@@@@@&######&@@
@@ -1188,6 +1479,82 @@ void InteractionsManager::SofaImage()
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 
+}
+
+void InteractionsManager::SofaKeyUnderImage()
+{
+	const char* image = R"(@@&########################################################################################################&@@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        .G@
+@G:                                                       :YP5555555555555YY5555555YYYY55555555YY5555YYYYYYP&@
+@G:                              .JGGGGGGGGGGGGGGGGGGGGGGGPYJYYYYYYYYYYJJP@&5JYYYJYB@@@GJJYYJJP@&Y?JG@@@@@PY#@
+@G:      7B#BBBBBBBBBBBBBBBBBBBBB#@&Y7????????????????????7~^~~~~~~~~~~^^7&#!^~~~^~P@P!~^~~~^^J&G~?B@@P777~!B@
+@@&######&@@@Y!~?&@5JYYYYYYYYYYYJ5&#7^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^?&#7^~~~^~5@@#?^~~~~~J&@&P7!!~~~~^7B@
+@#Y?JJJJJ?JB@Y^^7#@5?????????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^?&#7^~~~~~^~G@5!!!!J#G!J@G~^~~~~7G&@@
+@#Y???????JB@Y^^7P&@#Y???????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^?&#!^~~~^~!?B@&###&G!^^Y@G~^~~?#@?!B@
+@#Y???????JB@Y^~~^7#&Y???????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^?&@57~!JJJPBBG7^^^^~~~~?GPJ?J#@&P7!B@
+@#Y???????JB@Y^~~^?&&Y???????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!5GGY~Y@&P7:^^~~~~~~^^^::Y@&PP5!::!B@
+@#Y???????JB@Y^~~^?&&Y???????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^5@&PPP7^~~~^^!5GGPP#@#P5PPGPG&@
+@#Y???????JB@Y^~~^?&&Y???????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~7JJJ#@&P7~5BB#@&YJJJJJJJJJJJ5#@
+@#Y???????JB@Y^~~^?&&Y???????????J&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~?B@&#@&Y77!~^^^~~~~~~^^!B@
+@#Y?????????YB#?^^?&&Y?????????JB@@#7^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!7!?B@&&&&&@&P!~~~~~~^7B@
+@#Y?????????J#@Y~~J&#Y?????????J#&Y!!!!!!!!!!!!!!!!!!!!!!!J#@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@@@@@@&&&&&&@@@@@@
+@#Y?????????JB@@&&@@#J?????????JB@@&&&&&&&&&&&&&&&&&&&&&&&B5Y55555555555555555555555555555555555555555Y5B&&&@@
+@#Y???????JY5B#PYYP@#J7???Y5Y?7JB@GYY555555YY5GGG5Y555555555555555PGP55555555555555PGP55555555555555555555YP&@
+@#Y???????JB@GY55YP@@GPGPP#@#PPG&@GY5555555PB####P55555555555555Y5G#P55555555555555#@B5555555555555555GGPYYP&@
+@#Y???????JB@G55555GBBBBBBBBBBBBBGP55555555PBPYY55555555555555G###PY555555555555555PBP55555555555555Y5#@@BPP#@
+@#Y???????JB@G55555YP#B5Y5555555555555555555555555555555555555PGGGP55555555555555555555555555555555555PGGG5P&@
+@#Y???????JB@GY555555PP55555555555555555555555555555555555555555Y55555555555555555555555555555555555555555YP&@
+@#Y?????????YB&G55555555555555555555555555555555555555555555G&@&&&@&G5555555555555555555555555555555555555YP&@
+@#Y?????????JB@G5555P&#5555555555555555555555555555#&P555555B@@@@@@@G5555555555555555555555P55555555555555YP&@
+@#Y?????????JB@G555555555555555555555555555555555555555555G@@&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&PY55555555555YP&@
+@#Y?????????JB@G555555555555555555555555555555555555555555G@&PB@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&PY55555555555YP&@
+@#Y????????YG&@GY55555555555555555555555555555555555555555G@@@@@@@@@#BBBBBBBBBB#@@@&BB#&@@@@&PY55555555555YP&@
+@#J7?YGBBGB@@#GP555555555555555555555555555555555555555555PG#@@@@@@@GYY555555YYG@@@BYY5#@@@@&PY55555555555YP&@
+@@#B#&@&GGGGG5Y55555555555555555555555555555555555555555555YG@@@@@@@G5555555555PGGGP555PGGGGP5555555555555YP&@
+@&GPPPP55Y555555555555555555555555555555555555555555555555555PPPPPPP5555555555555Y555555555555555555555555YP&@
+@@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::SofaKeyUnderImage(bool)
+{
+	const char* image = R"(@@&########################################################################################################&@@
+@G:                                                                                                        :G@
+@G:                                                                                                        :G@
+@G:                                                                                                        .G@
+@G:                                                       :YP5555555555555YY5555555YYYY55555555YY5555YYYYYYP&@
+@G:                              .JGGGGGGGGGGGGGGGGGGGGGGGPYJYYYYYYYYYYJJP@&5JYYYJYB@@@GJJYYJJP@&Y?JG@@@@@PY#@
+@G:      7B#BBBBBBBBBBBBBBBBBBBBB#@&Y7????????????????????7~^~~~~~~~~~~^^7&#!^~~~^~P@P!~^~~~^^J&G~?B@@P777~!B@
+@@&######&@@@Y!~?&@5JYYYYYYYYYYYJ5&#7^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^?&#7^~~~^~5@@#?^~~~~~J&@&P7!!~~~~^7B@
+@#Y?JJJJJ?JB@Y^^7#@5?????????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^?&#7^~~~~~^~G@5!!!!J#G!J@G~^~~~~7G&@@
+@#Y???????JB@Y^^7P&@#Y???????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^?&#!^~~~^~!?B@&###&G!^^Y@G~^~~?#@?!B@
+@#Y???????JB@Y^~~^7#&Y???????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^?&@57~!JJJPBBG7^^^^~~~~?GPJ?J#@&P7!B@
+@#Y???????JB@Y^~~^?&&Y???????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!5GGY~Y@&P7:^^~~~~~~^^^::Y@&PP5!::!B@
+@#Y???????JB@Y^~~^?&&Y???????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^5@&PPP7^~~~^^!5GGPP#@#P5PPGPG&@
+@#Y???????JB@Y^~~^?&&Y???????????Y&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~7JJJ#@&P7~5BB#@&YJJJJJJJJJJJ5#@
+@#Y???????JB@Y^~~^?&&Y???????????J&&?^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~?B@&#@&Y77!~^^^~~~~~~^^!B@
+@#Y?????????YB#?^^?&&Y?????????JB@@#7^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!7!?B@&&&&&@&P!~~~~~~^7B@
+@#Y?????????J#@Y~~J&#Y?????????J#&Y!!!!!!!!!!!!!!!!!!!!!!!J#@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@@@@@@&&&&&&@@@@@@
+@#Y?????????JB@@&&@@#J?????????JB@@&&&&&&&&&&&&&&&&&&&&&&&B5Y55555555555555555555555555555555555555555Y5B&&&@@
+@#Y???????JY5B#PYYP@#J7???Y5Y?7JB@GYY555555YY5GGG5Y555555555555555PGP55555555555555PGP55555555555555555555YP&@
+@#Y???????JB@GY55YP@@GPGPP#@#PPG&@GY5555555PB####P55555555555555Y5G#P55555555555555#@B5555555555555555GGPYYP&@
+@#Y???????JB@G55555GBBBBBBBBBBBBBGP55555555PBPYY55555555555555G###PY555555555555555PBP55555555555555Y5#@@BPP#@
+@#Y???????JB@G55555YP#B5Y5555555555555555555555555555555555555PGGGP55555555555555555555555555555555555PGGG5P&@
+@#Y???????JB@GY555555PP55555555555555555555555555555555555555555555555555555555555555555555555555555555555YP&@
+@#Y?????????YB&G555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555YP&@
+@#Y?????????JB@G5555P&#5555555555555555555555555555#&P5555555555555555555555555555555555555555555555555555YP&@
+@#Y?????????JB@G555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555YP&@
+@#Y?????????JB@G555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555YP&@
+@#Y????????YG&@GY55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555YP&@
+@#J7?YGBBGB@@#GP555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555YP&@
+@@#B#&@&GGGGG5Y5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555YP&@
+@&GPPPP55Y555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555YP&@
+@@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
 void InteractionsManager::TableImage()
@@ -1915,6 +2282,45 @@ void InteractionsManager::TelevisionImage(bool)
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
+void InteractionsManager::TelevisionOtherChannelImage()
+{
+	const char* image = R"(@@&##&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&##&@@
+@G. :J&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&!  :G@
+@B7J@@@@@@@#BBBBBBBBBBBBBBBBBBBB&@@@@@@&G5P#@@@@@@@BGBBBBB#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Y~ :G@
+@@@@@@@@@@@5!!!!!!!!!!!!!!!!!!~!G@@@PY57   ^Y5YYY#@BY7~~~~Y&#5Y55555555555555555555555555555555YG@@@@@@@@@~.G@
+@@@@@@@@@@@5!!77777777777777!7YG@@5!             ~??JPGG57Y@P. ...............................  7&@@@@@@@&~.G@
+@@@@@@@@@@@5!!77777777777777!7B@5~                  :B@@#?Y@P:.:::::::::::::::::::::::::::::::..?@@@@@@@@#^.G@
+@@@@@@@@@GJ777777777777777!7P#J:           7B#B#G!   .7##?Y@P:.::::::::::::::::::::::::::::::::.:~5@@@@@@@#B&@
+@@@@@@@@@P!!7777777!J#@&&&&&@@7            .:.:5@@B~  ^B#?Y@P^.:::::::::::::::::::::::::::::::::..?@@@@@@@@@@@
+@@@@@@@@@P7!77?7JB@&&@BYJYG&@@7                         ~##75@5:.:::::::::::::::::::::::::::::::..J@@@@@@@@@@@
+@@@@@@@@@P77J#@@#5JJJJJYYYJJG#J:.                       ~##75@5:.:::::::::::::::::::::::::::::::..J@@@@@@@@@@@
+@@@@@@@@@57G@@B5JJYYYYYYYYYYJY&@7                       ~##75@5:.:::::::::::::::::::::::::::::::..7P#@@@@@@@@@
+@@@@@@@@@P7G@P?JYYYYYYYYYYYYJY#&!              ~JY?:   !5@#75@5:.:::::::::::::::::::::::::::::::::  J@@@@@@@@@
+@@@@@@@#5?7G@&G5JJYYYYYYYYYYJY#@BJ:            ~JJJ55YP@@GJ75@5:.:::::::::::::::::::::::::::::::::..Y@@@@@@@@@
+@@@@@@@P!!7?5#@PJJYYYYYYYYYYJY5P@&~                ^J#@@#?~!5@5:.:::::::::::::::::::::::::::::::::..Y@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYYYYYYYYYYYJY#@&P:               .G@577!!5@5:.:::::::::::::::::::::::::::::::::..Y@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYYYYYYYYYJYJ5#@@@@P^         .Y&&#&@&&&G75@P:.:::::::::::::::::::::::::..........Y@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYYYYYJJYYY5B&@B^:P@###########@B!      !&@@@&&&&&&&&&&&&&&&&&&&&&&&&@#7:^^^^^^^:^Y@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYYYJJY5#@@B!                           ~G@@BYJYYYYYYYYYYYYYYYYYYYYYYJYB@&&&&&&&@@@@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYYJY5#@@P~                               ~PBG5YYYYYYYYYY5PGGGGGGGGGGGPYJYYYYYJJG@@@@@@@@@@@
+@@@@@@@P7!7!7B@PJJYYJJG@&5~                                   ^YGBBG5YPGGGGB###########@@#PYYYYYYYG@@@@@@@@@@@
+@@@@@@@P!!7!7B@PJJYYJJG@5                                       ^J#@&B@@#BBG55555555555PB@@&GYJYYYG@@@@@@@@@@@
+@@@@@@@&BY7!7B@PJJYYJJG@5.                            :5BG?       .!G@@&G55555555G#&&&&##GGGB#B5JYG@@@@@@@@@@@
+@@@@@@@@@P7~7B@PJJYYJJG@5.                             :?@@#J.    ?BGPGPP55G&#P55B@#GPG&@@#PP@&5JYG@@@@@@@@@@@
+@@@@@@@@@P!!77JB&5JJP&P^                                  ?@P.   .5@B5555P&@@#P55B@B5555G&@@#5P&@&@@@@@@@@@@@@
+@@@@@@@@@P?77!?#@PJJP@P.         :PB!                     !&@@J 7#BPP5555G@&PG&#PB&@&G5PPPG&@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@5!!?#@PJJP@P.           ^##^                   ~G@@P~  5@B5555G@&P55G&#PPPPG#@@@@&BGB#@@@@@@@@@@@@@
+@@@@@@@@@@@5!~7B@5?JP@P            :#B:                     !&@P~ !PGGP55P&&BGGGG#&@&@&#GBBBBBGG#@@@@@@@@@GG&@
+@@@@@@@@@@@B55P&@BPPB@BJ7?????????7Y&&J7????????????????????P@G77?77B@#BBB@@@@&&&#GGGGGBBBBGB###&@@@@@@@@&^ G@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&###&&&&&&&&&#&@@@@@@@@@@@P7.:G@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@7  :G@
+@B~7&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Y:   :G@
+@@#&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&####&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+
+}
+
 void InteractionsManager::ToiletCabinetImage()
 {
 	const char* image = R"(@@&##############&######&######################################################################&######&####&@@
@@ -2334,12 +2740,6 @@ void InteractionsManager::ClockImage()
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
 
-void InteractionsManager::FridgeImage()
-{
-	const char* image = R"(
-)";
-	Scene::DrawASCII_Art(image, 0, 0, 15);
-}
 
 void InteractionsManager::KitchenTableImage()
 {
@@ -2652,3 +3052,281 @@ void InteractionsManager::EmptyBoxImage()
 )";
 	Scene::DrawASCII_Art(image, 0, 0, 15);
 }
+
+void InteractionsManager::KitchenTable()
+{
+	const char* image = R"(@@&#&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&#&@@
+@G^ ...................................................................................................... ^G@
+@G:                                                                                                        :G@
+@#5JJJJJJJJJJJJJJJJJJJJJJJYJJ????????JJYJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ5#@
+@#5JJJJJJJJJJJJYJJ?????????JB@@@@@@@@&5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ5#@
+@G:             :JPPPPPPGP! Y@5~~!~?&B^                                                                    :G@
+@G^  .........  ^#&7^~^^5@Y.Y@?    ^##^  ................................................................  ^G@
+@@&######&&&####&@B:    7@@#@@?    ^B@&####################################################################&@@
+@B7~~!7!7P&5~~!~?&#~.:..J@P!5@@&!  ^B&?~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!~7B@@@
+@B!^7P@@#Y~~~~~~7G&#######Y~5@&P^  :B&7^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!P&@@
+@#J5@@BJ~^~~~~~~~~~~~~~~~~^~G@5~!!!J&&7^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^!B@
+@@@@GJ~^~~~~~~~~~~~~~~~~~~~~JPGGGGGGGY!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^7B@
+@&P?~^~~~~~~~~~~~~~~~~~~~~~~~^^~~~~^^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^7B@
+@B!^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^7B@
+@B7^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^7B@
+@B7^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^7B@
+@B7^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^7B@
+@B7^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^7B@
+@#Y?JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJY#@
+@@@@################################################&@@&####################################################@@
+@&BG55555555555555555555555555555555555555555555555YP&&PY5555555555555555555555555555555555555555555555555YP&@
+@&P5555555555555555555555555555555555555555555555555P&&P555555555555555555555555555555555555555555555555555P&@
+@&P5555555555555555555555555555555555555555555555555P&&P555555555555555555555555555555555555555555555555555P&@
+@&P5555555555555555555555555555555555555555555555555P&&P555555555555555555555555555555555555555555555555555P&@
+@&P55555555555555555555555555555555555555555555555P#@@#P555555555555555555555555555555555555555555555555555P&@
+@&P55555555555555555555555555555555555555555555555P&@G55555555555555555555555555555555555555555555555555555P&@
+@&P55555555555555555555555555555555555555555555555P&@G55555555555555555555555555555555555555555555555555555P&@
+@&P55555555555555555555555555555555555555555555555P&@G55555555555555555555555555555555555555555555555555555P&@
+@&P55555555555555555555555555555555555555555555555P&@G55555555555555555555555555555555555555555555555555555P&@
+@@&BP555555555555555555555555555555555555555555555P&@G55555555555555555555555555555555555555555555555555555P&@
+@&GP5555555555555555555555555555555555555555555555P&@G55555555555555555555555555555555555555555555555555555P&@
+@@&&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&@@@@&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&@@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15); 
+
+}
+
+void InteractionsManager::FridgeImage()
+{
+
+	const char* image = R"(@@&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&&@@
+@G.~#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&########&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#~.G@
+@G.~&@&#########################################&&#PY??????YG#&&#######################################&@&~.G@
+@G.~&&PP#######################################G55P@@5????5@&P5PG#####################################PP&&~.G@
+@G.~&@#GPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPB#GP&&5????5@&PG#GPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPG#@&~.G@
+@G.~#@@G7!77777777777777777777777777777777777!7G@BP&&5????5@&P#@P7!777777777777777777777777777777777!7G@@#~.G@
+@G.~&@@G777777777777777777777777777777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@@G77777?777777777777777777777777777777777G@BP&&5????5@&PB@P77777777?????????????????777777777777G@@&~.G@
+@G.~&@@P77JB@@&5?777777777777777777777777777777G@BP&&5????5@&PB@P777777J#@&#############&@#J7777777777G@@&~.G@
+@G.~&@@GJ5BBBBBBGY?7777777777777777777777777777G@BP&&5????5@&PB@P777777J&B^             :G@Y7777777777G@@&~.G@
+@G.~&@@@@J      :B@J777777777777777777777777777G@BP&&5????5@&PB@P777777J&B^ ~^   ^77!:  :G&Y7777777777G@@&~.G@
+@G.~&@@@@J      ^B&J777777777777777777777777777G@BP&&5????5@&PB@P777777J&B:~@@Y~ ~5@@J  :G&Y7777777777G@@&~.G@
+@G.~&@@@@J      ^B&J777777777777777777777777777G@BP&&5????5@&PB@P777777J&B^.7JJ!   ~?^  :G&Y7777777777G@@&~.G@
+@G.~&@@@@J      ^B&J777777777777777777777777777G@BP&&5????5@&PB@P777777J&B^             :G&Y7777777777G@@&~.G@
+@G.~&@@@@J      :B&J777777777777777777777777777G@BP&&5????5@&PB@P777777J&B::G&#? !B&B!  :G&Y7777777777G@@&~.G@
+@G.~&@@G?5#&###&BY7777777777?????77777777777777G@BP&&5????5@&PB@P777777J&B^ :^^. .:^:.  :G&Y7777777777G@@&~.G@
+@G.~&@@G77???????777777777P@@###@&Y777777777777G@BP&&5????5@&PB@P777777J&B::G&#? !#&B!  :G@Y7777777777G@@&~.G@
+@G.~&@@G777777777777777777G@J  .P@Y777777777777G@BP&&5????5@&PB@P777777J&#7:^^^^^^^^^^^^!#@Y7777777777G@@&~.G@
+@G.~&@@G777777777777777777G@J  .P@Y777777777777G@BP&&5????5@&PB@P777777?P#################GJ7777777777G@@&~.G@
+@G.~&@@G777777777777777777G@?   P@5777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@@G777777777777777777G@#5Y5&@Y777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@@G777777777777777777JY55555Y?777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@@G777777777777777777777777777777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@@G777777777777777777777777777777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@@G777777777777777777777777777777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@@G777777777777777777777777777777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@@G777777777777777777777777777777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@@G777777777777777777777777777777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@@G777777777777777777777777777777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@@G777777777777777777777777777777777777777G@BP&&5????5@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~#@@G7!77777777777777777777777777777777777!7G@BP&&Y7??75@&PB@P77777777777777777777777777777777777!7G@@#~.G@
+@@&&@@@@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@@@@&&&&&@@@@@@@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@@&&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+
+}
+void InteractionsManager::FridgeImage(bool)
+{
+
+	const char* image = R"(@@&&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&&@@
+@G.~#@@#BGBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#~.G@
+@G.~#@@G7!!:                                              .~Y#&&#######################################&@&~.G@
+@G.~&&5Y5&@BJJ?:     .................................... 7@@P5PG#####################################PP&&~.G@
+@G.~&P.  ~JJY&@B55P5?.      ............................. 7&&PG#GPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPG#@&~.G@
+@G.~&G: ..  .~7777Y&@BGGGGBG7                             !&&P#@P7!777777777777777777777777777777777!7G@@#~.G@
+@G.~&G: ......    ~#&Y??JJ?JP##BBBBBBBBBBBBBBBBBBBBBBBBBBB#@#PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&G: ......... !##7~~~~~~!77777777777777777777777777777Y&&PB@P77777777?????????????????777777777777G@@&~.G@
+@G.~&G: ......... ~##7~!!!!!!!!!!!!!!!!!!!!!!!!!!!!7?!!?7~J&&PB@P777777J#@&#############&@#J7777777777G@@&~.G@
+@G.~&G: ......... ~##7~!!!!!!!!!!!!!!!!!!!!7?????????????75@&PB@P777777J&B^             :G@Y7777777777G@@&~.G@
+@G.~&G: ......... ~##7~!!!!!!!!!!!!!!!!7?????????????????75@&PB@P777777J&B^ ~^   ^77!:  :G&Y7777777777G@@&~.G@
+@G.~&G: ......... ~##7~!!!!!!!!!!!!!!!77?????????????????75@&PB@P777777J&B:~@@Y~ ~5@@J  :G&Y7777777777G@@&~.G@
+@G.~&G: ......... ~##7~~~~~~~~~~~~!!!!~!??77?????????????75@&PB@P777777J&B^.7JJ!   ~?^  :G&Y7777777777G@@&~.G@
+@G.~&G: ......... ~##77GBBBBBBBBBG?~!!!!??77?????????????75@&PB@P777777J&B^             :G&Y7777777777G@@&~.G@
+@G.~&G: ......... ~##7J@G~^~~^^~B@J~~!7??????????????????75@&PB@P777777J&B::G&#? !B&B!  :G&Y7777777777G@@&~.G@
+@G.~&G: ......... ~##7J@5      .P@J~~!???7!7?????????????75@&PB@P777777J&B^ :^^. .:^:.  :G&Y7777777777G@@&~.G@
+@G.~&G: ......... ~##7J@P.  .. .P@J~~~!!!!~~!!!~!7???????75@&PB@P777777J&B::G&#? !#&B!  :G@Y7777777777G@@&~.G@
+@G.~&G: ......... ~##7J@5  ^P@7 P@J~7??????????????777???75@&PB@P777777J&#7:^^^^^^^^^^^^!#@Y7777777777G@@&~.G@
+@G.~&G: ......... ~##7J@5 ?@@@7 P@?7#@#BBBBBBBBB#@@PJYYJ?75@&PB@P777777?P#################GJ7777777777G@@&~.G@
+@G.~&G: ......... !#B!J@5 ^Y5Y^.P@?7##7~~~~~~~~~!JPPG@&J!75@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&G: ......    ~#@B#@5       P&?!#@BPGGGGGGGGGPPPG@#7^~Y&&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&G:     .JBBGBP7~!5@@GGGGGGG@@##@@###############@@#BB#@#PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&P.!B###B?^^~~^   .^~~~~~~~~^^:7#@@&@@@@@@@@@@@&@@#7:^J&&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@&@@Y:::.                      :::::::::::::::::::   !&&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&@&&&#########&@@&&&&&&&&&&&&&&&&############&&&&&&&&&&@#PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&P. ......... ~##7~~!!!!!!!!!!!!!!!~~!!!!!!!!7??????775@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&G: ......... ~##7~!!!!!!!!!!!!!!!!!!7???????????????75@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&G: ......... ~##7~!!!!!!!!!!!!!!!!!77???????????????75@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&G: ......... ~##7~!!!!!!!!!!!!!!!7777???????????????75@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&G: ......... ~##7~!!!!!!!!!!!!!!!!7?????????????????75@&PB@P7777777777777777777777777777777777777G@@&~.G@
+@G.~&P: ......... ~##7~~!!!!!!!!!!!!!~~!!7?7!7??????????775@&PB@P77777777777777777777777777777777777!7G@@#~.G@
+@@&&@@&#&&&&&&&&&#&@@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@@@@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@@&&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+
+}
+
+void InteractionsManager::ShowerCurtainImage()
+{
+	const char* image = R"(@@&&&&&&#&@@&&&&&&&&&&&&&&@@@&&&&&&&&&&&&&&&&@@@&&&&&&&&&&&&&&&&@@@&&&&&&&&&@@&&&&&&&&&&&@@&&&&&&&&&&&@@&&&&@@
+@B!:^^^~!P#5!!7777777777!7P@G77????????????77G@P77????????????77G@P77????77Y&#?7?????7??5&&Y77??????7?B@J:.!B@
+@B!:^^^5@G!!77777777777777P@G?7????????????7?G@P77????????????7?G@P77?????75@#?7?????7?B@&GJ7???????77B@Y^:!B@
+@B!:^^^Y@G7!77777777777777P@G?7????????????7?G@P77????????????7?G@P77?????75@#?7?????7?#&Y!7????????YPPY7^:!B@
+@B!:^^^Y@G7!77777777777777P@P77????????????77G@P77????????????7?G@P77?????75@#?7?????7?B@#PJ7?????7?G@#Y!^:!B@
+@B!:^^^Y@G7!777777777777!7P@@BY7?????????7?YB@@P77????????????7?G@P77???????YPBP?7???7?B@@&Y7???????J5&@Y^:!B@
+@B!:^^^Y@G7!777777777777777JB@P77????????77P@@@P77????????????7?G@P77??????775@B?7??????5&&Y7???????77B@J^:!B@
+@B!:^^^Y@G7!77777777777777!7G@P77????????77P@BJ???????????????7?G@P77??????775@B?7?????7J#&Y7???????7?B@Y^:!B@
+@B!:^^^Y@G7!77777777777777!7G@P77????????77P@G77??????????????7?G@P77??????775@B?7?????7J#&Y7?????????7?B&7~B@
+@B!:^^^Y@G7!77777777777777!7G@P77????????77P@BJ???????????????7?G@P77??????775@B?7?????7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!77777777777777!7G@P77????????77P@@@P77????????????7?G@P77??????775@B?7?????7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!77777777777777!7G@P77????????77P@@@P77????????????7?G@P77??????775@B?7?????7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!77777777777777!7G@P77????????77P@@@P77??????????????YPGGY7?????775@B?7?????7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!7777777777777777?YGBY7???????77P@@@P77??????????????77B@P77????775@B?7?????7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!7777777777777777!7B@577??????77P@@@P77??????????????7?B@P77????775@B?7?????7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!7777777777777777!7B@577??????77P@@@P?7??????????????7?B@P77????775@B?7?????7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!7777777777777777!7B@577????????7?P@@&577????????????7?B@P77??????7?P@G?7???7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!7777777777777777!7B@577????????7?P@@@577????????????7?B@P77??????77P@G?7???7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!7777777777777777!7B@577????????7?P@@@577????????????7?B@P77??????77P@G?7???7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!7777777777777777!7B@577????????7?P@@@577????????????7?B@P77??????77P@G?7???7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!7777777777777777!7B@577????????7?P@@@577????????????7?B@P77??????77P@G?7???7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!7777777777777777!7B@577????????7?P@@@577????????????7?B@P77??????77P@G?7???7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!7777777777777777!7B@577????????7?P@@@577????????????7?B@P77??????77P@G?7???7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!77777777777777!7P&P????????????7?P@@@577????????????7?B@P77??????77P@G?7???7J#&Y7?????????7?B&?~B@
+@B!:^^^Y@G7!77777777777777!7G@P77??????????7?P@@@577????????????7?B@P77??????77P@G?7???7J#&Y7??????????J#&?~B@
+@B!:^^^Y@G7!77777777777777!7G@P77??????????7?P@@@577????????????7?B@P77??????77P@G?7???7JB#5J???????7?G@@&7~B@
+@B!:^^^Y@G7!77777777777777!7G@P77??????????7?P@@@577????????????7?B@P77??????77P@G?7?????7J&&J7?????7?G@&P!!B@
+@B!:^^^5@G!!77777777777777!!G@P77??????????7?P@@@577????????????7?B@P77??????77P@G?7?????7J#@B5?7???7?B@J:.!B@
+@B!:^^^7YPGY77777777777777YGGPJ????????????7?P@@@577????????????7?B@P77??????77P@G?7?????7J#@B5?7???7?B@J^:!B@
+@B!:^^^::5@P777777777777!7G@G77????????????7?P@@@P77????????????7?B@P77??????77P@G?7?????7Y&#J7?????7?B@J^:!B@
+@B!:^^^:^5@P!!7777777777!7P@G77????????????77G@GJ?7?????????????7?B@577??????77P@G?7????77J&&J77????7?B@J:.!B@
+@@&&&&&&&@@@&&&&&&&&&&&&&&@@@&&&&&&&&&&&&&&&&@@&&&&&&&&&&&&&&&&&&&@@@&&&&&&&&&&@@@&&&&&&&&&@@&&&&&&&&&@@&&&&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::ShowerImage()
+{
+
+	const char* image = R"(@@@@&&&&&&@@@@@@@@@&#&##&@@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@&&&&&&&&&&&@@&&&&&&&&&&&&&&&&&@@
+@@@G!^^^^5@@&&&&@@#J!7!!5@#YJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ?5@B?!7777777!?#&7^^^^^^^^^^^^^^^!B@
+@@@G!^~^~P@@BB#B#@@@@@@@@@@@GJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~^~?P#@&&@@G5PPPPPB@@@GJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~^^:^5@#B@#!.::^^:J@@@GJJJJJJJJJJJJJJJJJJJJJ??JJJJJJJJJJJJ?JJJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^^JGBG&@#B&@BGB5!^^Y@#5JJ?JJJJJJJJJJJJJJJJ?JP###############B5JJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!:^Y@@@@@BB&@@@@B!:^Y@@###&#5JJJJJJJJJJJJP&&&@&J~~!!!!!!~~5@@@PJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!:^Y@@@@@@@@@@@@B!:^Y@@@@@@@PJJJJJJJJJJP&@@@@@@&##########&@@@@&PJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!:^Y@&BGBBBBBG#@B!^~Y@@@@&@@PJJJJJJJJJJG@@#?:5#7^GB~!BP^7#@@@@@@PJYYJJ?5@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@B?~^Y@&BGBBBBBG#@B?Y@@@@#5JB@PJJJJJJJJJJG@P~:.^~::~~::~^.:~5@@@@@@@@@PYYG@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@@@BJP@&GGGBBBBGB&@@@###PJ?JB@P?JJJJJJJJJ5B@@P?#@Y?&&JJ@#?P@@GPG&@@@#BBBB#@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@&BGB&@@&##BGGB#&@@BPJ?JJJ?JB@#PYJJJJJJJJJ?5BBBBB@@@@@@@#5557. .7P&&Y!!!!Y&B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@BJ??YPGG&@@##&@@B5J?JJ?5BBB@@#PYJJJJJJJJJJJJ?J?J5GGPPB@&5!  ... .P@Y!!!!Y&B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@BJ?JJJ?JYP&@@@GYJJJJ?5B@@#PP5J?JJJJJJJJJJJJJJJJJJJJ??5&@@&GPGGGPG&@#BBBB#@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@@&&&GJJJJJY55YJJJJ?5#@@B5JJJJJJJJJJJJJJJJJJJJJJJJJJJ?5&@@@@@@@@@@@@@@@&PP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G7J@@@GJJJJJJJJJJ5&@@@@GJ?JJJJJJJJJJJJJJJJJJJJJJJJJJJJYJJP@@@@@@@@@@&PJ?5@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!:~Y&@&&&@@PJJ5&@@P~J@BYJYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYG@@@Y^.~G@@#5P@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~^^^^~5&@@@@&P!:^J@@@@@&BB############################BBB&@@&7:Y#@@##@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~^~5BB5!^^!?G@&GGP!.................................7G@&?  ^##^~&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~^^^^~^:J@@5!. .:::::::::::::::::::::::::::::::::: .P@GJJ5@#~!&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~~^^!Y#@P: :::::::::::::::::::::::::::::::::::::::!JYYYYY7:7&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~^!5&@#?~:::::::::::::::::::::::::::::::::::::::::.........7&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~^!P&@#7^:.:::::::::::::::::::::::::::::::::::::::::::::::::.7&#?!7777777!?#&7^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~^7##7:..:::::::::::::::::::::::::::::::::::::::::::::::::::.7#@@P7!7777?G@@@@G!^~~~~~~~~~~~^7B@
+@@@G!^~~~~~^^~7B@@#!:^~^^~~^::::::::::::::::::::::::::::::::::::::::::::::::.?@#J??7?B@@B~~#&?~~~~~~~~~~~~^7B@
+@@@G!^~~~^^~?B@@@BB@@B#@@B@@P~::::::::::::::::::::::::::::::::::::::::::::::.7G#B&@@@@G!..~P&@B!^~~~~~~~~~^7B@
+@@@G!^^^^!J#@#PG5!?@B.:P? ^5&@J..:::::::::::::::::::::::::::::::::::::::::::::...7GBP!..::: !&&Y7~~~~~~~~~^7B@
+@@@G~~Y55#@#Y~  ~#@P7     :7B@J..:::::::::::::::::::::::::::::::::::::::::::::::::...::::::.~JB@G~:~~~~~~~^7B@
+@@@#PB@#YJJ~..:.~#B. J7 :J#@#J~:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::. 7@@P?^^~~~~~^7B@
+@@@@@#?^...::::.~#@BB@@G#@B7^..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::^!P@@GJ~^~~~^7B@
+@@@G!:..:::::::.:~!!!~!!!~^..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..:~5@P^^^^^^!B@
+@@@@##&&&&&&&&&&&##########&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&##&@@&&&&&&&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::ShowerImage(bool)
+{
+	const char* image = R"(@@@@&&&&&&@@@@@@@@@&#&##&@@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@&&&&&&&&&&&@@&&&&&&&&&&&&&&&&&@@
+@@@G!^^^^5@@&&&&@@#J!7!!5@#YJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ?5@B?!7777777!?#&7^^^^^^^^^^^^^^^!B@
+@@@G!^~^~P@@BB#B#@@@@@@@@@@@GJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~^~?P#@&&@@G5PPPPPB@@@GJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~^^:^5@#B@#!.::^^:J@@@GJJJJJJJJJJJJJJJJJJJJJ??JJJJJJJJJJJJ?JJJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^^JGBG&@#B&@BGB5!^^Y@#5JJ?JJJJJJJJJJJJJJJJ?JP###############B5JJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!:^Y@@@@@BB&@@@@B!:^Y@@###&#5JJJJJJJJJJJJP&&&@&J~~!!!!!!~~5@@@PJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!:^Y@@@@@@@@@@@@B!:^Y@@@@@@@PJJJJJJJJJJP&@@@@@@&##########&@@@@&PJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!:^Y@&BGBBBBBG#@B!^~Y@@@@&@@PJJJJJJJJJJG@@#?:5#7^GB~!BP^7#@@@@@@PJYYJJ?5@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@B?~^Y@&BGBBBBBG#@B?Y@@@@#5JB@PJJJJJJJJJJG@P~:.^~::~~::~^.:~5@@@@@@@@@PYYG@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@@@BJP@&GGGBBBBGB&@@@###PJ?JB@P?JJJJJJJJJP&@@P?#@Y?&&JJ@#?P@@GPG&@@@#BBBB#@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@&BGB&@@&##BGGB#&@@BPJ?JJJ?JB@#PYJJJJJJJJYGGBBBBB@@@@@@@#5557. .7P&&Y!!!!Y&B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@BJ??YPGG&@@##&@@B5J?JJ?5BBB@@#PYJJJJJJY5GG5J?J?J5GGPPB@&5!  ... .P@Y!!!!Y&B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@BJ?JJJ?JYP&@@@GYJJJJ?5B@@#PP5J?JJJJJY5GGPYJJJJJJJJ?JYG&@@&GPGGGPG&@#BBBB#@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@@&&&GJJJJJY55YJJJJ?5#@@B5JJJJJJJJJYPGGPY5PPPPPGPYJJYPB@@@@@@@@@@@@@@@@&PP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G7J@@@GJJJJJJJJJJ5&@@@@GJ?JJJJJJYPGGPYJJ5GPJJYPGYJPGGPYJYP@@@@@@@@@@&PJ?5@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!:~Y&@&&&@@PJJ5&@@P~J@BYJYYYYYYYYYYYJ5GBBPY5GBG5YPG5YY5GPYG@@@Y^.~G@@#5P@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~^^^^~5&@@@@&P!:^J@@@@@&BB####BBBGP5PB##BGB##BGGB##BGGBBB&@@&7:Y#@@##@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~^~5BB5!^^!?G@&GGP!.......^?GY:....JG7. ^5P~  !GY: .7G@&?  ^##^~&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~^^^^~^:J@@5!. .::::.:!YGGY!:::.:JG7. ^5P~..!GY:.: .P@GJJ5@#~!&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~~^^!Y#@P: :::::.:7J???!:.:::.:YG7:7YGP~..!GY:.:::!JYYYYY7:7&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~^!5&@#?~:::::::75BP~..::::..::~!^:~77~^..!GY:.:::.........7&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~^!P&@#7^:.:::::.^5G?^::::.!5P57:.:::::::::.!GY:.:::::::::::.7&#?!7777777!?#&7^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~^7##7:..:::::::::^^::::.!5GGJ^::::::::::::.7GY^.:::::::::::.7#@@P7!7777?G@@@@G!^~~~~~~~~~~~^7B@
+@@@G!^~~~~~^^~7B@@#!:^~^^~~^:::::::::::7GY^.::::::~YGGY~..!5GGJ:.:::::::::::.?@#J??7?B@@B~~#&?~~~~~~~~~~~~^7B@
+@@@G!^~~~^^~?B@@@BB@@B#@@B@@P~::::::.~PGP?:.:::.:JBBP~.::::.!5?:.:::::::::::.7G#B&@@@@G!..~P&@B!^~~~~~~~~~^7B@
+@@@G!^^^^!J#@#PG5!?@B.:P? ^5&@J..:::.!G5^.:::::^75GPJ~:::::::.^!~:::::::::::::...7GBP!..::: !&&Y7~~~~~~~~~^7B@
+@@@G~~Y55#@#Y~  ~#@P7     :7B@J..::::^?7^::::..JGP?^.:::::::..?GJ:.:::::::::::::::...::::::.~JB@G~:~~~~~~~^7B@
+@@@#PB@#YJJ~..:.~#B. J7 :J#@#J~:::::::..:::::~JPG! .::::::::~?PG?:.:::::::::::::::::::::::::. 7@@P?^^~~~~~^7B@
+@@@@@#?^...::::.~#@BB@@G#@B7^..::::::::::::.:?GBGPY~:::::::.7G5!^:::::::::::::::::::::::::::::^!P@@GJ~^~~~^7B@
+@@@G!:..:::::::.:~!!!~!!!~^..::::::::::::::..?GBG?^:::::::..7GJ..:::::::::::::::::::::::::::::..:~5@P^^^^^^!B@
+@@@@##&&&&&&&&&&&##########&&&&&&&&&&&&&&&&&&&@@@&#&&&&&&&&&#GPPB&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&##&@@&&&&&&&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::ShowerNoShampooImage()
+{
+	const char* image = R"(@@@@&&&&&&&&&&&&&&&&&&&&&@@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@@@&&&&&&&&&&&@@&&&&&&&&&&&&&&&&&@@
+@@@G!^^^^^^^^^^^^^^^^^^^Y@BJ?JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ?5@B?!7777777!?#&7^^^^^^^^^^^^^^^!B@
+@@@G!^~~~~~~~~~~~~~~~~^^Y@BJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~~~~~~^^Y@BJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~~~~~~^^Y@BJJJJJJJJJJJJJJJJJJJJJJJ??JJJJJJJJJJJJ?JJJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~~~~~~^^Y@BJ?JJJJJJJJJJJJJJJJJJ?JP###############B5JJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~~~~~~^^Y@@###&#5JJJJJJJJJJJJP&&&@&J~~!!!!!!~~5@@@PJJJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~~~~~~^^Y@@@@@@@PJJJJJJJJJJP&@@@@@@&##########&@@@@&PJJJJJJP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~~~~~^^~Y@@@@&@@PJJJJJJJJJJG@@#?:5#7^GB~!BP^7#@@@@@@PJYYJJ?5@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@B?~^^^~~~~~~~~~~^~!5@@@@#5JB@PJJJJJJJJJJG@P~:.^~::~~::~^.:~5@@@@@@@@@PYYG@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@@@#J?J!^^^~~~~^~7P@@###PJ?JB@P?JJJJJJJJJ5B@@P?#@Y?&&JJ@#?P@@GPG&@@@#BBBB#@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@&BGB@@#5YY!^:~?P@@BPJ?JJJ?JB@#PYJJJJJJJJJ?5BBBBB@@@@@@@#5557. .7P&&Y!!!!Y&B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@BJ??YPGG@@B55G@@B5J?JJ?5BBB@@#PYJJJJJJJJJJJJ?J?J5GGPPB@&5!  ... .P@Y!!!!Y&B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@BJ?JJJ?JYP&@@@GYJJJJ?5B@@#PP5J?JJJJJJJJJJJJJJJJJJJJ??5&@@&GPGGGPG&@#BBBB#@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@@&&&GJJJJJY55YJJJJ?5#@@B5JJJJJJJJJJJJJJJJJJJJJJJJJJJ?5&@@@@@@@@@@@@@@@&PP@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G7J@@@GJJJJJJJJJJ5&@@@@GJ?JJJJJJJJJJJJJJJJJJJJJJJJJJJJYJJP@@@@@@@@@@&PJ?5@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!:~Y&@&&&@@PJJ5&@@P~J@BYJYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYG@@@Y^.~G@@#5P@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~^^^^~5&@@@@&P!:^J@@@@@&BB############################BBB&@@&7:Y#@@##@B?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~^~5BB5!^^!?G@&GGP!.................................7G@&?  ^##^~&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~^^^^~^:J@@5!. .:::::::::::::::::::::::::::::::::: .P@GJJ5@#~!&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~~^^!Y#@P: :::::::::::::::::::::::::::::::::::::::!JYYYYY7:7&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~~~^!5&@#?~:::::::::::::::::::::::::::::::::::::::::.........7&#?!7777777!?#&?^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~^!P&@#7^:.:::::::::::::::::::::::::::::::::::::::::::::::::.7&#?!7777777!?#&7^~~~~~~~~~~~~~^7B@
+@@@G!^~~~~~~~~~^7##7:..:::::::::::::::::::::::::::::::::::::::::::::::::::.7#@@P7!7777?G@@@@G!^~~~~~~~~~~~^7B@
+@@@G!^~~~~~^^~7B@@#!:^~^^~~^::::::::::::::::::::::::::::::::::::::::::::::::.?@#J??7?B@@B~~#&?~~~~~~~~~~~~^7B@
+@@@G!^~~~^^~?B@@@BB@@B#@@B@@P~::::::::::::::::::::::::::::::::::::::::::::::.7G#B&@@@@G!..~P&@B!^~~~~~~~~~^7B@
+@@@G!^^^^!J#@#PG5!?@B.:P? ^5&@J..:::::::::::::::::::::::::::::::::::::::::::::...7GBP!..::: !&&Y7~~~~~~~~~^7B@
+@@@G~~Y55#@#Y~  ~#@P7     :7B@J..:::::::::::::::::::::::::::::::::::::::::::::::::...::::::.~JB@G~:~~~~~~~^7B@
+@@@#PB@#YJJ~..:.~#B. J7 :J#@#J~:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::. 7@@P?^^~~~~~^7B@
+@@@@@#?^...::::.~#@BB@@G#@B7^..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::^!P@@GJ~^~~~^7B@
+@@@G!:..:::::::.:~!!!~!!!~^..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..:~5@P^^^^^^!B@
+@@@@##&&&&&&&&&&&##########&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&##&@@&&&&&&&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+//robber interaction
+
+//void InteractionsManager::robBedroomDoorInteracted(GameObject* BedroomDoor, GameObject* robber)
+//{
+	//timer.increaseTimeTaken(5);
+//}

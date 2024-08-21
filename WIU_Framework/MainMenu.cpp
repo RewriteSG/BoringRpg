@@ -123,17 +123,22 @@ void MainMenu::Update(void)
 			if (counter == 1) {
 				Scene::ChangeColor(Scene::Default);
 				system("cls");
+				UI ui = UI(Vector2(130, 12), 7, 100);
+				UI gameUI2(Vector2(Application::numberOfColumns / 2 - 171 / 2, 8), 0, 171);
+				//gameUI2.CreateBox(Vector2(), "", 40);
+				ui.PrintDialogue(Vector2(-105, 10), "You came home late from work, tired and exhausted.");
+				ui.PrintDialogue(Vector2(-105, 10), "You: There's so much work lately, and it's non-stop...");
+				ui.PrintDialogue(Vector2(-105, 10), "You: When will this boring life ever end?");
+				ui.PrintDialogue(Vector2(-105, 10), "You thought to yourself, and continued your journey back home.");
+				ui.PrintDialogue(Vector2(-105, 10), "As you reached your doorstep, you heard someone behind you.");
+				ui.PrintDialogue(Vector2(-105, 10), "You turned around, only to see a black figure dissapearing into the alley.");
+				ui.PrintDialogue(Vector2(-105, 10), "You: Is anyone there?");
+				ui.PrintDialogue(Vector2(-105, 10), "But there was only silence.");
+				ui.PrintDialogue(Vector2(-105, 10), "You: Maybe I'm just... hallucinating?");
+				ui.PrintDialogue(Vector2(-105, 10), "You reached into your pockets for your key, and unlocked the door.");
+				ui.PrintDialogue(Vector2(-105, 10), "Just as you close your door, the figure appears from the dark.");
+				ui.PrintDialogue(Vector2(-105, 10), "With a knife in his hand.");
 
-				if (GameManager::getGM()->TimeSys.TimeLoop < 1)
-				{
-					UI ui = UI(Vector2(130, 12), 0, 100);
-					ui.PrintDialogue(Vector2(-105, 10), "You came home from work, tired and exhausted.");
-					ui.PrintDialogue(Vector2(-105, 10), "You: Damn... so many customers today...");
-					ui.PrintDialogue(Vector2(-105, 10), "You: I really need to get some rest...");
-					ui.PrintDialogue(Vector2(-105, 10), "As you arrived at the door, you reached for your keys in your pocket.");
-					ui.PrintDialogue(Vector2(-105, 10), "When you inserted the key and turned, you walked into the living room.");
-					ui.PrintDialogue(Vector2(-105, 10), "You decided to take a shower and watch the news before going to bed.");
-				}
 				SceneManager::LoadScene(new LivingRoomScene());
 			}
 				
