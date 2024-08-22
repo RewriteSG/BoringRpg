@@ -46,19 +46,7 @@ void EndingManager::PlayLivingRoom(void)
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer immediately broke into the house with ease. ");
 	}
 
-	if (isPlayerFound)
-	{
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering living room, and finally found you there. ");
-		return;
-	}
-	else
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering living room, and found nothing. ");
-
-	if (GameManager::getGM()->InteractionsMgr.isSoapSetup && GameManager::getGM()->InteractionsMgr.soapLocation == killerCurrentScene)
-	{
-		*time += 60;
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The serial killer had stepped on the soap and fell down. This would take some time for the killer to recover. ");
-	}
+	SoapAction();
 }
 
 void EndingManager::PlayStoreroom(void)
@@ -73,11 +61,7 @@ void EndingManager::PlayStoreroom(void)
 	else
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering storeroom, and found nothing. ");
 
-	if (GameManager::getGM()->InteractionsMgr.isSoapSetup && GameManager::getGM()->InteractionsMgr.soapLocation == killerCurrentScene)
-	{
-		*time += 60;
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Ah yes! The serial killer had stepped on your soap and fell down. This would take some time for the killer to recover. ");
-	}
+	SoapAction();
 }
 
 void EndingManager::PlayToilet(void)
@@ -89,11 +73,7 @@ void EndingManager::PlayToilet(void)
 	else
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering toilet, and found nothing. ");
 
-	if (GameManager::getGM()->InteractionsMgr.isSoapSetup && GameManager::getGM()->InteractionsMgr.soapLocation == killerCurrentScene)
-	{
-		*time += 60;
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Ah yes! The serial killer had stepped on your soap and fell down. This would take some time for the killer to recover. ");
-	}
+	SoapAction();
 }
 
 void EndingManager::PlayBedroom(void)
@@ -105,11 +85,7 @@ void EndingManager::PlayBedroom(void)
 	else
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering bedroom, and found nothing. ");
 
-	if (GameManager::getGM()->InteractionsMgr.isSoapSetup && GameManager::getGM()->InteractionsMgr.soapLocation == killerCurrentScene)
-	{
-		*time += 60;
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Ah yes! The serial killer had stepped on your soap and fell down. This would take some time for the killer to recover. ");
-	}
+	SoapAction();
 }
 
 void EndingManager::PlayKitChen(void)
@@ -121,11 +97,7 @@ void EndingManager::PlayKitChen(void)
 	else
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering kitchen, and found nothing. ");
 
-	if (GameManager::getGM()->InteractionsMgr.isSoapSetup && GameManager::getGM()->InteractionsMgr.soapLocation == killerCurrentScene)
-	{
-		*time += 60;
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Ah yes! The serial killer had stepped on your soap and fell down. This would take some time for the killer to recover. ");
-	}
+	SoapAction();
 }
 
 void EndingManager::PickWeaponOption(void)
@@ -243,13 +215,62 @@ void EndingManager::MetalPanAction(void)
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As the blow from the metal pan was weak, the killer had recovered and stood up. ");
 
 		*time += 10;
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As you were hiding, the killer was still able to find to you.");
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " When you were escaping, the killer was still able to find to you.");
 		isPlayerFound = true;
 		break;
 	case 2:
 		*time += 10;
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As he was being knock out, you used your duct tape to tie him up. Then you were calmly waiting for the police on your sofa. ");
-		isWeaponUse = true;
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As he was being knock out, you used your duct tape to tie him up. ");
+
+		if (!GameManager::getGM()->InteractionsMgr.hasCalledTheCops)
+		{
+			if (GameManager::getGM()->InteractionsMgr.hasKnife)
+			{
+				ContinueDialogue();
+				ui->GetOptionUI()->AddOption(new string("Call the cops"));
+				ui->GetOptionUI()->AddOption(new string("Kill him"));
+				int chooseItem = ui->PickDialogue(Vector2(0, 10), "THOUGHT: I tied him with the duct tape. What should I do next?");
+				if (chooseItem == 0)
+				{
+					*time += 9;
+					dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Then, you quickly ran to bedroom table to get phone and call the cops. ");
+					dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The cops requested you to wait for their arrival in 3 more minutes. ");
+					
+					GameManager::getGM()->InteractionsMgr.hasCalledTheCops = true;
+					*time += 180;
+				}
+				else
+				{
+					isKillerGetKill = true;
+
+					*time += 9;
+					dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You took out your knife, and stabbed him countlessly like a monster. ");
+
+					*time += 2;
+					dialogues.push_back(TimeSystem::GetTimeinString(*time) + " In that moment, you was standing over your target, your blade stained with deep crimson of freshly spilled blood. ");
+
+					*time += 60;
+					dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a moment to calm youself down, you decided to call the police for asssistance. ");
+				}
+			}
+			else
+			{
+				*time += 9;
+				dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Then, you quickly ran to bedroom table to get phone and call the cops. ");
+				dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The cops requested you to wait for their arrival in 3 more minutes. ");
+
+				GameManager::getGM()->InteractionsMgr.hasCalledTheCops = true;
+				*time += 180;
+			}
+			return;
+		}
+		else
+		{
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Then you were calmly waiting for the police on your sofa. ");
+			*time = GameManager::getGM()->TimeSys.TimeLimitForCops;
+		}
+
+		isDuctTapeUse = true;
 		break;
 	}
 }
@@ -267,14 +288,47 @@ void EndingManager::KnifeAction(void)
 
 	*time += 60;
 	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a minute to calm youself down, you decided to call the police for asssistance. ");
-	isWeaponUse = true;
+	isKillerGetKill = true;
 }
 
 void EndingManager::HideAction(void)
 {
-	std::string locationYouHid = (GameManager::getGM()->InteractionsMgr.isHidInCloset) ? "in closet." : " in toilet.";
-	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You chose to remain quiet while hiding " + locationYouHid);
+	std::string locationYouHid = (GameManager::getGM()->InteractionsMgr.isHidInCloset) ? "closet." : "toilet.";
+	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You chose to remain quiet while hiding in the " + locationYouHid);
 	hasWeapon = false;
+}
+
+void EndingManager::SoapAction(void)
+{
+	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering " + killerCurrentScene);
+	if (GameManager::getGM()->InteractionsMgr.isSoapSetup && GameManager::getGM()->InteractionsMgr.soapLocation == killerCurrentScene)
+	{
+		if (isPlayerFound)
+		{
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You moved to the soap luring the  killer to run on the soap that you set. ");
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer found you and he ran towards your direction. ");
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As part of your plan, the killer had stepped on the soap and fell down. This would take some time for the killer to recover. ");
+
+			*time += 60;
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer got up and caught you. ");
+		}
+		else
+		{
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As part of your plan, the killer had stepped on the soap and fell down. This would take some time for the killer to recover. ");
+
+			*time += 60;
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer got up and continue on his search . ");
+
+		}
+		
+	}
+	else
+	{
+		if (isPlayerFound)
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer had a quick scan of the entire room, and finally found you there. ");
+		else
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering living room, and found nothing. ");
+	}
 }
 
 void EndingManager::ContinueDialogue(void)
@@ -312,9 +366,9 @@ EndingManager::EndingManager(void)
 	ui = nullptr;
 	killerCurrentScene = "";
 	isPlayerFound = false;
-	isPlayerGetKilled = false;
+	isKillerGetKill = false;
 	isPlayerWithKiller = false;
-	isWeaponUse = false;
+	isDuctTapeUse = false;
 	dialogueIndex = 0;
 	time = nullptr;
 	ui = nullptr;
@@ -332,9 +386,9 @@ void EndingManager::Start(void)
 
 	killerCurrentScene = "";
 	isPlayerFound = false;
-	isPlayerGetKilled = false;
+	isKillerGetKill = false;
 	isPlayerWithKiller = false;
-	isWeaponUse = false;
+	isDuctTapeUse = false;
 	dialogueIndex = 0;
 	endingNum = 0;
 
@@ -405,7 +459,7 @@ void EndingManager::Update(void)
 		if (isPoliceCame)
 			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Finally, the police arrived on time and provided you assistance. ");
 
-		if (isPlayerFound || isWeaponUse || isPoliceCame)
+		if (isPlayerFound || isDuctTapeUse || isPoliceCame || isKillerGetKill)
 			break;
 	}
 
@@ -417,13 +471,14 @@ void EndingManager::Update(void)
 		dialogues.push_back("TIME:??? The pain was not only once but continuously, and until you fell into eternal dream... ");
 	}
 
-	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops || (GameManager::getGM()->InteractionsMgr.hasDuctTape && GameManager::getGM()->InteractionsMgr.hasMetalPan))
+	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops &&
+		isDuctTapeUse && !isKillerGetKill)
 	{
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-year-old man successfully defended himself by attempting with well-preapred measures until police arrived.");
 		Endings::isunlocked[Endings::ARRESTED] = true;
 		endingNum = 3;
 	}
-	else if (!isPlayerFound && GameManager::getGM()->InteractionsMgr.hasKnife && !GameManager::getGM()->InteractionsMgr.isPlayerSucide)
+	else if (!isPlayerFound && isKillerGetKill && !GameManager::getGM()->InteractionsMgr.isPlayerSucide)
 	{
 		dialogues.push_back("[BREAKING NEWS]: The serial killer had been killed at BLK 243 Chicken Street in the " + killerCurrentScene + ". Suspect claimed that it was just self defence, but police still caught him for further investigation.");
 		Endings::isunlocked[Endings::KILLER_KILLED] = true;

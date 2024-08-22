@@ -61,9 +61,25 @@ void GameManager::Update()
 	if (!LoopStarted) {
 		ClearDialogue();
 		InteractionsMgr.Start(LoopStarted);
-		inventory.PickupItem("planks");
-		inventory.PickupItem("nails");
-		inventory.PickupItem("hammer");
+
+		string item1 = "metal pan";
+		string item2 = "knife";
+		string item3 = "storeroom key";
+		string item4 = "unknown key";
+		string item5 = "duct tape";
+		string item6 = "planks";
+		string item7 = "hammer";
+		string item8 = "nails";
+		string item9 = "soap";
+
+		inventory.PickupItem(item1);
+		inventory.PickupItem(item5);
+		inventory.PickupItem(item2);
+		InteractionsMgr.hasMetalPan = inventory.InventoryHasItems(item1);
+		InteractionsMgr.hasDuctTape = inventory.InventoryHasItems(item5);
+		InteractionsMgr.hasKnife = true;
+		//InteractionsMgr.hasClosetKeyCollected = inventory.InventoryHasItems(item4);
+		//InteractionsMgr.hasCalledTheCops = true;
 	}
 	inventory.DisplayItems();
 

@@ -129,6 +129,7 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 	}
 
 	CreateText("[Enter to continue]", Vector2(position.GetX(), originalPos.GetY() + numberOfLine));
+
 	while (true)
 	{
 		input = GameManager::_getch();
