@@ -5,6 +5,7 @@
 #include "InteractionsManager.h"
 TimeSystem::TimeSystem()
 {
+	lastTimeChecked = 0;
 	TimeLoop = 3;
 	TimeTaken = 0;
 	// 720 = 12 minutes
@@ -16,6 +17,7 @@ TimeSystem::TimeSystem()
 void TimeSystem::CountLoop(int time)
 {	TimeLoop++;
 	TimeTaken = 0;
+	lastTimeChecked = 0;
 	GameManager::getGM()->LoopStarted = false;
 	GameManager::getGM()->inventory = InventoryManager();
 	GameManager::getGM()->InteractionsMgr = InteractionsManager();

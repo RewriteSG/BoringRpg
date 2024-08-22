@@ -266,7 +266,7 @@ void EndingManager::KnifeAction(void)
 	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " In that moment, you was standing over your target, your blade stained with deep crimson of freshly spilled blood. ");
 
 	*time += 60;
-	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a minute to calm youself down, you decided to the police for asssistance. ");
+	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a minute to calm youself down, you decided to call the police for asssistance. ");
 	isWeaponUse = true;
 }
 
