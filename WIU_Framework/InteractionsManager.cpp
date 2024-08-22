@@ -1543,11 +1543,11 @@ RetryInput:
 			GameManager::getGM()->ClearDialogue();
 			ui.PrintDialogue(Vector2(3, 2), "Using soap on floor!");
 			ui.PrintDialogue(Vector2(3, 2), "You: I can make the floor slippery so it buys time.");
-			timeSystem->increaseTimeTaken(30);
 			isSoapSetup = true;
 			PouringShampooImage();
 			ui.PrintDialogue(Vector2(3, 2), "You: There, all good.");
 			ui.PrintDialogue(Vector2(3, 2), "Successfully used soap on floor!");
+			timeSystem->increaseTimeTaken(30);
 			GameManager::getGM()->inventory.UseItem(useItem1);
 			soapLocation = GameManager::getGM()->whatScenePlayerIn;
 			soapPosition = *GameManager::getGM()->player->GetPosition();
