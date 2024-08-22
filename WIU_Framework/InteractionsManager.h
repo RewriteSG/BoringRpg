@@ -40,6 +40,7 @@ public:
 	bool hasMetalPan;
 	bool isDoorBarricaded;
 	//bool isfirstCheckClock;
+	bool hasOrganisedBedroomDrawer;
 	bool hasOpenToiletCabinet;
 	static bool hasSearchedForSoap;
 	static bool LastTimeChecked;

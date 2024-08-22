@@ -857,29 +857,44 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 
 	if (!hasClosetKeyCollected) {
 
-		BedRoomDrawerImage();
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "There is some stuff in the drawer.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "It's quite messy.");
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should really clean this up...");
-		ui->GetOptionUI()->AddOption(new std::string("Yes"));
-		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Do you want to organise the drawer?");
+		int choosenItem = 0;
+		if (!hasOrganisedBedroomDrawer)
+		{
+			BedRoomDrawerImage();
+
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "There is some stuff in the drawer.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "It's quite messy.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should really clean this up...");
+			ui->GetOptionUI()->AddOption(new std::string("Yes"));
+			ui->GetOptionUI()->AddOption(new std::string("No"));
+			ui->PickDialogue(Vector2(POINTX, POINTY), "Do you want to organise the drawer?");
+
+		}
 		int choosenInput;
 		switch (choosenItem)
 		{
 		case 0:
 		
 			BedRoomDrawerImage(true);
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You cleaned up the drawer.");
-			timeSystem->increaseTimeTaken(15);
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "While you were organizing, you found a key inside."); 
-			if (!hasKnownKey)
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I wonder what this key is used for...");
-			else {
+			if (!hasOrganisedBedroomDrawer) {
 
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Really need to get a new closet that doesnt have locks.");
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Why is there locks in the closet?");
+				hasOrganisedBedroomDrawer = true;
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You cleaned up the drawer.");
+				timeSystem->increaseTimeTaken(15);
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "While you were organizing, you found a key inside.");
+				if (!hasKnownKey)
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I wonder what this key is used for...");
+				else {
+
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Really need to get a new closet that doesnt have locks.");
+					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Why is there locks in the closet?");
+				}
 			}
+			else 
+			{
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "There is a key on the top of the drawer.");
+			}
+			
 
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
@@ -906,6 +921,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 				break;
 			case 1:
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't think I have any use of this.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You left the key on the top of the drawer");
 				break;
 			}
 			break;
@@ -1617,6 +1633,7 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 	if(hasOpenToiletCabinet)
 	{
 		if (timeSystem->TimeLoop < 2) {
+			ToiletCabinetWithSoapImage(); 
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: This is a spare soap for when i run out of soap.");
 			return;
 		}
