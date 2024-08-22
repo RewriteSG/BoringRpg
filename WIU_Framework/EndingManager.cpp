@@ -50,7 +50,6 @@ void EndingManager::PlayLivingRoom(void)
 void EndingManager::PlayStoreroom(void)
 {
 	*time += 10;
-
 	SoapAction();
 }
 
@@ -443,16 +442,8 @@ void EndingManager::Update(void)
 		dialogues.push_back("TIME:??? The pain was not only once but continuously, and until you fell into eternal dream... ");
 	}
 
-	if (isPoliceCame) 
+	if (isPoliceCame && !isKillerGetKill || isDuctTapeUse)
 	{
-		//dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The police has arrived and entered your house. ");
-
-	}
-
-	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops &&
-		isDuctTapeUse && !isKillerGetKill)
-	{
-
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-year-old man successfully defended himself by attempting with well-preapred measures until police arrived.");
 		Endings::isunlocked[Endings::ARRESTED] = true;
 		endingNum = 3;
