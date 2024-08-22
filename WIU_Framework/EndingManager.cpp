@@ -160,7 +160,7 @@ void EndingManager::KnifeEnding(void)
 void EndingManager::MetalPanAction(void)
 {
 	std::string locationYouHid = (GameManager::getGM()->InteractionsMgr.isHidInCloset) ? "closet" : "toilet";
-	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " At the moment the killer was about to leave, you was gently opening " + locationYouHid + " door. ");
+	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " At the moment the killer was about to leave, you were gently opening " + locationYouHid + " door. ");
 
 	*time += 5;
 	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " And slowly moving behind of the killer to give him a strike on his head. ");
@@ -220,7 +220,7 @@ void EndingManager::MetalPanAction(void)
 					dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You took out your knife, and stabbed him countlessly like a monster. ");
 
 					*time += 2;
-					dialogues.push_back(TimeSystem::GetTimeinString(*time) + " In that moment, you was standing over your target, your blade stained with deep crimson of freshly spilled blood. ");
+					dialogues.push_back(TimeSystem::GetTimeinString(*time) + " In that moment, you are standing over your target, your blade stained with deep crimson of freshly spilled blood. ");
 
 					*time += 60;
 					dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a moment to calm youself down, you decided to call the police for asssistance. ");
@@ -251,13 +251,13 @@ void EndingManager::MetalPanAction(void)
 void EndingManager::KnifeAction(void)
 {
 	std::string locationYouHid = (GameManager::getGM()->InteractionsMgr.isHidInCloset) ? "closet" : " toilet";
-	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " At the moment the killer was about to leave, you was gently opening " + locationYouHid + " door. ");
+	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " At the moment the killer was about to leave, you are gently opening " + locationYouHid + " door. ");
 
 	*time += 5;
 	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " And slowly moving behind the killer to give him a critical stab on his back. ");
 
 	*time += 2;
-	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " In that moment, you was standing over your target, your blade stained with deep crimson of freshly spilled blood. ");
+	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " In that moment, you are standing over your target, your blade stained with deep crimson of freshly spilled blood. ");
 
 	*time += 60;
 	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a minute to calm youself down, you decided to call the police for asssistance. ");
