@@ -969,6 +969,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND CHICKEN STREET, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: It's the same news...again...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you might be stuck in a time loop of getting killed over and over.");
+		GameManager::getGM()->setSurviveObjective(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
 		TelevisionImage();
@@ -1532,6 +1533,10 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 	}
 	if(hasOpenToiletCabinet)
 	{
+		if (timeSystem->TimeLoop < 2) {
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: This is a spare soap for when i run out of soap.");
+			return;
+		}
 		if (!hasSoap) 
 		{
 			ToiletCabinetWithSoapImage();
@@ -1631,8 +1636,10 @@ void InteractionsManager::Start(bool isGameStarted)
 	case 3:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Im back again... It hurts every time i die.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Whatever I did last time didn't work.");
-		print = "You: Okay.. This has been happening for three times already. I really am stuck in the time loop";
+		print = "You: Okay.. This has been happening for three times already. I really am stuck in the time loop.";
 		//print += +"rd";
+		ui->PrintDialogue(Vector2(POINTX, POINTY), print);
+		print = "You: *Sigh* 2nd attempt, Let's do this.";
 		ui->PrintDialogue(Vector2(POINTX, POINTY), print);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");
 		break;
@@ -1642,8 +1649,12 @@ void InteractionsManager::Start(bool isGameStarted)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: " + differentText1[random]);
 		//ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Whatever I did last time didn't work.");
 		print = "You: Okay.. ";
-		print += ('0' + (timeSystem->TimeLoop +1));
-		print += "th attempt.";
+		print += std::to_string(timeSystem->TimeLoop-1);
+		if ((timeSystem->TimeLoop - 1) > 3)
+			print += "th attempt.";
+		else
+			print += "rd attempt.";
+
 		ui->PrintDialogue(Vector2(POINTX, POINTY), print);
 		if (random != 5)
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");

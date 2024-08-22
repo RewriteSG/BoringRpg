@@ -15,6 +15,7 @@
 #include "Endings.h"
 #include "Furniture.h"
 #include "Scene.h"
+#include "MainMenu.h"
 using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
@@ -26,7 +27,8 @@ GameManager::GameManager(void) : TimeSys()
 	GameEnded = false;
 	GameWon = true;
 	player = nullptr;
-	LoopStarted = false;
+	LoopStarted = false; 
+	isSurviveObjective = false;
 	DontCountTime = TimeSys.TimeLoop == 0;
 	gameUI = new UI(Vector2(130, 12), 0, 150);
 	gameUI->CreateOptionUI(Vector2(POINTX, POINTY), false);
@@ -52,6 +54,7 @@ void GameManager::Start()
 	GameEnded = false;
 	GameWon = true;
 	InteractionsMgr.Start();
+	isSurviveObjective = TimeSys.TimeLoop > 2;
 	DontCountTime = TimeSys.TimeLoop == 0;
 }
 void GameManager::Update()
@@ -174,10 +177,11 @@ void GameManager::HandleInput(void)
 	Scene::ChangeColor(Scene::Default, true);
 
 
-	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0));
+	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0), 10-7);
 	Scene::GotoXY(Application::numberOfColumns / 2 - 81, 45);
 	Scene::ChangeColor(Scene::Green, true);
 	cout<< "Input: ";
+	//Application::ShowCursor();
 	Scene::ChangeColor(Scene::Default, true);
 	char input = ' ';
 	if (LoopStarted)
@@ -190,21 +194,25 @@ void GameManager::HandleInput(void)
 	case 'w':
 		//Move up
 		*player->GetPosition() += Vector2(0, -1);
-		TimeSys.increaseTimeTaken(1,true);
+		if (TimeSys.TimeLoop > 1)
+			TimeSys.increaseTimeTaken(1, true);
 		break;
 	case 's':
 		*player->GetPosition() += Vector2(0, 1);
-		TimeSys.increaseTimeTaken(1, true);
+		if (TimeSys.TimeLoop > 1)
+			TimeSys.increaseTimeTaken(1, true);
 		//Move down
 		break;
 	case 'd':
 		*player->GetPosition() += Vector2(1, 0);
-		TimeSys.increaseTimeTaken(1, true);
+		if (TimeSys.TimeLoop > 1)
+			TimeSys.increaseTimeTaken(1, true);
 		//Move right
 		break;
 	case 'a':
 		*player->GetPosition() += Vector2(-1, 0);
-		TimeSys.increaseTimeTaken(1, true);
+		if (TimeSys.TimeLoop > 1)
+			TimeSys.increaseTimeTaken(1, true);
 		//Move left
 		break;
 	case '/':
@@ -216,9 +224,9 @@ void GameManager::HandleInput(void)
 		{
 			//					[ (W)(A)(S)(D): Move  (/): To enable input field ]
 			if(TimeSys.TimeLoop < 2)
-			ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use',       ]", Vector2(10, 0));
+			ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use',       ]", Vector2(10, 0),7);
 			else
-				ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use', 'Wait']", Vector2(10, 0));
+				ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use', 'Wait']", Vector2(10, 0),7);
 
 			Scene::GotoXY(3, 2, ui.GetPosition());
 			std::string Print = "blank", doorStr = "blank";
@@ -441,6 +449,13 @@ void GameManager::HandleInput(void)
 			else
 				ItemFromInput = "";
 			string furnStr = "";
+			if (stringInput == "menu")
+			{
+				TimeSys.CountLoop();
+				TimeSys.TimeLoop--;
+				SceneManager::LoadScene(SceneManager::mainMenu);
+				break;
+			}
 			if (stringInput == "soap")
 			{
 				ClearDialogue();
@@ -895,6 +910,17 @@ char GameManager::_getch(void)
 
 	SetConsoleMode(h, mode);
 	return tolower(ch);
+}
+
+void GameManager::setSurviveObjective(bool val)
+{
+	isSurviveObjective = val;
+	objManager.displayObjectives();
+}
+
+bool GameManager::getSurviveObjective()
+{
+	return isSurviveObjective;
 }
 
 
