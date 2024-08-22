@@ -26,7 +26,7 @@ void EndingManager::PlayLivingRoom(void)
 
 		*time += 3;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " You fell on the ground. Your breath and heartbeat was racing with the time. ");
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Everything went silience but the sound of tickling clock. ");
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Everything went silent but the sound of tickling clock. ");
 
 		*time += 10;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Finally your vision gradually faded off... ");
