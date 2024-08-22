@@ -1512,7 +1512,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 	{
 		GameManager::getGM()->ClearDialogue();
 		string invalidInteraction = "You: I dont think i can use ";
-		invalidInteraction += useItem1;
+		invalidInteraction += useItem1 + " ";
 		invalidInteraction += input;
 		ui.PrintDialogue(Vector2(3, 2), invalidInteraction);
 
