@@ -5,6 +5,7 @@
 #include "InteractionsManager.h"
 TimeSystem::TimeSystem()
 {
+	lastTimeChecked = 0;
 	TimeLoop = 3;
 	TimeTaken = 0;
 	// 720 = 12 minutes
