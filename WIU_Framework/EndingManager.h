@@ -7,9 +7,9 @@ private:
 	UI* ui;
 	std::string killerCurrentScene;
 	bool isPlayerWithKiller;
-	bool isPlayerGetKilled;
+	bool isKillerGetKill;
 	bool isPlayerFound;
-	bool isWeaponUse;
+	bool isDuctTapeUse;
 	bool hasWeapon;
 	bool isPoliceCame;
 	std::vector<std::string> dialogues;
@@ -33,6 +33,7 @@ private:
 	void KnifeAction(void);
 	void HideAction(void);
 
+	void SoapAction(void);
 	void ContinueDialogue(void);
 
 public:
