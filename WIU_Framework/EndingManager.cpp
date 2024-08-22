@@ -5,7 +5,7 @@
 #include "MainMenu.h"
 #include "Windows.h"
 #include "Endings.h"
-
+ 
 void EndingManager::PlayLivingRoom(void)
 {
 	if (GameManager::getGM()->TimeSys.TimeLoop == 1)
