@@ -26,7 +26,8 @@ GameManager::GameManager(void) : TimeSys()
 	GameEnded = false;
 	GameWon = true;
 	player = nullptr;
-	LoopStarted = false;
+	LoopStarted = false; 
+	isSurviveObjective = false;
 	DontCountTime = TimeSys.TimeLoop == 0;
 	gameUI = new UI(Vector2(130, 12), 0, 150);
 	gameUI->CreateOptionUI(Vector2(POINTX, POINTY), false);
@@ -896,6 +897,17 @@ char GameManager::_getch(void)
 
 	SetConsoleMode(h, mode);
 	return tolower(ch);
+}
+
+void GameManager::setSurviveObjective(bool val)
+{
+	isSurviveObjective = val;
+	objManager.displayObjectives();
+}
+
+bool GameManager::getSurviveObjective()
+{
+	return isSurviveObjective;
 }
 
 

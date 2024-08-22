@@ -969,6 +969,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND CHICKEN STREET, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: It's the same news...again...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you might be stuck in a time loop of getting killed over and over.");
+		GameManager::getGM()->setSurviveObjective(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
 		TelevisionImage();

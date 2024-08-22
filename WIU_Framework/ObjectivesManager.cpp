@@ -71,8 +71,16 @@ void ObjectivesManager::displayObjectives() const
 			if (!*hasCalledTheCops)
 			{
 				ui->CreateText("              ", Vector2(29, objectiveY));
-				ui->CreateText("Find a way to escape from ", Vector2(29, objectiveY));
-				ui->CreateText("the killer and escape the time loop", Vector2(18, objectiveY +1));
+				if (GameManager::getGM()->getSurviveObjective()) {
+
+					ui->CreateText("Find a way to escape from ", Vector2(29, objectiveY));
+					ui->CreateText("the killer and escape the time loop", Vector2(18, objectiveY + 1));
+				}
+				else 
+				{
+					ui->CreateText("Check the TV ", Vector2(29, objectiveY));
+
+				}
 				if (InteractionsManager::LastTimeChecked)
 					ui->CreateText("Last Time Checked: [" + TimeSystem::GetTimeinString(GameManager::getGM()->TimeSys.GetLastTimeChecked())+"]", Vector2(18, objectiveY + 2));
 				else
