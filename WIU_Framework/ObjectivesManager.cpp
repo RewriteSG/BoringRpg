@@ -81,6 +81,7 @@ void ObjectivesManager::displayObjectives() const
 			else
 			{
 				ui->CreateText("              ", Vector2(29, objectiveY));
+				ui->CreateText("                                   ", Vector2(18, objectiveY +1));
 				ui->CreateText("Survive until the cops arrive", Vector2(29, objectiveY));
 			}
 			break;
