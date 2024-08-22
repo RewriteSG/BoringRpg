@@ -9,6 +9,7 @@ public:
 	int TimeLoop;
 	TimeSystem();
 	void CountLoop(void);
+	void CountLoop(bool);
 	void increaseTimeTaken(int time);
 	void increaseTimeTaken(int time, bool);
 	void checkedTime(int time);
@@ -19,6 +20,6 @@ public:
 
 	static std::string GetTimeinString(int second);
 
-
+	void AnimateClockRewinding();
 };
 

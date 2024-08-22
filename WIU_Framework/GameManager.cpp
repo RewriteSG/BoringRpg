@@ -181,7 +181,7 @@ void GameManager::HandleInput(void)
 	Scene::ChangeColor(Scene::Default, true);
 
 
-	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0), 10-7);
+	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field              ]", Vector2(10, 0), 10-7);
 	Scene::GotoXY(Application::numberOfColumns / 2 - 81, 45);
 	Scene::ChangeColor(Scene::Green, true);
 	cout<< "Input: ";
@@ -455,7 +455,7 @@ void GameManager::HandleInput(void)
 			string furnStr = "";
 			if (stringInput == "menu")
 			{
-				TimeSys.CountLoop();
+				TimeSys.CountLoop(true);
 				TimeSys.TimeLoop--;
 				SceneManager::LoadScene(SceneManager::mainMenu);
 				break;
