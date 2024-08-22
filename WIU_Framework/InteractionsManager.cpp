@@ -845,7 +845,7 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 	}
 	else 
 	{
-
+		ClosetDoorImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: The closet always seems to lock itself when closed, I need to get a new closet.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I wonder where I put the keys at... I kinda forgot.");
 	}
@@ -867,7 +867,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should really clean this up...");
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
-			ui->PickDialogue(Vector2(POINTX, POINTY), "Do you want to organise the drawer?");
+			choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Do you want to organise the drawer?");
 
 		}
 		int choosenInput;
@@ -1112,8 +1112,6 @@ void InteractionsManager::LivingRoomDoorInteracted(GameObject* BathroomDoor, Gam
 
 void InteractionsManager::StoreRoomDoorInteracted(GameObject* storeRoomDoor, GameObject* player)
 {
-	Sleep(500);
-	Start();
 	//
 	if (hasStoreRoomKeyCollected && !isStoreRoomUnlocked) {
 		MainDoorImage();
