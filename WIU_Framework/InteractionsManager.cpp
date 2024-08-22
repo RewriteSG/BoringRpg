@@ -231,7 +231,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 	
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
-		choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take a shower?");
+		choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Do you want to take a shower?");
 		switch (choosenItem)
 		{
 		case 0:
@@ -244,6 +244,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 			*hasTakenShower = true;
 			break;
 		case 1:
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Guess i gotta stay stinky.");
 			break;
 		}
 		break;
@@ -396,6 +397,7 @@ void InteractionsManager::StoveInteracted(GameObject* stove, GameObject* player)
 	{
 	case 0:
 	case 1:
+		StoveImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There's a pan at the top of the stove.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Cooking wasn't so easy for me, because I have weak arms.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should really hit the gym sometimes.");
@@ -596,7 +598,11 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 		switch (timeSystem->TimeLoop)
 		{ 
 		case 0:
-			//bool for hascalledmom must set
+			if (!GameManager::getGM()->objManager.hasWatchedTV) {
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should do other things first. ");
+				break;
+			}
+				//bool for hascalledmom must set
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Hello mom, hows your day going?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: great! have you found a suitable apartment to rent out yet?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: yup, its at block 243 Chicken street");
@@ -609,6 +615,11 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 			*hasCalledMom = true;
 			break;
 		case 1:
+			if (!GameManager::getGM()->objManager.hasWatchedTV) {
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should do other things first. ");
+				break;
+			}
+
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Hello mom, hows your day going?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: great! have you found a suitable apartment to rent out yet?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: yup, its at block 243 Chicken street, Also......");
@@ -640,7 +651,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should probably call the cops.");
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
-			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Call the cops?");
+			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Do you want to call the cops?");
 			switch (choosenItem)
 			{
 			case 0:
@@ -715,7 +726,7 @@ void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabi
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can use this to tie the killer up.");
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
-			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the duct tape?");
+			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Do you want to take the duct tape?");
 			switch (choosenItem)
 			{
 			case 0:
@@ -771,7 +782,7 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "The closet seems big enough for a person to hide inside.");
 				ui->GetOptionUI()->AddOption(new std::string("Hide"));
 				ui->GetOptionUI()->AddOption(new std::string("Leave"));
-				int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Hide inside?");
+				int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "What do you want do?");
 				switch (choosenItem)
 				{
 				case 0:
@@ -817,7 +828,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should really clean this up...");
 		ui->GetOptionUI()->AddOption(new std::string("Yes"));
 		ui->GetOptionUI()->AddOption(new std::string("No"));
-		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Organise the drawer?");
+		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Do you want to organise the drawer?");
 		int choosenInput;
 		switch (choosenItem)
 		{
