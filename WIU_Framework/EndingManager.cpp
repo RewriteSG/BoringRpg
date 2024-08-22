@@ -496,16 +496,31 @@ void EndingManager::Exit()
 {
 	system("CLS");
 	dialogues.clear();
-	GameManager::getGM()->TimeSys.CountLoop();
+	if ((endingNum != 3 && endingNum != 4))
+		GameManager::getGM()->TimeSys.CountLoop();
 	
 	if (endingNum == 3 || endingNum == 4)
 	{
-		if(endingNum == 3)
+		if (endingNum == 3) {
+
 			ui->PrintDialogue(Vector2(), "Congratulation, you got a best ending!");
+			ui->PrintDialogue(Vector2(), "And finally you got out of the time loop and managed to survive.");
+			ui->PrintDialogue(Vector2(), "After dying multiple times, you felt a relief to be able to escape the time loop.");
+		}
 
-		if (endingNum == 4)
+		if (endingNum == 4) {
+
 			ui->PrintDialogue(Vector2(), "Unfortunately not a best ending, but at least you're survied!");
+			ui->PrintDialogue(Vector2(), "And finally you got out of the time loop and managed to survive.");
+			ui->PrintDialogue(Vector2(), "After dying multiple times, you felt a relief not because you are able to escape the time loop.");
+			ui->PrintDialogue(Vector2(), "But you get the sensation of taking ones life, and you felt that you are going insane.");
+			ui->PrintDialogue(Vector2(), "Well, The good thing is that you escaped the time loop.");
+		}
 
+		ui->PrintDialogue(Vector2(), ".");
+		ui->PrintDialogue(Vector2(), ".......");
+		ui->PrintDialogue(Vector2(), "............Or did you?");
+		GameManager::getGM()->TimeSys.CountLoop();
 		ui->CreateText("Returning to main menu...");
 		Sleep(1500);
 		SceneManager::LoadScene(SceneManager::mainMenu);
