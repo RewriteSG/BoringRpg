@@ -754,7 +754,11 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 		if (!isClosetUnlocked) {
 
 			ClosetDoorImage();
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Maybe this unknown key is for the closet?.");
+			if (!hasKnownKey)
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Maybe this unknown key is for the closet?.");
+			else
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You have a key to unlock the closet.");
+
 			//isClosetUnlocked = true;
 
 			ui->GetOptionUI()->AddOption(new std::string("Use Key"));
@@ -843,7 +847,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 			else {
 
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Really need to get a new closet that doesnt have locks.");
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Why is there locks in the closet");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Why is there locks in the closet?");
 			}
 
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
