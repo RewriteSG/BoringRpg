@@ -181,7 +181,11 @@ void GameManager::HandleInput(void)
 	Scene::ChangeColor(Scene::Default, true);
 
 
-	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field              ]", Vector2(10, 0), 10-7);
+	if (TimeSys.TimeLoop < 2)
+		ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field              ]", Vector2(10, 0), 10 - 7);
+	else
+		ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field                  ]", Vector2(10, 0), 10 - 7);
+
 	Scene::GotoXY(Application::numberOfColumns / 2 - 81, 45);
 	Scene::ChangeColor(Scene::Green, true);
 	cout<< "Input: ";
