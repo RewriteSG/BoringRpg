@@ -127,7 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AnxietySystem.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="BedroomCabinet2Sprite.cpp" />
     <ClCompile Include="BedroomCabinetSprite.cpp" />
@@ -195,7 +194,6 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnxietySystem.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="BedroomCabinet2Sprite.h" />
     <ClInclude Include="BedroomCabinetSprite.h" />
