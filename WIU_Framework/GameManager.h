@@ -26,6 +26,7 @@ private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
 	bool EmptyDialogue = true;
+	bool hasloadRooms;
 	EndingManager* endingMgr;
 	bool isSurviveObjective;
 public:

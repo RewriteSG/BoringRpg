@@ -29,6 +29,22 @@ void InteractionsManager::SeperateInput(std::string input, std::string& input1, 
 	else
 		input2 = "";
 }
+void InteractionsManager::SeperateInput(std::string& keyword, std::string& input1, std::string& OutPutItem, bool)
+{
+	while (keyword != "") {
+
+		SeperateInput(keyword, input1, keyword);
+		if (input1 == "on" || input1 == "with" || input1 == "and")
+		{
+			input1 = input1 + " " + keyword; 
+			SeperateInput(input1, keyword, input1);
+			//SeperateInput(useItem2, keyword, useItem2);
+			break;
+		}
+		OutPutItem += " " + input1;
+		input1 = "";
+	}
+}
 bool InteractionsManager::hasKnownKey = false;
 bool InteractionsManager::hasSearchedForSoap = false;
 bool InteractionsManager::LastTimeChecked = false;
@@ -253,6 +269,9 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 	
 		ShowerImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Lets see what can I do here.");
+
+		if (hasMetalPan || hasKnife)
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Maybe i can try surprising him by hiding here.");
 		ui->GetOptionUI()->AddOption(new std::string("Hide"));
 		if (!hasSearchedForSoap)
 			ui->GetOptionUI()->AddOption(new std::string("Search"));
@@ -325,6 +344,7 @@ void InteractionsManager::PlanksInteracted(GameObject* planks, GameObject* playe
 				GameManager::getGM()->inventory.PickupItem("Planks");
 				PlanksItemImage();
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up planks!");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Now i need something to nail it to the main door.");
 				PlanksImage(true);
 				Sleep(500);
 				break;
@@ -356,7 +376,7 @@ void InteractionsManager::ToolboxInteracted(GameObject* box, GameObject* player)
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can use those to fix, or block something.");
 			break;
 		default:
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can use this to barricade the door.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can use this to barricade the main door.");
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
 			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the nails and hammer?");
@@ -370,6 +390,8 @@ void InteractionsManager::ToolboxInteracted(GameObject* box, GameObject* player)
 				GameManager::getGM()->inventory.PickupItem("Nails");
 				HammerAndNailsImage();
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up hammer and nails!");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Now i need something to barricade the main door.");
+
 				ToolboxImage(true);
 				Sleep(500);
 				break;
@@ -424,6 +446,7 @@ void InteractionsManager::StoveInteracted(GameObject* stove, GameObject* player)
 			GameManager::getGM()->inventory.PickupItem("Metal Pan");
 			MetalPanImage();
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up metal pan!");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Okay, i can use this to knock the killer down, but i'll need to surprise him to do that.");
 			StoveImage(true);
 			Sleep(1000);
 			break;
@@ -473,6 +496,8 @@ void InteractionsManager::KitchenCabinetInteracted(GameObject* kitchenCabinet, G
 			KnifeImage();
 			GameManager::getGM()->inventory.PickupItem("knife");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up knife!");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Okay, i can use this to fight back, but i'll need to surprise him to do that.");
+
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Hint: You can use the knife on yourself (you).");
 			KitchenCabinetImage(true);
 			Sleep(500);
@@ -723,7 +748,6 @@ void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabi
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I don't even have much stuff to begin with.");
 			break;
 		default:
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can use this to tie the killer up.");
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
 			int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Do you want to take the duct tape?");
@@ -734,6 +758,8 @@ void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabi
 				GameManager::getGM()->inventory.PickupItem("Duct Tape");
 				DuctTapeImage();
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up a roll of duct tape!");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can use this to tie the killer up.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: But i'll need something to knock him out first.");
 				timeSystem->increaseTimeTaken(2);
 				LivingRoomCabinetImage(true); 
 				Sleep(500);
@@ -784,6 +810,8 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 			ClosetDoorImage(true);
 			if (timeSystem->TimeLoop > 1) {
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "The closet seems big enough for a person to hide inside.");
+				if(hasMetalPan || hasKnife)
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Maybe i can try surprising him with this.");
 				ui->GetOptionUI()->AddOption(new std::string("Hide"));
 				ui->GetOptionUI()->AddOption(new std::string("Leave"));
 				int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "What do you want do?");
@@ -886,7 +914,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 	else 
 	{
 		BedRoomDrawerImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "I have already organised the drawer.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You have already organised the drawer.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There is nothing useful inside the drawer.");
 
 	}
@@ -905,7 +933,7 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 	case 0:
 		if (!*hasTakenShower || !*hasWatchedTV || !GameManager::getGM()->objManager.hasCalledMom)
 		{
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "There's something else I need to do first.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There's something else I need to do first.");
 			break;
 		}
 		else if (*hasTakenShower && *hasWatchedTV && GameManager::getGM()->objManager.hasCalledMom)
@@ -936,7 +964,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 	case 0:
 			if (!*hasTakenShower)
 			{
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "There's something else I need to do first.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There's something else I need to do first.");
 				break;
 			}
 			else {
@@ -958,7 +986,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 	case 1:
 		if (!*hasTakenShower)
 		{
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "There's something else I need to do first.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There's something else I need to do first.");
 			break;
 		}
 		else
@@ -1068,7 +1096,7 @@ void InteractionsManager::StoreRoomDoorInteracted(GameObject* storeRoomDoor, Gam
 	Sleep(500);
 	Start();
 	//
-	if (hasStoreRoomKeyCollected) {
+	if (hasStoreRoomKeyCollected && !isStoreRoomUnlocked) {
 		MainDoorImage();
 		ui->GetOptionUI()->AddOption(new string("Use Key"));
 		ui->GetOptionUI()->AddOption(new string("Leave"));
@@ -1133,12 +1161,12 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 	UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
 
 	std::string keyword;
-	std::string useItem1; 
-	std::string useItem2; 
-	std::string useItem3; 
+	std::string useItem1;
+	std::string useItem2;
+	std::string useItem3;
 	std::string keyword2;
-	std::string onObject; 
-	RetryInput:
+	std::string onObject;
+RetryInput:
 	SeperateInput(useItem, useItem1, keyword);
 	//SeperateInput(keyword, keyword, useItem2);
 	if (keyword == "on" || keyword == "with" || keyword == "and")
@@ -1149,26 +1177,26 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 	else
 	{
 		//SeperateInput(keyword, keyword, useItem2);
+		SeperateInput(keyword, useItem2, useItem1, true);
+		//while (keyword != "") {
 
-		while (keyword != "") {
-
-			SeperateInput(keyword, useItem2, keyword);
-			if (useItem2 == "on" || useItem2 == "with" || useItem2 == "and")
-			{
-				useItem2 = useItem2 + " " + keyword;
-				SeperateInput(useItem2, keyword, useItem2); 
-				//SeperateInput(useItem2, keyword, useItem2);
-				break;
-			}
-			useItem1 += " " + useItem2;
-			useItem2 = "";
-		}
+		//	SeperateInput(keyword, useItem2, keyword);
+		//	if (useItem2 == "on" || useItem2 == "with" || useItem2 == "and")
+		//	{
+		//		useItem2 = useItem2 + " " + keyword;
+		//		SeperateInput(useItem2, keyword, useItem2); 
+		//		//SeperateInput(useItem2, keyword, useItem2);
+		//		break;
+		//	}
+		//	useItem1 += " " + useItem2;
+		//	useItem2 = "";
+		//}
 
 	}
 	if (!GameManager::getGM()->inventory.InventoryHasItems(useItem1))
 	{
 		GameManager::getGM()->ClearDialogue();
-		ui.PrintDialogue(Vector2(3,2), "No " + useItem1 + " in Inventory");
+		ui.PrintDialogue(Vector2(3, 2), "No " + useItem1 + " in Inventory");
 		return false;
 	}
 	if ((keyword != "with" && keyword != "and") && keyword.length() > 0)
@@ -1184,44 +1212,46 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 		{
 			keyword2 = keyword;
 
-			SeperateInput(useItem2, onObject, useItem2); 
+			SeperateInput(useItem2, onObject, useItem2);
 			if (!useItem2.empty() && useItem2 != " ")
 			{
-				onObject += " " + useItem2; 
+				onObject += " " + useItem2;
 			}
 		}
 	}
 	else if (keyword == "with" || keyword == "and")
 	{
-		//SeperateInput(useItem2, useItem2, keyword); 
+		SeperateInput(useItem2, useItem2, keyword); 
 		//SeperateInput(keyword, keyword, useItem3);
-		if (keyword == "on" || keyword == "with" || keyword == "and") 
+		if (keyword == "on" || keyword == "with" || keyword == "and")
 		{
 			SeperateInput(useItem2, useItem2, keyword2);
 			SeperateInput(keyword2, keyword, useItem3);
 		}
 		else
 		{
-			while (keyword != "") {
+			SeperateInput(keyword, useItem3, useItem2, true);
 
-				SeperateInput(keyword, useItem3, keyword);
-				if (useItem2 == "on" || useItem2 == "with" || useItem2 == "and")
-				{
-					useItem2 = useItem2 + " " + keyword;
-					SeperateInput(useItem2, keyword, useItem2);
-					//SeperateInput(useItem2, keyword, useItem2);
-					break;
-				}
-				useItem2 += " " + useItem3;
-				useItem3 = "";
-			}
+			//while (keyword != "") {
+
+			//	SeperateInput(keyword, useItem3, keyword);
+			//	if (useItem2 == "on" || useItem2 == "with" || useItem2 == "and")
+			//	{
+			//		useItem2 = useItem2 + " " + keyword;
+			//		SeperateInput(useItem2, keyword, useItem2);
+			//		//SeperateInput(useItem2, keyword, useItem2);
+			//		break;
+			//	}
+			//	useItem2 += " " + useItem3;
+			//	useItem3 = "";
+			//}
 
 		}
-		if (!GameManager::getGM()->inventory.InventoryHasItems(useItem2) ) 
+		if (!GameManager::getGM()->inventory.InventoryHasItems(useItem2))
 		{
 
-			GameManager::getGM()->ClearDialogue(); 
-			ui.PrintDialogue(Vector2(2,2), "No " + useItem2 + " in Inventory");
+			GameManager::getGM()->ClearDialogue();
+			ui.PrintDialogue(Vector2(2, 2), "No " + useItem2 + " in Inventory");
 			return false;
 		}
 
@@ -1240,7 +1270,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			{
 				keyword2 = keyword;
 
-				SeperateInput(useItem3, onObject, useItem3); 
+				SeperateInput(useItem3, onObject, useItem3);
 				if (!useItem3.empty() && useItem3 != " ")
 				{
 					onObject += " " + useItem3;
@@ -1251,24 +1281,54 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 		{
 
 			SeperateInput(useItem3, useItem3, keyword2);
-			
 
-			if (!GameManager::getGM()->inventory.InventoryHasItems(useItem3)) 
+			if (keyword2 == "on" || keyword2 == "with" || keyword2 == "and")
+			{
+				SeperateInput(useItem3, useItem3, keyword);
+				SeperateInput(keyword, keyword, onObject);
+			}
+			else
+			{
+				//string temp;
+				SeperateInput(keyword2, onObject, useItem3, true);
+			}
+
+			if (!GameManager::getGM()->inventory.InventoryHasItems(useItem3))
 			{
 				GameManager::getGM()->ClearDialogue();
-				ui.PrintDialogue(Vector2(2,2), "No " + useItem3 + " in Inventory");
+				ui.PrintDialogue(Vector2(2, 2), "No " + useItem3 + " in Inventory");
 				return false;
 			}
 
 			if (keyword2.length() > 0)
 			{
-				SeperateInput(keyword2, keyword2, onObject);
+				if (keyword2 != "on")
+					SeperateInput(keyword2, keyword2, onObject);
 				if (keyword2 != "on")
 				{
 					GameManager::getGM()->ClearDialogue();
 					ui.PrintDialogue(Vector2(3, 2), "Invalid Input");
 					return false;
 				}
+				else
+				{
+					keyword = keyword2;
+
+					//while (keyword != "") {
+
+					//	SeperateInput(keyword, temp, keyword);
+					//	if (useItem3 == "on" || useItem3 == "with" || useItem3 == "and")
+					//	{
+					//		useItem2 = useItem2 + " " + keyword;
+					//		SeperateInput(useItem2, keyword, useItem2);
+					//		//SeperateInput(useItem2, keyword, useItem2);
+					//		break;
+					//	}
+					//	useItem3 += " " + temp;
+					//	useItem3 = "";
+					//}
+				}
+
 			}
 		}
 
@@ -1289,35 +1349,39 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 	{
 		GameManager::getGM()->ClearDialogue();
 		ui.CreateText("Use item(s) on what? Enter 'on <Object Name>'", Vector2(3, 3));
-		if (useItem1 == "soap") 
+		if (useItem1 == "soap")
 		{
-			ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use soap on the floor to make it slippery. " );
+			ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use soap on the floor to make it slippery. ");
 
 		}
-		else if (useItem1 == "nails" || useItem1 == "planks" || useItem1 == "hammer") 
+		else if (useItem1 == "nails" || useItem1 == "planks" || useItem1 == "hammer")
 		{
-			ui.PrintDialogue(Vector2(3, 4),"You: Maybe i can use it on the main door together with other items to barricade the door. ");
+			ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it on the main door together with other items to barricade the door. ");
 
 		}
-		else if (useItem1 == "knife") 
+		else if (useItem1 == "knife")
 		{
-			ui.PrintDialogue(Vector2(3, 4),"You: This knife could get me out of the time loop if i use it on myself, nah maybe i can use it to fight back. ");
+			ui.PrintDialogue(Vector2(3, 4), "You: This knife could get me out of the time loop if i use it on myself, nah maybe i can use it to fight back. ");
 		}
 		else if (useItem1 == "store room key")
 		{
-			ui.PrintDialogue(Vector2(3, 4),"You: Maybe i can use it on the storeroom door. ");
-		}else if (useItem1 == "unknown key")
+			ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it on the storeroom door. ");
+		}
+		else if (useItem1 == "unknown key")
 		{
-			ui.PrintDialogue(Vector2(3, 4),"You: Maybe i can use it on the locked closet. ");
-		}else if (useItem1 == "closet key")
+			ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it on the locked closet. ");
+		}
+		else if (useItem1 == "closet key")
 		{
-			ui.PrintDialogue(Vector2(3, 4),"You: Maybe i can use it on the locked closet. ");
-		}else if (useItem1 == "metal pan")
+			ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it on the locked closet. ");
+		}
+		else if (useItem1 == "metal pan")
 		{
-			ui.PrintDialogue(Vector2(3, 4),"You: Maybe i can use it to fight back the killer. ");
-		}else if (useItem1 == "duct tape")
+			ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it to fight back the killer. ");
+		}
+		else if (useItem1 == "duct tape")
 		{
-			ui.PrintDialogue(Vector2(3, 4),"You: Maybe i can use it to tie the killer. ");
+			ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it to tie the killer. ");
 		}
 
 		GameManager::getGM()->ClearDialogue();
@@ -1335,40 +1399,40 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 	}
 	bool isValidInteraction = false;
 	//int itemsUsing = 0;
-	if (furnituresRight) 
+	if (furnituresRight)
 	{
 		if (furnituresRight->GetFurnitureType() == Furniture::MainDoor && (input == "on door" || input == "on main door" || input == "on main"))
 		{
-			bool usingNails = useItem1 == "nails" || useItem2 == "nails" || useItem3 == "nails"; 
+			bool usingNails = useItem1 == "nails" || useItem2 == "nails" || useItem3 == "nails";
 			bool usingPlanks = useItem1 == "planks" || useItem2 == "planks" || useItem3 == "planks";
-			bool usingHammer = useItem1 == "hammer" || useItem2 == "hammer" || useItem3 == "hammer"; 
+			bool usingHammer = useItem1 == "hammer" || useItem2 == "hammer" || useItem3 == "hammer";
 
 			if (usingHammer && usingNails && usingPlanks)
 			{
 				GameManager::getGM()->ClearDialogue();
 				ui.PrintDialogue(Vector2(3, 2), "Using Nails, Planks and Hammer on the main door.");
-				ui.PrintDialogue(Vector2(3,2), "You: I could barricade the door, this can buy some time.");
+				ui.PrintDialogue(Vector2(3, 2), "You: I could barricade the door, this can buy some time.");
 				isBarricadeSetup = true;
 				timeSystem->increaseTimeTaken(50);
 				BarricadeDoorImage();
-				ui.PrintDialogue(Vector2(3,2), "You: There, all good.");
-				ui.PrintDialogue(Vector2(3,2), "Successfully barricaded the door!");
+				ui.PrintDialogue(Vector2(3, 2), "You: There, all good.");
+				ui.PrintDialogue(Vector2(3, 2), "Successfully barricaded the door!");
 				GameManager::getGM()->inventory.UseItem(useItem1);
 				GameManager::getGM()->inventory.UseItem(useItem2);
 				GameManager::getGM()->inventory.UseItem(useItem3);
 				isValidInteraction = true;
 			}
-			else 
+			else
 			{
 				GameManager::getGM()->ClearDialogue();
 				if (usingHammer || usingNails || usingPlanks) {
 
-				ui.PrintDialogue(Vector2(3, 2), "I dont have enough items to use on the main door! Maybe i need nails, planks or hammer?");
-				ui.PrintDialogue(Vector2(3, 2), "Enter 'use' <item name> and <item name> and <item name> on main door");
+					ui.PrintDialogue(Vector2(3, 2), "I dont have enough items to use on the main door! Maybe i need nails, planks or hammer?");
+					ui.PrintDialogue(Vector2(3, 2), "Enter 'use' <item name> and <item name> and <item name> on main door");
 				}
 				else
-				ui.PrintDialogue(Vector2(3, 2), "I dont think i can use that on the main door!");
-					
+					ui.PrintDialogue(Vector2(3, 2), "I dont think i can use that on the main door!");
+
 			}
 			return true;
 		}
@@ -1462,7 +1526,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			ui.PrintDialogue(Vector2(3, 2), "You: I can make the floor slippery so it buys time.");
 			timeSystem->increaseTimeTaken(30);
 			isSoapSetup = true;
-			PouringShampooImage(); 
+			PouringShampooImage();
 			ui.PrintDialogue(Vector2(3, 2), "You: There, all good.");
 			ui.PrintDialogue(Vector2(3, 2), "Successfully used soap on floor!");
 			GameManager::getGM()->inventory.UseItem(useItem1);
@@ -1500,11 +1564,20 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 		}
 		return true;
 	}
-	if (!isValidInteraction) 
+	if (!isValidInteraction)
 	{
 		GameManager::getGM()->ClearDialogue();
 		string invalidInteraction = "You: I dont think i can use ";
 		invalidInteraction += useItem1 + " ";
+		if (useItem2 != "" && useItem2 != "on" && useItem2 != "and" && useItem2 != "with") {
+
+			invalidInteraction += "and " + useItem2 + " ";
+		}
+		if (useItem3 != "" && useItem3 != "on" && useItem3 != "and" && useItem3 != "with") {
+
+
+			invalidInteraction += "and " + useItem3 + " ";
+		}
 		invalidInteraction += input;
 		ui.PrintDialogue(Vector2(3, 2), invalidInteraction);
 
@@ -1548,6 +1621,8 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 		{
 			ToiletCabinetWithSoapImage();
 			int choosenItem = 0;
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You found a spare soap in the cabinet.");
+
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
 			choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the soap");
@@ -1560,6 +1635,7 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 				GameManager::getGM()->inventory.PickupItem("Soap");
 				SoapImage();
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up soap!");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can use this on the floor to make the floor slippery and hopefully make the killer fall.");
 				timeSystem->increaseTimeTaken(2);
 
 				ToiletCabinetImage(true);

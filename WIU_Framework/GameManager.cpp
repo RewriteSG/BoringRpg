@@ -34,6 +34,7 @@ GameManager::GameManager(void) : TimeSys()
 	gameUI->CreateOptionUI(Vector2(POINTX, POINTY), false);
 	endingMgr = new EndingManager();
 	InteractionsManager::hasSearchedForSoap = false;
+	hasloadRooms = false;
 }
 
 GameManager::~GameManager(void)
@@ -60,14 +61,22 @@ void GameManager::Start()
 	InteractionsMgr.Start();
 	isSurviveObjective = TimeSys.TimeLoop > 2;
 	DontCountTime = TimeSys.TimeLoop == 0;
+	hasloadRooms = true;
 }
 void GameManager::Update()
 {
 	whatScenePlayerIn = SceneManager::currentScene->getName();
 
 	if (!LoopStarted) {
+		inventory.PickupItem("duct tape");
+		inventory.PickupItem("nails");
+		inventory.PickupItem("hammer");
 		ClearDialogue();
 		InteractionsMgr.Start(LoopStarted);
+	}
+	if (hasloadRooms) {
+		hasloadRooms = false;
+		inventory.DisplayItems(true); 
 	}
 	inventory.DisplayItems();
 

@@ -3,6 +3,7 @@
 #include "MyFunctions.cpp"
 #include "GameManager.h"
 #include "Scene.h"
+#include "Application.h"
 using namespace myFunctions;
 std::string * InventoryManager::getItemInInventory(std::string item)
 {
@@ -62,8 +63,10 @@ void InventoryManager::DisplayItems()
 		{
 			gameUI.CreateText(clearText, Vector2(-5, 2 + i));
 		}
-	}
 	gameUI.CreateBox(Vector2(-5, 2), "Inventory:", 5 + (inventoryCurrentCapacity + 1));
+	gameUI.CreateText("[ Enter <item name> to see tooltip ]", Vector2(2,2));
+	}
+
 	for (int i = 0; i < inventoryCurrentCapacity; i++)
 	{
 		//Scene::ChangeColor(Scene::Yellow);
@@ -71,8 +74,36 @@ void InventoryManager::DisplayItems()
 	}
 }
 
+void InventoryManager::DisplayItems(bool)
+{
+	UI gameUI(Vector2(150, 12), 0, 45);
+	//hasChangedCapacity = false;
+	std::string clearText = "";
+	for (int j = 0; j < 45; j++)
+	{
+		clearText += ' ';
+	}
+	for (int i = 0; i <= 5 + inventoryCurrentCapacity; i++)
+	{
+		gameUI.CreateText(clearText, Vector2(-5, 2 + i));
+	}
+	gameUI.CreateBox(Vector2(-5, 2), "Inventory:", 5 + (inventoryCurrentCapacity + 1));
+	gameUI.CreateText("[ Enter <item name> to see tooltip ]", Vector2(2, 2));
+	for (int i = 0; i < inventoryCurrentCapacity; i++)
+	{
+		//Scene::ChangeColor(Scene::Yellow);
+		GameManager::getGM()->gameUI->CreateText(*Items[i], Vector2(18, 6 + i), 14 - 7);
+	}
+}
+
 bool InventoryManager::InventoryHasItems(std::string item1) const
 {
+	if (item1 == "key")
+	{
+		UI ui(Vector2(Application::numberOfColumns / 2 - 171 / 2, 35), 0, 166);
+		ui.PrintDialogue(Vector2(3, 2), "Make sure to enter the key with its name as shown in inventory. ");
+
+	}
 	bool hasItem1 = false; 
 	for (int i = 0; i < inventoryCurrentCapacity; i++)
 	{
@@ -80,37 +111,6 @@ bool InventoryManager::InventoryHasItems(std::string item1) const
 			hasItem1 = true;
 	}
 	return hasItem1;
-}
-
-bool InventoryManager::InventoryHasItems(std::string item1, std::string item2) const
-{
-	bool hasItem1 = false , hasItem2 = false; 
-
-	for (int i = 0; i < inventoryCurrentCapacity; i++)
-	{
-		if (*Items[i] == item1)
-			hasItem1 = true;
-		if (*Items[i] == item2)
-			hasItem2 = true;
-	}
-	return hasItem1 && hasItem2;
-}
-
-bool InventoryManager::InventoryHasItems(std::string item1, std::string item2, std::string item3) const
-{
-	bool hasItem1 = false, hasItem2 = false, hasItem3 = false; 
-
-
-	for (int i = 0; i < inventoryCurrentCapacity; i++)
-	{
-		if (*Items[i] == item1)
-			hasItem1 = true;
-		if (*Items[i] == item2)
-			hasItem2 = true;
-		if (*Items[i] == item3)
-			hasItem3 = true;
-	}
-	return hasItem1 && hasItem2 && hasItem3;
 }
 
 void InventoryManager::DropItem(std::string dropItem)
@@ -141,6 +141,13 @@ void InventoryManager::UseItem(std::string useItem)
 		}
 		hasChangedCapacity = true;
 		gameUI.CreateBox(Vector2(-5, 2), "Inventory:", 5 + (inventoryCurrentCapacity + 1));
+		gameUI.CreateText("[ Enter <item name> to see tooltip ]", Vector2(2, 2));
+
+		for (int i = 0; i < inventoryCurrentCapacity; i++)
+		{
+			//Scene::ChangeColor(Scene::Yellow);
+			GameManager::getGM()->gameUI->CreateText(*Items[i], Vector2(18, 6 + i), 14 - 7);
+		}
 	}
 }
 

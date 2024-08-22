@@ -6,6 +6,7 @@
 class InteractionsManager
 {
 	void SeperateInput(std::string input, std::string& input1, std::string& input2);
+	void SeperateInput(std::string& keyword, std::string& input1, std::string& OutPutItem, bool);
 public:
 	//timer
 	TimeSystem* timeSystem;

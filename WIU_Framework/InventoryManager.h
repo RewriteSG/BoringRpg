@@ -16,10 +16,10 @@ public:
 	int GetItemsCount();
 
 	void DisplayItems();
+	void DisplayItems(bool);
 	bool InventoryHasItems(std::string item1) const;
-	bool InventoryHasItems(std::string item1, std::string item2) const;
-	bool InventoryHasItems(std::string item1, std::string item2, std::string item3) const;
 	void DropItem(std::string dropItem);
 	void UseItem(std::string useItem);
+	
 };
 
