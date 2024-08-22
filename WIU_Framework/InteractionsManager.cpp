@@ -776,7 +776,6 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 				if (!hasKnownKey) {
 					hasKnownKey = true;
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Ah, thats the key.");
-
 				}
 			}
 			else
