@@ -1639,6 +1639,7 @@ void InteractionsManager::Start(bool isGameStarted)
 		print = "You: Okay.. This has been happening for three times already. I really am stuck in the time loop";
 		//print += +"rd";
 		ui->PrintDialogue(Vector2(POINTX, POINTY), print);
+		print = "You: *Sigh* 4th loop let's go";
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");
 		break;
 	default:
@@ -1648,7 +1649,7 @@ void InteractionsManager::Start(bool isGameStarted)
 		//ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Whatever I did last time didn't work.");
 		print = "You: Okay.. ";
 		print += ('0' + (timeSystem->TimeLoop +1));
-		print += "th attempt.";
+		print += "th Loop.";
 		ui->PrintDialogue(Vector2(POINTX, POINTY), print);
 		if (random != 5)
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");
