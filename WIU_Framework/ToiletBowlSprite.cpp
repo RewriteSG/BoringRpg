@@ -23,7 +23,7 @@
 		Scene::GotoXY(0 + x + (CellX * x), 4 + y + (y * CellY), topLeft);
 		std::cout << "--- --- ";
 		Scene::GotoXY(0 + x + (CellX * x), 5 + y + (y * CellY), topLeft);
-		std::cout << "I am a ÂíÍ°(Toiletbol)";
+		std::cout << "I am a Toiletbowl";
 	}
 //	      _______
 // ______|       |
