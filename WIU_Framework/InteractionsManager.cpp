@@ -1649,7 +1649,7 @@ void InteractionsManager::Start(bool isGameStarted)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: " + differentText1[random]);
 		//ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Whatever I did last time didn't work.");
 		print = "You: Okay.. ";
-		print += ('0' + (timeSystem->TimeLoop-1));
+		print += std::to_string(timeSystem->TimeLoop-1);
 		if ((timeSystem->TimeLoop - 1) > 3)
 			print += "th attempt.";
 		else
