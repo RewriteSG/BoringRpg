@@ -3,6 +3,7 @@
 #include "GameManager.h"
 #include "InventoryManager.h"
 #include "InteractionsManager.h"
+#include "UI.h"
 TimeSystem::TimeSystem()
 {
 	lastTimeChecked = 0;
@@ -26,6 +27,9 @@ void TimeSystem::CountLoop(void)
 
 void TimeSystem::increaseTimeTaken(int time)
 {
+
+	UI* ui = GameManager::getGM()->gameUI;
+	ui->PrintDialogue(Vector2(POINTX, POINTY), "You took " + std::to_string(time) + " seconds to do this.");
 	TimeTaken += time;
 	increasedTime = true;
 	if (increasedTime)

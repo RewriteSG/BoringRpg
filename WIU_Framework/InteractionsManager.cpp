@@ -124,7 +124,7 @@ void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
 		switch (choosenItem)
 		{
 		case 0:
-			timeSystem->increaseTimeTaken(5);
+			timeSystem->increaseTimeTaken(2);
 			hasStoreRoomKeyCollected = true;
 			GameManager::getGM()->inventory.PickupItem("Store Room Key");
 			KeyImage();
@@ -295,7 +295,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 			switch (choosenItem)
 			{
 			case 0:
-				timeSystem->increaseTimeTaken(5);
+				timeSystem->increaseTimeTaken(2);
 				hasSoap = true;
 				GameManager::getGM()->inventory.PickupItem("Soap");
 				SoapImage();
@@ -392,7 +392,7 @@ void InteractionsManager::ToolboxInteracted(GameObject* box, GameObject* player)
 			switch (choosenItem)
 			{
 			case 0:
-				timeSystem->increaseTimeTaken(5);
+				timeSystem->increaseTimeTaken(10);
 				hasHammer = true;
 				hasNails = true;
 				GameManager::getGM()->inventory.PickupItem("Hammer");
@@ -414,7 +414,7 @@ void InteractionsManager::BoxInteracted(GameObject* box, GameObject* player, int
 	Start();
 	EmptyBoxImage();
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "There's nothing inside.");
-	timeSystem->increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(2);
 }
 
 void InteractionsManager::StoveInteracted(GameObject* stove, GameObject* player)
@@ -501,7 +501,7 @@ void InteractionsManager::KitchenCabinetInteracted(GameObject* kitchenCabinet, G
 			KnifeImage();
 			GameManager::getGM()->inventory.PickupItem("knife");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up knife!");
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "Hint: You can use the knife on yourself.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "Hint: You can use the knife on yourself (you).");
 			KitchenCabinetImage(true);
 			Sleep(500);
 			break;
@@ -530,7 +530,7 @@ void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* p
 		switch (choosenItem)
 		{
 		case 0:
-			timeSystem->increaseTimeTaken(5);
+			timeSystem->increaseTimeTaken(10);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You searched the trash can and found nothing.");
 
 			break;
@@ -548,7 +548,7 @@ void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* p
 		switch (choosenItem)
 		{
 		case 0:
-			timeSystem->increaseTimeTaken(5);
+			timeSystem->increaseTimeTaken(10);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You searched the trash can and found nothing.");
 
 			break;
@@ -565,7 +565,7 @@ void InteractionsManager::TrashCanInteracted(GameObject* trashCan, GameObject* p
 		switch (choosenItem)
 		{
 		case 0:
-			timeSystem->increaseTimeTaken(5);
+			timeSystem->increaseTimeTaken(10);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "As you continue staring at the trash cans, they seem to turn before your very eyes.");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "The edges are no longer rusty, and the dents are smoothed over.");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "From under the lid comes a faint golden glow, sweet and alluring.");
@@ -599,7 +599,7 @@ void InteractionsManager::TableInteracted(GameObject* table, GameObject* player)
 	TableImage();
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "You scanned through the whole surface, and below the table.");
 	ui->PrintDialogue(Vector2(POINTX, POINTY), "But there was nothing on it.");
-	timeSystem->increaseTimeTaken(5);
+	timeSystem->increaseTimeTaken(3);
 }
 
 void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameObject* player)
@@ -617,7 +617,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 	switch (choosenItem)
 	{
 	case 0:
-		timeSystem->increaseTimeTaken(5);
+		timeSystem->increaseTimeTaken(10);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "A photo of your family.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I miss them...");
 		break;
@@ -627,6 +627,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 		{ 
 		case 0:
 			//bool for hascalledmom must set
+			timeSystem->increaseTimeTaken(30);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Hello mom, hows your day going?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: great! have you found a suitable apartment to rent out yet?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: yup, its at block 243 Chicken street");
@@ -637,6 +638,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 			*hasCalledMom = true;
 			break;
 		case 1:
+			timeSystem->increaseTimeTaken(30);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Hello mom, hows your day going?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: great! have you found a suitable apartment to rent out yet?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: yup, its at block 243 Chicken street, Also......");
@@ -656,7 +658,6 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 			else 
 			{
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: But I recently saw on the news that there was a serial killer going around my area, I'm a little worried...");
-
 			}
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: But even so, I don't think I'll be targetted. ");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: The main door is shut tight, the killer might be weak and cant break down the door.");
@@ -665,9 +666,6 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 			*hasCalledMom = true;
 			break;
 		default:
-
-		
-
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should probably call the cops.");
 			ui->GetOptionUI()->AddOption(new std::string("Yes"));
 			ui->GetOptionUI()->AddOption(new std::string("No"));
@@ -679,7 +677,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 				{
 				
 					hasCalledTheCops = true;
-					timeSystem->increaseTimeTaken(5);
+					timeSystem->increaseTimeTaken(30);
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You called the cops.");
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "Cops: Hi, this is [REDACTED] police department, how may I help?");
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: YOU GOTTA SEND SOMEONE HERE!");
@@ -706,7 +704,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 
 		break;
 	case 2:
-		timeSystem->increaseTimeTaken(5);
+		timeSystem->increaseTimeTaken(20);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You winded up the music box, and it played a song.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: This was my favourite toy when I was a kid.");
 		break;
@@ -728,6 +726,7 @@ void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabi
 	}
 	else
 	{
+		timeSystem->increaseTimeTaken(10);
 		LivingRoomCabinetImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Inside the big cabinet, there's only a roll of duct tape.");
 		switch (timeSystem->TimeLoop)
@@ -745,7 +744,7 @@ void InteractionsManager::LivingRoomCabinetInteracted(GameObject* livingRoomCabi
 			switch (choosenItem)
 			{
 			case 0:
-				timeSystem->increaseTimeTaken(5);
+				timeSystem->increaseTimeTaken(2);
 				hasDuctTape = true;
 				GameManager::getGM()->inventory.PickupItem("Duct Tape");
 				DuctTapeImage();
@@ -776,6 +775,7 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 			ui->GetOptionUI()->AddOption(new std::string("Leave"));
 			if (ui->PickDialogue(Vector2(POINTX, POINTY), "What do you want to do?") == 0)
 			{
+				timeSystem->increaseTimeTaken(5);
 				ClosetDoorImage(true);
 				isClosetUnlocked = true;
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "The closet is unlocked. ");
@@ -793,7 +793,7 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 		{
 			ClosetDoorImage(true);
 			if (timeSystem->TimeLoop > 1) {
-
+				timeSystem->increaseTimeTaken(5);
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "The closet seems big enough for a person to hide inside.");
 				ui->GetOptionUI()->AddOption(new std::string("Hide"));
 				ui->GetOptionUI()->AddOption(new std::string("Leave"));
@@ -807,7 +807,6 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 					break;
 				case 1:
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Seems like a bad idea...");
-
 					break;
 				}
 				
@@ -848,7 +847,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 		{
 		case 0:
 		
-			timeSystem->increaseTimeTaken(5);
+			timeSystem->increaseTimeTaken(15);
 			BedRoomDrawerImage(true);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You cleaned up the drawer.");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "While you were organizing, you found a key inside."); 
@@ -894,7 +893,7 @@ void InteractionsManager::BedRoomDrawerInteracted(GameObject* bedRoomCabinet, Ga
 	else 
 	{
 		BedRoomDrawerImage(true);
-
+		timeSystem->increaseTimeTaken(5);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "I have already organised the drawer.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "There is nothing useful inside the drawer.");
 
@@ -999,6 +998,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		TelevisionImage();
 		break;
 	default:
+		timeSystem->increaseTimeTaken(5);
 		TelevisionImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned on the TV.");
 		TelevisionImage(true);
@@ -1085,7 +1085,7 @@ void InteractionsManager::StoreRoomDoorInteracted(GameObject* storeRoomDoor, Gam
 		ui->GetOptionUI()->AddOption(new string("Leave"));
 		int chooseItem = ui->PickDialogue(Vector2(POINTX, POINTY), "You have a key for store room door, What do you want to do?");
 		if (chooseItem == 0) {
-
+			timeSystem->increaseTimeTaken(5);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Using Storeroom Key to unlock Storeroom.");
 			isStoreRoomUnlocked = true;
 			GameManager::getGM()->inventory.UseItem("store room key");
@@ -1105,6 +1105,7 @@ void InteractionsManager::StoreRoomDoorInteracted(GameObject* storeRoomDoor, Gam
 	}
 	else
 	{
+		timeSystem->increaseTimeTaken(5);
 		MainDoorImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I need a key to unlock the store room, Maybe i dropped a key somewhere near here.....");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I should check under the sofa.");
@@ -1421,6 +1422,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 
 			if (usingStoreroomKey)
 			{
+				timeSystem->increaseTimeTaken(5);
 				GameManager::getGM()->ClearDialogue();
 				ui.PrintDialogue(Vector2(3, 2), "Using Storeroom Key to unlock Storeroom.");
 				isStoreRoomUnlocked = true;
@@ -1468,7 +1470,7 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 			GameManager::getGM()->ClearDialogue();
 			ui.PrintDialogue(Vector2(3, 2), "Using soap on floor!");
 			ui.PrintDialogue(Vector2(3, 2), "You: I can make the floor slippery so it buys time.");
-			timeSystem->increaseTimeTaken(45);
+			timeSystem->increaseTimeTaken(30);
 			isSoapSetup = true;
 			PouringShampooImage(); 
 			ui.PrintDialogue(Vector2(3, 2), "You: There, all good.");

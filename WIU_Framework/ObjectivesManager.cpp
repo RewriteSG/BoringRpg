@@ -21,7 +21,7 @@ void ObjectivesManager::displayObjectives() const
 	switch (GameManager::getGM()->TimeSys.TimeLoop)
 	{
 		case 0:
-				//if (!hasCalledMom)
+				
 			if (!hasTakenShower)
 			{
 				ui->CreateText("              ", Vector2(29, objectiveY));
