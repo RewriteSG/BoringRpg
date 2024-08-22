@@ -24,7 +24,7 @@ public:
 	bool isPlayerSucide;
 	bool isCurtainOpen;
 	bool isHidInCloset;
-
+	//bool hasOpenedLivingRoomDrawer;
 	bool hasFoundKeyUnderSofa;
 	bool hasCabinetKeyCollected;
 	bool hasStoreRoomKeyCollected;

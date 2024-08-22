@@ -29,11 +29,15 @@ void TimeSystem::increaseTimeTaken(int time)
 {
 
 	UI* ui = GameManager::getGM()->gameUI;
-	ui->PrintDialogue(Vector2(POINTX, POINTY), "You took " + std::to_string(time) + " seconds to do this.");
 	TimeTaken += time;
-	increasedTime = true;
-	if (increasedTime)
+	if (!increasedTime) {
+
 		InteractionsManager::LastTimeChecked = false;
+		GameManager::getGM()->objManager.displayObjectives();
+	}
+	increasedTime = true;
+	if (TimeLoop > 1)
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You took " + std::to_string(time) + " seconds to do this.");
 }
 void TimeSystem::increaseTimeTaken(int time, bool)
 {
