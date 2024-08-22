@@ -27,8 +27,13 @@ private:
 	void PlayKitChen(void);
 
 	void PickWeaponOption(void);
-	void MentalPanEnding(void);
+	void MetalPanEnding(void);
 	void KnifeEnding(void);
+	void MetalPanAction(void);
+	void KnifeAction(void);
+	void HideAction(void);
+
+	void ContinueDialogue(void);
 
 public:
 	EndingManager(void);

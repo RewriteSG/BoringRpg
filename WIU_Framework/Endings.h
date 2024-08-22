@@ -22,5 +22,7 @@ public:
          KILLER_KILLED,
          SLEEPING,
      };
+
+     void ShowEnding(const int type);
 };
 

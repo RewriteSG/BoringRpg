@@ -389,8 +389,6 @@ void Endings::ending3()
 
 void Endings::ending4()
 {
-
-
     if (isunlocked[3] == false) {
 
         const char* ending4 = R"(
@@ -444,7 +442,6 @@ void Endings::ending4()
 
 
     }
-
     else {
         const char* ending4 = R"(
 
@@ -489,13 +486,10 @@ void Endings::ending4()
 
 
     }
-
 }
 
 void Endings::ending5()
 {
-
-
     if (isunlocked[4] == false) {
 
         const char* ending5 = R"(
@@ -549,9 +543,6 @@ void Endings::ending5()
 
 
     }
-
-
-
     else {
         const char* ending5 = R"(
 
@@ -592,10 +583,22 @@ void Endings::ending5()
                                            ETERNAL DREAM
 )";
 
+
         DrawASCII_Art(ending5, 0, 0, Scene::White);
 
-
     }
+}
 
-
+void Endings::ShowEnding(const int type)
+{
+    if (type == GOT_KILLED)
+        ending1();
+    else if (type == SUICIDE)
+        ending2();
+    else if (type == ARRESTED)
+        ending3();
+    else if (type == KILLER_KILLED)
+        ending4();
+    else if (SLEEPING)
+        ending5();
 }
