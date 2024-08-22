@@ -31,6 +31,7 @@ void InteractionsManager::SeperateInput(std::string input, std::string& input1, 
 }
 bool InteractionsManager::hasKnownKey = false;
 bool InteractionsManager::hasSearchedForSoap = false;
+bool InteractionsManager::LastTimeChecked = false;
 
 InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 {
@@ -64,6 +65,7 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 	hasStoreRoomKeyCollected = false;
 	isDoorBarricaded = false;
 	isClosetUnlocked = false;
+	LastTimeChecked = true;
 }
 
 void InteractionsManager::SofaInteracted(GameObject* sofa, GameObject* player)
@@ -1081,6 +1083,7 @@ void InteractionsManager::StoreRoomDoorInteracted(GameObject* storeRoomDoor, Gam
 
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Using Storeroom Key to unlock Storeroom.");
 			isStoreRoomUnlocked = true;
+			GameManager::getGM()->inventory.UseItem("store room key");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Successfully unlocked the door!");
 		}
 		if (chooseItem == 1) 
@@ -1121,12 +1124,12 @@ void InteractionsManager::ClockInteracted(GameObject* clock, GameObject* player)
 		break;
 	default:
 		timeSystem->increaseTimeTaken(2);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I remember that he comes at 00:05, I still have time.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "The time is currently: " +
 			GameManager::getGM()->TimeSys.GetTimeinString(GameManager::getGM()->TimeSys.TimeTaken));
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I remember that he comes at 00:05:00, I still have time.");
 		break;
 	}
-	
+	GameManager::getGM()->TimeSys.checkedTime(0);
 }
 
 bool InteractionsManager::UseItem(std::string useItem, GameObject* player)

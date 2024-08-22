@@ -203,21 +203,21 @@ void GameManager::HandleInput(void)
 	case 'w':
 		//Move up
 		*player->GetPosition() += Vector2(0, -1);
-		TimeSys.increaseTimeTaken(1);
+		TimeSys.increaseTimeTaken(1,true);
 		break;
 	case 's':
 		*player->GetPosition() += Vector2(0, 1);
-		TimeSys.increaseTimeTaken(1);
+		TimeSys.increaseTimeTaken(1, true);
 		//Move down
 		break;
 	case 'd':
 		*player->GetPosition() += Vector2(1, 0);
-		TimeSys.increaseTimeTaken(1);
+		TimeSys.increaseTimeTaken(1, true);
 		//Move right
 		break;
 	case 'a':
 		*player->GetPosition() += Vector2(-1, 0);
-		TimeSys.increaseTimeTaken(1);
+		TimeSys.increaseTimeTaken(1, true);
 		//Move left
 		break;
 	case '/':

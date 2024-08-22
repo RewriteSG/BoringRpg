@@ -10,6 +10,7 @@ TimeSystem::TimeSystem()
 	// 720 = 12 minutes
 	RobberTime = 300;
 	TimeLimitForCops = 480;
+	increasedTime = false;
 }
 
 void TimeSystem::CountLoop(int time)
@@ -18,25 +19,40 @@ void TimeSystem::CountLoop(int time)
 	GameManager::getGM()->LoopStarted = false;
 	GameManager::getGM()->inventory = InventoryManager();
 	GameManager::getGM()->InteractionsMgr = InteractionsManager();
-
+	increasedTime = false;
 }
 
 void TimeSystem::increaseTimeTaken(int time)
 {
 	TimeTaken += time;
+	increasedTime = true;
+	if (increasedTime)
+		InteractionsManager::LastTimeChecked = false;
 }
-
-void TimeSystem::decreaseTimeTaken(int time)
+void TimeSystem::increaseTimeTaken(int time, bool)
 {
-	TimeTaken -= time;
+	TimeTaken += time;
+	//increasedTime = true;
+	if (increasedTime)
+		InteractionsManager::LastTimeChecked = false;
+}
+void TimeSystem::checkedTime(int time)
+{
+	InteractionsManager::LastTimeChecked = true;
+	lastTimeChecked = TimeTaken;
+	increasedTime = false;
 }
 void TimeSystem::increaseRobberTime(int time) {
 	RobberTime += time;
 }
 
+int TimeSystem::GetLastTimeChecked()
+{
+	return lastTimeChecked;
+}
+
 std::string TimeSystem::GetTimeinString(int time)
 {
-
 	//display time in min & sec
 	int minute = time / 60;
 	int second = time % 60;

@@ -33,8 +33,8 @@ void Scene::Start()
 	world.Render();
 
 	UI gameUI(Vector2(150, 12), 0, 45);
-	gameUI.CreateBox(Vector2(-5, -7), "Objective:", 6);
-	gameUI.CreateBox(Vector2(-5, 0), "Inventory:", 10);
+	gameUI.CreateBox(Vector2(-5, -7), "Objective:", 8);
+	gameUI.CreateBox(Vector2(-5, 2), "Inventory:", 5);
 	//gameUI.CreateText("Axiety Meter: ", Vector2(20, -9));
 	gameUI.CreateText("YOU AT: " + getName(), Vector2(-5, -9));
 

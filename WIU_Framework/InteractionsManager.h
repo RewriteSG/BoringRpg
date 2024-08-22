@@ -36,7 +36,9 @@ public:
 	bool hasDuctTape;
 	bool hasMetalPan;
 	bool isDoorBarricaded;
+	//bool isfirstCheckClock;
 	static bool hasSearchedForSoap;
+	static bool LastTimeChecked;
 	static bool hasKnownKey;
 	int trashCanInteractions = 0;
 	InteractionsManager();
