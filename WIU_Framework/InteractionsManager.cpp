@@ -231,9 +231,9 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 	}
 	else {
 
-		if (hasSoap)
-			ShowerNoShampooImage();
-		else
+		//if (hasSoap)
+		//	ShowerNoShampooImage();
+		//else
 			ShowerImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "Just a normal shower area.");
 	}
@@ -294,6 +294,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 			
 			if (!hasSearchedForSoap)
 			{
+				hasSearchedForSoap = true;
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "You found a body Soap bottle.");
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: But it seems like it is empty");
 			}
@@ -321,7 +322,7 @@ void InteractionsManager::PlanksInteracted(GameObject* planks, GameObject* playe
 	if (hasPlanks)
 	{
 		PlanksImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I already have the planks.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "There is nothing else on the shelf.");
 	}
 	else
 	{
@@ -363,7 +364,7 @@ void InteractionsManager::ToolboxInteracted(GameObject* box, GameObject* player)
 	if (hasNails and hasHammer)
 	{
 		ToolboxImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I already have the tools.");
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "There is nothing else in the toolbox. ");
 	}
 	else
 	{
@@ -968,6 +969,7 @@ void InteractionsManager::BedInteracted(GameObject* bed, GameObject* player)
 		}
 		
 	default:
+		BedImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can't sleep...");
 		break;
 	}
@@ -1653,7 +1655,7 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 				GameManager::getGM()->inventory.PickupItem("Soap");
 				SoapImage();
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up soap!");
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can use this on the floor to make the floor slippery and hopefully make the killer fall.");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I can use this on the floor to make the floor slippery and hopefully make the killer falls.");
 				timeSystem->increaseTimeTaken(2);
 
 				ToiletCabinetImage(true);
