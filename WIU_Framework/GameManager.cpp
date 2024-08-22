@@ -178,7 +178,7 @@ void GameManager::HandleInput(void)
 	Scene::GotoXY(Application::numberOfColumns / 2 - 81, 45);
 	Scene::ChangeColor(Scene::Green, true);
 	cout<< "Input: ";
-	Application::ShowCursor();
+	//Application::ShowCursor();
 	Scene::ChangeColor(Scene::Default, true);
 	char input = ' ';
 	if (LoopStarted)
