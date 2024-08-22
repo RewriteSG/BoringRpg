@@ -587,9 +587,9 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 	switch (choosenItem)
 	{
 	case 0:
-		timeSystem->increaseTimeTaken(10);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "A photo of your family.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I miss them...");
+		timeSystem->increaseTimeTaken(10);
 		break;
 	case 1:
 		timeSystem->increaseTimeTaken(5);
@@ -597,7 +597,6 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 		{ 
 		case 0:
 			//bool for hascalledmom must set
-			timeSystem->increaseTimeTaken(30);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Hello mom, hows your day going?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: great! have you found a suitable apartment to rent out yet?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: yup, its at block 243 Chicken street");
@@ -605,10 +604,11 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: But even so, I don't think I'll be targetted, everyone loves me:)");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: Just be careful, remember to always lock your doors okay? goodnight");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You hung up the phone.");
+			timeSystem->increaseTimeTaken(30);
+
 			*hasCalledMom = true;
 			break;
 		case 1:
-			timeSystem->increaseTimeTaken(30);
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Hello mom, hows your day going?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: great! have you found a suitable apartment to rent out yet?");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: yup, its at block 243 Chicken street, Also......");
@@ -633,6 +633,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: The main door is shut tight, the killer might be weak and cant break down the door.");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "Mom: Just be careful, remember to always lock your doors okay? goodnight");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You hung up the phone.");
+				timeSystem->increaseTimeTaken(30);
 			*hasCalledMom = true;
 			break;
 		default:
@@ -647,7 +648,6 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 				{
 				
 					hasCalledTheCops = true;
-					timeSystem->increaseTimeTaken(30);
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You called the cops.");
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "Cops: Hi, this is [REDACTED] police department, how may I help?");
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: YOU GOTTA SEND SOMEONE HERE!");
@@ -657,6 +657,7 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "They hung up.");
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Son of a-");
 					ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I guess that I have to find a way to hold him off until they come.");
+					timeSystem->increaseTimeTaken(30);
 					break;
 				}
 				else
@@ -674,9 +675,9 @@ void InteractionsManager::BedroomTableInteracted(GameObject* bedroomTable, GameO
 
 		break;
 	case 2:
-		timeSystem->increaseTimeTaken(20);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You winded up the music box, and it played a song.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: This was my favourite toy when I was a kid.");
+		timeSystem->increaseTimeTaken(20);
 		break;
 
 	default:

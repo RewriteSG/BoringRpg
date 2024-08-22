@@ -6,7 +6,7 @@
 #include "UI.h"
 TimeSystem::TimeSystem()
 {
-	TimeLoop = 0;
+	TimeLoop = 4;
 	lastTimeChecked = 0;
 	TimeTaken = 0;
 	RobberTime = 300;
