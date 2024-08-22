@@ -15,6 +15,7 @@
 #include "Endings.h"
 #include "Furniture.h"
 #include "Scene.h"
+#include "MainMenu.h"
 using namespace myFunctions;
 
 GameManager* GameManager::GM_Instance = nullptr;
@@ -448,6 +449,13 @@ void GameManager::HandleInput(void)
 			else
 				ItemFromInput = "";
 			string furnStr = "";
+			if (stringInput == "menu")
+			{
+				TimeSys.CountLoop();
+				TimeSys.TimeLoop--;
+				SceneManager::LoadScene(SceneManager::mainMenu);
+				break;
+			}
 			if (stringInput == "soap")
 			{
 				ClearDialogue();

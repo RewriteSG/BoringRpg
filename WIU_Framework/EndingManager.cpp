@@ -499,7 +499,7 @@ void EndingManager::Update(void)
 	}
 	else
 	{
-		dialogues.push_back("[BREAKING NEWS]: A 25-year-old man was tragically found dead in the " + killerCurrentScene + " at BLK 243 Chicken Street yesterday around 12:" + to_string(*time / 60) + " AM, prompting police to launch a homicide investigation.");
+		dialogues.push_back("[BREAKING NEWS]: A 25-year-old man was tragically found dead in the " + killerCurrentScene + " at BLK 243 Chicken Street yesterday around 12:0" + to_string(*time / 60) + " AM, prompting police to launch a homicide investigation.");
 		Endings::isunlocked[Endings::GOT_KILLED] = true;
 		endingNum = 1;
 	}
