@@ -81,17 +81,19 @@ void ObjectivesManager::displayObjectives() const
 					ui->CreateText("Check the TV ", Vector2(29, objectiveY));
 
 				}
-				if (InteractionsManager::LastTimeChecked)
-					ui->CreateText("Last Time Checked: [" + TimeSystem::GetTimeinString(GameManager::getGM()->TimeSys.GetLastTimeChecked())+"]", Vector2(18, objectiveY + 2));
-				else
-					ui->CreateText("Last Time Checked: [Time: ??:??:??]", Vector2(18, objectiveY + 2));
+				
 			}
 			else
 			{
 				ui->CreateText("              ", Vector2(29, objectiveY));
 				ui->CreateText("                                   ", Vector2(18, objectiveY +1));
 				ui->CreateText("Survive until the cops arrive", Vector2(29, objectiveY));
+				ui->CreateText("(00:08 am)                         ", Vector2(18, objectiveY +1));
 			}
+			if (InteractionsManager::LastTimeChecked)
+				ui->CreateText("Last Time Checked: [" + TimeSystem::GetTimeinString(GameManager::getGM()->TimeSys.GetLastTimeChecked()) + "]", Vector2(18, objectiveY + 2));
+			else
+				ui->CreateText("Last Time Checked: [Time: ??:??:??]", Vector2(18, objectiveY + 2));
 			break;
 	}
 }

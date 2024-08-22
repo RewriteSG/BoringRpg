@@ -991,25 +991,16 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 void InteractionsManager::MainDoorInteracted(GameObject* MainDoor, GameObject* player)
 {
 	Start();
-	MainDoorImage();
-	
-	switch (timeSystem->TimeLoop)
+
+	if (!isDoorBarricaded)
 	{
-	case 0:
-	case 1:
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Strange... I can't open the door.");
-		break;
-	default:
-		if (!isDoorBarricaded)
-		{
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Strange, the door can't be opened");
-		}
-		else
-		{
-			BarricadeDoorImage();
-			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have barricaded the door.");
-		}
-		
+		MainDoorImage();
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Strange, the door can't be opened");
+	}
+	else
+	{
+		BarricadeDoorImage();
+		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have barricaded the door.");
 	}
 }
 
@@ -1343,8 +1334,8 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 				ui.PrintDialogue(Vector2(3,2), "You: I could barricade the door, this can buy some time.");
 				isBarricadeSetup = true;
 				timeSystem->increaseTimeTaken(50);
-				ui.PrintDialogue(Vector2(3,2), "You: There, all good.");
 				BarricadeDoorImage();
+				ui.PrintDialogue(Vector2(3,2), "You: There, all good.");
 				ui.PrintDialogue(Vector2(3,2), "Successfully barricaded the door!");
 				GameManager::getGM()->inventory.UseItem(useItem1);
 				GameManager::getGM()->inventory.UseItem(useItem2);
