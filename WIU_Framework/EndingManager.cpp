@@ -321,16 +321,16 @@ void EndingManager::ContinueDialogue(void)
 		if (dialogueIndex != dialogues.size())
 		{
 			for (int j = 0; j < index; ++j)
-		{
-			if (j != 0)
 			{
-				for (int ch = 0; ch < dialogues[static_cast<std::vector<std::string, std::allocator<std::string>>::size_type>(j) - 1].length(); ++ch)
-					ui->CreateText(" ", Vector2(ch, yPos));
-			}
+				if (j != 0)
+				{
+					for (int ch = 0; ch < dialogues[static_cast<std::vector<std::string, std::allocator<std::string>>::size_type>(j) - 1].length(); ++ch)
+						ui->CreateText(" ", Vector2(ch, yPos));
+				}
 
-			ui->CreateText(dialogues[j], Vector2(0, yPos));
-			yPos++;
-		}
+				ui->CreateText(dialogues[j], Vector2(0, yPos));
+				yPos++;
+			}
 			dialogueIndex++;
 		}
 
