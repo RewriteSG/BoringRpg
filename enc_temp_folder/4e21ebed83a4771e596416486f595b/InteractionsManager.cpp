@@ -83,7 +83,6 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 	isClosetUnlocked = false;
 	LastTimeChecked = true; 
 	hasOpenToiletCabinet = false;
-	hasOrganisedBedroomDrawer = false;
 	//hasOpenedLivingRoomDrawer = false;
 }
 
