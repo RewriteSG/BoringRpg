@@ -68,9 +68,9 @@ void GameManager::Update()
 	whatScenePlayerIn = SceneManager::currentScene->getName();
 
 	if (!LoopStarted) {
-		inventory.PickupItem("duct tape");
-		inventory.PickupItem("nails");
-		inventory.PickupItem("hammer");
+		//inventory.PickupItem("duct tape");
+		//inventory.PickupItem("nails");
+		//inventory.PickupItem("hammer");
 		ClearDialogue();
 		InteractionsMgr.Start(LoopStarted);
 	}

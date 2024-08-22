@@ -793,6 +793,8 @@ void InteractionsManager::ClosetDoorInteracted(GameObject* bedRoomCabinet, GameO
 			{
 				ClosetDoorImage(true);
 				isClosetUnlocked = true;
+				GameManager::getGM()->inventory.UseItem("closet key");
+				GameManager::getGM()->inventory.UseItem("unknown key");
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "The closet is unlocked. ");
 				timeSystem->increaseTimeTaken(5);
 				if (!hasKnownKey) {

@@ -124,7 +124,7 @@ void InventoryManager::UseItem(std::string useItem)
 {
 	UI gameUI(Vector2(150, 12), 0, 45);
 	int prevCapacityCount = inventoryCurrentCapacity;
-
+	useItem = Scene::tolowerString(useItem);
 	std::string * item = getItemInInventory(useItem);
 	Items = ArrayRemove(Items, item, inventoryCurrentCapacity);
 
