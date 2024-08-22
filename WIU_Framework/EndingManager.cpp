@@ -32,8 +32,6 @@ void EndingManager::PlayLivingRoom(void)
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " Finally your vision gradually faded off... ");
 		return;
 	}
-	else
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was trying to open the MAIN DOOR. ");
 
 	if (GameManager::getGM()->InteractionsMgr.isBarricadeSetup) 
 	{
@@ -53,50 +51,24 @@ void EndingManager::PlayStoreroom(void)
 {
 	*time += 10;
 
-	if (isPlayerFound)
-	{
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering storeroom, and finally found you there. ");
-		return;
-	}
-	else
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering storeroom, and found nothing. ");
-
 	SoapAction();
 }
 
 void EndingManager::PlayToilet(void)
 {
 	*time += 10;
-
-	if (isPlayerFound)
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering toilet, and finally found you in toilet. ");
-	else
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering toilet, and found nothing. ");
-
 	SoapAction();
 }
 
 void EndingManager::PlayBedroom(void)
 {
 	*time += 10;
-
-	if (isPlayerFound)
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering bedroom, and finally found you in bedroom. ");
-	else
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering bedroom, and found nothing. ");
-
 	SoapAction();
 }
 
 void EndingManager::PlayKitChen(void)
 {
 	*time += 10;
-
-	if (isPlayerFound)
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering kitchen, and finally found you in kitchen. ");
-	else
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering kitchen, and found nothing. ");
-
 	SoapAction();
 }
 
@@ -471,9 +443,16 @@ void EndingManager::Update(void)
 		dialogues.push_back("TIME:??? The pain was not only once but continuously, and until you fell into eternal dream... ");
 	}
 
+	if (isPoliceCame) 
+	{
+		//dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The police has arrived and entered your house. ");
+
+	}
+
 	if (GameManager::getGM()->InteractionsMgr.hasCalledTheCops && GameManager::getGM()->TimeSys.TimeTaken >= GameManager::getGM()->TimeSys.TimeLimitForCops &&
 		isDuctTapeUse && !isKillerGetKill)
 	{
+
 		dialogues.push_back("[BREAKING NEWS]: The serial killer was arrested by the police. A 25-year-old man successfully defended himself by attempting with well-preapred measures until police arrived.");
 		Endings::isunlocked[Endings::ARRESTED] = true;
 		endingNum = 3;
