@@ -30,7 +30,7 @@ SceneManager::~SceneManager(void)
 {
 	delete mainMenu;
 	delete endingsPage;
-	delete GameManager::getGM();
+	//delete GameManager::getGM();
 }
 
 void SceneManager::Start(void)

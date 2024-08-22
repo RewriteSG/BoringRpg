@@ -35,11 +35,13 @@ void EndingManager::PlayLivingRoom(void)
 
 	if (GameManager::getGM()->InteractionsMgr.isBarricadeSetup) 
 	{
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer arrived at the main door doorstep. ");
 		*time += 120;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As the door barricaded. This would take some time for the killer to break into the house. ");
 	}
 	else 
 	{
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer arrived at the main door doorstep. ");
 		*time += 5;
 		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer immediately broke into the house with ease. ");
 	}
@@ -290,6 +292,9 @@ void EndingManager::SoapAction(void)
 			*time += 60;
 			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer got up and continue on his search . ");
 
+			if (killerCurrentScene != SceneManager::GetSceneName(SceneManager::LIVING_ROOM))
+				dialogues.push_back(TimeSystem::GetTimeinString(*time) + " He found nothing and the killer was entering living room. ");
+			
 		}
 		
 	}
@@ -298,7 +303,7 @@ void EndingManager::SoapAction(void)
 		if (isPlayerFound)
 			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer had a quick scan of the entire room, and finally found you there. ");
 		else
-			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " The killer was entering living room, and found nothing. ");
+			dialogues.push_back(TimeSystem::GetTimeinString(*time) + " He found nothing and the killer was entering living room. ");
 	}
 }
 
@@ -347,6 +352,10 @@ EndingManager::EndingManager(void)
 	isPoliceCame = false;
 	playerGotBothWeapon = false;
 	endingNum = 0;
+}
+
+EndingManager::~EndingManager()
+{
 }
 
 void EndingManager::Start(void)

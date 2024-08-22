@@ -39,7 +39,11 @@ GameManager::GameManager(void) : TimeSys()
 GameManager::~GameManager(void)
 {
 	delete gameUI;
-	delete endingMgr;
+	gameUI = nullptr;
+	if (endingMgr) {
+		delete endingMgr;
+		endingMgr = nullptr;
+	}
 }
 
 GameManager* GameManager::getGM()

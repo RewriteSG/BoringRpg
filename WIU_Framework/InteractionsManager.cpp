@@ -1516,7 +1516,7 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 			else
 			ToiletCabinetWithSoapImage();
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You look through the cabinet.");
-			timeSystem->increaseTimeTaken(5);
+			timeSystem->increaseTimeTaken(2);
 			hasOpenToiletCabinet = true;
 			break;
 		case 1:

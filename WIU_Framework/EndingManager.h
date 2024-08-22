@@ -38,6 +38,7 @@ private:
 
 public:
 	EndingManager(void);
+	~EndingManager();
 	void Start(void);
 	void Update(void);
 	void Exit(void);
