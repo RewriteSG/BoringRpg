@@ -214,7 +214,7 @@ void EndingManager::KnifeEnding(void)
 
 void EndingManager::MetalPanAction(void)
 {
-	std::string locationYouHid = (GameManager::getGM()->InteractionsMgr.isHidInCloset) ? "closet" : " toilet";
+	std::string locationYouHid = (GameManager::getGM()->InteractionsMgr.isHidInCloset) ? "closet" : "toilet";
 	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " At the moment the killer was about to leave, you was gently opening " + locationYouHid + " door. ");
 
 	*time += 5;
@@ -248,7 +248,7 @@ void EndingManager::MetalPanAction(void)
 		break;
 	case 2:
 		*time += 10;
-		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As he was being knock out, you used your duct tape to tie him up. Then you was calmly waiting for police on the sofa. ");
+		dialogues.push_back(TimeSystem::GetTimeinString(*time) + " As he was being knock out, you used your duct tape to tie him up. Then you were calmly waiting for the police on your sofa. ");
 		isWeaponUse = true;
 		break;
 	}
@@ -266,7 +266,7 @@ void EndingManager::KnifeAction(void)
 	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " In that moment, you was standing over your target, your blade stained with deep crimson of freshly spilled blood. ");
 
 	*time += 60;
-	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a minute to calm youself down, you decided to the police for asssistance. ");
+	dialogues.push_back(TimeSystem::GetTimeinString(*time) + " After waiting for a minute to calm youself down, you decided to call the police for asssistance. ");
 	isWeaponUse = true;
 }
 
@@ -280,6 +280,7 @@ void EndingManager::HideAction(void)
 void EndingManager::ContinueDialogue(void)
 {
 	int index = dialogueIndex;
+
 	for (int i = dialogueIndex; i < dialogues.size(); ++i)
 	{
 		ui->PrintDialogue(Vector2(), dialogues[i]);
@@ -289,8 +290,10 @@ void EndingManager::ContinueDialogue(void)
 		for (int j = 0; j < index; ++j)
 		{
 			if (j != 0)
+			{
 				for (int ch = 0; ch < dialogues[static_cast<std::vector<std::string, std::allocator<std::string>>::size_type>(j) - 1].length(); ++ch)
 					ui->CreateText(" ", Vector2(ch, yPos));
+			}
 
 			ui->CreateText(dialogues[j], Vector2(0, yPos));
 			yPos++;
@@ -446,7 +449,7 @@ void EndingManager::Update(void)
 	
 	system("CLS");
 	((Endings*)SceneManager::endingsPage)->ShowEnding(endingNum - 1);
-	Sleep(1500);
+	Sleep(2500);
 
 	Exit();
 }
@@ -455,7 +458,7 @@ void EndingManager::Exit()
 {
 	system("CLS");
 	dialogues.clear();
-	GameManager::getGM()->TimeSys.CountLoop(0);
+	GameManager::getGM()->TimeSys.CountLoop();
 	
 	if (endingNum == 3 || endingNum == 4)
 	{
