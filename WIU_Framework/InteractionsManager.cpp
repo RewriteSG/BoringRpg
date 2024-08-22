@@ -1532,6 +1532,10 @@ void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, Gam
 	}
 	if(hasOpenToiletCabinet)
 	{
+		if (timeSystem->TimeLoop < 2) {
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: This is a spare soap for when i run out of soap.");
+			return;
+		}
 		if (!hasSoap) 
 		{
 			ToiletCabinetWithSoapImage();
