@@ -58,6 +58,7 @@ public:
 	void CreatePlayer(Vector2 toPos);
 	void ClearDialogue();
 	void SetDialogueEmpty(bool value);
+
 	static char _getch(void);
 };
 
