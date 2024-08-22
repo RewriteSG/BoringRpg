@@ -20,6 +20,7 @@ InventoryManager::InventoryManager()
 	Items = nullptr;
 	inventoryCurrentCapacity = 0;
 	inventoryMaxCapacity = 0;
+	hasChangedCapacity = true;
 }
 
 bool InventoryManager::PickupItem(std::string typeofPickup)
@@ -30,7 +31,7 @@ bool InventoryManager::PickupItem(std::string typeofPickup)
 	*newItem = Scene::tolowerString(typeofPickup);
 
 	Items = ArrayAdd(Items, newItem, inventoryCurrentCapacity);
-
+	hasChangedCapacity = true;
 
 	return true;
 }
@@ -45,23 +46,28 @@ int InventoryManager::GetItemsCount()
 	return inventoryCurrentCapacity;
 }
 
-void InventoryManager::DisplayItems() const
+void InventoryManager::DisplayItems() 
 {
 
 	UI gameUI(Vector2(150, 12), 0, 45);
-	std::string clearText = "";
-	for (int j = 0; j < 45; j++)
-	{
-		clearText += ' ';
-	}
-	for (int i = 0; i <= 5 + inventoryCurrentCapacity; i++)
-	{
-		gameUI.CreateText(clearText, Vector2(-5, 2 + i));
+	if (hasChangedCapacity) {
+
+		hasChangedCapacity = false;
+		std::string clearText = "";
+		for (int j = 0; j < 45; j++)
+		{
+			clearText += ' ';
+		}
+		for (int i = 0; i <= 5 + inventoryCurrentCapacity; i++)
+		{
+			gameUI.CreateText(clearText, Vector2(-5, 2 + i));
+		}
 	}
 	gameUI.CreateBox(Vector2(-5, 2), "Inventory:", 5 + (inventoryCurrentCapacity + 1));
 	for (int i = 0; i < inventoryCurrentCapacity; i++)
 	{
-		GameManager::getGM()->gameUI->CreateText(*Items[i], Vector2(18, 6 + i));
+		//Scene::ChangeColor(Scene::Yellow);
+		GameManager::getGM()->gameUI->CreateText(*Items[i], Vector2(18, 6 + i), 14-7);
 	}
 }
 
@@ -121,7 +127,20 @@ void InventoryManager::UseItem(std::string useItem)
 
 	std::string * item = getItemInInventory(useItem);
 	Items = ArrayRemove(Items, item, inventoryCurrentCapacity);
-	if (prevCapacityCount != inventoryCurrentCapacity)
+
+	if (prevCapacityCount != inventoryCurrentCapacity) {
+
+		std::string clearText = "";
+		for (int j = 0; j < 45; j++)
+		{
+			clearText += ' ';
+		}
+		for (int i = 0; i <= 5 + prevCapacityCount; i++)
+		{
+			gameUI.CreateText(clearText, Vector2(-5, 2 + i));
+		}
+		hasChangedCapacity = true;
 		gameUI.CreateBox(Vector2(-5, 2), "Inventory:", 5 + (inventoryCurrentCapacity + 1));
+	}
 }
 

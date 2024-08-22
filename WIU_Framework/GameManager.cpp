@@ -61,6 +61,9 @@ void GameManager::Update()
 	if (!LoopStarted) {
 		ClearDialogue();
 		InteractionsMgr.Start(LoopStarted);
+		inventory.PickupItem("planks");
+		inventory.PickupItem("nails");
+		inventory.PickupItem("hammer");
 	}
 	inventory.DisplayItems();
 
@@ -333,7 +336,7 @@ void GameManager::HandleInput(void)
 						Scene::ChangeColor(Scene::Yellow, true);
 						cout << "e";
 						Scene::ChangeColor(Scene::Default, true);
-						xOffset += doortext.length();
+						xOffset += (int)doortext.length();
 					}
 					if (InteractablesText != "") {
 						if (xOffset > 5) {
@@ -360,7 +363,7 @@ void GameManager::HandleInput(void)
 							Scene::ChangeColor(Scene::Default, true);
 						}
 
-						xOffset += InteractablesText.length();
+						xOffset += (int)InteractablesText.length();
 					}
 					//if (notDoorCount > 0) {
 					//	ui.CreateText("   Objects around you:", Vector2(2, 4 + yOffset - 1));
@@ -441,6 +444,48 @@ void GameManager::HandleInput(void)
 			else
 				ItemFromInput = "";
 			string furnStr = "";
+			if (stringInput == "soap")
+			{
+				ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use soap on the floor to make it slippery. ");
+
+			}
+			else if (stringInput == "nails" || stringInput == "planks" || stringInput == "hammer")
+			{
+				ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it on the main door together with other items to barricade the door. ");
+
+			}
+			else if (stringInput == "knife")
+			{
+				ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 4), "You: This knife could get me out of the time loop if i use it on myself, nah maybe i can use it to fight back. ");
+			}
+			else if (stringInput == "store room key")
+			{
+				ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it on the storeroom door. ");
+			}
+			else if (stringInput == "unknown key")
+			{
+				ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it on the locked closet. ");
+			}
+			else if (stringInput == "closet key")
+			{
+				ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it on the locked closet. ");
+			}
+			else if (stringInput == "metal pan")
+			{
+				ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it to fight back the killer. ");
+			}
+			else if (stringInput == "duct tape")
+			{
+				ClearDialogue();
+				ui.PrintDialogue(Vector2(3, 4), "You: Maybe i can use it to tie the killer. ");
+			}
 			if (furnituresLeft)
 			{
 				furnStr = furnituresLeft->GetName();
@@ -644,8 +689,11 @@ void GameManager::HandleInput(void)
 					ui.GetOptionUI()->AddOption(new string("Yes"));
 					ui.GetOptionUI()->AddOption(new string("No"));
 					int choice = ui.PickDialogue(Vector2(3, 2), "Are you sure you want to wait for the killer to arrive? (This will skip to the ending)");
-					if (choice == 0)
+					if (choice == 0) 
+					{
 						TimeSys.TimeTaken = TimeSys.RobberTime;
+						break;
+					}
 				}
 				else
 				ui.PrintDialogue(Vector2(3, 2), "How did you know how to use this command? Play the game first. ");

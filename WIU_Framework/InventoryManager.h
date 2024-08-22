@@ -6,6 +6,7 @@ class InventoryManager
 {
 	int inventoryMaxCapacity;
 	int inventoryCurrentCapacity;
+	bool hasChangedCapacity;
 	std::string** Items;
 	std::string* getItemInInventory(std::string item);
 public:
@@ -14,7 +15,7 @@ public:
 	std::string** GetItems();
 	int GetItemsCount();
 
-	void DisplayItems() const;
+	void DisplayItems();
 	bool InventoryHasItems(std::string item1) const;
 	bool InventoryHasItems(std::string item1, std::string item2) const;
 	bool InventoryHasItems(std::string item1, std::string item2, std::string item3) const;

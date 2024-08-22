@@ -11,6 +11,7 @@ TimeSystem::TimeSystem()
 	RobberTime = 300;
 	TimeLimitForCops = 480;
 	increasedTime = false;
+	lastTimeChecked = 0;
 }
 
 void TimeSystem::CountLoop(int time)
