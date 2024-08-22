@@ -7,7 +7,7 @@
 TimeSystem::TimeSystem()
 {
 	lastTimeChecked = 0;
-	TimeLoop = 3;
+	TimeLoop = 0;
 	TimeTaken = 0;
 	RobberTime = 300;
 	TimeLimitForCops = 480;
