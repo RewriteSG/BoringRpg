@@ -174,10 +174,11 @@ void GameManager::HandleInput(void)
 	Scene::ChangeColor(Scene::Default, true);
 
 
-	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0));
+	ui.CreateText("[ (W)(A)(S)(D): Move  (/): To enable input field ]", Vector2(10, 0), 10-7);
 	Scene::GotoXY(Application::numberOfColumns / 2 - 81, 45);
 	Scene::ChangeColor(Scene::Green, true);
 	cout<< "Input: ";
+	Application::ShowCursor();
 	Scene::ChangeColor(Scene::Default, true);
 	char input = ' ';
 	if (LoopStarted)
@@ -216,9 +217,9 @@ void GameManager::HandleInput(void)
 		{
 			//					[ (W)(A)(S)(D): Move  (/): To enable input field ]
 			if(TimeSys.TimeLoop < 2)
-			ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use',       ]", Vector2(10, 0));
+			ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use',       ]", Vector2(10, 0),7);
 			else
-				ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use', 'Wait']", Vector2(10, 0));
+				ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use', 'Wait']", Vector2(10, 0),7);
 
 			Scene::GotoXY(3, 2, ui.GetPosition());
 			std::string Print = "blank", doorStr = "blank";
