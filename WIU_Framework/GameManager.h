@@ -26,8 +26,8 @@ private:
 	static GameManager* GM_Instance;
 	bool GameEnded, GameWon;
 	bool EmptyDialogue = true;
-
 	EndingManager* endingMgr;
+	bool isSurviveObjective;
 public:
 	bool LoopStarted;
 	bool DontCountTime;
@@ -58,6 +58,9 @@ public:
 	void CreatePlayer(Vector2 toPos);
 	void ClearDialogue();
 	void SetDialogueEmpty(bool value);
+
 	static char _getch(void);
+	void setSurviveObjective(bool);
+	bool getSurviveObjective();
 };
 

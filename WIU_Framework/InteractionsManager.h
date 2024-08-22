@@ -39,6 +39,7 @@ public:
 	bool hasMetalPan;
 	bool isDoorBarricaded;
 	//bool isfirstCheckClock;
+	bool hasOpenToiletCabinet;
 	static bool hasSearchedForSoap;
 	static bool LastTimeChecked;
 	static bool hasKnownKey;
@@ -110,6 +111,7 @@ public:
 	void TelevisionOtherChannelImage();
 	void ToiletCabinetImage();
 	void ToiletCabinetImage(bool);
+	void ToiletCabinetWithSoapImage();
 	void BedroomDoorImage();
 	void ClosetDoorImage();
 	void ClosetDoorImage(bool);

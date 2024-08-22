@@ -65,7 +65,8 @@ InteractionsManager::InteractionsManager() : timeSystem(nullptr), ui(nullptr)
 	hasStoreRoomKeyCollected = false;
 	isDoorBarricaded = false;
 	isClosetUnlocked = false;
-	LastTimeChecked = true;
+	LastTimeChecked = true; 
+	hasOpenToiletCabinet = false;
 	//hasOpenedLivingRoomDrawer = false;
 }
 
@@ -238,6 +239,7 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "TSSSSHHHHHHHHHH");
 			ShowerImage();
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You took a shower.");
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Man the soap is finished, Guess i gotta to restock it.");
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Let me catch up on the news before doing anything else.");
 			*hasTakenShower = true;
 			break;
@@ -248,16 +250,12 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 	default:
 
 	
-		if (hasSoap)
-			ShowerNoShampooImage();
-		else
-			ShowerImage();
+		ShowerImage();
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Lets see what can I do here.");
 		ui->GetOptionUI()->AddOption(new std::string("Hide"));
-		if (hasSearchedForSoap && !hasSoap)
-			ui->GetOptionUI()->AddOption(new std::string("Get Soap"));
-		else
+		if (!hasSearchedForSoap)
 			ui->GetOptionUI()->AddOption(new std::string("Search"));
+
 		ui->GetOptionUI()->AddOption(new std::string("Leave"));
 		choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "What to do?");
 		switch (choosenItem)
@@ -272,43 +270,13 @@ void InteractionsManager::ShowerInteracted(GameObject* shower, GameObject* playe
 			isPlayerHidden = true;
 			break;
 		case 1:
-			if (hasSoap)
-			{
-
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "There is nothing of useful here.");
-				break;
-			}
-			if (!hasSearchedForSoap && !hasSoap)
+			
+			if (!hasSearchedForSoap)
 			{
 				ui->PrintDialogue(Vector2(POINTX, POINTY), "You found a body Soap bottle.");
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Maybe there's a use to this?");
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "You: But it seems like it is empty");
 			}
-			if (!hasSearchedForSoap) {
-
-			ui->GetOptionUI()->AddOption(new std::string("Yes"));
-			ui->GetOptionUI()->AddOption(new std::string("No"));
-			choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the soap");
-			}
-			else
-				choosenItem = 0;
-
-			hasSearchedForSoap = true;
-
-			switch (choosenItem)
-			{
-			case 0:
-				hasSoap = true;
-				GameManager::getGM()->inventory.PickupItem("Soap");
-				SoapImage();
-				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up soap!");
-				timeSystem->increaseTimeTaken(2);
-
-				ShowerNoShampooImage();
-				Sleep(500);
-				break;
-			case 1:
-				break;
-			}
+			
 			break;
 		}
 		break;
@@ -1001,6 +969,7 @@ void InteractionsManager::TelevisionInteracted(GameObject* bed, GameObject* play
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "TV: BREAKING NEWS, A SERIAL KILLER IS ON THE LOOSE AROUND CHICKEN STREET, PLEASE CHECK YOUR LOCKS AND KEEP YOURSELF SAFE!");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: It's the same news...again...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You realized that you might be stuck in a time loop of getting killed over and over.");
+		GameManager::getGM()->setSurviveObjective(true);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: I have to do something about this...");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You turned off the TV.");
 		TelevisionImage();
@@ -1540,20 +1509,64 @@ bool InteractionsManager::UseItem(std::string useItem, GameObject* player)
 void InteractionsManager::ToiletCabinetInteracted(GameObject* toiletCabinet, GameObject* player)
 {
 	//timeSystem->increaseTimeTaken(5);
-	ui->GetOptionUI()->AddOption(new std::string("Yes"));
-	ui->GetOptionUI()->AddOption(new std::string("No"));
-	ToiletCabinetImage();
-	int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Search the cabinet?");
-	switch (choosenItem)
+	if (!hasOpenToiletCabinet) 
 	{
-	case 0:
-		ToiletCabinetImage(true);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "You look through the cabinet.");
-		timeSystem->increaseTimeTaken(5);
-		ui->PrintDialogue(Vector2(POINTX, POINTY), "But you found nothing useful.");
-		break;
-	case 1:
-		break;
+
+		ui->GetOptionUI()->AddOption(new std::string("Yes"));
+		ui->GetOptionUI()->AddOption(new std::string("No"));
+		ToiletCabinetImage();
+		int choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Search the cabinet?");
+		switch (choosenItem)
+		{
+		case 0:
+			if(hasSoap)
+				ToiletCabinetImage(true);
+			else
+			ToiletCabinetWithSoapImage();
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You look through the cabinet.");
+			timeSystem->increaseTimeTaken(5);
+			hasOpenToiletCabinet = true;
+			break;
+		case 1:
+			break;
+		}
+	}
+	if(hasOpenToiletCabinet)
+	{
+		if (timeSystem->TimeLoop < 2) {
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: This is a spare soap for when i run out of soap.");
+			return;
+		}
+		if (!hasSoap) 
+		{
+			ToiletCabinetWithSoapImage();
+			int choosenItem = 0;
+			ui->GetOptionUI()->AddOption(new std::string("Yes"));
+			ui->GetOptionUI()->AddOption(new std::string("No"));
+			choosenItem = ui->PickDialogue(Vector2(POINTX, POINTY), "Take the soap");
+
+
+			switch (choosenItem)
+			{
+			case 0:
+				hasSoap = true;
+				GameManager::getGM()->inventory.PickupItem("Soap");
+				SoapImage();
+				ui->PrintDialogue(Vector2(POINTX, POINTY), "Picked up soap!");
+				timeSystem->increaseTimeTaken(2);
+
+				ToiletCabinetImage(true);
+				Sleep(500);
+				break;
+			case 1:
+				break;
+			}
+		}
+		else 
+		{
+			ToiletCabinetImage(true);
+			ui->PrintDialogue(Vector2(POINTX, POINTY), "There is nothing useful.");
+		}
 	}
 	
 }
@@ -1623,8 +1636,10 @@ void InteractionsManager::Start(bool isGameStarted)
 	case 3:
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Im back again... It hurts every time i die.");
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Whatever I did last time didn't work.");
-		print = "You: Okay.. This has been happening for three times already. I really am stuck in the time loop";
+		print = "You: Okay.. This has been happening for three times already. I really am stuck in the time loop.";
 		//print += +"rd";
+		ui->PrintDialogue(Vector2(POINTX, POINTY), print);
+		print = "You: *Sigh* 2nd attempt, Let's do this.";
 		ui->PrintDialogue(Vector2(POINTX, POINTY), print);
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");
 		break;
@@ -1634,8 +1649,12 @@ void InteractionsManager::Start(bool isGameStarted)
 		ui->PrintDialogue(Vector2(POINTX, POINTY), "You: " + differentText1[random]);
 		//ui->PrintDialogue(Vector2(POINTX, POINTY), "You: Whatever I did last time didn't work.");
 		print = "You: Okay.. ";
-		print += ('0' + (timeSystem->TimeLoop +1));
-		print += "th attempt.";
+		print += ('0' + (timeSystem->TimeLoop-1));
+		if ((timeSystem->TimeLoop - 1) > 3)
+			print += "th attempt.";
+		else
+			print += "rd attempt.";
+
 		ui->PrintDialogue(Vector2(POINTX, POINTY), print);
 		if (random != 5)
 			ui->PrintDialogue(Vector2(POINTX, POINTY), "You: There has to be a way out of this.");
@@ -2665,6 +2684,44 @@ void InteractionsManager::ToiletCabinetImage(bool)
 @G:           :G@Y777777777777P&@&PJJYJJYYYYYYYYYYYYYYJJP@G.  J@Y                                     5@?  :G@
 @G:           :G@Y777777777?P@@@5?777777777777777777777!Y@G.  ...                                     5@?  :G@
 @G:           :G@Y77777777P@@&57777777777777777777777777Y@G.                                          5@?  :G@
+@G:           :G@Y777777?JG#5777777777777777777777777777Y@G.                                        .^5B!  :G@
+@#?!77!:      :G@Y77?Y55G#577777777777777777777777777777Y@G.                                        Y@J    :G@
+@&PY5#@#J?JY?. G@Y!!Y@@GY!!777777777777777777777777777!!Y@P.                                      :?B@J    :G@
+@G.  :?JJJJJJYP&@#GG#@@BGBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB#@&P55555555555555555555555555555555555555#@#?^    :G@
+@G:          ^7!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!7777777777777777777777777777777777777777!:      :G@
+@G:                                                                                                        :G@
+@@&########################################################################################################&@@
+)";
+	Scene::DrawASCII_Art(image, 0, 0, 15);
+}
+
+void InteractionsManager::ToiletCabinetWithSoapImage()
+{
+	const char* image = R"(@@@@@@@@@@@&##########################################&########################################&######&####&@@
+@&BBBBBBB#B?^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                            ^^^.      :G@
+@G:        ?GGG&@@@@@#BB############################BJ!!!!!!!!!7777777777777777777777777777777!!5@@@Y      :G@
+@G:           .P@BB@&P55J!!!!7777777777777777777777!?PBBBBBB&@#555555555555555555555555555555555YYB@Y      :G@
+@G:           :G&J75PPB@@BBGY7!7777777777777777777777!!!!!!!5@Y                                   ?@Y      :G@
+@G:           :G@Y7777?Y5555G##BBBBBBBBBBBBBBBBBBBBBBBBBBBBB&@5                                   J@Y      :G@
+@G:           :G@Y7777777777?YJY#@GY555555555555555555555YG@G~.                                   J@Y      :G@
+@G:           :G@Y777777777777!?B@5??JJJJJJJJJJJJJJJJJJJ??P@5                                     ?@Y      :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJJJJ??P@P.                                      Y@J    :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJJJJJYPBJ.                                      Y@J    :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJJJ?5@G.                                        Y@J    :G@
+@G:           :G@Y7777777777777?B@5?JJJJJJJJJJJJJJJJJJJ?5@G.                                        Y@J    :G@
+@G:           :G@Y7777777777777?B@5?JJJJ?????????JJJJJJ?5@G.  !Y!                                   Y@J    :G@
+@G:           :G@Y7777777777777?B@5?J??YB##BBBB#B5?JJJ??5@G.  J@Y                                   :!YP~  :G@
+@G:           :G@Y7777777777777?B@5??YB@@@@@@@@@@P??J?YB@@P.  J@Y                                     5@?  :G@
+@G:           :G@Y7777777777777?B@5??JYYYJYG@@@GYJJJJ?5@B~  !#@@J                                     5@?  :G@
+@G:           :G@Y7777777777777?B@5?J??5&@##&####&#5J?5@B:  ?@5                                       5@?  :G@
+@G:           :G@Y7777777777777?B@5?J??P@P.  .^^^ .G@5Y&G:  ?@5                                       5@?  :G@
+@G:           :G@Y7777777777777?B@5?JJ?P@P.  Y@&5^.P@5Y&#?: 7@5                                       5@?  :G@
+@G:           :G@Y7777777777777?B@5?JJ?P@P.  Y@G!..P@5Y#@@P.7@#?^                                     5@?  :G@
+@G:           :G@Y7777777777777?B@5????5@P.  :7#@7.P@YJ#@@P..7B@Y                                     5@?  :G@
+@G:           :G@Y777777777777!?B@&####&@P.  !P@@!.P@&#@@@P.  ?@Y                                     5@?  :G@
+@G:           :G@Y777777777777P&@&PJJJJP@P.  :~~^ .P@PJJP@G.  J@Y                                     5@?  :G@
+@G:           :G@Y777777777?P@@@5?7777!5@P.       :G@Y!!Y@G.  ...                                     5@?  :G@
+@G:           :G@Y77777777P@@&577777777Y#@&&&&&&&&#Y7777Y@G.                                          5@?  :G@
 @G:           :G@Y777777?JG#5777777777777777777777777777Y@G.                                        .^5B!  :G@
 @#?!77!:      :G@Y77?Y55G#577777777777777777777777777777Y@G.                                        Y@J    :G@
 @&PY5#@#J?JY?. G@Y!!Y@@GY!!777777777777777777777777777!!Y@P.                                      :?B@J    :G@

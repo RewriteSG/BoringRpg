@@ -6,8 +6,8 @@
 #include "UI.h"
 TimeSystem::TimeSystem()
 {
+	TimeLoop = 1;
 	lastTimeChecked = 0;
-	TimeLoop = 3;
 	TimeTaken = 0;
 	RobberTime = 300;
 	TimeLimitForCops = 480;

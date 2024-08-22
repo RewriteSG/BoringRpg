@@ -78,7 +78,7 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 
 	int numCh = 0;
 	char input = ' ';
-	int duration = 20;
+	int duration = 5;
 	int numOfCharsInLine = 0;
 	int numberOfLine = 1;
 	for (char& ch : textToPrint)
@@ -127,9 +127,7 @@ void UI::PrintDialogue(Vector2 position, const std::string text) const
 		Sleep(duration);
 		numCh++;
 	}
-
-	CreateText("[Enter to continue]", Vector2(position.GetX(), originalPos.GetY() + numberOfLine));
-
+	CreateText("[Enter to continue]", Vector2(position.GetX(), position.GetY() + numberOfLine));
 	while (true)
 	{
 		input = GameManager::_getch();
@@ -159,7 +157,7 @@ int UI::PickDialogue(Vector2 position, const std::string text) const
 
 	int numCh = 0;
 	char input = ' ';
-	int duration = 20;
+	int duration = 5;
 	int numOfCharsInLine = 0;
 	int numberOfLine = 1;
 	for (char& ch : textToPrint)
