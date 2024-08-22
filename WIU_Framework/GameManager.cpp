@@ -224,9 +224,9 @@ void GameManager::HandleInput(void)
 		{
 			//					[ (W)(A)(S)(D): Move  (/): To enable input field ]
 			if(TimeSys.TimeLoop < 2)
-			ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use',       ]", Vector2(10, 0),7);
+			ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use', 'Help', 'Menu'     ]", Vector2(10, 0),7);
 			else
-				ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use', 'Wait']", Vector2(10, 0),7);
+				ui.CreateText("[ Options: 'E', 'Interact', 'Move', 'Use', 'Wait', 'Help', 'Menu' ]", Vector2(10, 0),7);
 
 			Scene::GotoXY(3, 2, ui.GetPosition());
 			std::string Print = "blank", doorStr = "blank";
